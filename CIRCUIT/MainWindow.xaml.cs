@@ -25,7 +25,8 @@ namespace CIRCUIT
 
         private void Something()
         {
-            num = 20;
+            num = 1203;
+            
         }
     }
 }
