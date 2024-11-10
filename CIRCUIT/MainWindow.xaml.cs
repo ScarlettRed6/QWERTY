@@ -26,6 +26,7 @@ namespace CIRCUIT
         private void Something()
         {
             num = 1203;
+            string develop = "something";
             
         }
     }
