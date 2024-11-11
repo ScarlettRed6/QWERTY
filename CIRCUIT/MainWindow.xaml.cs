@@ -19,6 +19,7 @@ namespace CIRCUIT
         public MainWindow()
         {
             InitializeComponent();
+           
         }
 
         

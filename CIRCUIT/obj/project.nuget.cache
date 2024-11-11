@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "zatGoZs5LHs=",
+  "dgSpecHash": "F1o3nBTx8z4=",
   "success": true,
   "projectFilePath": "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Dreadlord\\.nuget\\packages\\fontawesome.sharp\\6.6.0\\fontawesome.sharp.6.6.0.nupkg.sha512"
+  ],
   "logs": []
 }

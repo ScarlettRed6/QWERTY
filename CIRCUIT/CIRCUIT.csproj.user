@@ -7,7 +7,39 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="CustomControls\CustomPasswordBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardView\AdminDashboardView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardView\CatalogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardView\HomeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="CustomControls\CustomPasswordBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\ButtonStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\UIColors.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardView\AdminDashboardView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardView\CatalogView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardView\HomeView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

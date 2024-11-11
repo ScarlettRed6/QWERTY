@@ -1,0 +1,159 @@
+﻿<Window x:Class="CIRCUIT.View.AdminDashboardView.AdminDashboardView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboardView"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen" WindowStyle="None"
+        Background="Transparent" AllowsTransparency="True"
+        Title="AdminDashboardView" Height="700" Width="1300">
+
+    
+    <!-- Outer border -->
+    <Border CornerRadius="10" BorderThickness="1">
+        <!-- Border color gradient -->
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="{StaticResource primary3}" Offset="0"/>
+                <GradientStop Color="#AE445A" Offset="0.75"/>
+                <GradientStop Color="#E8BCB9" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Border.Background>
+            <SolidColorBrush Color="{StaticResource primary2}"/>
+        </Border.Background>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/> <!-- The Side navigation -->
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Border and Border background for the side nav -->
+            <Border CornerRadius="10,0,0,10">
+                <Border.Background>
+                    <SolidColorBrush Color="{StaticResource primary1}"/>
+                </Border.Background>
+
+                <StackPanel>
+                    
+                    <!-- LOGO and Text either Dashboard or app Name or Current user -->
+                    <StackPanel Orientation="Horizontal" Height="35"
+                                Margin="15,25,0,40">
+
+                        <Image Source="/Assets/Images/Personalpic.jpg" Height="30"/>
+                        <TextBlock Text="DASHBOARD" Foreground="Red"
+                                   FontSize="20" FontWeight="Medium"
+                                   VerticalAlignment="Center" Margin="10,0,0,0"/>
+
+                    </StackPanel>
+                    
+                    <!-- Side menu buttons -->
+                    
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource panelColor2}">
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Home" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Home" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+                        
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource panelColor2}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Bath" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Analytics" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource panelColor2}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Bicycle" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Catalog" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource panelColor2}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Battery4" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Transactions" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource panelColor2}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Truck" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Stock" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+
+                    </RadioButton>
+
+                    <!-- End of menu buttons -->
+                </StackPanel>
+                
+            </Border>
+
+            
+            <!-- Right Panel , The Content Panel -->
+            
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel x:Name="ControlBar" Orientation="Horizontal"
+                            FlowDirection="RightToLeft" Background="Transparent"
+                            Margin="0,0,5,0"
+                            MouseLeftButtonDown="ControlBar_MouseLeftButtonDown"
+                            MouseEnter="ControlBar_MouseEnter">
+
+                    <!-- Button Close control -->
+                    <Button x:Name="btnClose" Style="{StaticResource controlButton}"
+                            Tag="{StaticResource panelColor2}" Click="btnClose_Click">
+                        <fa:IconImage Icon="Xmark" 
+                                      Style="{StaticResource controlButtonIcon}"/>
+
+                    </Button>
+                    <!-- Button Maximize control -->
+                    <Button x:Name="btnMaximize" Style="{StaticResource controlButton}"
+                            Tag="{StaticResource panelColor2}" Click="btnMaximize_Click">
+                        <fa:IconImage Icon="Square" 
+                                      Style="{StaticResource controlButtonIcon}"/>
+
+                    </Button>
+                    <!-- Button Minimize control -->
+                    <Button x:Name="btnMinimize" Style="{StaticResource controlButton}"
+                            Tag="{StaticResource panelColor2}" Click="btnMinimize_Click">
+                        <fa:IconImage Icon="WindowMinimize" 
+                                      Style="{StaticResource controlButtonIcon}"/>
+
+                    </Button>
+
+                </StackPanel>
+                
+                <!-- Random Header caption !Can be remove later! -->
+                
+                
+            </Grid>
+            
+        </Grid>
+        
+    </Border>
+
+</Window>

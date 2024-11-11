@@ -9,9 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="View\" />
-    <Folder Include="ViewModel\" />
+    <None Remove="Assets\Images\Personalpic.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome.Sharp" Version="6.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\Personalpic.jpg" />
   </ItemGroup>
 
 </Project>
