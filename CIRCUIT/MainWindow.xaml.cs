@@ -16,18 +16,11 @@ namespace CIRCUIT
     /// </summary>
     public partial class MainWindow : Window
     {
-        int num = 0;
         public MainWindow()
         {
             InitializeComponent();
-            Something();
         }
 
-        private void Something()
-        {
-            num = 1203;
-            string develop = "something";
-            develop = "DevelopNew";
-        }
+        
     }
 }
