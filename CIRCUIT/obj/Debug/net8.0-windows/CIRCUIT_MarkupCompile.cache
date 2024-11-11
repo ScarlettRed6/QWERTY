@@ -1,5 +1,5 @@
 ﻿CIRCUIT
-1.0.0.0
+
 
 winexe
 C#
@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\Ganotice\Desktop\QWERTY\CIRCUIT\App.xaml
 11407045341
 
-6-24888580
+41422982412
 198-556154604
 MainWindow.xaml;
 
-False
+True
 
