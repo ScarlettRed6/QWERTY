@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj": {}
+    "C:\\Users\\clarence\\Desktop\\QWERTY\\CIRCUIT\\CIRCUIT.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj": {
+    "C:\\Users\\clarence\\Desktop\\QWERTY\\CIRCUIT\\CIRCUIT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj",
+        "projectUniqueName": "C:\\Users\\clarence\\Desktop\\QWERTY\\CIRCUIT\\CIRCUIT.csproj",
         "projectName": "CIRCUIT",
-        "projectPath": "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj",
-        "packagesPath": "C:\\Users\\Dreadlord\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\obj\\",
+        "projectPath": "C:\\Users\\clarence\\Desktop\\QWERTY\\CIRCUIT\\CIRCUIT.csproj",
+        "packagesPath": "C:\\Users\\clarence\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\clarence\\Desktop\\QWERTY\\CIRCUIT\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Dreadlord\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\clarence\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -63,7 +63,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
