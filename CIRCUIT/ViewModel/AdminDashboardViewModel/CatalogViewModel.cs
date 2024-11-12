@@ -9,5 +9,6 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 {
     public class CatalogViewModel : PropertyChange
     {
+
     }
 }
