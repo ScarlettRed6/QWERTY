@@ -23,7 +23,6 @@ namespace CIRCUIT.View.AdminDashboardView
     {
         public AdminDashboardView()
         {
-            string name = "Rhenz";
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
