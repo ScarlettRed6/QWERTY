@@ -10,13 +10,16 @@
     <Compile Update="CustomControls\CustomPasswordBox.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\AdminDashboardView\AdminDashboardView.xaml.cs">
+    <Compile Update="View\AdminDashboardView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\AdminDashboardView\CatalogView.xaml.cs">
+    <Compile Update="View\AdminDashboardViews\AnalyticsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\AdminDashboardView\HomeView.xaml.cs">
+    <Compile Update="View\AdminDashboardViews\CatalogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardViews\HomeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -33,13 +36,16 @@
     <Page Update="Styles\UIColors.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\AdminDashboardView\AdminDashboardView.xaml">
+    <Page Update="View\AdminDashboardView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\AdminDashboardView\CatalogView.xaml">
+    <Page Update="View\AdminDashboardViews\AnalyticsView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\AdminDashboardView\HomeView.xaml">
+    <Page Update="View\AdminDashboardViews\CatalogView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardViews\HomeView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

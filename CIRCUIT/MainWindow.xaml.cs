@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using CIRCUIT.Utilities;
+using CIRCUIT.ViewModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,8 +20,12 @@ namespace CIRCUIT
     {
         public MainWindow()
         {
+            //Initialize the windowcontrolservice and set datacontext to mainviewmodel
             InitializeComponent();
-           
+            var windowService = new WindowControlService(this);
+            var mainViewModel = new MainViewModel(windowService);
+            DataContext = mainViewModel;
+            
         }
 
         

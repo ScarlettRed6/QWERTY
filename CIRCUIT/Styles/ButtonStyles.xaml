@@ -84,6 +84,7 @@
         <Setter Property="Height" Value="9"/>
     </Style>
 
+    <!-- Button Texts -->
     <Style x:Key="menuButtonText" TargetType="TextBlock">
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="Roboto"/>
