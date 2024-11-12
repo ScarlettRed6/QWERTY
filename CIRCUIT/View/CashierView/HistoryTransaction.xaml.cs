@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CIRCUIT.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,14 +15,13 @@ using System.Windows.Shapes;
 
 namespace CIRCUIT.View.CashierView
 {
-    /// <summary>
-    /// Interaction logic for HistoryTransaction.xaml
-    /// </summary>
+
     public partial class HistoryTransaction : Window
     {
         public HistoryTransaction()
         {
             InitializeComponent();
+            this.DataContext = new HistoryTransactionViewModel();
         }
 
 
