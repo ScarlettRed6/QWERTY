@@ -8,5 +8,6 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 {
     internal class CatalogViewModel
     {
+
     }
 }
