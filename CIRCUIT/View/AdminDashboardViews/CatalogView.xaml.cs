@@ -24,5 +24,7 @@ namespace CIRCUIT.View.AdminDashboard
         {
             InitializeComponent();
         }
+
+        
     }
 }

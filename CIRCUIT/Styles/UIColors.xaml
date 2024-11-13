@@ -20,5 +20,6 @@
     <SolidColorBrush x:Key="panelColor3">#171717</SolidColorBrush>
     <SolidColorBrush x:Key="panelColor4">#A6AEBF</SolidColorBrush>
     <SolidColorBrush x:Key="panelColor5">#2e2e2e</SolidColorBrush>
+    <SolidColorBrush x:Key="panelColor6">#000000</SolidColorBrush>
     
 </ResourceDictionary>

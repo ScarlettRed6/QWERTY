@@ -4,10 +4,102 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboard"
+             xmlns:vm="clr-namespace:CIRCUIT.ViewModel.AdminDashboardViewModel"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
-             Background="White"
+             Background="Transparent"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="Welcome Home!"/>
-    </Grid>
+
+    <UserControl.DataContext>
+        <vm:HomeViewModel/>
+    </UserControl.DataContext>
+    
+    <Border CornerRadius="10" Background="{StaticResource panelColor6}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            
+            <!-- Grid row 0 -->
+            <Grid Grid.Row="0" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Gross Profit" Foreground="{StaticResource panelColor4}"
+                           Margin="10,0,0,0"/>
+                <Border CornerRadius="10" Margin="2,20,0,0"
+                        Background="{StaticResource panelColor5}"
+                        Width="auto">
+
+                    <lvc:CartesianChart Series="{Binding SeriesCollection2}">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis ShowLabels="False"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis ShowLabels="False"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+
+                </Border>
+
+                <Border CornerRadius="10" Grid.Column="1" Margin="2"
+                        Background="{StaticResource panelColor5}"
+                        Width="auto">
+                    
+                    <TextBlock Name="Caption1" Text="Total Revenue"/>
+                    
+
+                </Border>
+
+                <Border CornerRadius="10" Grid.Column="2" Margin="2"
+                        Background="{StaticResource panelColor5}"
+                        Width="auto">
+
+                    <TextBlock Text="Sales by Product"/>
+                    
+
+                </Border>
+
+            </Grid>
+            <!-- End of Grid row 0 -->
+            
+            <!-- Grid row 1 -->
+            <Border CornerRadius="5" Grid.Row="1"
+                    Background="{StaticResource panelColor5}"
+                    Margin="5">
+                <lvc:CartesianChart Grid.Row="1" Margin="10"
+                                    Series="{Binding SeriesCollection}"
+                                    LegendLocation="Left"
+                                    Foreground="{StaticResource panelColor1}"
+                                    FontWeight="Bold">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Days" Labels="{Binding labels}"
+                                  Foreground="{StaticResource panelColor4}"
+                                  FontWeight="Bold"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                    
+                </lvc:CartesianChart>
+            </Border>
+            <!-- End of Grid Row 1-->
+            
+            
+            <!-- Grid row 2 -->
+
+            <Button Name="btnTest" Grid.Row="2" Height="50" Width="100"
+                    Content="test" Command="{Binding btnTestCommand}"/>
+
+        </Grid>
+    </Border>
+    
 </UserControl>
+    
+    
+    

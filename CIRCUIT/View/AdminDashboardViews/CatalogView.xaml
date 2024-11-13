@@ -4,10 +4,90 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboard"
+             xmlns:vm="clr-namespace:CIRCUIT.ViewModel.AdminDashboardViewModel" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             Background="Wheat"
+             Background="Transparent"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="Product Catalog"/>
-    </Grid>
+
+    <UserControl.DataContext>
+        <vm:CatalogViewModel/>
+    </UserControl.DataContext>
+
+    <Border CornerRadius="10" Background="{StaticResource panelColor6}">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="65"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="2" Background="{StaticResource panelColor5}"
+                        Height="40" Width="160"
+                        CornerRadius="20">
+                    <Button Width="160" Height="40"
+                            Background="Transparent"
+                            BorderThickness="0">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Plus" Height="15"
+                                          Margin="0,0,30,0"/>
+                            <TextBlock Text="ADD" FontSize="20"
+                                       FontWeight="Medium"
+                                       Margin="0,0,0,2"/>
+                        </StackPanel>
+
+                    </Button>
+
+                </Border>
+               
+            </Grid>
+
+           
+
+            <DataGrid x:Name="ProductDataGrid" 
+                      AutoGenerateColumns="False" 
+                      AlternatingRowBackground="{StaticResource panelColor3}" 
+                      RowBackground="{StaticResource panelColor5}"
+                      IsReadOnly="True" Grid.Row="1"
+                      ItemsSource="{Binding Product}"
+                      Background="{StaticResource panelColor3}"
+                      Foreground="{StaticResource panelColor4}"
+                      SelectionMode="Extended">
+                <!-- Checkbox Column -->
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="*">
+                        <DataGridTemplateColumn.Header>
+                            <CheckBox Content="Select All" 
+                                      Command="{Binding SelectAllCommand}" 
+                                      IsChecked="{Binding AllItemsSelected}" />
+                        </DataGridTemplateColumn.Header>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <!-- Data Columns -->
+                    <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}" Width="*" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding ProductName}" Width="*" />
+                    <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="*" />
+                    <DataGridTextColumn Header="Brand" Binding="{Binding Brand}" Width="*" />
+                    <DataGridTextColumn Header="Model" Binding="{Binding ModelNumber}" Width="*" />
+                    <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity}" Width="*" />
+                    <DataGridTextColumn Header="Cost" Binding="{Binding UnitCost}" Width="*" />
+                    <DataGridTextColumn Header="Price" Binding="{Binding SellingPrice}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+    </Border>
+
 </UserControl>

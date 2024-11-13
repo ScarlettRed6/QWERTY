@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\App.xaml
-82035148266
+111623934689
 
-18-777713004
-208-446826937
-CustomControls\CustomPasswordBox.xaml;MainWindow.xaml;Styles\ButtonStyles.xaml;Styles\UIColors.xaml;View\AdminDashboardView.xaml;View\AdminDashboardViews\AnalyticsView.xaml;View\AdminDashboardViews\CatalogView.xaml;View\AdminDashboardViews\HomeView.xaml;
+26-14176302
+241975741270
+CustomControls\CustomPasswordBox.xaml;MainWindow.xaml;Styles\ButtonStyles.xaml;Styles\UIColors.xaml;View\AdminDashboardView.xaml;View\AdminDashboardViews\AnalyticsView.xaml;View\AdminDashboardViews\CatalogView.xaml;View\AdminDashboardViews\HomeView.xaml;View\CashierView\CashierCategory.xaml;View\CashierView\HistoryTransaction.xaml;View\CashierView\newSale.xaml;
 
 False
 

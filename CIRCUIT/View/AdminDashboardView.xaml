@@ -14,6 +14,7 @@
         Background="Transparent" AllowsTransparency="True"
         Title="AdminDashboardView" Height="700" Width="1300">
 
+    
     <Window.Resources>
         <DataTemplate DataType="{x:Type adminVm:HomeViewModel}">
             <Views:HomeView/>
@@ -207,7 +208,7 @@
 
                 <!-- Content control for panel switching -->
                 <ContentControl Grid.Row="2" Content="{Binding CurrentAdminView}"
-                                Margin="20"/>
+                                Margin="10"/>
 
             </Grid>
 
