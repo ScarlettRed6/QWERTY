@@ -6,6 +6,15 @@ namespace CIRCUIT.View.CashierView
 {
     public partial class CashierView : Window
     {
+
+        //hahaha try
+        public string name(string name) 
+        {
+        return name;
+        
+        }
+        //hanggang rito
+
         public CashierView()
         {
             InitializeComponent();
@@ -38,5 +47,8 @@ namespace CIRCUIT.View.CashierView
             HistoryTransaction.Show();
             this.Close();
         }
+
+
+
     }
 }
