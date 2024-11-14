@@ -1,0 +1,277 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\view\\admindashboardviews\\homeview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:view\\admindashboardviews\\homeview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\view\\admindashboardviews\\catalogview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:view\\admindashboardviews\\catalogview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\view\\admindashboardviews\\analyticsview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:view\\admindashboardviews\\analyticsview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\view\\cashierview\\newsaleview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:view\\cashierview\\newsaleview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\view\\admindashboardview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:view\\admindashboardview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\view\\admindashboardview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:view\\admindashboardview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\view\\admindashboardviews\\analyticsview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:view\\admindashboardviews\\analyticsview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\view\\admindashboardviews\\homeview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:view\\admindashboardviews\\homeview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\viewmodel\\admindashboardviewmodel\\homeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:viewmodel\\admindashboardviewmodel\\homeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\viewmodel\\cashierviewmodel\\newsaleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:viewmodel\\cashierviewmodel\\newsaleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\viewmodel\\admindashboardviewmodel\\catalogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:viewmodel\\admindashboardviewmodel\\catalogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\viewmodel\\admindashboardviewmodel\\analyticsandreportsvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:viewmodel\\admindashboardviewmodel\\analyticsandreportsvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\utilities\\db.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:utilities\\db.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|c:\\users\\ganotice\\onedrive\\desktop\\bscsappdev\\2ndyr\\1st_sem\\oop\\projectmaking\\final pos\\circuit\\utilities\\propertychange.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{578D4B6C-F23F-451A-B951-6B03B2EA5782}|CIRCUIT.csproj|solutionrelative:utilities\\propertychange.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 353,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "newSaleView.xaml",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\CashierView\\newSaleView.xaml",
+              "RelativeDocumentMoniker": "View\\CashierView\\newSaleView.xaml",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\CashierView\\newSaleView.xaml",
+              "RelativeToolTip": "View\\CashierView\\newSaleView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-11-14T03:39:43.742Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AdminDashboardView.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardView.xaml.cs",
+              "RelativeDocumentMoniker": "View\\AdminDashboardView.xaml.cs",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardView.xaml.cs",
+              "RelativeToolTip": "View\\AdminDashboardView.xaml.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T03:31:34.365Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AdminDashboardView.xaml",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardView.xaml",
+              "RelativeDocumentMoniker": "View\\AdminDashboardView.xaml",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardView.xaml",
+              "RelativeToolTip": "View\\AdminDashboardView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-11-14T03:31:01.971Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CatalogView.xaml",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardViews\\CatalogView.xaml",
+              "RelativeDocumentMoniker": "View\\AdminDashboardViews\\CatalogView.xaml",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardViews\\CatalogView.xaml",
+              "RelativeToolTip": "View\\AdminDashboardViews\\CatalogView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-11-14T03:30:53.014Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AnalyticsView.xaml",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardViews\\AnalyticsView.xaml",
+              "RelativeDocumentMoniker": "View\\AdminDashboardViews\\AnalyticsView.xaml",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardViews\\AnalyticsView.xaml",
+              "RelativeToolTip": "View\\AdminDashboardViews\\AnalyticsView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-11-14T03:30:47.807Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "HomeView.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardViews\\HomeView.xaml.cs",
+              "RelativeDocumentMoniker": "View\\AdminDashboardViews\\HomeView.xaml.cs",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardViews\\HomeView.xaml.cs",
+              "RelativeToolTip": "View\\AdminDashboardViews\\HomeView.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T03:30:14.265Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HomeView.xaml",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardViews\\HomeView.xaml",
+              "RelativeDocumentMoniker": "View\\AdminDashboardViews\\HomeView.xaml",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardViews\\HomeView.xaml",
+              "RelativeToolTip": "View\\AdminDashboardViews\\HomeView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-11-14T03:30:11.196Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "NewSaleViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\ViewModel\\CashierViewModel\\NewSaleViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\CashierViewModel\\NewSaleViewModel.cs",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\ViewModel\\CashierViewModel\\NewSaleViewModel.cs",
+              "RelativeToolTip": "ViewModel\\CashierViewModel\\NewSaleViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T03:14:31.016Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "HomeViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\ViewModel\\AdminDashboardViewModel\\HomeViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\AdminDashboardViewModel\\HomeViewModel.cs",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\ViewModel\\AdminDashboardViewModel\\HomeViewModel.cs",
+              "RelativeToolTip": "ViewModel\\AdminDashboardViewModel\\HomeViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T03:13:55.129Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AnalyticsView.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardViews\\AnalyticsView.xaml.cs",
+              "RelativeDocumentMoniker": "View\\AdminDashboardViews\\AnalyticsView.xaml.cs",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\View\\AdminDashboardViews\\AnalyticsView.xaml.cs",
+              "RelativeToolTip": "View\\AdminDashboardViews\\AnalyticsView.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T03:12:41.376Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Db.cs",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\Utilities\\Db.cs",
+              "RelativeDocumentMoniker": "Utilities\\Db.cs",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\Utilities\\Db.cs",
+              "RelativeToolTip": "Utilities\\Db.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T03:12:02.328Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "PropertyChange.cs",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\Utilities\\PropertyChange.cs",
+              "RelativeDocumentMoniker": "Utilities\\PropertyChange.cs",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\Utilities\\PropertyChange.cs",
+              "RelativeToolTip": "Utilities\\PropertyChange.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T03:10:39.042Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CatalogViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\ViewModel\\AdminDashboardViewModel\\CatalogViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\AdminDashboardViewModel\\CatalogViewModel.cs",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\ViewModel\\AdminDashboardViewModel\\CatalogViewModel.cs",
+              "RelativeToolTip": "ViewModel\\AdminDashboardViewModel\\CatalogViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T03:08:29Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "AnalyticsAndReportsVM.cs",
+              "DocumentMoniker": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\ViewModel\\AdminDashboardViewModel\\AnalyticsAndReportsVM.cs",
+              "RelativeDocumentMoniker": "ViewModel\\AdminDashboardViewModel\\AnalyticsAndReportsVM.cs",
+              "ToolTip": "C:\\Users\\Ganotice\\OneDrive\\Desktop\\BSCSAPPDEV\\2ndyr\\1st_sem\\oop\\projectmaking\\FINAL POS\\CIRCUIT\\ViewModel\\AdminDashboardViewModel\\AnalyticsAndReportsVM.cs",
+              "RelativeToolTip": "ViewModel\\AdminDashboardViewModel\\AnalyticsAndReportsVM.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-14T03:08:16.926Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 143,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 229,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
