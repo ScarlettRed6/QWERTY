@@ -1,0 +1,60 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- Data grid custom style -->
+    <Style x:Key="catalogGrid" TargetType="DataGrid">
+        <Setter Property="Background" Value="{StaticResource panelColor3}"/>
+        <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+        <Setter Property="CanUserResizeRows" Value="False"/>
+        <Setter Property="CanUserResizeColumns" Value="False"/>
+        <Setter Property="AlternatingRowBackground" Value="LightBlue"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="Gray"/>
+        <Setter Property="VerticalGridLinesBrush" Value="Gray"/>
+
+    </Style>
+
+    <!-- Data grid row custom styles -->
+    <Style x:Key="catalogRowStyle" TargetType="DataGridRow">
+        <Setter Property="Foreground" Value="Red"/>
+        <Setter Property="Background" Value="Black"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource panelColor1}"/>
+                <Setter Property="Foreground" Value="{StaticResource panelColor4}"/>
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <!-- Data grid cell custom styles -->
+    <Style x:Key="catalogCellStyle" TargetType="DataGridCell">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{StaticResource panelColor2}"/>
+                <Setter Property="BorderThickness" Value="0"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Data grid column headers styles -->
+    <Style x:Key="columnHeadersStyle" TargetType="DataGridColumnHeader">
+        <Setter Property="Background" Value="{StaticResource panelColor5}"/>
+        <Setter Property="Foreground" Value="{StaticResource panelColor1}"/>
+        <Setter Property="BorderThickness" Value="0.7"/>
+        <Setter Property="BorderBrush" Value="{StaticResource panelColor6}"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource panelColor1}"/>
+                <Setter Property="Foreground" Value="{StaticResource panelColor4}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!-- Data grid row headers styles -->
+    <Style x:Key="rowHeadersStyle" TargetType="DataGridRowHeader">
+        
+    </Style>
+    
+</ResourceDictionary>

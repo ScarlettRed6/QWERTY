@@ -1,0 +1,248 @@
+﻿<UserControl x:Class="CIRCUIT.View.AdminDashboardViews.AddProductView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboardViews"
+             xmlns:vm="clr-namespace:CIRCUIT.ViewModel.AdminDashboardViewModel"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:view="clr-namespace:CIRCUIT.View.AdminDashboard"
+             mc:Ignorable="d" 
+             Background="Transparent"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <vm:AddProductViewModel/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vm:CatalogViewModel}">
+            <view:CatalogView/>
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    
+
+    <Border CornerRadius="10" Background="{StaticResource panelColor5}">
+
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Kaya nasa stackpanel kac baka mag add ako ng text later idk haha -->
+                <StackPanel Orientation="Horizontal"
+                FlowDirection="LeftToRight">
+
+                    <Button Style="{StaticResource returnBtn}"
+                            Margin="5,0,0,0"
+                            Height="35" Width="35"
+                            Command="{Binding ReturnBtnCommand}">
+                        <fa:IconImage Icon="ArrowAltCircleLeft" 
+                          Style="{StaticResource returnIcon}"
+                          Height="35"/>
+                    </Button>
+                </StackPanel>
+
+                <!-- Grid row 1 -->
+
+                <Grid Grid.Row="1" Background="{StaticResource panelColor6}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Grid row 1 col 0 -->
+                    <TextBlock Text="Add new Products in the inventory."
+                       FontSize="20"
+                       FontWeight="Medium"
+                       Margin="10,0,0,0"
+                       Foreground="{StaticResource panelColor4}"
+                       VerticalAlignment="Center"/>
+
+                    <!-- Grid row 1 col 1-->
+                    <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        FlowDirection="RightToLeft"
+                        Margin="0,0,10,0">
+
+                        <!-- Button save -->
+                        <Button Height="50" Width="100"
+                        Style="{StaticResource addCatalogButton}"
+                        Margin="0,0,10,0">
+
+                            <TextBlock Text="SAVE" FontSize="20"
+                               FontWeight="Medium"
+                               Foreground="{StaticResource panelColor4}"/>
+
+                        </Button>
+                        <!-- Button Cancel -->
+                        <Button Height="50" Width="100"
+                        Style="{StaticResource addCatalogButton}">
+
+                            <TextBlock Text="CANCEL" FontSize="20"
+                               FontWeight="Medium"
+                               Foreground="{StaticResource panelColor4}"/>
+
+                        </Button>
+
+                    </StackPanel>
+
+                </Grid>
+                
+                <!-- Grid row 2-->
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Grid row 2 row 0-->
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <StackPanel>
+                            <Label Content="Product Name"
+                                   FontSize="15"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource panelColor4}"
+                                   Margin="8,0,0,0"/>
+                            <TextBox x:Name="prodName" Height="35"
+                                     Width="230" 
+                                     Margin="10,0,0,0"
+                                     FontSize="20"
+                                     Foreground="{StaticResource panelColor4}"
+                                     Style="{StaticResource catalogBox}"/>
+                        </StackPanel>
+
+                        <StackPanel>
+                            <Label Content="Model"
+                                   FontSize="15"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource panelColor4}"
+                                   Margin="8,0,0,0"/>
+                            <TextBox  x:Name="prodModel" Height="35"
+                                      Width="230" 
+                                      Margin="10,0,0,0"
+                                      FontSize="20"
+                                      Foreground="{StaticResource panelColor4}"
+                                      Style="{StaticResource catalogBox}"/>
+                        </StackPanel>
+
+                        <StackPanel>
+                            <Label Content="Category"
+                                   FontSize="15"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource panelColor4}"
+                                   Margin="8,0,0,0"/>
+        
+                            <ComboBox Width="180" Height="35"
+                                      Margin="8,0,0,0"
+                                      FontSize="15"
+                                      Style="{StaticResource categoryBox}">
+                                <ComboBoxItem Content="yes"/>
+                                <ComboBoxItem Content="no"/>
+                                <ComboBoxItem Content="maybes"/>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Quantity"
+                                   FontSize="15"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource panelColor4}"
+                                   Margin="8,0,0,0"/>
+                            <TextBox  x:Name="stockQuantity" Height="35"
+                                      Width="70" 
+                                      Margin="10,0,0,0"
+                                      FontSize="20"
+                                      Foreground="{StaticResource panelColor4}"
+                                      Style="{StaticResource catalogBox}"
+                                      PreviewTextInput="NumberValidationTextBox"/>
+
+                        </StackPanel>
+
+                    </StackPanel>
+
+                    <!-- Grid row 2 row 0 -->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <StackPanel>
+                            <Label Content="Description"
+                                   FontSize="15"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource panelColor4}"
+                                   Margin="8,0,0,0"/>
+                            <TextBox x:Name="descriptionBox" Height="120"
+                                     Width="330" 
+                                     Margin="10,0,0,0"
+                                     FontSize="15"
+                                     Foreground="{StaticResource panelColor4}"
+                                     Style="{StaticResource catalogBox}"
+                                     TextWrapping="Wrap"
+                                     VerticalScrollBarVisibility="Auto" 
+                                     HorizontalScrollBarVisibility="Disabled"/>
+
+                        </StackPanel>
+
+                        <StackPanel>
+                            <Label Content="Selling price $"
+                                   FontSize="15"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource panelColor4}"
+                                   Margin="8,0,0,0"/>
+                            <TextBox  x:Name="sellingPrice" Height="35"
+                                      Width="90" 
+                                      Margin="10,0,0,0"
+                                      FontSize="20"
+                                      Foreground="{StaticResource panelColor4}"
+                                      Style="{StaticResource catalogBox}"
+                                      PreviewTextInput="NumberValidationTextBox"/>
+
+                        </StackPanel>
+                        
+                        <StackPanel>
+                            <Label Content="Min Reorder"
+                                   FontSize="15"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource panelColor4}"
+                                   Margin="8,0,0,0"/>
+                            <TextBox  x:Name="minStockLevel" Height="35"
+                                      Width="90" 
+                                      Margin="10,0,0,0"
+                                      FontSize="20"
+                                      Foreground="{StaticResource panelColor4}"
+                                      Style="{StaticResource catalogBox}"
+                                      PreviewTextInput="NumberValidationTextBox"/>
+
+                        </StackPanel>
+
+                        <Border AllowDrop="True" 
+                                BorderBrush="{StaticResource panelColor1}" 
+                                BorderThickness="1" 
+                                Width="200" 
+                                Height="170" 
+                                VerticalAlignment="Center" 
+                                HorizontalAlignment="Center"
+                                Drop="Border_Drop"
+                                Margin="10,20,0,0"
+                                CornerRadius="5"
+                                Background="{StaticResource panelColor7}">
+                            <TextBlock Text="Drag and drop image files here" 
+                                       HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center"
+                                       Foreground="{StaticResource panelColor4}"/>
+                        </Border>
+
+                    </StackPanel>
+                    
+                </Grid>
+
+            </Grid>
+            
+            <!-- Content Control for panel switching -->
+            <ContentControl Content="{Binding CurrentAddView}"/>
+        </Grid>
+    </Border>
+</UserControl>

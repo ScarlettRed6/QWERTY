@@ -13,6 +13,9 @@
     <Compile Update="View\AdminDashboardView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\AdminDashboardViews\AddProductView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\AdminDashboardViews\AnalyticsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -33,10 +36,19 @@
     <Page Update="Styles\ButtonStyles.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Styles\ComboBoxStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\DataGridStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Styles\UIColors.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\AdminDashboardView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardViews\AddProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\AdminDashboardViews\AnalyticsView.xaml">

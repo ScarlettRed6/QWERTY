@@ -17,9 +17,6 @@ namespace CIRCUIT.ViewModel
     {   
         //Fields
 
-        //Current view
-		//private object _currentView;
-
         //Subscribing to window service interface
         private readonly IWindowService _windowService;
 
@@ -39,18 +36,6 @@ namespace CIRCUIT.ViewModel
         private IconChar _icon;
 
         //Properties
-        /*
-        public object CurrentView
-		{
-			get { return _currentView; }
-			set 
-			{
-				_currentView = value;
-				OnPropertyChange();
-
-            }
-		}
-        */
 
         public object CurrentAdminView 
         { 

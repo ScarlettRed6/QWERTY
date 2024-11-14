@@ -9,8 +9,8 @@ namespace CIRCUIT.Utilities
 {
     internal class CommandRelay : ICommand
     {
-        private readonly Action<object> _execute;
-        private readonly Func<object, bool> _canExecute;
+        private Action<object> _execute;
+        private Func<object, bool> _canExecute;
 
         public event EventHandler? CanExecuteChanged
         {

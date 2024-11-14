@@ -25,6 +25,9 @@ namespace CIRCUIT.View.AdminDashboard
             InitializeComponent();
         }
 
-        
+        private void ProductDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

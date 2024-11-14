@@ -25,4 +25,8 @@
     <Resource Include="Assets\Images\Personalpic.jpg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Assets\Images\UploadedImages\" />
+  </ItemGroup>
+
 </Project>
