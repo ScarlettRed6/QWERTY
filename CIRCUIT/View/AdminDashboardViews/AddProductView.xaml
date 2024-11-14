@@ -225,7 +225,6 @@
                                 Height="170" 
                                 VerticalAlignment="Center" 
                                 HorizontalAlignment="Center"
-                                Drop="Border_Drop"
                                 Margin="10,20,0,0"
                                 CornerRadius="5"
                                 Background="{StaticResource panelColor7}">
