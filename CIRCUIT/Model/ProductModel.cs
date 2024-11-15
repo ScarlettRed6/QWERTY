@@ -15,9 +15,16 @@ namespace CIRCUIT.Model
         public string ModelNumber { get; set; }
         public int StockQuantity { get; set; }
         public double UnitCost { get; set; }
+
+        //price
         public double SellingPrice { get; set; }
         public int MinStockLevel { get; set; }
         public bool IsArchived { get; set; }
+
+
+        // Renamed to follow C# naming conventions
+        public string _imageSource { get; set; }
+        public string ProductDescription { get; set; }
 
     }
 }
