@@ -1,28 +1,31 @@
 ﻿using CIRCUIT.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CIRCUIT.View.CashierView
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for NewSale.xaml
     /// </summary>
     public partial class NewSale : Window
     {
         public NewSale()
         {
             InitializeComponent();
+            this.DataContext = new NewSaleViewModel();
+        }
+
+
+        private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var product = (sender as Border)?.DataContext as Product;
+            if (product == null) return;
+
+            var modal = new ProductDetailsModal
+            {
+                DataContext = product 
+            };
+            modal.ShowDialog();
         }
     }
 }
