@@ -30,7 +30,7 @@ namespace CIRCUIT.ViewModel
         //method
         public NewSaleViewModel()
         {
-            StaffName = "Rhenz"; // Default staff name
+            StaffName = "Rhenz pogi"; // Default staff name
             Products = new ObservableCollection<Product>
             {
                 //tezsting
