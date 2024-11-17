@@ -1,0 +1,36 @@
+﻿<Window x:Class="CIRCUIT.View.CashierView.ProductDetailsModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Product Details" Height="500" Width="700"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="{StaticResource panelColor7}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Image for Product -->
+        <Image Grid.Row="0" Margin="10,10,338,71" Source="{Binding ImageSource}" Stretch="Uniform"/>
+
+        <!-- Product Name -->
+        <TextBlock Margin="3,375,1,2" Text="{Binding ProductName}" FontSize="16" FontWeight="Bold" TextAlignment="Center" Foreground="White" RenderTransformOrigin="0.501,0.221"/>
+
+        <!-- Product Description -->
+        <TextBlock Margin="371,6,3,67" Text="{Binding ProductDescription}" TextWrapping="Wrap" Foreground="White"/>
+
+        <!-- Price -->
+        <TextBlock Margin="-1,339,2,58" Text="{Binding Price, StringFormat='Price: {0:C}'}" TextAlignment="Center" Foreground="White"/>
+
+        <!-- Buttons: Cancel and Add to Cart -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <!-- Cancel Button -->
+            <Button Content="CANCEL" Width="100" Margin="0,0,10,0" Background="#FFF8D7DA" Foreground="#FF721C24" Padding="10,5"/>
+            <!-- Add to Cart Button -->
+            <Button Content="ADD TO CART" Width="100" Background="#FFD4EDDA" Foreground="#FF155724" Padding="10,5"/>
+        </StackPanel>
+    </Grid>
+</Window>
