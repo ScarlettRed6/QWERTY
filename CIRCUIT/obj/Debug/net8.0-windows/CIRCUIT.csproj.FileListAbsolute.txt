@@ -110,3 +110,6 @@ C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\Styles\ComboBoxStyles.baml
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\newSaleView.baml
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\newSaleView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\EditProductView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\EditProductView.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\bin\Debug\net8.0-windows\CommunityToolkit.Mvvm.dll

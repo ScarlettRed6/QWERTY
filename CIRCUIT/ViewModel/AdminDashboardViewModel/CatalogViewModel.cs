@@ -1,11 +1,13 @@
 ﻿using CIRCUIT.Model;
 using CIRCUIT.Utilities;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CIRCUIT.ViewModel.AdminDashboardViewModel
@@ -19,7 +21,10 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         public ObservableCollection<ProductModel> Product { get; set; }
 
         //Commands
-        public ICommand AddNewProduct { get; }
+        public RelayCommand AddNewProduct { get; }
+        public RelayCommand<ProductModel> EditCommand { get; }
+
+        private EditProductViewModel _editProductViewModel;
 
         private object _addProductView;
 
@@ -35,14 +40,30 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         public CatalogViewModel()
         {
-            string query = "SELECT product_id, product_name, category, brand, model_number, stock_quantity, unit_cost, selling_price FROM products";
+            string query = "SELECT product_id, product_name, category, brand, model_number, stock_quantity, unit_cost, selling_price FROM Products";
             Product = new ObservableCollection<ProductModel>(dbCon.FetchData(query));
-
-            AddNewProduct = new CommandRelay(ExecuteAddProduct);
+            AddNewProduct = new RelayCommand(ExecuteAddProduct);
+            EditCommand = new RelayCommand<ProductModel>(ExecuteEditCommand);
+            UpdateCatalog(query);
 
         }
 
-        private void ExecuteAddProduct(object obj)
+        private void ExecuteEditCommand(ProductModel data)
+        {
+            _editProductViewModel = new EditProductViewModel(data);
+            AddProductView = _editProductViewModel; 
+        }
+
+        public void UpdateCatalog(string query)
+        {
+            Product.Clear();
+            foreach (var prod in dbCon.FetchData(query))
+            {
+                Product.Add(prod);
+            }
+        }
+
+        private void ExecuteAddProduct()
         {
             AddProductView = new AddProductViewModel();
         }

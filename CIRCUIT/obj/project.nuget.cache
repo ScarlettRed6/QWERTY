@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "9qQs+T08xIU=",
+  "dgSpecHash": "cXx3dmLZsyk=",
   "success": true,
   "projectFilePath": "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dreadlord\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Dreadlord\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
+    "C:\\Users\\Dreadlord\\.nuget\\packages\\communitytoolkit.mvvm\\8.3.2\\communitytoolkit.mvvm.8.3.2.nupkg.sha512",
     "C:\\Users\\Dreadlord\\.nuget\\packages\\fontawesome.sharp\\6.6.0\\fontawesome.sharp.6.6.0.nupkg.sha512",
     "C:\\Users\\Dreadlord\\.nuget\\packages\\livecharts\\0.9.7\\livecharts.0.9.7.nupkg.sha512",
     "C:\\Users\\Dreadlord\\.nuget\\packages\\livecharts.wpf\\0.9.7\\livecharts.wpf.0.9.7.nupkg.sha512",

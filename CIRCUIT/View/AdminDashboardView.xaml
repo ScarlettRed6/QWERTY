@@ -12,7 +12,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" WindowStyle="None"
         Background="Transparent" AllowsTransparency="True"
-        Title="AdminDashboardView" Height="700" Width="1300">
+        Title="AdminDashboardView" Height="800" Width="1400">
 
     
     <Window.Resources>
@@ -32,7 +32,7 @@
     
     
     <!-- Outer border -->
-    <Border CornerRadius="10" BorderThickness="1">
+    <Border CornerRadius="10" BorderThickness="5,0,0,7">
         <!-- Border color gradient -->
         <Border.BorderBrush>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -52,7 +52,7 @@
             </Grid.ColumnDefinitions>
             
             <!-- Border and Border background for the side nav -->
-            <Border CornerRadius="10,0,0,10">
+            <Border CornerRadius="7,0,0,5">
                 <Border.Background>
                     <SolidColorBrush Color="{StaticResource primary1}"/>
                 </Border.Background>
@@ -64,7 +64,7 @@
                                 Margin="15,25,0,40">
 
                         <Image Source="/Assets/Images/Personalpic.jpg" Height="30"/>
-                        <TextBlock Text="DASHBOARD" Foreground="Red"
+                        <TextBlock Text="CIRCUIT" Foreground="Red"
                                    FontSize="20" FontWeight="Medium"
                                    VerticalAlignment="Center" Margin="10,0,0,0"/>
 
@@ -88,8 +88,8 @@
                                  Command="{Binding ShowAnalyticsCommand}">
 
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Bath" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Analytics" Style="{StaticResource menuButtonText}"/>
+                            <fa:IconImage Icon="ChartBar" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Reports" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
 
                     </RadioButton>
@@ -99,8 +99,8 @@
                                  Command="{Binding ShowCatalogCommand}">
 
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Bicycle" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Catalog" Style="{StaticResource menuButtonText}"/>
+                            <fa:IconImage Icon="Tag" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Products" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
 
                     </RadioButton>
@@ -119,8 +119,28 @@
                                  Tag="{StaticResource panelColor2}">
 
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Truck" Style="{StaticResource menuButtonIcon}"/>
+                            <fa:IconImage Icon="Box" Style="{StaticResource menuButtonIcon}"/>
                             <TextBlock Text="Stock" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource panelColor2}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="PeopleGroup" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Staff" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource panelColor2}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Gear" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Settings" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
 
                     </RadioButton>
@@ -142,7 +162,7 @@
 
                 <StackPanel x:Name="ControlBar" Orientation="Horizontal"
                             FlowDirection="RightToLeft" Background="Transparent"
-                            Margin="0,0,5,0"
+                            Margin="0,3,5,0"
                             MouseLeftButtonDown="ControlBar_MouseLeftButtonDown"
                             MouseEnter="ControlBar_MouseEnter">
 

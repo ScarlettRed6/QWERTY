@@ -1,15 +1,9 @@
 ﻿using CIRCUIT.Utilities;
 using CIRCUIT.ViewModel.AdminDashboardViewModel;
-using CIRCUIT.View;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows;
-using CIRCUIT.View.AdminDashboardView;
+using CommunityToolkit.Mvvm.Input;
 using FontAwesome.Sharp;
+using System.Windows;
+using System.Windows.Input;
 
 namespace CIRCUIT.ViewModel
 {
@@ -21,13 +15,13 @@ namespace CIRCUIT.ViewModel
         private readonly IWindowService _windowService;
 
         //Commands
-		public ICommand btnCloseCommand { get; }
-        public ICommand btnMinimizeCommand { get; }
-        public ICommand btnMaximizeCommand { get; }
+		public RelayCommand btnCloseCommand { get; }
+        public RelayCommand<object> btnMinimizeCommand { get; }
+        public RelayCommand<object> btnMaximizeCommand { get; }
         //Commands for child views
-        public ICommand ShowHomeCommand { get; }
-        public ICommand ShowCatalogCommand { get; }
-        public ICommand ShowAnalyticsCommand { get; }
+        public RelayCommand ShowHomeCommand { get; }
+        public RelayCommand ShowCatalogCommand { get; }
+        public RelayCommand ShowAnalyticsCommand { get; }
 
 
         //For side nav content control for current right panel/child view
@@ -72,20 +66,20 @@ namespace CIRCUIT.ViewModel
         public MainViewModel(IWindowService windowService)
         {
             _windowService = windowService;
-			btnCloseCommand = new CommandRelay(ExecuteClose);
-            btnMinimizeCommand = new CommandRelay(_ => _windowService.Minimize());
-            btnMaximizeCommand = new CommandRelay(_ => _windowService.Maximize());
-            ShowAnalyticsCommand = new CommandRelay(ExecuteShowAnalytics);
-            ShowCatalogCommand = new CommandRelay(ExecuteShowCatalog);
-            ShowHomeCommand = new CommandRelay(ExecuteShowHome);
+			btnCloseCommand = new RelayCommand(ExecuteClose);
+            btnMinimizeCommand = new RelayCommand<object>(_ => _windowService.Minimize());
+            btnMaximizeCommand = new RelayCommand<object>(_ => _windowService.Maximize());
+            ShowAnalyticsCommand = new RelayCommand(ExecuteShowAnalytics);
+            ShowCatalogCommand = new RelayCommand(ExecuteShowCatalog);
+            ShowHomeCommand = new RelayCommand(ExecuteShowHome);
 
             //Default dashboard panel
-            ExecuteShowHome(null);
+            ExecuteShowHome();
 
 
         }
 
-        private void ExecuteShowAnalytics(object obj)
+        private void ExecuteShowAnalytics()
         {
             CurrentAdminView = new  AnalyticsAndReportsVM();
             Caption = "Reports";
@@ -93,21 +87,21 @@ namespace CIRCUIT.ViewModel
 
         }
 
-        private void ExecuteShowCatalog(object obj)
+        private void ExecuteShowCatalog()
         {
             CurrentAdminView = new CatalogViewModel();
             Caption = "Product Catalog";
             Icon = IconChar.ProductHunt;
         }
 
-        private void ExecuteShowHome(object obj)
+        private void ExecuteShowHome()
         {
             CurrentAdminView = new HomeViewModel();
             Caption = "Summary";
             Icon = IconChar.Home;
         }
 
-        private void ExecuteClose(object obj)
+        private void ExecuteClose()
         {
             Application.Current.Shutdown();
         }

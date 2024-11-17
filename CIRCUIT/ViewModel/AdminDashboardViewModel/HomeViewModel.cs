@@ -11,11 +11,10 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
     {
       
         //Test
-        public ICommand btnTestCommand { get; }
+        //public ICommand btnTestCommand { get; }
         //Test
 
         public SeriesCollection SeriesCollection { get; set; }
-        public SeriesCollection SeriesCollection2 {  get; set; }
         public Func<double, string> YFormatter { get; set; }
         public string[] labels { get; set; }
         //public ObservableCollection<double> _data; 
@@ -26,10 +25,11 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             //_data = new ObservableCollection<double> { Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
             SalesPerDay();
             GrossProfit();
-            btnTestCommand = new CommandRelay(ExecuteTest);
+            //btnTestCommand = new CommandRelay(ExecuteTest); Part of the testButton, remove or use later
 
         }
 
+        /* This is for testing the graphs, remove later or use later
         private void ExecuteTest(object obj)
         {
             if (SeriesCollection[0].Values.Count >= 7)
@@ -38,7 +38,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             }
             SeriesCollection[0].Values.Add(48d);
             
-        }
+        }*/
 
         //Sales per day chart
         private void SalesPerDay()
@@ -71,18 +71,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         //Gross pofit chart
         private void GrossProfit()
         {
-            SeriesCollection2 = new SeriesCollection
-            {
-                
-                new LineSeries
-                {
-                    Title = "Series 3",
-                    Values = new ChartValues<double> { 4,2,7,2,7 },
-                    PointGeometry = DefaultGeometries.Square,
-                    PointGeometrySize = 5,
-                    
-                }
-            };
+            
         }
 
     }

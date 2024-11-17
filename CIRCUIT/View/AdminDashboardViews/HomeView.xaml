@@ -8,7 +8,7 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              Background="Transparent"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="550" d:DesignWidth="900">
 
     <UserControl.DataContext>
         <vm:HomeViewModel/>
@@ -17,9 +17,9 @@
     <Border CornerRadius="10" Background="{StaticResource panelColor6}">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>
-                <RowDefinition/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="30*"/>
             </Grid.RowDefinitions>
 
             
@@ -30,29 +30,29 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Gross Profit" Foreground="{StaticResource panelColor4}"
-                           Margin="10,0,0,0"/>
-                <Border CornerRadius="10" Margin="2,20,0,0"
+
+                <Border CornerRadius="10" Margin="2"
                         Background="{StaticResource panelColor5}"
                         Width="auto">
-
-                    <lvc:CartesianChart Series="{Binding SeriesCollection2}">
-                        <lvc:CartesianChart.AxisY>
-                            <lvc:Axis ShowLabels="False"></lvc:Axis>
-                        </lvc:CartesianChart.AxisY>
-                        <lvc:CartesianChart.AxisX>
-                            <lvc:Axis ShowLabels="False"></lvc:Axis>
-                        </lvc:CartesianChart.AxisX>
-                    </lvc:CartesianChart>
+                    <StackPanel>
+                        <TextBlock Text="Gross Profit" Foreground="{StaticResource panelColor4}"
+                                   Margin="10,0,0,0"/>
+                        <TextBlock Text="{Binding GrossProfit}" Foreground="{StaticResource panelColor4}"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
 
                 </Border>
 
                 <Border CornerRadius="10" Grid.Column="1" Margin="2"
                         Background="{StaticResource panelColor5}"
                         Width="auto">
-                    
-                    <TextBlock Name="Caption1" Text="Total Revenue"/>
-                    
+
+                    <StackPanel>
+                        <TextBlock Text="Total Sales Revenue" Foreground="{StaticResource panelColor4}"
+                                   Margin="10,0,0,0"/>
+                        <TextBlock Text="{Binding GrossProfit}" Foreground="{StaticResource panelColor4}"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
 
                 </Border>
 
@@ -60,8 +60,13 @@
                         Background="{StaticResource panelColor5}"
                         Width="auto">
 
-                    <TextBlock Text="Sales by Product"/>
-                    
+                    <StackPanel>
+                        <TextBlock Text="Total Sales by Category" Foreground="{StaticResource panelColor4}"
+                                   Margin="10,0,0,0"/>
+                        <TextBlock Text="{Binding GrossProfit}" Foreground="{StaticResource panelColor4}"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+
 
                 </Border>
 
@@ -71,30 +76,121 @@
             <!-- Grid row 1 -->
             <Border CornerRadius="5" Grid.Row="1"
                     Background="{StaticResource panelColor5}"
-                    Margin="5">
-                <lvc:CartesianChart Grid.Row="1" Margin="10"
-                                    Series="{Binding SeriesCollection}"
-                                    LegendLocation="Left"
-                                    Foreground="{StaticResource panelColor1}"
-                                    FontWeight="Bold">
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Days" Labels="{Binding labels}"
-                                  Foreground="{StaticResource panelColor4}"
-                                  FontWeight="Bold"></lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
+                    Margin="5,-1,5,0"
+                    Height="300"
+                    VerticalAlignment="Top">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60*"/>
+                        <ColumnDefinition Width="40*"/>
+                    </Grid.ColumnDefinitions>
                     
-                </lvc:CartesianChart>
+                    <lvc:CartesianChart Margin="10" Grid.Column="0"
+                                        Series="{Binding SeriesCollection}"
+                                        Foreground="{StaticResource panelColor4}"
+                                        FontWeight="Bold"
+                                        MaxWidth="900"
+                                        Width="510"
+                                        Height="240"
+                                        HorizontalAlignment="Left">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Days" Labels="{Binding labels}"
+                                      Foreground="{StaticResource panelColor4}"
+                                      FontWeight="Bold"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+
+                    </lvc:CartesianChart>
+
+                    <Border CornerRadius="5" Grid.Column="1"
+                            Background="{StaticResource panelColor3}"
+                            Width="auto"
+                            Margin="5">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="5">
+                                <TextBlock Text="Stock Alert"
+                                           Foreground="{StaticResource panelColor4}"
+                                           FontSize="17"
+                                           Margin="10,5,0,0"/>
+                                <Button Content="View All >"
+                                        Background="Transparent"
+                                        Foreground="{StaticResource panelColor4}"
+                                        FontSize="17"
+                                        Margin="180,0,0,0"/>
+                            </StackPanel>
+                            
+                            <ListView Grid.Row="1">
+                                <ListViewItem Content="Item1"/>
+                                <ListViewItem Content="Item2"/>
+                                <ListViewItem Content="Item3"/>
+                                
+                            </ListView>
+                        </Grid>
+                    </Border>
+                    
+                </Grid>
             </Border>
             <!-- End of Grid Row 1-->
             
-            
             <!-- Grid row 2 -->
+            <Border Grid.Row="2"
+                    Background="{StaticResource panelColor7}"
+                    CornerRadius="5"
+                    Margin="4">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
-            <Button Name="btnTest" Grid.Row="2" Height="50" Width="100"
-                    Content="test" Command="{Binding btnTestCommand}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Latest Transactions"
+                                   Foreground="{StaticResource panelColor4}"
+                                   FontSize="17"
+                                   Margin="10,5,0,0"/>
+                        <Button Content="View All >"
+                                Grid.Column="1"
+                                Background="Transparent"
+                                Foreground="{StaticResource panelColor4}"
+                                FontSize="17"
+                                Width="90"
+                                HorizontalAlignment="Right"/>
+
+
+                    </Grid>
+                    
+                    <DataGrid Grid.Row="1"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="False"
+                              RowHeaderWidth="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"/>
+                            <DataGridTextColumn Header="Cashier"/>
+                            <DataGridTextColumn Header="Date"/>
+                            <DataGridTextColumn Header="Payment"/>
+                            <DataGridTextColumn Header="Received"/>
+                            <DataGridTextColumn Header="Change"/>
+                            <DataGridTextColumn Header="Total Amount"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                </Grid>
+            </Border>
+            
 
         </Grid>
     </Border>

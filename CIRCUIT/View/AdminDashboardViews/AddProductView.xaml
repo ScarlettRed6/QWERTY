@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              Background="Transparent"
              d:DesignHeight="450" d:DesignWidth="800">
-
+    
     <UserControl.DataContext>
         <vm:AddProductViewModel/>
     </UserControl.DataContext>
@@ -21,8 +21,6 @@
         </DataTemplate>
     </UserControl.Resources>
     
-    
-
     <Border CornerRadius="10" Background="{StaticResource panelColor5}">
 
         <Grid>
@@ -35,7 +33,7 @@
 
                 <!-- Kaya nasa stackpanel kac baka mag add ako ng text later idk haha -->
                 <StackPanel Orientation="Horizontal"
-                FlowDirection="LeftToRight">
+                            FlowDirection="LeftToRight">
 
                     <Button Style="{StaticResource returnBtn}"
                             Margin="5,0,0,0"
@@ -56,36 +54,37 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Grid row 1 col 0 -->
-                    <TextBlock Text="Add new Products in the inventory."
-                       FontSize="20"
-                       FontWeight="Medium"
-                       Margin="10,0,0,0"
-                       Foreground="{StaticResource panelColor4}"
-                       VerticalAlignment="Center"/>
+                    <TextBlock Text="Add NEW Products here."
+                               FontSize="20"
+                               FontWeight="Medium"
+                               Margin="10,0,0,0"
+                               Foreground="{StaticResource panelColor4}"
+                               VerticalAlignment="Center"/>
 
                     <!-- Grid row 1 col 1-->
                     <StackPanel Grid.Column="1"
-                        Orientation="Horizontal"
-                        FlowDirection="RightToLeft"
-                        Margin="0,0,10,0">
+                                Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                Margin="0,0,10,0">
 
                         <!-- Button save -->
                         <Button Height="50" Width="100"
-                        Style="{StaticResource addCatalogButton}"
-                        Margin="0,0,10,0">
+                                Style="{StaticResource addCatalogButton}"
+                                Margin="0,0,10,0"
+                                Command="{Binding SaveProductCommand}">
 
                             <TextBlock Text="SAVE" FontSize="20"
-                               FontWeight="Medium"
-                               Foreground="{StaticResource panelColor4}"/>
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource panelColor4}"/>
 
                         </Button>
                         <!-- Button Cancel -->
                         <Button Height="50" Width="100"
-                        Style="{StaticResource addCatalogButton}">
+                                Style="{StaticResource addCatalogButton}">
 
                             <TextBlock Text="CANCEL" FontSize="20"
-                               FontWeight="Medium"
-                               Foreground="{StaticResource panelColor4}"/>
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource panelColor4}"/>
 
                         </Button>
 
@@ -103,7 +102,9 @@
 
                     <!-- Grid row 2 row 0-->
                     <StackPanel Orientation="Horizontal"
-                                VerticalAlignment="Center">
+                                VerticalAlignment="Top">
+                        
+                        <!-- Product name textbox -->
                         <StackPanel>
                             <Label Content="Product Name"
                                    FontSize="15"
@@ -115,9 +116,11 @@
                                      Margin="10,0,0,0"
                                      FontSize="20"
                                      Foreground="{StaticResource panelColor4}"
-                                     Style="{StaticResource catalogBox}"/>
+                                     Style="{StaticResource catalogBox}"
+                                     Text="{Binding ProductNameBox, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
 
+                        <!-- Product model textbox -->
                         <StackPanel>
                             <Label Content="Model"
                                    FontSize="15"
@@ -129,9 +132,30 @@
                                       Margin="10,0,0,0"
                                       FontSize="20"
                                       Foreground="{StaticResource panelColor4}"
-                                      Style="{StaticResource catalogBox}"/>
+                                      Style="{StaticResource catalogBox}"
+                                      Text="{Binding ProductModelBox, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
 
+                        <StackPanel>
+                            <Label Content="Brand"
+                                   FontSize="15"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource panelColor4}"
+                                   Margin="8,0,0,0"/>
+
+                            <ComboBox Width="150" Height="35"
+                                      Margin="8,0,0,0"
+                                      FontSize="15"
+                                      SelectedValuePath="Content"
+                                      Style="{StaticResource categoryBox}"
+                                      SelectedValue="{Binding BrandBox, UpdateSourceTrigger=PropertyChanged}">
+                                <ComboBoxItem Content="Brand1"/>
+                                <ComboBoxItem Content="Brand2"/>
+                                <ComboBoxItem Content="Brand3"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <!-- Product category combobox -->
                         <StackPanel>
                             <Label Content="Category"
                                    FontSize="15"
@@ -139,100 +163,151 @@
                                    Foreground="{StaticResource panelColor4}"
                                    Margin="8,0,0,0"/>
         
-                            <ComboBox Width="180" Height="35"
+                            <ComboBox Width="150" Height="35"
                                       Margin="8,0,0,0"
                                       FontSize="15"
-                                      Style="{StaticResource categoryBox}">
-                                <ComboBoxItem Content="yes"/>
-                                <ComboBoxItem Content="no"/>
-                                <ComboBoxItem Content="maybes"/>
+                                      SelectedValuePath="Content"
+                                      Style="{StaticResource categoryBox}"
+                                      SelectedValue="{Binding CategoryBox, UpdateSourceTrigger=PropertyChanged}">
+                                <ComboBoxItem Content="cat1"/>
+                                <ComboBoxItem Content="cat2"/>
+                                <ComboBoxItem Content="cat3"/>
                             </ComboBox>
                         </StackPanel>
-                        <StackPanel>
-                            <Label Content="Quantity"
-                                   FontSize="15"
-                                   FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
-                                   Margin="8,0,0,0"/>
-                            <TextBox  x:Name="stockQuantity" Height="35"
-                                      Width="70" 
-                                      Margin="10,0,0,0"
-                                      FontSize="20"
-                                      Foreground="{StaticResource panelColor4}"
-                                      Style="{StaticResource catalogBox}"
-                                      PreviewTextInput="NumberValidationTextBox"/>
-
-                        </StackPanel>
+                        
+                        
 
                     </StackPanel>
 
                     <!-- Grid row 2 row 0 -->
                     <StackPanel Grid.Row="1" Orientation="Horizontal">
-                        <StackPanel>
-                            <Label Content="Description"
-                                   FontSize="15"
-                                   FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
-                                   Margin="8,0,0,0"/>
-                            <TextBox x:Name="descriptionBox" Height="120"
-                                     Width="330" 
-                                     Margin="10,0,0,0"
-                                     FontSize="15"
-                                     Foreground="{StaticResource panelColor4}"
-                                     Style="{StaticResource catalogBox}"
-                                     TextWrapping="Wrap"
-                                     VerticalScrollBarVisibility="Auto" 
-                                     HorizontalScrollBarVisibility="Disabled"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
 
-                        </StackPanel>
+                            <!-- Product Description textbox -->
+                            <StackPanel>
+                                <Label Content="Description"
+                                       FontSize="15"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource panelColor4}"
+                                       Margin="8,0,0,0"/>
+                                <TextBox x:Name="descriptionBox" Height="170"
+                                         Width="330" 
+                                         Margin="10,0,0,0"
+                                         FontSize="15"
+                                         Foreground="{StaticResource panelColor4}"
+                                         Style="{StaticResource catalogBox}"
+                                         TextWrapping="Wrap"
+                                         VerticalScrollBarVisibility="Auto" 
+                                         HorizontalScrollBarVisibility="Disabled"
+                                         Text="{Binding ProductDescriptionBox, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <StackPanel>
-                            <Label Content="Selling price $"
-                                   FontSize="15"
-                                   FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
-                                   Margin="8,0,0,0"/>
-                            <TextBox  x:Name="sellingPrice" Height="35"
-                                      Width="90" 
-                                      Margin="10,0,0,0"
-                                      FontSize="20"
-                                      Foreground="{StaticResource panelColor4}"
-                                      Style="{StaticResource catalogBox}"
-                                      PreviewTextInput="NumberValidationTextBox"/>
+                            </StackPanel>
 
-                        </StackPanel>
+                            <!-- Grid col 1 -->
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <!-- Selling price numerical textbox -->
+                                    <StackPanel>
+                                        <Label Content="Selling price $"
+                                           FontSize="15"
+                                           FontWeight="Medium"
+                                           Foreground="{StaticResource panelColor4}"/>
+                                        <TextBox  x:Name="sellingPrice" Height="35"
+                                              Width="90"
+                                              FontSize="20"
+                                              Foreground="{StaticResource panelColor4}"
+                                              Style="{StaticResource catalogBox}"
+                                              PreviewTextInput="NumberValidationTextBox"
+                                              Text="{Binding SellingPriceBox, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    </StackPanel>
+
+                                    <!-- Minimum Stock level/Reorder point -->
+                                    <StackPanel>
+                                        <Label Content="Min Reorder"
+                                           FontSize="15"
+                                           FontWeight="Medium"
+                                           Foreground="{StaticResource panelColor4}"
+                                           Margin="8,0,0,0"/>
+                                        <TextBox x:Name="minStockLevel" Height="35"
+                                             Width="90"
+                                             FontSize="20"
+                                             Foreground="{StaticResource panelColor4}"
+                                             Style="{StaticResource catalogBox}"
+                                             PreviewTextInput="NumberValidationTextBox"
+                                             Text="{Binding MinStockLevelBox, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    </StackPanel>
+                                </StackPanel>
+                                
+                                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                    <!-- Stock quantity numerical textbox -->
+                                    <StackPanel>
+                                        <Label Content="Quantity"
+                                               FontSize="15"
+                                               FontWeight="Medium"
+                                               Foreground="{StaticResource panelColor4}"
+                                               Margin="8,0,0,0"/>
+                                        <TextBox  x:Name="stockQuantity" Height="35"
+                                                  Width="90" 
+                                                  Margin="10,0,0,0"
+                                                  FontSize="20"
+                                                  Foreground="{StaticResource panelColor4}"
+                                                  Style="{StaticResource catalogBox}"
+                                                  PreviewTextInput="NumberValidationTextBox"
+                                                  Text="{Binding StockQuantityBox, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    </StackPanel>
+
+                                    <StackPanel>
+                                        <Label Content="Unit Cost"
+                                               FontSize="15"
+                                               FontWeight="Medium"
+                                               Foreground="{StaticResource panelColor4}"
+                                               Margin="8,0,0,0"/>
+                                        <TextBox  x:Name="UnitCost" Height="35"
+                                                  Width="90" 
+                                                  Margin="10,0,0,0"
+                                                  FontSize="20"
+                                                  Foreground="{StaticResource panelColor4}"
+                                                  Style="{StaticResource catalogBox}"
+                                                  PreviewTextInput="NumberValidationTextBox"
+                                                  Text="{Binding UnitCostBox, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    </StackPanel>
+
+                                </StackPanel>
+                                
+                            </Grid>
+                            <!-- Image drop box , implement later -->
+                            <Border AllowDrop="True" Grid.Column="2"
+                                    BorderBrush="{StaticResource panelColor1}" 
+                                    BorderThickness="1" 
+                                    Width="200" 
+                                    Height="170"
+                                    Margin="10"
+                                    VerticalAlignment="Center" 
+                                    HorizontalAlignment="Center"
+                                    CornerRadius="5"
+                                    Background="{StaticResource panelColor7}">
+                                <TextBlock Text="Drag and drop image files here" 
+                                           HorizontalAlignment="Center" 
+                                           VerticalAlignment="Center"
+                                           Foreground="{StaticResource panelColor4}"/>
+                            </Border>
+
+                        </Grid>
                         
-                        <StackPanel>
-                            <Label Content="Min Reorder"
-                                   FontSize="15"
-                                   FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
-                                   Margin="8,0,0,0"/>
-                            <TextBox  x:Name="minStockLevel" Height="35"
-                                      Width="90" 
-                                      Margin="10,0,0,0"
-                                      FontSize="20"
-                                      Foreground="{StaticResource panelColor4}"
-                                      Style="{StaticResource catalogBox}"
-                                      PreviewTextInput="NumberValidationTextBox"/>
-
-                        </StackPanel>
-
-                        <Border AllowDrop="True" 
-                                BorderBrush="{StaticResource panelColor1}" 
-                                BorderThickness="1" 
-                                Width="200" 
-                                Height="170" 
-                                VerticalAlignment="Center" 
-                                HorizontalAlignment="Center"
-                                Margin="10,20,0,0"
-                                CornerRadius="5"
-                                Background="{StaticResource panelColor7}">
-                            <TextBlock Text="Drag and drop image files here" 
-                                       HorizontalAlignment="Center" 
-                                       VerticalAlignment="Center"
-                                       Foreground="{StaticResource panelColor4}"/>
-                        </Border>
 
                     </StackPanel>
                     
