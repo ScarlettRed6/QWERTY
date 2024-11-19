@@ -60,7 +60,7 @@
                                  Foreground="{StaticResource panelColor5}" 
                                  Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
                                  Width="230"
-                                 />
+                                 utils:TextBoxPHHelper.PlaceholderText="Search"/>
                     </StackPanel>
 
                     <!-- Colomn 3 Add button -->
