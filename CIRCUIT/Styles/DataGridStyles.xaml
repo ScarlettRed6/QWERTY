@@ -4,19 +4,20 @@
     <!-- Data grid custom style -->
     <Style x:Key="catalogGrid" TargetType="DataGrid">
         <Setter Property="Background" Value="{StaticResource panelColor3}"/>
-        <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+        <Setter Property="GridLinesVisibility" Value="All"/>
         <Setter Property="CanUserResizeRows" Value="False"/>
         <Setter Property="CanUserResizeColumns" Value="False"/>
-        <Setter Property="AlternatingRowBackground" Value="LightBlue"/>
-        <Setter Property="HorizontalGridLinesBrush" Value="Gray"/>
-        <Setter Property="VerticalGridLinesBrush" Value="Gray"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource panelColor4}"/>
+        <Setter Property="VerticalGridLinesBrush" Value="{StaticResource panelColor1}"/>
+        <Setter Property="AlternatingRowBackground" Value="{StaticResource panelColor7}"/>
 
     </Style>
 
     <!-- Data grid row custom styles -->
     <Style x:Key="catalogRowStyle" TargetType="DataGridRow">
-        <Setter Property="Foreground" Value="Red"/>
+        <Setter Property="Foreground" Value="{StaticResource panelColor4}"/>
         <Setter Property="Background" Value="Black"/>
+        <Setter Property="Height" Value="40"/>
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -40,7 +41,9 @@
     <!-- Data grid column headers styles -->
     <Style x:Key="columnHeadersStyle" TargetType="DataGridColumnHeader">
         <Setter Property="Background" Value="{StaticResource panelColor5}"/>
-        <Setter Property="Foreground" Value="{StaticResource panelColor1}"/>
+        <Setter Property="Foreground" Value="{StaticResource panelColor4}"/>
+        <Setter Property="FontWeight" Value="Heavy"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="BorderThickness" Value="0.7"/>
         <Setter Property="BorderBrush" Value="{StaticResource panelColor6}"/>
 

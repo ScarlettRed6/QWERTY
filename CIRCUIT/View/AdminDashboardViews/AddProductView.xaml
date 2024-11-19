@@ -245,7 +245,7 @@
                                              Foreground="{StaticResource panelColor4}"
                                              Style="{StaticResource catalogBox}"
                                              PreviewTextInput="NumberValidationTextBox"
-                                             Text="{Binding MinStockLevelBox, UpdateSourceTrigger=PropertyChanged}"/>
+                                             Text="{Binding MinStockLevel, UpdateSourceTrigger=PropertyChanged}"/>
 
                                     </StackPanel>
                                 </StackPanel>
@@ -282,7 +282,7 @@
                                                   Foreground="{StaticResource panelColor4}"
                                                   Style="{StaticResource catalogBox}"
                                                   PreviewTextInput="NumberValidationTextBox"
-                                                  Text="{Binding UnitCostBox, UpdateSourceTrigger=PropertyChanged}"/>
+                                                  Text="{Binding UnitCost, UpdateSourceTrigger=PropertyChanged}"/>
 
                                     </StackPanel>
 

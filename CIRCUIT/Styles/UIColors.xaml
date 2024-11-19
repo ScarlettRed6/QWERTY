@@ -22,5 +22,13 @@
     <SolidColorBrush x:Key="panelColor5">#2e2e2e</SolidColorBrush>
     <SolidColorBrush x:Key="panelColor6">#000000</SolidColorBrush>
     <SolidColorBrush x:Key="panelColor7">#1E1E1E</SolidColorBrush>
-    
+
+
+
+    <SolidColorBrush x:Key="hoverBackground" Color="#FFD6EAF8" />
+    <SolidColorBrush x:Key="hoverForeground" Color="#FF1F618D" />
+    <SolidColorBrush x:Key="openBackground" Color="#FFAED6F1" />
+    <SolidColorBrush x:Key="openForeground" Color="#FF154360" />
+
+
 </ResourceDictionary>

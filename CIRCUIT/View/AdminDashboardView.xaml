@@ -95,22 +95,22 @@
                     </RadioButton>
 
                     <RadioButton Style="{StaticResource menuButton}"
+                                 Tag="{StaticResource panelColor2}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="ExchangeAlt" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Transactions" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource panelColor2}"
                                  Command="{Binding ShowCatalogCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Tag" Style="{StaticResource menuButtonIcon}"/>
                             <TextBlock Text="Products" Style="{StaticResource menuButtonText}"/>
-                        </StackPanel>
-
-                    </RadioButton>
-
-                    <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource panelColor2}">
-
-                        <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Battery4" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Transactions" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
 
                     </RadioButton>
@@ -129,8 +129,8 @@
                                  Tag="{StaticResource panelColor2}">
 
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="PeopleGroup" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Staff" Style="{StaticResource menuButtonText}"/>
+                            <fa:IconImage Icon="Archive" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Archived" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
 
                     </RadioButton>
@@ -139,8 +139,8 @@
                                  Tag="{StaticResource panelColor2}">
 
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Gear" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Settings" Style="{StaticResource menuButtonText}"/>
+                            <fa:IconImage Icon="PeopleGroup" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Staff" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
 
                     </RadioButton>

@@ -15,6 +15,7 @@
                 <ResourceDictionary Source="/Styles/DataGridStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/TextBoxStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/ComboBoxStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/ExpanderStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
   

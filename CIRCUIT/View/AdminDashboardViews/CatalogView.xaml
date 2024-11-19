@@ -22,6 +22,9 @@
         <DataTemplate DataType="{x:Type vm:EditProductViewModel}">
             <view:EditProductView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ArchiveProductViewModel}">
+            <view:ArchiveProductView/>
+        </DataTemplate>
     </UserControl.Resources>
 
     <Border CornerRadius="10" Background="{StaticResource panelColor6}">
@@ -55,9 +58,8 @@
                                  BorderThickness="0,0,0,2" Height="30"
                                  VerticalAlignment="Center" Margin="0,4,0,0"
                                  Foreground="{StaticResource panelColor5}" 
-                                 Text="{Binding SearchProduct, UpdateSourceTrigger=PropertyChanged}"
-                                 Width="230"
-                                 utils:TextBoxPHHelper.PlaceholderText="Search"/>
+                                 Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                                 Width="230"/>
                     </StackPanel>
 
                     <!-- Colomn 3 Add button -->
@@ -83,7 +85,8 @@
                           AutoGenerateColumns="False" 
                           CanUserAddRows="False"
                           Grid.Row="1"
-                          ItemsSource="{Binding Product}"
+                          IsReadOnly="True"
+                          ItemsSource="{Binding PagedProducts}"
                           SelectionMode="Extended"
                           RowHeaderWidth="0"
                           Style="{StaticResource catalogGrid}"
@@ -95,7 +98,7 @@
 
                     <!-- Column context -->
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="70" />
+                        <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="70"/>
                         <DataGridTextColumn Header="Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="*" />
                         <DataGridTextColumn Header="Category" Binding="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Width="*" />
                         <DataGridTextColumn Header="Brand" Binding="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" Width="*" />
@@ -104,8 +107,24 @@
                         <DataGridTextColumn Header="Cost" Binding="{Binding UnitCost, UpdateSourceTrigger=PropertyChanged}" Width="70" />
                         <DataGridTextColumn Header="Price" Binding="{Binding SellingPrice, UpdateSourceTrigger=PropertyChanged}" Width="70" />
 
+
+                        <!-- Row Expander 
+                        <DataGridTemplateColumn Width="200" Header="Details">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Expander Header="View Details">
+                                        <StackPanel>
+                                            <TextBlock Text="eyo" FontWeight="Bold" Foreground="AliceBlue"/>
+                                            <TextBlock Text="{Binding Manufacturer}" Margin="0,5,0,0"/>
+                                            <TextBlock Text="{Binding WarrantyInfo}" Margin="0,5,0,0"/>
+                                        </StackPanel>
+                                    </Expander>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>-->
+
                         <!-- Implement Edit/Archive button here later -->
-                        <DataGridTemplateColumn Width="100">
+                        <DataGridTemplateColumn Width="100" Header="Operations">
                             <DataGridTemplateColumn.CellTemplate> 
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
@@ -114,9 +133,12 @@
                                                 Margin="2"
                                                 Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                                 CommandParameter="{Binding}"/>
+                                        
                                         <Button Height="20" Width="50" 
                                                 Content="Archive"
-                                                Margin="2"/>
+                                                Margin="2"
+                                                Command="{Binding DataContext.ArchiveCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -126,6 +148,18 @@
 
                 </DataGrid>
 
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <Button Content=" First" Command="{Binding FirstPageCommand}" />
+                    <Button Content=" Prev" Command="{Binding PreviousPageCommand}" />
+                    <TextBlock Text="{Binding CurrentPage}" Margin="2" 
+                               Foreground="{StaticResource panelColor4}"/>
+                    <TextBlock Text="of" Margin="2" 
+                               Foreground="{StaticResource panelColor4}"/>
+                    <TextBlock Text="{Binding TotalPages}" Margin="2"
+                               Foreground="{StaticResource panelColor4}"/>
+                    <Button Content="Next >" Command="{Binding NextPageCommand}" />
+                    <Button Content="Last >>" Command="{Binding LastPageCommand}" />
+                </StackPanel>
             </Grid>
 
             <ContentControl Content="{Binding AddProductView}"/>

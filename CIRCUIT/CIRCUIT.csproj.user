@@ -19,6 +19,9 @@
     <Compile Update="View\AdminDashboardViews\AnalyticsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\AdminDashboardViews\ArchiveProductView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\AdminDashboardViews\CatalogView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -45,6 +48,9 @@
     <Page Update="Styles\DataGridStyles.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Styles\ExpanderStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Styles\UIColors.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -55,6 +61,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\AdminDashboardViews\AnalyticsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardViews\ArchiveProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\AdminDashboardViews\CatalogView.xaml">

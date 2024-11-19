@@ -344,7 +344,7 @@
           }
         }
       },
-      "Microsoft.NETCore.Platforms/3.1.9": {
+      "Microsoft.NETCore.Platforms/1.1.0": {
         "type": "package",
         "compile": {
           "lib/netstandard1.0/_._": {}
@@ -375,373 +375,59 @@
           }
         }
       },
-      "Microsoft.Win32.SystemEvents/4.7.0": {
+      "Syncfusion.Data.WPF/27.2.2": {
         "type": "package",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.1.0"
-        },
         "compile": {
-          "ref/netstandard2.0/_._": {
+          "lib/net8.0-windows7.0/Syncfusion.Data.WPF.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtimeTargets": {
-          "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll": {
-            "assetType": "runtime",
-            "rid": "win"
-          }
-        }
-      },
-      "OpenTK/4.3.0": {
-        "type": "package",
-        "dependencies": {
-          "OpenTK.Compute": "4.3.0",
-          "OpenTK.Core": "4.3.0",
-          "OpenTK.Graphics": "4.3.0",
-          "OpenTK.Input": "4.3.0",
-          "OpenTK.Mathematics": "4.3.0",
-          "OpenTK.OpenAL": "4.3.0",
-          "OpenTK.Windowing.Common": "4.3.0",
-          "OpenTK.Windowing.Desktop": "4.3.0",
-          "OpenTK.Windowing.GraphicsLibraryFramework": "4.3.0"
-        }
-      },
-      "OpenTK.Compute/4.3.0": {
-        "type": "package",
-        "compile": {
-          "lib/netcoreapp3.1/OpenTK.Compute.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/OpenTK.Compute.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
-      "OpenTK.Core/4.3.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.1/OpenTK.Core.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.1/OpenTK.Core.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
-      "OpenTK.GLWpfControl/4.2.3": {
-        "type": "package",
-        "dependencies": {
-          "OpenTK": "[4.3.0, 5.0.0)"
-        },
-        "compile": {
-          "lib/netcoreapp3.1/GLWpfControl.dll": {
-            "related": ".pdb"
-          }
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/GLWpfControl.dll": {
-            "related": ".pdb"
-          }
-        }
-      },
-      "OpenTK.Graphics/4.3.0": {
-        "type": "package",
-        "dependencies": {
-          "OpenTK.Core": "[4.3.0, 4.4.0)",
-          "OpenTK.Mathematics": "[4.3.0, 4.4.0)"
-        },
-        "compile": {
-          "lib/netstandard2.1/OpenTK.Graphics.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.1/OpenTK.Graphics.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
-      "OpenTK.Input/4.3.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/OpenTK.Input.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/OpenTK.Input.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
-      "OpenTK.Mathematics/4.3.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.1/OpenTK.Mathematics.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.1/OpenTK.Mathematics.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
-      "OpenTK.OpenAL/4.3.0": {
-        "type": "package",
-        "dependencies": {
-          "OpenTK.Core": "[4.3.0, 4.4.0)",
-          "OpenTK.Mathematics": "[4.3.0, 4.4.0)"
-        },
-        "compile": {
-          "lib/netcoreapp3.1/OpenTK.OpenAL.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/OpenTK.OpenAL.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
-      "OpenTK.redist.glfw/3.3.0-pre20200830200122": {
-        "type": "package",
-        "runtimeTargets": {
-          "runtimes/linux-x64/native/libglfw.so.3.3": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          },
-          "runtimes/osx-x64/native/libglfw.3.dylib": {
-            "assetType": "native",
-            "rid": "osx-x64"
-          },
-          "runtimes/win-x64/native/glfw3.dll": {
-            "assetType": "native",
-            "rid": "win-x64"
-          },
-          "runtimes/win-x86/native/glfw3.dll": {
-            "assetType": "native",
-            "rid": "win-x86"
-          }
-        }
-      },
-      "OpenTK.Windowing.Common/4.3.0": {
-        "type": "package",
-        "dependencies": {
-          "OpenTK.Core": "[4.3.0, 4.4.0)",
-          "OpenTK.Mathematics": "[4.3.0, 4.4.0)"
-        },
-        "compile": {
-          "lib/netstandard2.1/OpenTK.Windowing.Common.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.1/OpenTK.Windowing.Common.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
-      "OpenTK.Windowing.Desktop/4.3.0": {
-        "type": "package",
-        "dependencies": {
-          "OpenTK.Core": "[4.3.0, 4.4.0)",
-          "OpenTK.Mathematics": "[4.3.0, 4.4.0)",
-          "OpenTK.Windowing.Common": "[4.3.0, 4.4.0)",
-          "OpenTK.Windowing.GraphicsLibraryFramework": "[4.3.0, 4.4.0)"
-        },
-        "compile": {
-          "lib/netcoreapp3.1/OpenTK.Windowing.Desktop.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/OpenTK.Windowing.Desktop.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
-      "OpenTK.Windowing.GraphicsLibraryFramework/4.3.0": {
-        "type": "package",
-        "dependencies": {
-          "OpenTK.Core": "[4.3.0, 4.4.0)",
-          "OpenTK.redist.glfw": "[3.3.0-pre20200830200122, 3.4.0-pre)"
-        },
-        "compile": {
-          "lib/netcoreapp3.1/OpenTK.Windowing.GraphicsLibraryFramework.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/OpenTK.Windowing.GraphicsLibraryFramework.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
-      "ScottPlot/5.0.44": {
-        "type": "package",
-        "dependencies": {
-          "SkiaSharp": "2.88.9",
-          "SkiaSharp.NativeAssets.Linux.NoDependencies": "2.88.9"
-        },
-        "compile": {
-          "lib/net8.0/ScottPlot.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/ScottPlot.dll": {
+          "lib/net8.0-windows7.0/Syncfusion.Data.WPF.dll": {
             "related": ".xml"
           }
         }
       },
-      "ScottPlot.WPF/5.0.44": {
+      "Syncfusion.Licensing/27.2.2": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Syncfusion.Licensing.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0/Syncfusion.Licensing.dll": {}
+        }
+      },
+      "Syncfusion.SfGrid.WPF/27.2.2": {
         "type": "package",
         "dependencies": {
-          "OpenTK": "4.3.0",
-          "OpenTK.GLWpfControl": "4.2.3",
-          "ScottPlot": "5.0.44",
-          "SkiaSharp.Views.WPF": "2.88.9"
+          "Syncfusion.Data.WPF": "27.2.2",
+          "Syncfusion.Licensing": "27.2.2",
+          "Syncfusion.Shared.WPF": "27.2.2"
         },
         "compile": {
-          "lib/net6.0-windows7.0/ScottPlot.WPF.dll": {
+          "lib/net8.0-windows7.0/Syncfusion.SfGrid.WPF.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net6.0-windows7.0/ScottPlot.WPF.dll": {
+          "lib/net8.0-windows7.0/Syncfusion.SfGrid.WPF.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Syncfusion.Shared.WPF/27.2.2": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Licensing": "27.2.2"
+        },
+        "compile": {
+          "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.dll": {
             "related": ".xml"
           }
         },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WPF"
-        ]
-      },
-      "SkiaSharp/2.88.9": {
-        "type": "package",
-        "dependencies": {
-          "SkiaSharp.NativeAssets.Win32": "2.88.9",
-          "SkiaSharp.NativeAssets.macOS": "2.88.9"
-        },
-        "compile": {
-          "lib/net6.0/SkiaSharp.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
         "runtime": {
-          "lib/net6.0/SkiaSharp.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
-      "SkiaSharp.NativeAssets.Linux.NoDependencies/2.88.9": {
-        "type": "package",
-        "dependencies": {
-          "SkiaSharp": "2.88.9"
-        },
-        "compile": {
-          "lib/net6.0/_._": {}
-        },
-        "runtime": {
-          "lib/net6.0/_._": {}
-        },
-        "runtimeTargets": {
-          "runtimes/linux-arm/native/libSkiaSharp.so": {
-            "assetType": "native",
-            "rid": "linux-arm"
-          },
-          "runtimes/linux-arm64/native/libSkiaSharp.so": {
-            "assetType": "native",
-            "rid": "linux-arm64"
-          },
-          "runtimes/linux-musl-x64/native/libSkiaSharp.so": {
-            "assetType": "native",
-            "rid": "linux-musl-x64"
-          },
-          "runtimes/linux-x64/native/libSkiaSharp.so": {
-            "assetType": "native",
-            "rid": "linux-x64"
-          }
-        }
-      },
-      "SkiaSharp.NativeAssets.macOS/2.88.9": {
-        "type": "package",
-        "compile": {
-          "lib/net6.0/_._": {}
-        },
-        "runtime": {
-          "lib/net6.0/_._": {}
-        },
-        "runtimeTargets": {
-          "runtimes/osx/native/libSkiaSharp.dylib": {
-            "assetType": "native",
-            "rid": "osx"
-          }
-        }
-      },
-      "SkiaSharp.NativeAssets.Win32/2.88.9": {
-        "type": "package",
-        "compile": {
-          "lib/net6.0/_._": {}
-        },
-        "runtime": {
-          "lib/net6.0/_._": {}
-        },
-        "runtimeTargets": {
-          "runtimes/win-arm64/native/libSkiaSharp.dll": {
-            "assetType": "native",
-            "rid": "win-arm64"
-          },
-          "runtimes/win-x64/native/libSkiaSharp.dll": {
-            "assetType": "native",
-            "rid": "win-x64"
-          },
-          "runtimes/win-x86/native/libSkiaSharp.dll": {
-            "assetType": "native",
-            "rid": "win-x86"
-          }
-        }
-      },
-      "SkiaSharp.Views.Desktop.Common/2.88.9": {
-        "type": "package",
-        "dependencies": {
-          "SkiaSharp": "2.88.9",
-          "System.Drawing.Common": "4.7.3"
-        },
-        "compile": {
-          "lib/netcoreapp3.1/SkiaSharp.Views.Desktop.Common.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/SkiaSharp.Views.Desktop.Common.dll": {
-            "related": ".pdb;.xml"
-          }
-        }
-      },
-      "SkiaSharp.Views.WPF/2.88.9": {
-        "type": "package",
-        "dependencies": {
-          "SkiaSharp": "2.88.9",
-          "SkiaSharp.Views.Desktop.Common": "2.88.9"
-        },
-        "compile": {
-          "lib/netcoreapp3.1/SkiaSharp.Views.WPF.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/SkiaSharp.Views.WPF.dll": {
-            "related": ".pdb;.xml"
+          "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -822,31 +508,6 @@
             "rid": "win"
           },
           "runtimes/win/lib/net8.0/System.Diagnostics.EventLog.dll": {
-            "assetType": "runtime",
-            "rid": "win"
-          }
-        }
-      },
-      "System.Drawing.Common/4.7.3": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.1.9",
-          "Microsoft.Win32.SystemEvents": "4.7.0"
-        },
-        "compile": {
-          "ref/netcoreapp3.0/System.Drawing.Common.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/System.Drawing.Common.dll": {}
-        },
-        "runtimeTargets": {
-          "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll": {
-            "assetType": "runtime",
-            "rid": "unix"
-          },
-          "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll": {
             "assetType": "runtime",
             "rid": "win"
           }
@@ -1553,22 +1214,19 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
-    "Microsoft.NETCore.Platforms/3.1.9": {
-      "sha512": "e+/BrhryHoMojWlbcPJAFcShpk3JYvsMfrmoM26dnvHARWR6vtmGbfHppZcANVqf7DUBDIRxlZXcWg7v/9e1TQ==",
+    "Microsoft.NETCore.Platforms/1.1.0": {
+      "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
       "type": "package",
-      "path": "microsoft.netcore.platforms/3.1.9",
+      "path": "microsoft.netcore.platforms/1.1.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
-        "microsoft.netcore.platforms.3.1.9.nupkg.sha512",
+        "microsoft.netcore.platforms.1.1.0.nupkg.sha512",
         "microsoft.netcore.platforms.nuspec",
-        "runtime.json",
-        "useSharedDesignerContext.txt",
-        "version.txt"
+        "runtime.json"
       ]
     },
     "Microsoft.NETCore.Targets/1.1.0": {
@@ -1604,422 +1262,127 @@
         "microsoft.sqlserver.server.nuspec"
       ]
     },
-    "Microsoft.Win32.SystemEvents/4.7.0": {
-      "sha512": "mtVirZr++rq+XCDITMUdnETD59XoeMxSpLRIII7JRI6Yj0LEDiO1pPn0ktlnIj12Ix8bfvQqQDMMIF9wC98oCA==",
+    "Syncfusion.Data.WPF/27.2.2": {
+      "sha512": "yAMGnnKmaZkYBTH/4Rc+lg/XwML6+wdv5EnROyOJ/7kxm/omCZQbpvv9zRSLbkKik813J1ThvgGpU95rCy7shg==",
       "type": "package",
-      "path": "microsoft.win32.systemevents/4.7.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/net461/Microsoft.Win32.SystemEvents.dll",
-        "lib/net461/Microsoft.Win32.SystemEvents.xml",
-        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll",
-        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.xml",
-        "microsoft.win32.systemevents.4.7.0.nupkg.sha512",
-        "microsoft.win32.systemevents.nuspec",
-        "ref/net461/Microsoft.Win32.SystemEvents.dll",
-        "ref/net461/Microsoft.Win32.SystemEvents.xml",
-        "ref/net472/Microsoft.Win32.SystemEvents.dll",
-        "ref/net472/Microsoft.Win32.SystemEvents.xml",
-        "ref/netstandard2.0/Microsoft.Win32.SystemEvents.dll",
-        "ref/netstandard2.0/Microsoft.Win32.SystemEvents.xml",
-        "runtimes/win/lib/netcoreapp2.0/Microsoft.Win32.SystemEvents.dll",
-        "runtimes/win/lib/netcoreapp2.0/Microsoft.Win32.SystemEvents.xml",
-        "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.dll",
-        "runtimes/win/lib/netcoreapp3.0/Microsoft.Win32.SystemEvents.xml",
-        "useSharedDesignerContext.txt",
-        "version.txt"
-      ]
-    },
-    "OpenTK/4.3.0": {
-      "sha512": "w2oiuLDpZbSCyqzHEFFLTO6JMNadHWS6Pp68U68lfzdTrzTQQqyH7x+/PJidsk+wRSDopaH9e03/KzYB9Fs+7Q==",
-      "type": "package",
-      "path": "opentk/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "opentk.4.3.0.nupkg.sha512",
-        "opentk.nuspec"
-      ]
-    },
-    "OpenTK.Compute/4.3.0": {
-      "sha512": "XrMVjBPp1PNuz7z7hdNyO2oBsAPZHcHzILs7ewtEP09CM1KPVwZDAsIjOjEJesLCWrNr+jm6+3TvHActYkk4lQ==",
-      "type": "package",
-      "path": "opentk.compute/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netcoreapp3.1/OpenTK.Compute.dll",
-        "lib/netcoreapp3.1/OpenTK.Compute.pdb",
-        "lib/netcoreapp3.1/OpenTK.Compute.xml",
-        "opentk.compute.4.3.0.nupkg.sha512",
-        "opentk.compute.nuspec"
-      ]
-    },
-    "OpenTK.Core/4.3.0": {
-      "sha512": "Hu+4U+tvnQW++y8Gj4OggLVuhclLm1hVN9ZIc3e9d8uo15CWYOSycw+FQhaRH3aibFv1vFYgH+bMIHM509YwYg==",
-      "type": "package",
-      "path": "opentk.core/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard2.1/OpenTK.Core.dll",
-        "lib/netstandard2.1/OpenTK.Core.pdb",
-        "lib/netstandard2.1/OpenTK.Core.xml",
-        "opentk.core.4.3.0.nupkg.sha512",
-        "opentk.core.nuspec"
-      ]
-    },
-    "OpenTK.GLWpfControl/4.2.3": {
-      "sha512": "VIq15MqeMB42v7cuoPcbHAFzdlOcN5DZEhguuQVdvZP0NlfajjaoVDqtP3koOWLs1how2YqCaVk1qIvsuRdQqQ==",
-      "type": "package",
-      "path": "opentk.glwpfcontrol/4.2.3",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netcoreapp3.1/GLWpfControl.dll",
-        "lib/netcoreapp3.1/GLWpfControl.pdb",
-        "opentk.glwpfcontrol.4.2.3.nupkg.sha512",
-        "opentk.glwpfcontrol.nuspec"
-      ]
-    },
-    "OpenTK.Graphics/4.3.0": {
-      "sha512": "N1XXKrX+op6ORxkRoLa8mb/rMQVTW4YsJraneyU0RKqZ04PeOwcnX6BFb+mJISZnbtk+3SyYlWLjSsQjDdFbRg==",
-      "type": "package",
-      "path": "opentk.graphics/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard2.1/OpenTK.Graphics.dll",
-        "lib/netstandard2.1/OpenTK.Graphics.pdb",
-        "lib/netstandard2.1/OpenTK.Graphics.xml",
-        "opentk.graphics.4.3.0.nupkg.sha512",
-        "opentk.graphics.nuspec"
-      ]
-    },
-    "OpenTK.Input/4.3.0": {
-      "sha512": "tvTQlC87bnNWN5BPOxCqSE2UJ6RKz/r342I25XBfeF/TNpw9Ad6upLdok8l8Nhess9LUItOPT6uBBdOlMEO0cA==",
-      "type": "package",
-      "path": "opentk.input/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard2.0/OpenTK.Input.dll",
-        "lib/netstandard2.0/OpenTK.Input.pdb",
-        "lib/netstandard2.0/OpenTK.Input.xml",
-        "opentk.input.4.3.0.nupkg.sha512",
-        "opentk.input.nuspec"
-      ]
-    },
-    "OpenTK.Mathematics/4.3.0": {
-      "sha512": "3yiHBaEeV6OVu7La6961Jx7xoP7dJoZXcRJaDqqPrEmmIuwUx2i4AQI60UpGmcrMJ11QhicmW6zjb8aZYySYrw==",
-      "type": "package",
-      "path": "opentk.mathematics/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard2.1/OpenTK.Mathematics.dll",
-        "lib/netstandard2.1/OpenTK.Mathematics.pdb",
-        "lib/netstandard2.1/OpenTK.Mathematics.xml",
-        "opentk.mathematics.4.3.0.nupkg.sha512",
-        "opentk.mathematics.nuspec"
-      ]
-    },
-    "OpenTK.OpenAL/4.3.0": {
-      "sha512": "zDzP8wsppS/5jwW8RUaac/bWOrZV5rB8Faejy5vLVE1ixWKclOEyO30ADOO3XZ+IWNKioX5wMhzKcy8kfsKKew==",
-      "type": "package",
-      "path": "opentk.openal/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netcoreapp3.1/OpenTK.OpenAL.dll",
-        "lib/netcoreapp3.1/OpenTK.OpenAL.pdb",
-        "lib/netcoreapp3.1/OpenTK.OpenAL.xml",
-        "opentk.openal.4.3.0.nupkg.sha512",
-        "opentk.openal.nuspec"
-      ]
-    },
-    "OpenTK.redist.glfw/3.3.0-pre20200830200122": {
-      "sha512": "EKE9pJCFHScbqOv/t0zG1h5Eh24nWr44SXYnpYtAWDhJhzAoUoI8TwDRXGvTGhDeCBp8ONEaVsq9xRC+OQIxQA==",
-      "type": "package",
-      "path": "opentk.redist.glfw/3.3.0-pre20200830200122",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "COPYING.md",
-        "opentk.png",
-        "opentk.redist.glfw.3.3.0-pre20200830200122.nupkg.sha512",
-        "opentk.redist.glfw.nuspec",
-        "runtimes/linux-x64/native/libglfw.so.3.3",
-        "runtimes/osx-x64/native/libglfw.3.dylib",
-        "runtimes/win-x64/native/glfw3.dll",
-        "runtimes/win-x86/native/glfw3.dll"
-      ]
-    },
-    "OpenTK.Windowing.Common/4.3.0": {
-      "sha512": "HKKMHsv+eQrB3C3ySCcYS0yfKNZ/SM0v1upqBLEN5khs7IVPQ/wRwdR+OaPH/9v11pYtdNQL/XtkPVV0SC8jWA==",
-      "type": "package",
-      "path": "opentk.windowing.common/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netstandard2.1/OpenTK.Windowing.Common.dll",
-        "lib/netstandard2.1/OpenTK.Windowing.Common.pdb",
-        "lib/netstandard2.1/OpenTK.Windowing.Common.xml",
-        "opentk.windowing.common.4.3.0.nupkg.sha512",
-        "opentk.windowing.common.nuspec"
-      ]
-    },
-    "OpenTK.Windowing.Desktop/4.3.0": {
-      "sha512": "pomhIDKQGGLn+5jAWCUsxAcHLOwO4/43pmcXA2xVKRcrvRQgY0QCUcroQRDwGam+8SinRBSTa0PNVNbDxZhoRA==",
-      "type": "package",
-      "path": "opentk.windowing.desktop/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netcoreapp3.1/OpenTK.Windowing.Desktop.dll",
-        "lib/netcoreapp3.1/OpenTK.Windowing.Desktop.pdb",
-        "lib/netcoreapp3.1/OpenTK.Windowing.Desktop.xml",
-        "opentk.windowing.desktop.4.3.0.nupkg.sha512",
-        "opentk.windowing.desktop.nuspec"
-      ]
-    },
-    "OpenTK.Windowing.GraphicsLibraryFramework/4.3.0": {
-      "sha512": "R8H4ynmYUYuow/QNx4pnvPGR8Z6KUP54rVlnsH5tRkDYBU/m6bWmvFFvAA492rRyM5nt+6zAqGjv8GXY+8sylA==",
-      "type": "package",
-      "path": "opentk.windowing.graphicslibraryframework/4.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netcoreapp3.1/OpenTK.Windowing.GraphicsLibraryFramework.dll",
-        "lib/netcoreapp3.1/OpenTK.Windowing.GraphicsLibraryFramework.pdb",
-        "lib/netcoreapp3.1/OpenTK.Windowing.GraphicsLibraryFramework.xml",
-        "opentk.windowing.graphicslibraryframework.4.3.0.nupkg.sha512",
-        "opentk.windowing.graphicslibraryframework.nuspec"
-      ]
-    },
-    "ScottPlot/5.0.44": {
-      "sha512": "sA2YzjJuf9uiZJK/NibsQiklT1NnObL4I/tzlq/Ts9y11PiYOHG9arIimBtvLgGYN0jq3MYShmL4ODjLQNgF/Q==",
-      "type": "package",
-      "path": "scottplot/5.0.44",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "icon.png",
-        "lib/net462/ScottPlot.dll",
-        "lib/net462/ScottPlot.xml",
-        "lib/net6.0/ScottPlot.dll",
-        "lib/net6.0/ScottPlot.xml",
-        "lib/net8.0/ScottPlot.dll",
-        "lib/net8.0/ScottPlot.xml",
-        "lib/netstandard2.0/ScottPlot.dll",
-        "lib/netstandard2.0/ScottPlot.xml",
-        "readme.md",
-        "scottplot.5.0.44.nupkg.sha512",
-        "scottplot.nuspec"
-      ]
-    },
-    "ScottPlot.WPF/5.0.44": {
-      "sha512": "+933hkqWQZ+ZAlrV2pD+q1EB3eVhxHP71PX8pe4j3VDsjAjY0m/IJpydhTyQWj52TzTabK450vomI1V2W8sJhA==",
-      "type": "package",
-      "path": "scottplot.wpf/5.0.44",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "icon.png",
-        "lib/net462/ScottPlot.WPF.dll",
-        "lib/net462/ScottPlot.WPF.xml",
-        "lib/net6.0-windows7.0/ScottPlot.WPF.dll",
-        "lib/net6.0-windows7.0/ScottPlot.WPF.xml",
-        "readme.md",
-        "scottplot.wpf.5.0.44.nupkg.sha512",
-        "scottplot.wpf.nuspec"
-      ]
-    },
-    "SkiaSharp/2.88.9": {
-      "sha512": "3MD5VHjXXieSHCleRLuaTXmL2pD0mB7CcOB1x2kA1I4bhptf4e3R27iM93264ZYuAq6mkUyX5XbcxnZvMJYc1Q==",
-      "type": "package",
-      "path": "skiasharp/2.88.9",
+      "path": "syncfusion.data.wpf/27.2.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.txt",
-        "THIRD-PARTY-NOTICES.txt",
-        "interactive-extensions/dotnet/SkiaSharp.DotNet.Interactive.dll",
-        "lib/monoandroid1.0/SkiaSharp.dll",
-        "lib/monoandroid1.0/SkiaSharp.pdb",
-        "lib/monoandroid1.0/SkiaSharp.xml",
-        "lib/net462/SkiaSharp.dll",
-        "lib/net462/SkiaSharp.pdb",
-        "lib/net462/SkiaSharp.xml",
-        "lib/net6.0-android30.0/SkiaSharp.dll",
-        "lib/net6.0-android30.0/SkiaSharp.pdb",
-        "lib/net6.0-android30.0/SkiaSharp.xml",
-        "lib/net6.0-ios13.6/SkiaSharp.dll",
-        "lib/net6.0-ios13.6/SkiaSharp.pdb",
-        "lib/net6.0-ios13.6/SkiaSharp.xml",
-        "lib/net6.0-maccatalyst13.5/SkiaSharp.dll",
-        "lib/net6.0-maccatalyst13.5/SkiaSharp.pdb",
-        "lib/net6.0-maccatalyst13.5/SkiaSharp.xml",
-        "lib/net6.0-macos10.15/SkiaSharp.dll",
-        "lib/net6.0-macos10.15/SkiaSharp.pdb",
-        "lib/net6.0-macos10.15/SkiaSharp.xml",
-        "lib/net6.0-tizen7.0/SkiaSharp.dll",
-        "lib/net6.0-tizen7.0/SkiaSharp.pdb",
-        "lib/net6.0-tizen7.0/SkiaSharp.xml",
-        "lib/net6.0-tvos13.4/SkiaSharp.dll",
-        "lib/net6.0-tvos13.4/SkiaSharp.pdb",
-        "lib/net6.0-tvos13.4/SkiaSharp.xml",
-        "lib/net6.0/SkiaSharp.dll",
-        "lib/net6.0/SkiaSharp.pdb",
-        "lib/net6.0/SkiaSharp.xml",
-        "lib/netcoreapp3.1/SkiaSharp.dll",
-        "lib/netcoreapp3.1/SkiaSharp.pdb",
-        "lib/netcoreapp3.1/SkiaSharp.xml",
-        "lib/netstandard1.3/SkiaSharp.dll",
-        "lib/netstandard1.3/SkiaSharp.pdb",
-        "lib/netstandard1.3/SkiaSharp.xml",
-        "lib/netstandard2.0/SkiaSharp.dll",
-        "lib/netstandard2.0/SkiaSharp.pdb",
-        "lib/netstandard2.0/SkiaSharp.xml",
-        "lib/netstandard2.1/SkiaSharp.dll",
-        "lib/netstandard2.1/SkiaSharp.pdb",
-        "lib/netstandard2.1/SkiaSharp.xml",
-        "lib/tizen40/SkiaSharp.dll",
-        "lib/tizen40/SkiaSharp.pdb",
-        "lib/tizen40/SkiaSharp.xml",
-        "lib/uap10.0.10240/SkiaSharp.dll",
-        "lib/uap10.0.10240/SkiaSharp.pdb",
-        "lib/uap10.0.10240/SkiaSharp.xml",
-        "lib/uap10.0.16299/SkiaSharp.dll",
-        "lib/uap10.0.16299/SkiaSharp.pdb",
-        "lib/uap10.0.16299/SkiaSharp.xml",
-        "lib/xamarinios1.0/SkiaSharp.dll",
-        "lib/xamarinios1.0/SkiaSharp.pdb",
-        "lib/xamarinios1.0/SkiaSharp.xml",
-        "lib/xamarinmac2.0/SkiaSharp.dll",
-        "lib/xamarinmac2.0/SkiaSharp.pdb",
-        "lib/xamarinmac2.0/SkiaSharp.xml",
-        "lib/xamarintvos1.0/SkiaSharp.dll",
-        "lib/xamarintvos1.0/SkiaSharp.pdb",
-        "lib/xamarintvos1.0/SkiaSharp.xml",
-        "lib/xamarinwatchos1.0/SkiaSharp.dll",
-        "lib/xamarinwatchos1.0/SkiaSharp.pdb",
-        "lib/xamarinwatchos1.0/SkiaSharp.xml",
-        "skiasharp.2.88.9.nupkg.sha512",
-        "skiasharp.nuspec"
+        "lib/net40/Syncfusion.Data.WPF.dll",
+        "lib/net40/Syncfusion.Data.WPF.xml",
+        "lib/net462/Syncfusion.Data.WPF.dll",
+        "lib/net462/Syncfusion.Data.WPF.xml",
+        "lib/net6.0-windows7.0/Syncfusion.Data.WPF.dll",
+        "lib/net6.0-windows7.0/Syncfusion.Data.WPF.xml",
+        "lib/net8.0-windows7.0/Syncfusion.Data.WPF.dll",
+        "lib/net8.0-windows7.0/Syncfusion.Data.WPF.xml",
+        "lib/net9.0-windows7.0/Syncfusion.Data.WPF.dll",
+        "lib/net9.0-windows7.0/Syncfusion.Data.WPF.xml",
+        "syncfusion.data.wpf.27.2.2.nupkg.sha512",
+        "syncfusion.data.wpf.nuspec",
+        "syncfusion_logo.png"
       ]
     },
-    "SkiaSharp.NativeAssets.Linux.NoDependencies/2.88.9": {
-      "sha512": "ZA9syMvIuoqxPhyFTgde/bNV6VMdeYT9gRdNQT5O+ZjPK+a/nVkKRrqBbn7EVA7XQiW+xIycyT4gW/sea9eh+w==",
+    "Syncfusion.Licensing/27.2.2": {
+      "sha512": "dhfD4qMrtzManAzH0ERFREh3cS1CPB23eReSDJBze03H6z601y1/MP/0N/rYZUMW53vdFpRPsCCfUAXq5CNS+w==",
       "type": "package",
-      "path": "skiasharp.nativeassets.linux.nodependencies/2.88.9",
+      "path": "syncfusion.licensing/27.2.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.txt",
-        "THIRD-PARTY-NOTICES.txt",
-        "build/net462/SkiaSharp.NativeAssets.Linux.NoDependencies.targets",
-        "buildTransitive/net462/SkiaSharp.NativeAssets.Linux.NoDependencies.targets",
-        "lib/net462/_._",
-        "lib/net6.0/_._",
-        "lib/netcoreapp3.1/_._",
-        "lib/netstandard1.3/_._",
-        "runtimes/linux-arm/native/libSkiaSharp.so",
-        "runtimes/linux-arm64/native/libSkiaSharp.so",
-        "runtimes/linux-musl-x64/native/libSkiaSharp.so",
-        "runtimes/linux-x64/native/libSkiaSharp.so",
-        "skiasharp.nativeassets.linux.nodependencies.2.88.9.nupkg.sha512",
-        "skiasharp.nativeassets.linux.nodependencies.nuspec"
+        "README.md",
+        "lib/MonoAndroid90/Syncfusion.Licensing.dll",
+        "lib/Xamarin.Mac/Syncfusion.Licensing.dll",
+        "lib/Xamarin.iOS10/Syncfusion.Licensing.dll",
+        "lib/net40/Syncfusion.Licensing.dll",
+        "lib/net45/Syncfusion.Licensing.dll",
+        "lib/net462/Syncfusion.Licensing.dll",
+        "lib/net6.0/Syncfusion.Licensing.dll",
+        "lib/net7.0/Syncfusion.Licensing.dll",
+        "lib/net8.0/Syncfusion.Licensing.dll",
+        "lib/net9.0/Syncfusion.Licensing.dll",
+        "lib/netstandard2.0/Syncfusion.Licensing.dll",
+        "lib/uap10.0/Syncfusion.Licensing.dll",
+        "syncfusion.licensing.27.2.2.nupkg.sha512",
+        "syncfusion.licensing.nuspec",
+        "syncfusion_logo.png"
       ]
     },
-    "SkiaSharp.NativeAssets.macOS/2.88.9": {
-      "sha512": "Nv5spmKc4505Ep7oUoJ5vp3KweFpeNqxpyGDWyeEPTX2uR6S6syXIm3gj75dM0YJz7NPvcix48mR5laqs8dPuA==",
+    "Syncfusion.SfGrid.WPF/27.2.2": {
+      "sha512": "QrV4s+JkuSR8RRukXgCOUDEnxreNqWawlnt1AB7ltHjmkJSvM8xOh2nmnTqsgihEKmBvgteBRn/9vOEaigTkQg==",
       "type": "package",
-      "path": "skiasharp.nativeassets.macos/2.88.9",
+      "path": "syncfusion.sfgrid.wpf/27.2.2",
+      "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.txt",
-        "THIRD-PARTY-NOTICES.txt",
-        "build/net462/SkiaSharp.NativeAssets.macOS.targets",
-        "build/net6.0-macos10.15/SkiaSharp.NativeAssets.macOS.targets",
-        "build/xamarinmac2.0/SkiaSharp.NativeAssets.macOS.targets",
-        "buildTransitive/net462/SkiaSharp.NativeAssets.macOS.targets",
-        "buildTransitive/net6.0-macos10.15/SkiaSharp.NativeAssets.macOS.targets",
-        "buildTransitive/xamarinmac2.0/SkiaSharp.NativeAssets.macOS.targets",
-        "lib/net462/_._",
-        "lib/net6.0-macos10.15/_._",
-        "lib/net6.0/_._",
-        "lib/netcoreapp3.1/_._",
-        "lib/netstandard1.3/_._",
-        "lib/xamarinmac2.0/_._",
-        "runtimes/osx/native/libSkiaSharp.dylib",
-        "skiasharp.nativeassets.macos.2.88.9.nupkg.sha512",
-        "skiasharp.nativeassets.macos.nuspec"
+        "README.md",
+        "lib/net40/Design/Syncfusion.SfGrid.WPF.DesignTools.dll",
+        "lib/net40/Design/Syncfusion.SfGrid.WPF.Expression.Design.dll",
+        "lib/net40/Design/Syncfusion.SfGrid.WPF.VisualStudio.Design.dll",
+        "lib/net40/Syncfusion.SfGrid.WPF.dll",
+        "lib/net40/Syncfusion.SfGrid.WPF.xml",
+        "lib/net462/Design/Syncfusion.SfGrid.WPF.DesignTools.dll",
+        "lib/net462/Design/Syncfusion.SfGrid.WPF.Expression.Design.dll",
+        "lib/net462/Design/Syncfusion.SfGrid.WPF.VisualStudio.Design.dll",
+        "lib/net462/Syncfusion.SfGrid.WPF.dll",
+        "lib/net462/Syncfusion.SfGrid.WPF.xml",
+        "lib/net6.0-windows7.0/Design/Syncfusion.SfGrid.WPF.DesignTools.dll",
+        "lib/net6.0-windows7.0/Syncfusion.SfGrid.WPF.dll",
+        "lib/net6.0-windows7.0/Syncfusion.SfGrid.WPF.xml",
+        "lib/net8.0-windows7.0/Design/Syncfusion.SfGrid.WPF.DesignTools.dll",
+        "lib/net8.0-windows7.0/Syncfusion.SfGrid.WPF.dll",
+        "lib/net8.0-windows7.0/Syncfusion.SfGrid.WPF.xml",
+        "lib/net9.0-windows7.0/Design/Syncfusion.SfGrid.WPF.DesignTools.dll",
+        "lib/net9.0-windows7.0/Syncfusion.SfGrid.WPF.dll",
+        "lib/net9.0-windows7.0/Syncfusion.SfGrid.WPF.xml",
+        "syncfusion.sfgrid.wpf.27.2.2.nupkg.sha512",
+        "syncfusion.sfgrid.wpf.nuspec",
+        "syncfusion_logo.png",
+        "tools/VisualStudioToolsManifest.xml"
       ]
     },
-    "SkiaSharp.NativeAssets.Win32/2.88.9": {
-      "sha512": "wb2kYgU7iy84nQLYZwMeJXixvK++GoIuECjU4ECaUKNuflyRlJKyiRhN1MAHswvlvzuvkrjRWlK0Za6+kYQK7w==",
+    "Syncfusion.Shared.WPF/27.2.2": {
+      "sha512": "GnXQ1oHKs8aq4RaPTRi2zY7PIxNTTMcOOf6AgWXzCtJc9OdHwHiyZtn88dMhaprht/qC/hHhq1HfOQNgqamulQ==",
       "type": "package",
-      "path": "skiasharp.nativeassets.win32/2.88.9",
+      "path": "syncfusion.shared.wpf/27.2.2",
+      "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.txt",
-        "THIRD-PARTY-NOTICES.txt",
-        "build/net462/SkiaSharp.NativeAssets.Win32.targets",
-        "buildTransitive/net462/SkiaSharp.NativeAssets.Win32.targets",
-        "lib/net462/_._",
-        "lib/net6.0/_._",
-        "lib/netcoreapp3.1/_._",
-        "lib/netstandard1.3/_._",
-        "runtimes/win-arm64/native/libSkiaSharp.dll",
-        "runtimes/win-x64/native/libSkiaSharp.dll",
-        "runtimes/win-x86/native/libSkiaSharp.dll",
-        "skiasharp.nativeassets.win32.2.88.9.nupkg.sha512",
-        "skiasharp.nativeassets.win32.nuspec"
-      ]
-    },
-    "SkiaSharp.Views.Desktop.Common/2.88.9": {
-      "sha512": "a9geU/Xe5Tn6OnadnfnMCUqqO3vB7GwCxJM8f7rRay8JrGXm7rgYKBPQX0baymxmVlPqYXeMm8AWhQj5RVtwPw==",
-      "type": "package",
-      "path": "skiasharp.views.desktop.common/2.88.9",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE.txt",
-        "lib/net462/SkiaSharp.Views.Desktop.Common.dll",
-        "lib/net462/SkiaSharp.Views.Desktop.Common.pdb",
-        "lib/net462/SkiaSharp.Views.Desktop.Common.xml",
-        "lib/netcoreapp3.1/SkiaSharp.Views.Desktop.Common.dll",
-        "lib/netcoreapp3.1/SkiaSharp.Views.Desktop.Common.pdb",
-        "lib/netcoreapp3.1/SkiaSharp.Views.Desktop.Common.xml",
-        "lib/netstandard2.0/SkiaSharp.Views.Desktop.Common.dll",
-        "lib/netstandard2.0/SkiaSharp.Views.Desktop.Common.pdb",
-        "lib/netstandard2.0/SkiaSharp.Views.Desktop.Common.xml",
-        "skiasharp.views.desktop.common.2.88.9.nupkg.sha512",
-        "skiasharp.views.desktop.common.nuspec"
-      ]
-    },
-    "SkiaSharp.Views.WPF/2.88.9": {
-      "sha512": "80fEK0dYEJpi36Ko9WylN2rCf4w/hzzHEe+nyEL79dTHvUVfuXLZONmIwrDJ+pL5JSi8YmktQVxbYZexS+NZCw==",
-      "type": "package",
-      "path": "skiasharp.views.wpf/2.88.9",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE.txt",
-        "lib/net462/SkiaSharp.Views.WPF.dll",
-        "lib/net462/SkiaSharp.Views.WPF.pdb",
-        "lib/net462/SkiaSharp.Views.WPF.xml",
-        "lib/netcoreapp3.1/SkiaSharp.Views.WPF.dll",
-        "lib/netcoreapp3.1/SkiaSharp.Views.WPF.pdb",
-        "lib/netcoreapp3.1/SkiaSharp.Views.WPF.xml",
-        "skiasharp.views.wpf.2.88.9.nupkg.sha512",
-        "skiasharp.views.wpf.nuspec"
+        "README.md",
+        "lib/net40/Design/Syncfusion.Design.Wpf.dll",
+        "lib/net40/Design/Syncfusion.Shared.WPF.DesignTools.dll",
+        "lib/net40/Design/Syncfusion.Shared.Wpf.Expression.Design.dll",
+        "lib/net40/Design/Syncfusion.Shared.Wpf.VisualStudio.Design.dll",
+        "lib/net40/Design/Syncfusion.Shared.Wpf.dll.Design.dll",
+        "lib/net40/Syncfusion.Shared.WPF.dll",
+        "lib/net40/Syncfusion.Shared.WPF.xml",
+        "lib/net462/Design/Syncfusion.Design.Wpf.dll",
+        "lib/net462/Design/Syncfusion.Shared.WPF.DesignTools.dll",
+        "lib/net462/Design/Syncfusion.Shared.Wpf.Expression.Design.dll",
+        "lib/net462/Design/Syncfusion.Shared.Wpf.VisualStudio.Design.dll",
+        "lib/net462/Design/Syncfusion.Shared.Wpf.dll.Design.dll",
+        "lib/net462/Syncfusion.Shared.WPF.dll",
+        "lib/net462/Syncfusion.Shared.WPF.xml",
+        "lib/net6.0-windows7.0/Design/Syncfusion.Shared.WPF.DesignTools.dll",
+        "lib/net6.0-windows7.0/Syncfusion.Shared.WPF.dll",
+        "lib/net6.0-windows7.0/Syncfusion.Shared.WPF.xml",
+        "lib/net8.0-windows7.0/Design/Syncfusion.Shared.WPF.DesignTools.dll",
+        "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.dll",
+        "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.xml",
+        "lib/net9.0-windows7.0/Design/Syncfusion.Shared.WPF.DesignTools.dll",
+        "lib/net9.0-windows7.0/Syncfusion.Shared.WPF.dll",
+        "lib/net9.0-windows7.0/Syncfusion.Shared.WPF.xml",
+        "syncfusion.shared.wpf.27.2.2.nupkg.sha512",
+        "syncfusion.shared.wpf.nuspec",
+        "syncfusion_logo.png",
+        "tools/VisualStudioToolsManifest.xml"
       ]
     },
     "System.ClientModel/1.0.0": {
@@ -2132,46 +1495,6 @@
         "system.diagnostics.eventlog.8.0.0.nupkg.sha512",
         "system.diagnostics.eventlog.nuspec",
         "useSharedDesignerContext.txt"
-      ]
-    },
-    "System.Drawing.Common/4.7.3": {
-      "sha512": "B3+wwhAeoUQ6KeshWSq3IRLQiMoqPEzSHzyVyxTI/EbYuqIp90lXrRISlip2AF+5tj74ycIVPpnRY4M424HahA==",
-      "type": "package",
-      "path": "system.drawing.common/4.7.3",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/MonoAndroid10/_._",
-        "lib/MonoTouch10/_._",
-        "lib/net461/System.Drawing.Common.dll",
-        "lib/netstandard2.0/System.Drawing.Common.dll",
-        "lib/xamarinios10/_._",
-        "lib/xamarinmac20/_._",
-        "lib/xamarintvos10/_._",
-        "lib/xamarinwatchos10/_._",
-        "ref/MonoAndroid10/_._",
-        "ref/MonoTouch10/_._",
-        "ref/net461/System.Drawing.Common.dll",
-        "ref/netcoreapp3.0/System.Drawing.Common.dll",
-        "ref/netcoreapp3.0/System.Drawing.Common.xml",
-        "ref/netstandard2.0/System.Drawing.Common.dll",
-        "ref/xamarinios10/_._",
-        "ref/xamarinmac20/_._",
-        "ref/xamarintvos10/_._",
-        "ref/xamarinwatchos10/_._",
-        "runtimes/unix/lib/netcoreapp2.0/System.Drawing.Common.dll",
-        "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.dll",
-        "runtimes/unix/lib/netcoreapp3.0/System.Drawing.Common.xml",
-        "runtimes/win/lib/netcoreapp2.0/System.Drawing.Common.dll",
-        "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll",
-        "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.xml",
-        "system.drawing.common.4.7.3.nupkg.sha512",
-        "system.drawing.common.nuspec",
-        "useSharedDesignerContext.txt",
-        "version.txt"
       ]
     },
     "System.IdentityModel.Tokens.Jwt/6.35.0": {
@@ -2700,7 +2023,8 @@
       "LiveCharts.Wpf >= 0.9.7",
       "Microsoft.Data.SqlClient >= 5.2.2",
       "Microsoft.SqlServer.Server >= 1.0.0",
-      "ScottPlot.WPF >= 5.0.44"
+      "Syncfusion.Licensing >= 27.2.2",
+      "Syncfusion.SfGrid.WPF >= 27.2.2"
     ]
   },
   "packageFolders": {
@@ -2771,9 +2095,13 @@
             "target": "Package",
             "version": "[1.0.0, )"
           },
-          "ScottPlot.WPF": {
+          "Syncfusion.Licensing": {
             "target": "Package",
-            "version": "[5.0.44, )"
+            "version": "[27.2.2, )"
+          },
+          "Syncfusion.SfGrid.WPF": {
+            "target": "Package",
+            "version": "[27.2.2, )"
           }
         },
         "imports": [

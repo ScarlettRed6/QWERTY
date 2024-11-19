@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\App.xaml
-16-1128002299
+19-1774488026
 
-31-1716227271
-242-1504393282
-CustomControls\CustomPasswordBox.xaml;MainWindow.xaml;Styles\ButtonStyles.xaml;Styles\ComboBoxStyles.xaml;Styles\DataGridStyles.xaml;Styles\TextBoxStyles.xaml;Styles\UIColors.xaml;View\AdminDashboardView.xaml;View\AdminDashboardViews\AddProductView.xaml;View\AdminDashboardViews\AnalyticsView.xaml;View\AdminDashboardViews\CatalogView.xaml;View\AdminDashboardViews\EditProductView.xaml;View\AdminDashboardViews\HomeView.xaml;View\CashierView\CashierCategory.xaml;View\CashierView\HistoryTransaction.xaml;View\CashierView\newSaleView.xaml;
+36-859399414
+231289875424
+CustomControls\CustomPasswordBox.xaml;MainWindow.xaml;Styles\ButtonStyles.xaml;Styles\ComboBoxStyles.xaml;Styles\DataGridStyles.xaml;Styles\ExpanderStyles.xaml;Styles\TextBoxStyles.xaml;Styles\UIColors.xaml;View\AdminDashboardView.xaml;View\AdminDashboardViews\AddProductView.xaml;View\AdminDashboardViews\AnalyticsView.xaml;View\AdminDashboardViews\ArchiveProductView.xaml;View\AdminDashboardViews\CatalogView.xaml;View\AdminDashboardViews\EditProductView.xaml;View\AdminDashboardViews\HomeView.xaml;View\CashierView\CashierCategory.xaml;View\CashierView\HistoryTransaction.xaml;View\CashierView\newSaleView.xaml;View\CashierView\ProductDetailsModal.xaml;
 
 False
 

@@ -69,9 +69,13 @@
               "target": "Package",
               "version": "[1.0.0, )"
             },
-            "ScottPlot.WPF": {
+            "Syncfusion.Licensing": {
               "target": "Package",
-              "version": "[5.0.44, )"
+              "version": "[27.2.2, )"
+            },
+            "Syncfusion.SfGrid.WPF": {
+              "target": "Package",
+              "version": "[27.2.2, )"
             }
           },
           "imports": [
