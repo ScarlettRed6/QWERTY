@@ -107,6 +107,7 @@ namespace CIRCUIT.Utilities
             return products;
         }
 
+        //Method to fetch data by product ID
         public List<ProductModel> GetProductById(int productId)
         {
             var products = new List<ProductModel>();
@@ -136,7 +137,7 @@ namespace CIRCUIT.Utilities
                                     MinStockLevel = reader.GetInt32(reader.GetOrdinal("min_stock_level")),
                                     StockQuantity = reader.GetInt32(reader.GetOrdinal("stock_quantity")),
                                     UnitCost = (double)reader.GetDecimal(reader.GetOrdinal("unit_cost")),
-                                    //SKU = reader.GetOrdinal("sku"),
+                                    SKU = reader.GetOrdinal("sku"),
                                     //IsArchived = reader.GetBoolean(reader.GetOrdinal("is_archived"))
                                 };
                                 products.Add(product);
@@ -150,11 +151,12 @@ namespace CIRCUIT.Utilities
                 }
 
             }
-
             return products;
+
         }
 
-        public void UpdateProductAsync(ProductModel product)
+        //Method to update product
+        public void UpdateProductData(ProductModel product)
         {
             string updateQuery = "UPDATE Products SET product_name = @productName, model_number = @modelNumber, brand = @brand, category = @category, description = @description, " +
                                  "selling_price = @sellingPrice, min_stock_level = @minStockLevel, stock_quantity = @stockQuantity, unit_cost = @unitCost WHERE product_id = @productId";
@@ -178,9 +180,29 @@ namespace CIRCUIT.Utilities
                     command.Parameters.AddWithValue("@productId", product.ProductId);
 
                     command.ExecuteNonQuery();
-                     // Returns true if the update was successful
+                    
                 }
             }
+        }
+
+        //Method to archive a product
+        public void ArchiveProduct(ProductModel product)
+        {
+            string archiveQuery = "UPDATE Products SET is_archived = @IsArchived WHERE product_id = @productId";
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (var command = new SqlCommand(archiveQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@IsArchived", product.IsArchived);
+                    command.Parameters.AddWithValue("@productId", product.ProductId);
+                    command.ExecuteNonQuery();
+
+                }
+
+            }
+
         }
 
     }

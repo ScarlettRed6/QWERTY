@@ -13,6 +13,8 @@
     <SourceRoot Include="C:\Users\Dreadlord\.nuget\packages\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgSyncfusion_Shared_WPF Condition=" '$(PkgSyncfusion_Shared_WPF)' == '' ">C:\Users\Dreadlord\.nuget\packages\syncfusion.shared.wpf\27.2.2</PkgSyncfusion_Shared_WPF>
+    <PkgSyncfusion_SfGrid_WPF Condition=" '$(PkgSyncfusion_SfGrid_WPF)' == '' ">C:\Users\Dreadlord\.nuget\packages\syncfusion.sfgrid.wpf\27.2.2</PkgSyncfusion_SfGrid_WPF>
     <PkgLiveCharts_Wpf Condition=" '$(PkgLiveCharts_Wpf)' == '' ">C:\Users\Dreadlord\.nuget\packages\livecharts.wpf\0.9.7</PkgLiveCharts_Wpf>
   </PropertyGroup>
 </Project>

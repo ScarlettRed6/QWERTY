@@ -1,28 +1,42 @@
 ﻿using CIRCUIT.Model;
 using CIRCUIT.Utilities;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 
 namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 {
-    public class AddProductViewModel : PropertyChange
+    public partial class AddProductViewModel : ObservableObject
     {
-        //Fields
+        //Properties
+        [ObservableProperty]
         private string _productNameBox;
+
+        [ObservableProperty]
         private string _productModelBox;
+
+        [ObservableProperty]
         private string _brandBox;
+
+        [ObservableProperty]
         private string _categoryBox;
+
+        [ObservableProperty]
         private string _productDescriptionBox;
+
+        [ObservableProperty]
         private double _sellingPriceBox;
+
+        [ObservableProperty]
         private int _minStockLevel;
+
+        [ObservableProperty]
         private int _stockQuantityBox;
+
+        [ObservableProperty]
         private double _unitCost;
+
+        [ObservableProperty]
         private object _currentAddView;
 
         //Random number integer for sku placeholder
@@ -34,106 +48,6 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         //Commands
         public RelayCommand ReturnBtnCommand { get; }
         public RelayCommand SaveProductCommand { get; }
-
-        //Properties
-        public object CurrentAddView
-        {
-            get { return _currentAddView; }
-            set 
-            { 
-                _currentAddView = value;
-                OnPropertyChange();
-            }
-        }
-
-        public string ProductNameBox 
-        { 
-            get => _productNameBox; 
-            set 
-            { 
-                _productNameBox = value;
-                OnPropertyChange();
-            } 
-        }
-
-        public string ProductModelBox 
-        { 
-            get => _productModelBox; 
-            set
-            {
-                _productModelBox = value; 
-                OnPropertyChange();
-            } 
-        }
-
-        public string BrandBox 
-        { 
-            get => _brandBox; 
-            set 
-            { 
-                _brandBox = value; 
-                OnPropertyChange();
-            } 
-        }
-
-        public string CategoryBox 
-        { 
-            get => _categoryBox; 
-            set 
-            { 
-                _categoryBox = value; 
-                OnPropertyChange();
-            } 
-        }
-
-        public string ProductDescriptionBox 
-        { 
-            get => _productDescriptionBox; 
-            set 
-            { 
-                _productDescriptionBox = value;
-                OnPropertyChange();
-            }
-        }
-
-        public double SellingPriceBox 
-        { 
-            get => _sellingPriceBox; 
-            set 
-            { 
-                _sellingPriceBox = value;
-                OnPropertyChange();
-            }
-        }
-
-        public int MinStockLevelBox
-        { 
-            get => _minStockLevel; 
-            set 
-            { 
-                _minStockLevel = value;
-                OnPropertyChange();
-            }
-        }
-
-        public int StockQuantityBox 
-        { 
-            get => _stockQuantityBox; 
-            set 
-            { 
-                _stockQuantityBox = value;
-                OnPropertyChange();
-            }
-        }
-
-        public double UnitCostBox
-        {
-            get => _unitCost;
-            set 
-            { 
-                _unitCost = value; 
-            }
-        }
 
         //Constructor
         public AddProductViewModel()
@@ -147,7 +61,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         private void ExecuteSaveProductCommand()
         {
             if (ProductNameBox == null || ProductModelBox == null || BrandBox == null || CategoryBox == null ||
-                ProductDescriptionBox == null || SellingPriceBox <= 0 || MinStockLevelBox <= 0 || StockQuantityBox <= 0 || UnitCostBox <= 0)
+                ProductDescriptionBox == null || SellingPriceBox <= 0 || MinStockLevel <= 0 || StockQuantityBox <= 0 || UnitCost <= 0)
             {
                 MessageBox.Show("Empty details is not allowed!", "Missing Product Details", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -172,9 +86,9 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 Category = CategoryBox,
                 Description = ProductDescriptionBox,
                 SellingPrice = SellingPriceBox,
-                MinStockLevel = MinStockLevelBox,
+                MinStockLevel = MinStockLevel,
                 StockQuantity = StockQuantityBox,
-                UnitCost = UnitCostBox,
+                UnitCost = UnitCost,
                 SKU = _random.Next(1, 9),
                 IsArchived = false
             };

@@ -9,7 +9,7 @@
              xmlns:view="clr-namespace:CIRCUIT.View.AdminDashboard"
              mc:Ignorable="d" 
              Background="Transparent"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="1000">
 
     <Border CornerRadius="10" Background="{StaticResource panelColor5}">
 
@@ -33,6 +33,7 @@
                       Style="{StaticResource returnIcon}"
                       Height="35"/>
                     </Button>
+
                 </StackPanel>
 
                 <!-- Grid row 1 -->
@@ -68,26 +69,17 @@
                                    Foreground="{StaticResource panelColor4}"/>
 
                         </Button>
-                        <!-- Button Cancel -->
-                        <Button Height="50" Width="100"
-                            Style="{StaticResource addCatalogButton}">
-
-                            <TextBlock Text="CANCEL" FontSize="20"
-                                   FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"/>
-
-                        </Button>
 
                     </StackPanel>
 
                 </Grid>
 
                 <!-- Grid row 2-->
-                <Grid Grid.Row="2">
+                <Grid Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition/>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="70*"/>
+                        <RowDefinition Height="10*"/>
                     </Grid.RowDefinitions>
 
                     <!-- Grid row 2 row 0-->
@@ -192,8 +184,7 @@
                                      Foreground="{StaticResource panelColor4}"
                                      Style="{StaticResource catalogBox}"
                                      TextWrapping="Wrap"
-                                     VerticalScrollBarVisibility="Auto" 
-                                     HorizontalScrollBarVisibility="Disabled"
+                                     VerticalScrollBarVisibility="Auto"
                                      Text="{Binding EditDescription, UpdateSourceTrigger=PropertyChanged}"/>
 
                             </StackPanel>
@@ -209,26 +200,26 @@
                                     <!-- Selling price numerical textbox -->
                                     <StackPanel>
                                         <Label Content="Selling price $"
-                                       FontSize="15"
-                                       FontWeight="Medium"
-                                       Foreground="{StaticResource panelColor4}"/>
+                                               FontSize="15"
+                                               FontWeight="Medium"
+                                               Foreground="{StaticResource panelColor4}"/>
                                         <TextBox  x:Name="sellingPrice" Height="35"
-                                          Width="90"
-                                          FontSize="20"
-                                          Foreground="{StaticResource panelColor4}"
-                                          Style="{StaticResource catalogBox}"
-                                          PreviewTextInput="NumberValidationTextBox"
-                                          Text="{Binding EditSellingPrice, UpdateSourceTrigger=PropertyChanged}"/>
+                                                  Width="90"
+                                                  FontSize="20"
+                                                  Foreground="{StaticResource panelColor4}"
+                                                  Style="{StaticResource catalogBox}"
+                                                  PreviewTextInput="NumberValidationTextBox"
+                                                  Text="{Binding EditSellingPrice, UpdateSourceTrigger=PropertyChanged}"/>
 
                                     </StackPanel>
 
                                     <!-- Minimum Stock level/Reorder point -->
                                     <StackPanel>
                                         <Label Content="Min Reorder"
-                                       FontSize="15"
-                                       FontWeight="Medium"
-                                       Foreground="{StaticResource panelColor4}"
-                                       Margin="8,0,0,0"/>
+                                               FontSize="15"
+                                               FontWeight="Medium"
+                                               Foreground="{StaticResource panelColor4}"
+                                               Margin="8,0,0,0"/>
                                         <TextBox x:Name="minStockLevel" Height="35"
                                          Width="90"
                                          FontSize="20"

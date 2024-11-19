@@ -14,7 +14,8 @@
           "LiveCharts.Wpf": "0.9.7",
           "Microsoft.Data.SqlClient": "5.2.2",
           "Microsoft.SqlServer.Server": "1.0.0",
-          "ScottPlot.WPF": "5.0.44"
+          "Syncfusion.Licensing": "27.2.2",
+          "Syncfusion.SfGrid.WPF": "27.2.2"
         },
         "runtime": {
           "CIRCUIT.dll": {}
@@ -281,7 +282,7 @@
           }
         }
       },
-      "Microsoft.NETCore.Platforms/3.1.9": {},
+      "Microsoft.NETCore.Platforms/1.1.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
       "Microsoft.SqlServer.Server/1.0.0": {
         "runtime": {
@@ -291,267 +292,43 @@
           }
         }
       },
-      "Microsoft.Win32.SystemEvents/4.7.0": {
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.1.9"
-        }
-      },
-      "OpenTK/4.3.0": {
-        "dependencies": {
-          "OpenTK.Compute": "4.3.0",
-          "OpenTK.Core": "4.3.0",
-          "OpenTK.Graphics": "4.3.0",
-          "OpenTK.Input": "4.3.0",
-          "OpenTK.Mathematics": "4.3.0",
-          "OpenTK.OpenAL": "4.3.0",
-          "OpenTK.Windowing.Common": "4.3.0",
-          "OpenTK.Windowing.Desktop": "4.3.0",
-          "OpenTK.Windowing.GraphicsLibraryFramework": "4.3.0"
-        }
-      },
-      "OpenTK.Compute/4.3.0": {
+      "Syncfusion.Data.WPF/27.2.2": {
         "runtime": {
-          "lib/netcoreapp3.1/OpenTK.Compute.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
+          "lib/net8.0-windows7.0/Syncfusion.Data.WPF.dll": {
+            "assemblyVersion": "27.2.2.0",
+            "fileVersion": "27.2.2.0"
           }
         }
       },
-      "OpenTK.Core/4.3.0": {
+      "Syncfusion.Licensing/27.2.2": {
         "runtime": {
-          "lib/netstandard2.1/OpenTK.Core.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
+          "lib/net8.0/Syncfusion.Licensing.dll": {
+            "assemblyVersion": "27.2.2.0",
+            "fileVersion": "27.2.2.0"
           }
         }
       },
-      "OpenTK.GLWpfControl/4.2.3": {
+      "Syncfusion.SfGrid.WPF/27.2.2": {
         "dependencies": {
-          "OpenTK": "4.3.0"
+          "Syncfusion.Data.WPF": "27.2.2",
+          "Syncfusion.Licensing": "27.2.2",
+          "Syncfusion.Shared.WPF": "27.2.2"
         },
         "runtime": {
-          "lib/netcoreapp3.1/GLWpfControl.dll": {
-            "assemblyVersion": "4.2.3.0",
-            "fileVersion": "4.2.3.0"
+          "lib/net8.0-windows7.0/Syncfusion.SfGrid.WPF.dll": {
+            "assemblyVersion": "27.2.2.0",
+            "fileVersion": "27.2.2.0"
           }
         }
       },
-      "OpenTK.Graphics/4.3.0": {
+      "Syncfusion.Shared.WPF/27.2.2": {
         "dependencies": {
-          "OpenTK.Core": "4.3.0",
-          "OpenTK.Mathematics": "4.3.0"
+          "Syncfusion.Licensing": "27.2.2"
         },
         "runtime": {
-          "lib/netstandard2.1/OpenTK.Graphics.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
-          }
-        }
-      },
-      "OpenTK.Input/4.3.0": {
-        "runtime": {
-          "lib/netstandard2.0/OpenTK.Input.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
-          }
-        }
-      },
-      "OpenTK.Mathematics/4.3.0": {
-        "runtime": {
-          "lib/netstandard2.1/OpenTK.Mathematics.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
-          }
-        }
-      },
-      "OpenTK.OpenAL/4.3.0": {
-        "dependencies": {
-          "OpenTK.Core": "4.3.0",
-          "OpenTK.Mathematics": "4.3.0"
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/OpenTK.OpenAL.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
-          }
-        }
-      },
-      "OpenTK.redist.glfw/3.3.0-pre20200830200122": {
-        "runtimeTargets": {
-          "runtimes/linux-x64/native/libglfw.so.3.3": {
-            "rid": "linux-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/osx-x64/native/libglfw.3.dylib": {
-            "rid": "osx-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/win-x64/native/glfw3.dll": {
-            "rid": "win-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/win-x86/native/glfw3.dll": {
-            "rid": "win-x86",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "OpenTK.Windowing.Common/4.3.0": {
-        "dependencies": {
-          "OpenTK.Core": "4.3.0",
-          "OpenTK.Mathematics": "4.3.0"
-        },
-        "runtime": {
-          "lib/netstandard2.1/OpenTK.Windowing.Common.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
-          }
-        }
-      },
-      "OpenTK.Windowing.Desktop/4.3.0": {
-        "dependencies": {
-          "OpenTK.Core": "4.3.0",
-          "OpenTK.Mathematics": "4.3.0",
-          "OpenTK.Windowing.Common": "4.3.0",
-          "OpenTK.Windowing.GraphicsLibraryFramework": "4.3.0"
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/OpenTK.Windowing.Desktop.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
-          }
-        }
-      },
-      "OpenTK.Windowing.GraphicsLibraryFramework/4.3.0": {
-        "dependencies": {
-          "OpenTK.Core": "4.3.0",
-          "OpenTK.redist.glfw": "3.3.0-pre20200830200122"
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/OpenTK.Windowing.GraphicsLibraryFramework.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
-          }
-        }
-      },
-      "ScottPlot/5.0.44": {
-        "dependencies": {
-          "SkiaSharp": "2.88.9",
-          "SkiaSharp.NativeAssets.Linux.NoDependencies": "2.88.9"
-        },
-        "runtime": {
-          "lib/net8.0/ScottPlot.dll": {
-            "assemblyVersion": "5.0.44.0",
-            "fileVersion": "5.0.44.0"
-          }
-        }
-      },
-      "ScottPlot.WPF/5.0.44": {
-        "dependencies": {
-          "OpenTK": "4.3.0",
-          "OpenTK.GLWpfControl": "4.2.3",
-          "ScottPlot": "5.0.44",
-          "SkiaSharp.Views.WPF": "2.88.9"
-        },
-        "runtime": {
-          "lib/net6.0-windows7.0/ScottPlot.WPF.dll": {
-            "assemblyVersion": "5.0.44.0",
-            "fileVersion": "5.0.44.0"
-          }
-        }
-      },
-      "SkiaSharp/2.88.9": {
-        "dependencies": {
-          "SkiaSharp.NativeAssets.Win32": "2.88.9",
-          "SkiaSharp.NativeAssets.macOS": "2.88.9"
-        },
-        "runtime": {
-          "lib/net6.0/SkiaSharp.dll": {
-            "assemblyVersion": "2.88.0.0",
-            "fileVersion": "2.88.9.0"
-          }
-        }
-      },
-      "SkiaSharp.NativeAssets.Linux.NoDependencies/2.88.9": {
-        "dependencies": {
-          "SkiaSharp": "2.88.9"
-        },
-        "runtimeTargets": {
-          "runtimes/linux-arm/native/libSkiaSharp.so": {
-            "rid": "linux-arm",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/linux-arm64/native/libSkiaSharp.so": {
-            "rid": "linux-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/linux-musl-x64/native/libSkiaSharp.so": {
-            "rid": "linux-musl-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/linux-x64/native/libSkiaSharp.so": {
-            "rid": "linux-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "SkiaSharp.NativeAssets.macOS/2.88.9": {
-        "runtimeTargets": {
-          "runtimes/osx/native/libSkiaSharp.dylib": {
-            "rid": "osx",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "SkiaSharp.NativeAssets.Win32/2.88.9": {
-        "runtimeTargets": {
-          "runtimes/win-arm64/native/libSkiaSharp.dll": {
-            "rid": "win-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/win-x64/native/libSkiaSharp.dll": {
-            "rid": "win-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/win-x86/native/libSkiaSharp.dll": {
-            "rid": "win-x86",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "SkiaSharp.Views.Desktop.Common/2.88.9": {
-        "dependencies": {
-          "SkiaSharp": "2.88.9",
-          "System.Drawing.Common": "4.7.3"
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/SkiaSharp.Views.Desktop.Common.dll": {
-            "assemblyVersion": "2.88.0.0",
-            "fileVersion": "2.88.9.0"
-          }
-        }
-      },
-      "SkiaSharp.Views.WPF/2.88.9": {
-        "dependencies": {
-          "SkiaSharp": "2.88.9",
-          "SkiaSharp.Views.Desktop.Common": "2.88.9"
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/SkiaSharp.Views.WPF.dll": {
-            "assemblyVersion": "2.88.0.0",
-            "fileVersion": "2.88.9.0"
+          "lib/net8.0-windows7.0/Syncfusion.Shared.WPF.dll": {
+            "assemblyVersion": "27.2.2.0",
+            "fileVersion": "27.2.2.0"
           }
         }
       },
@@ -579,12 +356,6 @@
         }
       },
       "System.Diagnostics.EventLog/8.0.0": {},
-      "System.Drawing.Common/4.7.3": {
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.1.9",
-          "Microsoft.Win32.SystemEvents": "4.7.0"
-        }
-      },
       "System.IdentityModel.Tokens.Jwt/6.35.0": {
         "dependencies": {
           "Microsoft.IdentityModel.JsonWebTokens": "6.35.0",
@@ -613,7 +384,7 @@
       "System.Numerics.Vectors/4.5.0": {},
       "System.Runtime/4.3.0": {
         "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.1.9",
+          "Microsoft.NETCore.Platforms": "1.1.0",
           "Microsoft.NETCore.Targets": "1.1.0"
         }
       },
@@ -641,7 +412,7 @@
       "System.Security.Cryptography.ProtectedData/8.0.0": {},
       "System.Text.Encoding/4.3.0": {
         "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.1.9",
+          "Microsoft.NETCore.Platforms": "1.1.0",
           "Microsoft.NETCore.Targets": "1.1.0",
           "System.Runtime": "4.3.0"
         }
@@ -783,12 +554,12 @@
       "path": "microsoft.identitymodel.tokens/6.35.0",
       "hashPath": "microsoft.identitymodel.tokens.6.35.0.nupkg.sha512"
     },
-    "Microsoft.NETCore.Platforms/3.1.9": {
+    "Microsoft.NETCore.Platforms/1.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-e+/BrhryHoMojWlbcPJAFcShpk3JYvsMfrmoM26dnvHARWR6vtmGbfHppZcANVqf7DUBDIRxlZXcWg7v/9e1TQ==",
-      "path": "microsoft.netcore.platforms/3.1.9",
-      "hashPath": "microsoft.netcore.platforms.3.1.9.nupkg.sha512"
+      "sha512": "sha512-kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+      "path": "microsoft.netcore.platforms/1.1.0",
+      "hashPath": "microsoft.netcore.platforms.1.1.0.nupkg.sha512"
     },
     "Microsoft.NETCore.Targets/1.1.0": {
       "type": "package",
@@ -804,152 +575,33 @@
       "path": "microsoft.sqlserver.server/1.0.0",
       "hashPath": "microsoft.sqlserver.server.1.0.0.nupkg.sha512"
     },
-    "Microsoft.Win32.SystemEvents/4.7.0": {
+    "Syncfusion.Data.WPF/27.2.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-mtVirZr++rq+XCDITMUdnETD59XoeMxSpLRIII7JRI6Yj0LEDiO1pPn0ktlnIj12Ix8bfvQqQDMMIF9wC98oCA==",
-      "path": "microsoft.win32.systemevents/4.7.0",
-      "hashPath": "microsoft.win32.systemevents.4.7.0.nupkg.sha512"
+      "sha512": "sha512-yAMGnnKmaZkYBTH/4Rc+lg/XwML6+wdv5EnROyOJ/7kxm/omCZQbpvv9zRSLbkKik813J1ThvgGpU95rCy7shg==",
+      "path": "syncfusion.data.wpf/27.2.2",
+      "hashPath": "syncfusion.data.wpf.27.2.2.nupkg.sha512"
     },
-    "OpenTK/4.3.0": {
+    "Syncfusion.Licensing/27.2.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-w2oiuLDpZbSCyqzHEFFLTO6JMNadHWS6Pp68U68lfzdTrzTQQqyH7x+/PJidsk+wRSDopaH9e03/KzYB9Fs+7Q==",
-      "path": "opentk/4.3.0",
-      "hashPath": "opentk.4.3.0.nupkg.sha512"
+      "sha512": "sha512-dhfD4qMrtzManAzH0ERFREh3cS1CPB23eReSDJBze03H6z601y1/MP/0N/rYZUMW53vdFpRPsCCfUAXq5CNS+w==",
+      "path": "syncfusion.licensing/27.2.2",
+      "hashPath": "syncfusion.licensing.27.2.2.nupkg.sha512"
     },
-    "OpenTK.Compute/4.3.0": {
+    "Syncfusion.SfGrid.WPF/27.2.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-XrMVjBPp1PNuz7z7hdNyO2oBsAPZHcHzILs7ewtEP09CM1KPVwZDAsIjOjEJesLCWrNr+jm6+3TvHActYkk4lQ==",
-      "path": "opentk.compute/4.3.0",
-      "hashPath": "opentk.compute.4.3.0.nupkg.sha512"
+      "sha512": "sha512-QrV4s+JkuSR8RRukXgCOUDEnxreNqWawlnt1AB7ltHjmkJSvM8xOh2nmnTqsgihEKmBvgteBRn/9vOEaigTkQg==",
+      "path": "syncfusion.sfgrid.wpf/27.2.2",
+      "hashPath": "syncfusion.sfgrid.wpf.27.2.2.nupkg.sha512"
     },
-    "OpenTK.Core/4.3.0": {
+    "Syncfusion.Shared.WPF/27.2.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Hu+4U+tvnQW++y8Gj4OggLVuhclLm1hVN9ZIc3e9d8uo15CWYOSycw+FQhaRH3aibFv1vFYgH+bMIHM509YwYg==",
-      "path": "opentk.core/4.3.0",
-      "hashPath": "opentk.core.4.3.0.nupkg.sha512"
-    },
-    "OpenTK.GLWpfControl/4.2.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-VIq15MqeMB42v7cuoPcbHAFzdlOcN5DZEhguuQVdvZP0NlfajjaoVDqtP3koOWLs1how2YqCaVk1qIvsuRdQqQ==",
-      "path": "opentk.glwpfcontrol/4.2.3",
-      "hashPath": "opentk.glwpfcontrol.4.2.3.nupkg.sha512"
-    },
-    "OpenTK.Graphics/4.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-N1XXKrX+op6ORxkRoLa8mb/rMQVTW4YsJraneyU0RKqZ04PeOwcnX6BFb+mJISZnbtk+3SyYlWLjSsQjDdFbRg==",
-      "path": "opentk.graphics/4.3.0",
-      "hashPath": "opentk.graphics.4.3.0.nupkg.sha512"
-    },
-    "OpenTK.Input/4.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-tvTQlC87bnNWN5BPOxCqSE2UJ6RKz/r342I25XBfeF/TNpw9Ad6upLdok8l8Nhess9LUItOPT6uBBdOlMEO0cA==",
-      "path": "opentk.input/4.3.0",
-      "hashPath": "opentk.input.4.3.0.nupkg.sha512"
-    },
-    "OpenTK.Mathematics/4.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-3yiHBaEeV6OVu7La6961Jx7xoP7dJoZXcRJaDqqPrEmmIuwUx2i4AQI60UpGmcrMJ11QhicmW6zjb8aZYySYrw==",
-      "path": "opentk.mathematics/4.3.0",
-      "hashPath": "opentk.mathematics.4.3.0.nupkg.sha512"
-    },
-    "OpenTK.OpenAL/4.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-zDzP8wsppS/5jwW8RUaac/bWOrZV5rB8Faejy5vLVE1ixWKclOEyO30ADOO3XZ+IWNKioX5wMhzKcy8kfsKKew==",
-      "path": "opentk.openal/4.3.0",
-      "hashPath": "opentk.openal.4.3.0.nupkg.sha512"
-    },
-    "OpenTK.redist.glfw/3.3.0-pre20200830200122": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-EKE9pJCFHScbqOv/t0zG1h5Eh24nWr44SXYnpYtAWDhJhzAoUoI8TwDRXGvTGhDeCBp8ONEaVsq9xRC+OQIxQA==",
-      "path": "opentk.redist.glfw/3.3.0-pre20200830200122",
-      "hashPath": "opentk.redist.glfw.3.3.0-pre20200830200122.nupkg.sha512"
-    },
-    "OpenTK.Windowing.Common/4.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-HKKMHsv+eQrB3C3ySCcYS0yfKNZ/SM0v1upqBLEN5khs7IVPQ/wRwdR+OaPH/9v11pYtdNQL/XtkPVV0SC8jWA==",
-      "path": "opentk.windowing.common/4.3.0",
-      "hashPath": "opentk.windowing.common.4.3.0.nupkg.sha512"
-    },
-    "OpenTK.Windowing.Desktop/4.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-pomhIDKQGGLn+5jAWCUsxAcHLOwO4/43pmcXA2xVKRcrvRQgY0QCUcroQRDwGam+8SinRBSTa0PNVNbDxZhoRA==",
-      "path": "opentk.windowing.desktop/4.3.0",
-      "hashPath": "opentk.windowing.desktop.4.3.0.nupkg.sha512"
-    },
-    "OpenTK.Windowing.GraphicsLibraryFramework/4.3.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-R8H4ynmYUYuow/QNx4pnvPGR8Z6KUP54rVlnsH5tRkDYBU/m6bWmvFFvAA492rRyM5nt+6zAqGjv8GXY+8sylA==",
-      "path": "opentk.windowing.graphicslibraryframework/4.3.0",
-      "hashPath": "opentk.windowing.graphicslibraryframework.4.3.0.nupkg.sha512"
-    },
-    "ScottPlot/5.0.44": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-sA2YzjJuf9uiZJK/NibsQiklT1NnObL4I/tzlq/Ts9y11PiYOHG9arIimBtvLgGYN0jq3MYShmL4ODjLQNgF/Q==",
-      "path": "scottplot/5.0.44",
-      "hashPath": "scottplot.5.0.44.nupkg.sha512"
-    },
-    "ScottPlot.WPF/5.0.44": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-+933hkqWQZ+ZAlrV2pD+q1EB3eVhxHP71PX8pe4j3VDsjAjY0m/IJpydhTyQWj52TzTabK450vomI1V2W8sJhA==",
-      "path": "scottplot.wpf/5.0.44",
-      "hashPath": "scottplot.wpf.5.0.44.nupkg.sha512"
-    },
-    "SkiaSharp/2.88.9": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-3MD5VHjXXieSHCleRLuaTXmL2pD0mB7CcOB1x2kA1I4bhptf4e3R27iM93264ZYuAq6mkUyX5XbcxnZvMJYc1Q==",
-      "path": "skiasharp/2.88.9",
-      "hashPath": "skiasharp.2.88.9.nupkg.sha512"
-    },
-    "SkiaSharp.NativeAssets.Linux.NoDependencies/2.88.9": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ZA9syMvIuoqxPhyFTgde/bNV6VMdeYT9gRdNQT5O+ZjPK+a/nVkKRrqBbn7EVA7XQiW+xIycyT4gW/sea9eh+w==",
-      "path": "skiasharp.nativeassets.linux.nodependencies/2.88.9",
-      "hashPath": "skiasharp.nativeassets.linux.nodependencies.2.88.9.nupkg.sha512"
-    },
-    "SkiaSharp.NativeAssets.macOS/2.88.9": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Nv5spmKc4505Ep7oUoJ5vp3KweFpeNqxpyGDWyeEPTX2uR6S6syXIm3gj75dM0YJz7NPvcix48mR5laqs8dPuA==",
-      "path": "skiasharp.nativeassets.macos/2.88.9",
-      "hashPath": "skiasharp.nativeassets.macos.2.88.9.nupkg.sha512"
-    },
-    "SkiaSharp.NativeAssets.Win32/2.88.9": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-wb2kYgU7iy84nQLYZwMeJXixvK++GoIuECjU4ECaUKNuflyRlJKyiRhN1MAHswvlvzuvkrjRWlK0Za6+kYQK7w==",
-      "path": "skiasharp.nativeassets.win32/2.88.9",
-      "hashPath": "skiasharp.nativeassets.win32.2.88.9.nupkg.sha512"
-    },
-    "SkiaSharp.Views.Desktop.Common/2.88.9": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-a9geU/Xe5Tn6OnadnfnMCUqqO3vB7GwCxJM8f7rRay8JrGXm7rgYKBPQX0baymxmVlPqYXeMm8AWhQj5RVtwPw==",
-      "path": "skiasharp.views.desktop.common/2.88.9",
-      "hashPath": "skiasharp.views.desktop.common.2.88.9.nupkg.sha512"
-    },
-    "SkiaSharp.Views.WPF/2.88.9": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-80fEK0dYEJpi36Ko9WylN2rCf4w/hzzHEe+nyEL79dTHvUVfuXLZONmIwrDJ+pL5JSi8YmktQVxbYZexS+NZCw==",
-      "path": "skiasharp.views.wpf/2.88.9",
-      "hashPath": "skiasharp.views.wpf.2.88.9.nupkg.sha512"
+      "sha512": "sha512-GnXQ1oHKs8aq4RaPTRi2zY7PIxNTTMcOOf6AgWXzCtJc9OdHwHiyZtn88dMhaprht/qC/hHhq1HfOQNgqamulQ==",
+      "path": "syncfusion.shared.wpf/27.2.2",
+      "hashPath": "syncfusion.shared.wpf.27.2.2.nupkg.sha512"
     },
     "System.ClientModel/1.0.0": {
       "type": "package",
@@ -978,13 +630,6 @@
       "sha512": "sha512-fdYxcRjQqTTacKId/2IECojlDSFvp7LP5N78+0z/xH7v/Tuw5ZAxu23Y6PTCRinqyu2ePx+Gn1098NC6jM6d+A==",
       "path": "system.diagnostics.eventlog/8.0.0",
       "hashPath": "system.diagnostics.eventlog.8.0.0.nupkg.sha512"
-    },
-    "System.Drawing.Common/4.7.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-B3+wwhAeoUQ6KeshWSq3IRLQiMoqPEzSHzyVyxTI/EbYuqIp90lXrRISlip2AF+5tj74ycIVPpnRY4M424HahA==",
-      "path": "system.drawing.common/4.7.3",
-      "hashPath": "system.drawing.common.4.7.3.nupkg.sha512"
     },
     "System.IdentityModel.Tokens.Jwt/6.35.0": {
       "type": "package",

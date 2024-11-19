@@ -1,0 +1,77 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp">
+
+    <Style x:Key="customExpander" TargetType="Expander">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Expander">
+                    <Border BorderThickness="0" BorderBrush="{StaticResource panelColor2}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Header (ToggleButton) -->
+                            <ToggleButton Grid.Row="0"
+                                      FontWeight="Bold" 
+                                      Background="{StaticResource panelColor6}"
+                                      BorderThickness="0"
+                                      IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Style>
+                                    <Style TargetType="ToggleButton">
+                                        <Setter Property="Foreground" Value="{StaticResource panelColor4}" />
+                                        <Setter Property="Background" Value="{StaticResource panelColor6}" />
+                                        <Style.Triggers>
+                                            <!-- Hover State -->
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="Red" />
+                                                <Setter Property="Foreground" Value="{StaticResource hoverForeground}" />
+                                            </Trigger>
+                                            <!-- Open State -->
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="Background" Value="Red" />
+                                                <Setter Property="Foreground" Value="{StaticResource openForeground}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ToggleButton.Style>
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Icon="Tag" Style="{StaticResource menuButtonIcon}"
+                                              Margin="20,0,0,0"
+                                              Foreground="{StaticResource panelColor2}"/>
+                                    <TextBlock Text="Products"
+                                           Foreground="{StaticResource panelColor4}"
+                                           Style="{StaticResource menuButtonText}"
+                                           Padding="20,0,0,0"/>
+                                    <fa:IconImage Icon="ChevronDown" Style="{StaticResource menuButtonIcon}"
+                                              Margin="80,0,0,0"
+                                              Foreground="{StaticResource panelColor2}"/>
+                                </StackPanel>
+                            </ToggleButton>
+
+                            <!-- Content -->
+                            <ContentPresenter Grid.Row="1" Margin="40,0,0,0">
+                                <ContentPresenter.Style>
+                                    <Style TargetType="ContentPresenter">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource AncestorType=Expander}}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ContentPresenter.Style>
+                            </ContentPresenter>
+
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+</ResourceDictionary>

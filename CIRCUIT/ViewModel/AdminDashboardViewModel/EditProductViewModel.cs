@@ -50,10 +50,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         public RelayCommand ReturnBtnCommand { get; }
 
         // Default constructor
-        public EditProductViewModel() 
-        {
-            _dbCon = new Db();
-        }
+        public EditProductViewModel() => _dbCon = new Db();
 
         // Constructor with a parameter
         public EditProductViewModel(ProductModel data)
@@ -66,8 +63,16 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             LoadProductById(data.ProductId);
         }
 
+        //Execute UpdateProductCommand
         private void ExecuteUpdateCommand()
         {
+            var result = MessageBox.Show("Do you want to proceed with the Update?","Proceed to update",MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if(result != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
             var updatedProduct = new ProductModel
             {
                 ProductId = ProductID,
@@ -83,12 +88,13 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 
             };
 
-            _dbCon.UpdateProductAsync(updatedProduct); // Assuming your UpdateProduct method is async
+            _dbCon.UpdateProductData(updatedProduct);
 
             CurrentAddView = new CatalogViewModel();
 
         }
 
+        //Execute ReturnBtnCommand
         private void ExecuteReturnBtn()
         {
             CurrentAddView = new CatalogViewModel();
