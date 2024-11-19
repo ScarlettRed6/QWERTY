@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CIRCUIT.ViewModel;
+using System;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -7,32 +8,12 @@ namespace CIRCUIT.View.CashierView
     public partial class CashierView : Window
     {
 
-        //hahaha try
-        public string name(string name) 
-        {
-        return name;
-        
-        }
-        //hanggang rito
-
         public CashierView()
         {
             InitializeComponent();
-            StartDateTimeUpdate();
+            this.DataContext = new NewSaleViewModel();
         }
 
-        private void StartDateTimeUpdate()
-        {
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += Timer_Tick;
-            timer.Start();
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            DateTimeTextBlock.Text = DateTime.Now.ToString("MMMM dd, yyyy HH:mm:ss");
-        }
 
         private void NewSale_Click(object sender, RoutedEventArgs e)
         {
@@ -48,7 +29,9 @@ namespace CIRCUIT.View.CashierView
             this.Close();
         }
 
+        private void Refund_Click(object sender, RoutedEventArgs e)
+        {
 
-
+        }
     }
 }

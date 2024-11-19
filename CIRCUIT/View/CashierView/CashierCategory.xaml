@@ -5,52 +5,86 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="CashierView" Height="450" Width="800">
+        Title="CashierView" Height="600" Width="800">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- For the header -->
+            <RowDefinition Height="*"/>
+            <!-- For the buttons -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
         <Border Background="#CAE9F5" Height="50" Width="320" VerticalAlignment="Top" Margin="0,10,0,0" CornerRadius="5">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="0*" />
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="STAFF" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" FontWeight="Bold" Grid.Column="0"/>
-                
-                <TextBlock x:Name="DateTimeTextBlock" Text="Date" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0" Grid.Column="2" />
+                <!-- Name Section -->
+                <Grid Grid.Column="0" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Name: " VerticalAlignment="Center" Margin="10,0" FontWeight="Bold" Grid.Column="0" />
+                    <TextBlock Text="{Binding StaffName}" FontSize="12" Margin="5,0,0,0" FontWeight="Bold" Grid.Column="1" />
+                </Grid>
+
+                <!-- Date and Time Section -->
+                <Grid Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Date: " VerticalAlignment="Center" Margin="10,0" FontWeight="Bold" Grid.Column="0" />
+                    <TextBlock Text="{Binding CurrentDate, StringFormat='{}{0:MM/dd/yyyy}'}" 
+                               FontSize="12" Margin="5,0,10,0" FontWeight="Bold" Grid.Column="1" />
+                </Grid>
             </Grid>
         </Border>
 
-       
-        <Button x:Name="newSale" Content="Start New Sale" FontSize="25" Height="150" Margin="80,0,0,0" Width="300" HorizontalAlignment="Left" VerticalAlignment="Center" Click="NewSale_Click">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="White" 
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1" 
-                            CornerRadius="20">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+        <!-- Buttons Section -->
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <!-- Start New Sale Button -->
+                <Button x:Name="newSale" Content="Start New Sale" FontSize="25" Height="150" Width="300" Click="NewSale_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="White" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="20">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
 
-        <Button x:Name="History" Content="View Transaction History" FontSize="25" Height="150" Margin="0,0,80,0" Width="300" HorizontalAlignment="Right" VerticalAlignment="Center" Click="History_Click">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="White" 
-                            BorderBrush="{TemplateBinding BorderBrush}" 
-                            BorderThickness="1" 
-                            CornerRadius="20">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+                <!-- View Transaction History Button -->
+                <Button x:Name="History" Content="View Transaction History" FontSize="25" Height="150" Width="300" Click="History_Click" Margin="20,0,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="White" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="20">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+
+            <!-- Refund Button -->
+            <Button x:Name="Refund" Content="Refund" FontSize="25" Height="150" Width="300" Click="Refund_Click" Margin="0,20,0,0">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="White" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
     </Grid>
-    
-    
-    
-    
-    
 </Window>

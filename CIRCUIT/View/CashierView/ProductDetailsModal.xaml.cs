@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CIRCUIT.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,22 @@ namespace CIRCUIT.View.CashierView
         public ProductDetailsModal()
         {
             InitializeComponent();
+            this.DataContext = new NewSaleViewModel();
+
         }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void AddToCartButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+
+
+
     }
 }

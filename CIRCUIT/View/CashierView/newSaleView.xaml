@@ -4,10 +4,12 @@
         Title="New Sale" Height="760" Width="1400"
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource panelColor6}">
+    
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="410"/>
         </Grid.ColumnDefinitions>
 
         <!-- Left Side - Products Grid -->
@@ -21,11 +23,26 @@
             <!-- Date/Time and Staff Info -->
             <Grid Grid.Row="0" Margin="0,0,0,10">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <!-- Back Button -->
+                <Button Grid.Column="0" 
+                        Width="40" 
+                        Height="30" 
+                        Margin="0,0,15,0"
+                        Background="{StaticResource panelColor2}"
+                        BorderThickness="0"
+                        Click="BackButton_Click">
+                    <TextBlock Text="←" 
+                             FontSize="20" 
+                             FontWeight="Bold" 
+                             Foreground="White"/>
+                </Button>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
                     <TextBlock Text="Date: " FontSize="15" FontWeight="SemiBold" Foreground="White"/>
                     <TextBlock FontSize="15" Margin="5,0,15,0" Width="100" Foreground="White">
                         <TextBlock.Text>
@@ -41,7 +58,7 @@
                     </TextBlock>
                 </StackPanel>
 
-                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
                     <TextBlock Text="STAFF: " FontSize="15" FontWeight="SemiBold" Foreground="White"/>
                     <TextBlock FontSize="15" Margin="5,0,0,0" Foreground="White">
                         <TextBlock.Text>
@@ -52,56 +69,64 @@
             </Grid>
 
             <!-- Search Box -->
-            <TextBox Grid.Row="1" Height="30" Margin="0,0,0,10"
+            <TextBox x:Name="userinput" Grid.Row="1" Height="30" Margin="0,0,0,10" HorizontalAlignment="Right"
                      BorderThickness="1" BorderBrush="{StaticResource panelColor2}"
                      Background="{StaticResource panelColor7}"
                      Foreground="White"
                      Padding="5" FontSize="14"
+                     Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+                     LostFocus="userinput_LostFocus"
+                     Width="250"/>
+            
+            <TextBox x:Name="watermark" Grid.Row="1" Height="30" Margin="0,0,0,10" HorizontalAlignment="Right"
+                     BorderThickness="1" BorderBrush="{StaticResource panelColor2}"
+                     Background="{StaticResource panelColor7}"
+                     Foreground="White"
+                     Padding="5" FontSize="14"
+                     Width="250"
+                     GotFocus="watermark_GotFocus"
                      Text="SEARCH"/>
 
-            <!-- Products ListView -->
+            <!-- Products List -->
             <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
-                <WrapPanel>
-                    <ItemsControl x:Name="ProductsItemsControl" ItemsSource="{Binding Products}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border Width="150" Height="150" Margin="5"
-                                        BorderThickness="1" BorderBrush="{StaticResource panelColor2}"
-                                        Background="{StaticResource panelColor7}"
-                                        CornerRadius="5"
-                                        Cursor="Hand"
-                                        MouseDown="Border_MouseDown">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="2*"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
-                                        <Image Grid.Row="0" Margin="5"
-                                               Source="{Binding ImageSource}"
-                                               Stretch="Uniform"/>
-                                        <TextBlock Grid.Row="1" Margin="5,0"
-                                                   Text="{Binding ProductName}"
-                                                   TextWrapping="Wrap"
-                                                   TextAlignment="Center"
-                                                   Foreground="White"/>
-                                        <TextBlock Grid.Row="2" Margin="5"
-                                                   Text="{Binding Price}"
-                                                   TextAlignment="Center"
-                                                   FontWeight="Bold"
-                                                   Foreground="White"/>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </WrapPanel>
+                <ItemsControl x:Name="ProductsItemsControl" ItemsSource="{Binding FilteredProducts}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Width="150" Height="150" Margin="5"
+                            BorderThickness="1" BorderBrush="{StaticResource panelColor2}"
+                            Background="{StaticResource panelColor7}"
+                            CornerRadius="5" Cursor="Hand"
+                            MouseDown="ProductBox_MouseDown">
+                                <!-- Add MouseDown event here -->
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.Row="0" Margin="5"
+                               Source="{Binding ImageSource}"
+                               Stretch="Uniform"/>
+                                    <TextBlock Grid.Row="1" Margin="5,0"
+                                   Text="{Binding ProductName}"
+                                   TextWrapping="Wrap"
+                                   TextAlignment="Center"
+                                   Foreground="White"/>
+                                    <TextBlock Grid.Row="2" Margin="5"
+                                   Text="{Binding Price}"
+                                   TextAlignment="Center"
+                                   FontWeight="Bold"
+                                   Foreground="White"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
             </ScrollViewer>
         </Grid>
 
@@ -191,25 +216,22 @@
                 </Border>
 
                 <!-- Action Buttons -->
-                <UniformGrid Grid.Row="1" Rows="2" Columns="2" Margin="0,10,0,0">
+                <UniformGrid Grid.Row="1" Rows="1" Columns="3" Margin="0,10,0,0">
                     <Button Content="CANCEL ORDER"
                             Margin="2"
-                            Height="40"
+                            Height="120"
                             Background="{StaticResource panelColor2}"
                             Foreground="White"/>
                     <Button Content="DISCOUNT"
                             Margin="2"
-                            Height="40"
-                            Background="{StaticResource panelColor2}"
-                            Foreground="White"/>
-                    <Button Content="REFUND"
-                            Margin="2"
-                            Height="40"
+                            Height="120"
                             Background="{StaticResource panelColor2}"
                             Foreground="White"/>
                     <Button Content="PROCESS ORDER"
                             Margin="2"
-                            Height="40"
+                            Height="120"
+                            Width="120"
+                            HorizontalAlignment="Center"
                             Background="{StaticResource panelColor2}"
                             Foreground="White"/>
                 </UniformGrid>
