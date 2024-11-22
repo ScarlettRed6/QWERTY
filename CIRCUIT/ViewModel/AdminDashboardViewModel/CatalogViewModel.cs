@@ -55,75 +55,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 OnPropertyChange();
             }
         }
-        //For pagination
-        public int CurrentPage
-        {
-            get => _currentPage;
-            set
-            {
-                if (_currentPage != value && value > 0 && value <= TotalPages)
-                {
-                    _currentPage = value;
-                    OnPropertyChange();
-                    UpdatePagedProducts();
-                }
-            }
-        }
-        //For pagination number of items per page
-        public int ItemsPerPage
-        {
-            get => _itemsPerPage;
-            set
-            {
-                _itemsPerPage = value;
-                OnPropertyChange();
-                UpdatePagedProducts();
-            }
-        }
-        //For total items in the dataset Product collection
-        public int TotalItems
-        {
-            get => _totalItems;
-            set
-            {
-                _totalItems = value;
-                OnPropertyChange();
-            }
-        }
 
-        private string _searchTerm;
-        public string SearchTerm
-        {
-            get => _searchTerm;
-            set
-            {
-                if (_searchTerm != value)
-                {
-                    _searchTerm = value;
-                    OnPropertyChange();
-                    UpdatePagedProducts();
-                }
-            }
-        }
 
-        public void SearchProducts(string searchTerm)
-        {
-            // Filter the product list based on the search term
-            var filteredProducts = Product
-                .Where(p => p.ProductName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-
-            // Update TotalItems to reflect filtered results
-            TotalItems = filteredProducts.Count;
-
-            // Paginate the filtered results
-            PagedProducts = new ObservableCollection<ProductModel>(
-                filteredProducts.Skip((CurrentPage - 1) * ItemsPerPage).Take(ItemsPerPage)
-            );
-
-            // Notify UI about changes
-            OnPropertyChange(nameof(PagedProducts));
-        }
         //For pagination
         public int CurrentPage
         {
