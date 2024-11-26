@@ -22,6 +22,9 @@ namespace CIRCUIT.ViewModel
         public RelayCommand ShowHomeCommand { get; }
         public RelayCommand ShowCatalogCommand { get; }
         public RelayCommand ShowAnalyticsCommand { get; }
+        public RelayCommand ShowArchivedCommand { get; }
+        public RelayCommand ShowEmployeeManagementCommand { get; }
+        public RelayCommand ShowSalesCommand { get; }
 
 
         //For side nav content control for current right panel/child view
@@ -72,11 +75,35 @@ namespace CIRCUIT.ViewModel
             ShowAnalyticsCommand = new RelayCommand(ExecuteShowAnalytics);
             ShowCatalogCommand = new RelayCommand(ExecuteShowCatalog);
             ShowHomeCommand = new RelayCommand(ExecuteShowHome);
+            ShowArchivedCommand = new RelayCommand(ExecuteShowArchived);
+            ShowEmployeeManagementCommand = new RelayCommand(ExecuteShowEmployee);
+            ShowSalesCommand = new RelayCommand(ExecuteShowSales);
 
             //Default dashboard panel
             ExecuteShowHome();
 
 
+        }
+
+        private void ExecuteShowSales()
+        {
+            CurrentAdminView = new SalesTransactionsViewModel();
+            Caption = "Sales Transactions";
+            Icon = IconChar.MoneyBill1;
+        }
+
+        private void ExecuteShowEmployee()
+        {
+            CurrentAdminView = new StaffViewModel();
+            Caption = "Staff Management";
+            Icon = IconChar.PeopleGroup;
+        }
+
+        private void ExecuteShowArchived()
+        {
+            CurrentAdminView = new ArchivedProductsViewModel();
+            Caption = "Archives";
+            Icon = IconChar.Archive;
         }
 
         private void ExecuteShowAnalytics()

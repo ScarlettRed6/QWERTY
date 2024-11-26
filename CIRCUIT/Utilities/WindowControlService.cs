@@ -1,4 +1,7 @@
-﻿using System;
+﻿using CIRCUIT.View;
+using CIRCUIT.View.AdminDashboardView;
+using CIRCUIT.View.CashierView;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +16,7 @@ namespace CIRCUIT.Utilities
         void Minimize();
     }
 
-    class WindowControlService : IWindowService
+    public class WindowControlService : IWindowService
     {
         private readonly Window _windowService;
 
@@ -34,6 +37,12 @@ namespace CIRCUIT.Utilities
         public void Minimize()
         {
             _windowService.WindowState = WindowState.Minimized;
+        }
+
+        public void NavigateToLogin()
+        {
+            UserLoginView loginView = new UserLoginView();
+            loginView.Show();
         }
     }
 }

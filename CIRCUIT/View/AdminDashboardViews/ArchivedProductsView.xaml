@@ -1,0 +1,136 @@
+﻿<UserControl x:Class="CIRCUIT.View.AdminDashboardViews.ArchivedProductsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboardViews" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:vm="clr-namespace:CIRCUIT.ViewModel.AdminDashboardViewModel"
+             xmlns:view="clr-namespace:CIRCUIT.View.AdminDashboardViews"
+             mc:Ignorable="d" 
+             Background="Transparent"
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <vm:ArchivedProductsViewModel/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vm:ViewProductViewModel}">
+            <view:ViewProductView/>
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <Border CornerRadius="10" Background="{StaticResource panelColor6}">
+
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="65"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Search textbox -->
+                    <!-- Implement product search later on bindings -->
+                    <StackPanel Orientation="Horizontal">
+
+                        <fa:IconImage Icon="Search"
+                                  Foreground="{StaticResource panelColor5}"
+                                  Height="30"
+                                  Margin="5"/>
+                        <TextBox x:Name="txtUser" FontSize="15"
+                             FontWeight="Medium" Background="Transparent"
+                             CaretBrush="LightGray" BorderBrush="DarkGray"
+                             BorderThickness="0,0,0,2" Height="30"
+                             VerticalAlignment="Center" Margin="0,4,0,0"
+                             Foreground="{StaticResource panelColor5}" 
+                             Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                             Width="230"/>
+                    </StackPanel>
+                    
+                </Grid>
+
+                <DataGrid x:Name="ProductDataGrid" 
+                      AutoGenerateColumns="False" 
+                      CanUserAddRows="False"
+                      Grid.Row="1"
+                      IsReadOnly="True"
+                      ItemsSource="{Binding PagedProducts}"
+                      SelectionMode="Extended"
+                      RowHeaderWidth="0"
+                      Style="{StaticResource catalogGrid}"
+                      RowStyle="{StaticResource catalogRowStyle}"
+                      CellStyle="{StaticResource catalogCellStyle}"
+                      ColumnHeaderStyle="{StaticResource columnHeadersStyle}"
+                      BorderThickness="2,7,2,7"
+                      BorderBrush="{StaticResource panelColor7}">
+
+                    <!-- Column context -->
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="ID" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                        <!-- <DataGridTextColumn Header="Category" Binding="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Width="*" /> -->
+                        <DataGridTextColumn Header="Brand" Binding="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                        <DataGridTextColumn Header="Model" Binding="{Binding ModelNumber, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                        <!-- <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity, UpdateSourceTrigger=PropertyChanged}" Width="70" /> -->
+                        <DataGridTextColumn Header="Cost" Binding="{Binding UnitCost, UpdateSourceTrigger=PropertyChanged}" Width="70" />
+                        <DataGridTextColumn Header="Price" Binding="{Binding SellingPrice, UpdateSourceTrigger=PropertyChanged}" Width="70" />
+
+                        <!-- Implement Edit/Archive button here later -->
+                        <DataGridTemplateColumn Width="100" Header="Operations">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Height="20" Width="30" 
+                                            Content="Recover"
+                                            Margin="2"
+                                            Command="{Binding DataContext.RecoverCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding}"/>
+
+                                        <Button Height="20" Width="50" 
+                                            Content="View"
+                                            Margin="2"
+                                            Command="{Binding DataContext.ViewCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <Button Content=" First" 
+                        Command="{Binding FirstPageCommand}" />
+                    <Button Content=" Prev" 
+                        Command="{Binding PreviousPageCommand}" />
+                    <TextBlock Text="{Binding CurrentPage}" Margin="2" 
+                           Foreground="{StaticResource panelColor4}"/>
+                    <TextBlock Text="of" Margin="2" 
+                           Foreground="{StaticResource panelColor4}"/>
+                    <TextBlock Text="{Binding TotalPages}" Margin="2"
+                           Foreground="{StaticResource panelColor4}"/>
+                    <Button Content="Next >" 
+                        Command="{Binding NextPageCommand}" />
+                    <Button Content="Last >>" 
+                        Command="{Binding LastPageCommand}" />
+                    
+                </StackPanel>
+            </Grid>
+
+            <ContentControl Content="{Binding AddProductView}"/>
+        </Grid>
+
+    </Border>
+
+</UserControl>

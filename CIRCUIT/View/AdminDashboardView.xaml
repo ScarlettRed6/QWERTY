@@ -7,6 +7,7 @@
         xmlns:vm="clr-namespace:CIRCUIT.ViewModel"
         xmlns:Views="clr-namespace:CIRCUIT.View.AdminDashboard"
         xmlns:Views2="clr-namespace:CIRCUIT.View.AdminDashboardView"
+        xmlns:Views3="clr-namespace:CIRCUIT.View.AdminDashboardViews"
         xmlns:adminVm="clr-namespace:CIRCUIT.ViewModel.AdminDashboardViewModel"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
         mc:Ignorable="d"
@@ -26,6 +27,18 @@
 
         <DataTemplate DataType="{x:Type adminVm:CatalogViewModel}">
             <Views:CatalogView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type adminVm:ArchivedProductsViewModel}">
+            <Views3:ArchivedProductsView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type adminVm:StaffViewModel}">
+            <Views3:StaffView/>
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type adminVm:SalesTransactionsViewModel}">
+            <Views3:SalesTransactionsView/>
         </DataTemplate>
 
     </Window.Resources>
@@ -95,11 +108,12 @@
                     </RadioButton>
 
                     <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource panelColor2}">
+                                 Tag="{StaticResource panelColor2}"
+                                 Command="{Binding ShowSalesCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="ExchangeAlt" Style="{StaticResource menuButtonIcon}"/>
-                            <TextBlock Text="Transactions" Style="{StaticResource menuButtonText}"/>
+                            <TextBlock Text="Sales" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
 
                     </RadioButton>
@@ -126,7 +140,8 @@
                     </RadioButton>
 
                     <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource panelColor2}">
+                                 Tag="{StaticResource panelColor2}"
+                                 Command="{Binding ShowArchivedCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Archive" Style="{StaticResource menuButtonIcon}"/>
@@ -136,7 +151,8 @@
                     </RadioButton>
 
                     <RadioButton Style="{StaticResource menuButton}"
-                                 Tag="{StaticResource panelColor2}">
+                                 Tag="{StaticResource panelColor2}"
+                                 Command="{Binding ShowEmployeeManagementCommand}">
 
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="PeopleGroup" Style="{StaticResource menuButtonIcon}"/>

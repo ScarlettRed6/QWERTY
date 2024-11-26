@@ -22,8 +22,8 @@
         <DataTemplate DataType="{x:Type vm:EditProductViewModel}">
             <view:EditProductView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:ArchiveProductViewModel}">
-            <view:ArchiveProductView/>
+        <DataTemplate DataType="{x:Type vm:ViewProductViewModel}">
+            <view:ViewProductView/>
         </DataTemplate>
     </UserControl.Resources>
 
@@ -98,30 +98,31 @@
 
                     <!-- Column context -->
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="70"/>
-                        <DataGridTextColumn Header="Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="*" />
-                        <DataGridTextColumn Header="Category" Binding="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Width="*" />
-                        <DataGridTextColumn Header="Brand" Binding="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" Width="*" />
-                        <DataGridTextColumn Header="Model" Binding="{Binding ModelNumber, UpdateSourceTrigger=PropertyChanged}" Width="*" />
-                        <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity, UpdateSourceTrigger=PropertyChanged}" Width="70" />
-                        <DataGridTextColumn Header="Cost" Binding="{Binding UnitCost, UpdateSourceTrigger=PropertyChanged}" Width="70" />
-                        <DataGridTextColumn Header="Price" Binding="{Binding SellingPrice, UpdateSourceTrigger=PropertyChanged}" Width="70" />
 
-
-                        <!-- Row Expander 
-                        <DataGridTemplateColumn Width="200" Header="Details">
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding DataContext.IsAllSelected, RelativeSource={RelativeSource AncestorType=DataGrid}, Mode=TwoWay}"
+                                              Command="{Binding DataContext.CheckSelectAll, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Expander Header="View Details">
-                                        <StackPanel>
-                                            <TextBlock Text="eyo" FontWeight="Bold" Foreground="AliceBlue"/>
-                                            <TextBlock Text="{Binding Manufacturer}" Margin="0,5,0,0"/>
-                                            <TextBlock Text="{Binding WarrantyInfo}" Margin="0,5,0,0"/>
-                                        </StackPanel>
-                                    </Expander>
+                                    <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Command="{Binding DataContext.CheckSelectCell, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>-->
+                        </DataGridTemplateColumn>
+
+
+                        <DataGridTextColumn Header="ID" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                       <!-- <DataGridTextColumn Header="Category" Binding="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Width="*" /> -->
+                        <DataGridTextColumn Header="Brand" Binding="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                        <DataGridTextColumn Header="Model" Binding="{Binding ModelNumber, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                       <!-- <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity, UpdateSourceTrigger=PropertyChanged}" Width="70" /> -->
+                        <DataGridTextColumn Header="Cost" Binding="{Binding UnitCost, UpdateSourceTrigger=PropertyChanged}" Width="70" />
+                        <DataGridTextColumn Header="Price" Binding="{Binding SellingPrice, UpdateSourceTrigger=PropertyChanged}" Width="70" />
 
                         <!-- Implement Edit/Archive button here later -->
                         <DataGridTemplateColumn Width="100" Header="Operations">
@@ -135,9 +136,9 @@
                                                 CommandParameter="{Binding}"/>
                                         
                                         <Button Height="20" Width="50" 
-                                                Content="Archive"
+                                                Content="View"
                                                 Margin="2"
-                                                Command="{Binding DataContext.ArchiveCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                Command="{Binding DataContext.ViewCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                                 CommandParameter="{Binding}"/>
                                     </StackPanel>
                                 </DataTemplate>
@@ -149,16 +150,23 @@
                 </DataGrid>
 
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                    <Button Content=" First" Command="{Binding FirstPageCommand}" />
-                    <Button Content=" Prev" Command="{Binding PreviousPageCommand}" />
-                    <TextBlock Text="{Binding CurrentPage}" Margin="2" 
+                    <Button Content=" First" 
+                            Command="{Binding FirstPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Content=" Prev" 
+                            Command="{Binding PreviousPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Text="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged}" Margin="2" 
                                Foreground="{StaticResource panelColor4}"/>
                     <TextBlock Text="of" Margin="2" 
                                Foreground="{StaticResource panelColor4}"/>
-                    <TextBlock Text="{Binding TotalPages}" Margin="2"
+                    <TextBlock Text="{Binding TotalPages, UpdateSourceTrigger=PropertyChanged}" Margin="2"
                                Foreground="{StaticResource panelColor4}"/>
-                    <Button Content="Next >" Command="{Binding NextPageCommand}" />
-                    <Button Content="Last >>" Command="{Binding LastPageCommand}" />
+                    <Button Content="Next >" 
+                            Command="{Binding NextPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Content="Last >>" 
+                            Command="{Binding LastPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Content="test"
+                            Command="{Binding TestCommand, UpdateSourceTrigger=PropertyChanged}"
+                            Margin="10,0,0,0"/>
                 </StackPanel>
             </Grid>
 

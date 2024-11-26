@@ -13,22 +13,46 @@
     <Compile Update="View\AdminDashboardView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\AdminDashboardViews\AddNewUserView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\AdminDashboardViews\AddProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\AdminDashboardViews\AnalyticsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\AdminDashboardViews\ArchiveProductView.xaml.cs">
+    <Compile Update="View\AdminDashboardViews\ArchivedProductsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\AdminDashboardViews\CatalogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardViews\EditAccountView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\AdminDashboardViews\EditProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\AdminDashboardViews\HomeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardViews\SalesTransactionsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardViews\StaffView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardViews\ViewAccountView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardViews\ViewProductView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardViews\ViewSaleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\UserLoginView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -57,19 +81,34 @@
     <Page Update="View\AdminDashboardView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\AdminDashboardViews\AddNewUserView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\AdminDashboardViews\AddProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\AdminDashboardViews\AnalyticsView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\AdminDashboardViews\ArchiveProductView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="View\AdminDashboardViews\CatalogView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\AdminDashboardViews\HomeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardViews\SalesTransactionsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardViews\ViewAccountView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardViews\ViewProductView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardViews\ViewSaleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\UserLoginView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
