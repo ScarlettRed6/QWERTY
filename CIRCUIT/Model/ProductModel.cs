@@ -4,7 +4,7 @@ namespace CIRCUIT.Model
 {
     public class ProductModel : PropertyChange
     {
-        public int ProductId {  get; set; }
+        public int ProductId {  get; set; }   
         public string ProductName { get; set; }
         public string Category {  get; set; }
         public string Brand { get; set; }
@@ -34,8 +34,9 @@ namespace CIRCUIT.Model
 
 
         // Renamed to follow C# naming conventions
-        public string _imageSource { get; set; }
+        public string ImageSource { get; set; }
         public string ProductDescription { get; set; }
+
 
     }
 }

@@ -1,15 +1,15 @@
 ﻿using CIRCUIT.Model;
+using CIRCUIT.Model.NewSaleModel;
 using Microsoft.Data.SqlClient;
-using System.Windows;
-
 namespace CIRCUIT.Utilities
 {
     public class Db
     {
         //Comment each of our local connection for local use
-        //private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Integrated Security=True;";
-        private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
-                                           "Trust Server Certificate=True";
+        private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
+
+        //private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
+        //                                  "Trust Server Certificate=True";
 
         //Method to execute non queries like INSERT or UPDATE, might change this code later idk
         public void ExecuteNonQuery(string query)
@@ -22,6 +22,7 @@ namespace CIRCUIT.Utilities
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.ExecuteNonQuery();
+
                     }
                 }
                 catch (Exception ex)
@@ -90,12 +91,13 @@ namespace CIRCUIT.Utilities
                                     ProductId = reader.GetInt32(reader.GetOrdinal("product_id")),
                                     ProductName = reader.GetString(reader.GetOrdinal("product_name")),
                                     Category = reader.GetString(reader.GetOrdinal("category")),
+                                    //nilagya ko ng description dito tapos dun sa catalogviewmodel mo pre
                                     Description = reader.GetString(reader.GetOrdinal("description")),
                                     Brand = reader.GetString(reader.GetOrdinal("brand")),
                                     ModelNumber = reader.GetString(reader.GetOrdinal("model_number")),
                                     StockQuantity = reader.GetInt32(reader.GetOrdinal("stock_quantity")),
-                                    UnitCost = reader.GetDecimal(reader.GetOrdinal("unit_cost")),
-                                    SellingPrice = reader.GetDecimal(reader.GetOrdinal("selling_price"))
+                                    UnitCost = (decimal)reader.GetDecimal(reader.GetOrdinal("unit_cost")),
+                                    SellingPrice = (decimal)reader.GetDecimal(reader.GetOrdinal("selling_price"))
                                 };
                                 products.Add(product);
                             }
@@ -137,10 +139,10 @@ namespace CIRCUIT.Utilities
                                     Brand = reader.GetString(reader.GetOrdinal("brand")),
                                     Category = reader.GetString(reader.GetOrdinal("category")),
                                     Description = reader.GetString(reader.GetOrdinal("description")),
-                                    SellingPrice = reader.GetDecimal(reader.GetOrdinal("selling_price")),
+                                    SellingPrice = (decimal)reader.GetDecimal(reader.GetOrdinal("selling_price")),
                                     MinStockLevel = reader.GetInt32(reader.GetOrdinal("min_stock_level")),
                                     StockQuantity = reader.GetInt32(reader.GetOrdinal("stock_quantity")),
-                                    UnitCost = reader.GetDecimal(reader.GetOrdinal("unit_cost")),
+                                    UnitCost = (decimal)reader.GetDecimal(reader.GetOrdinal("unit_cost")),
                                     SKU = reader.GetOrdinal("sku"),
                                     //IsArchived = reader.GetBoolean(reader.GetOrdinal("is_archived"))
                                 };
@@ -154,10 +156,8 @@ namespace CIRCUIT.Utilities
                 {
                     MessageBox.Show($"Error fetching data: {ex.Message}");
                 }
-
             }
             return products;
-
         }
 
         //Method to update product by product Id
@@ -326,148 +326,45 @@ namespace CIRCUIT.Utilities
                             }
                         }
 
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error fetching data: {ex.Message}");
-                }
             }
-            return users;
-
         }
 
-        //Method to fetch data by user ID, FetchUser overloaded
-        public List<UsersModel> FetchUser(int userId)
-        {
-            var user = new List<UsersModel>();
-            string query = "SELECT * FROM users WHERE user_id = @userId";
 
-            using (var connection = GetConnection())
+
+        //ETO UNG BAGO 
+
+        public void InsertSale(SaleModel sale)
+        {
+            //string query = @"INSERT INTO sales (date_time, cashier_id, total_amount, payment_method, customer_payment, change_given)
+            //        VALUES (@DateTime, @CashierId, @TotalAmount, @PaymentMethod, @CustomerPaid, @ChangeGiven)";
+            string query = @"INSERT INTO sales (date_time, total_amount, payment_method, customer_payment, change_given)
+                    VALUES (@DateTime, @TotalAmount, @PaymentMethod, @CustomerPaid, @ChangeGiven)";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                try
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
+                    command.Parameters.AddWithValue("@DateTime", sale.DateTime);
+                    command.Parameters.AddWithValue("@CashierId", sale.CashierId);
+                    command.Parameters.AddWithValue("@TotalAmount", sale.TotalAmount);
+                    command.Parameters.AddWithValue("@PaymentMethod", sale.PaymentMethod);
+                    command.Parameters.AddWithValue("@CustomerPaid", sale.CustomerPaid);
+                    command.Parameters.AddWithValue("@ChangeGiven", sale.ChangeGiven);
+
                     connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@userId", userId);
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                var account = new UsersModel
-                                {
-                                    UserId = reader.GetInt32(reader.GetOrdinal("user_id")),
-                                    Username = reader.GetString(reader.GetOrdinal("username")),
-                                    Password = reader.GetString(reader.GetOrdinal("password")),
-                                    Role = reader.GetString(reader.GetOrdinal("role")),
-                                    Salt = reader.GetString(reader.GetOrdinal("salt")),
-                                };
-                                user.Add(account);
-                            }
-                        }
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error fetching data: {ex.Message}");
-                }
-
-            }
-            return user;
-
-        }
-
-        //Method to fetch user for password verification
-        public UsersModel FetchUserPassAndSalt(string username)
-        {
-            string queryUser = "SELECT * FROM Users WHERE username = @username";
-            UsersModel user = null;
-
-            using (var connection = GetConnection())
-            {
-                try
-                {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(queryUser, connection))
-                    {
-                        command.Parameters.AddWithValue("@Username", username);
-
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            if (reader.Read())  // Check if the user exists
-                            {
-                                user = new UsersModel()
-                                {
-                                    Username = reader.GetString(reader.GetOrdinal("username")),
-                                    Role = reader.GetString(reader.GetOrdinal("role")),
-                                    Password = reader.GetString(reader.GetOrdinal("password")),
-                                    Salt = reader.GetString(reader.GetOrdinal("salt"))
-                                };
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error fetching data: {ex.Message}");
-                }
-            }
-            return user;
-        }
-
-        public void DeleteUserAccount(int userId)
-        {
-            string deleteQuery = "DELETE FROM users WHERE user_id = @UserId";
-
-            using (var connection = GetConnection())  // Assuming GetConnection() returns the connection object
-            {
-                try
-                {
-                    connection.Open();
-
-                    using (SqlCommand command = new SqlCommand(deleteQuery, connection))
-                    {
-                        command.Parameters.AddWithValue("@UserId", userId);
-
-                        // Execute the query and check how many rows were affected
-                        int rowsAffected = command.ExecuteNonQuery();
-
-                        if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("User deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("No user found with the specified ID.", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error deleting user: {ex.Message}", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    command.ExecuteNonQuery();
                 }
             }
         }
-        */
-        /*
-        // SALES TRANSACTION QUERIES
 
-        //Method to fetch sales data
-        public List<SalesModel> FetchSales()
+        public List<SaleHistoryModel> GetSalesHistory()
         {
-            //This also fetches from users table
-            string query = @"SELECT s.sale_id, s.date_time, s.cashier_id, s.total_amount, 
-                                   s.payment_method, s.customer_payment, s.change_given, 
-                                   u.username AS CashierName FROM sales s INNER JOIN users u ON s.cashier_id = u.user_id";
+            string query = @"SELECT sale_id, date_time, COALESCE(cashier_id, 0) AS cashier_id, total_amount, payment_method, customer_payment, change_given FROM sales";
+            List<SaleHistoryModel> salesHistory = new List<SaleHistoryModel>();
 
-            var sales = new List<SalesModel>();
-
-            using (var connection = GetConnection())
+            try
             {
-                try
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -476,161 +373,39 @@ namespace CIRCUIT.Utilities
                         {
                             while (reader.Read())
                             {
-                                var sale = new SalesModel
+                                var sale = new SaleHistoryModel
                                 {
                                     SaleId = reader.GetInt32(reader.GetOrdinal("sale_id")),
                                     DateTime = reader.GetDateTime(reader.GetOrdinal("date_time")),
-                                    CashierId = reader.GetInt32(reader.GetOrdinal("cashier_id")),
+                                    //papallitan nalang to if ok n ung login cashierID bawal kasi magsend here ng may null
+                                    CashierId = reader.IsDBNull(reader.GetOrdinal("cashier_id")) ? 0 : reader.GetInt32(reader.GetOrdinal("cashier_id")),
                                     TotalAmount = reader.GetDecimal(reader.GetOrdinal("total_amount")),
                                     PaymentMethod = reader.GetString(reader.GetOrdinal("payment_method")),
-                                    CustomerPayment = reader.GetDecimal(reader.GetOrdinal("customer_payment")),
-                                    ChangeGiven = reader.GetDecimal(reader.GetOrdinal("change_given")),
-                                    CashierName = reader.GetString(reader.GetOrdinal("CashierName"))
+                                    CustomerPaid = reader.GetDecimal(reader.GetOrdinal("customer_payment")),
+                                    ChangeGiven = reader.GetDecimal(reader.GetOrdinal("change_given"))
                                 };
 
-                                sales.Add(sale);
+                                salesHistory.Add(sale);
                             }
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error fetching sales: " + ex.Message + "\n" + ex.StackTrace);
-                }
             }
-
-            return sales;
-        }
-
-        //Method to fetch product names for fetching many data reducing the queries, this is an enchanced version of GetProductById method query but only gets the product name
-        //Main used for sale item where i fetch the product name based on the product id from sale item table
-        public Dictionary<int, string> GetProductNames(List<int> productIds)
-        {
-            var productNames = new Dictionary<int, string>();
-            string query = "SELECT product_id, product_name FROM Products WHERE product_id IN (" + string.Join(",", productIds) + ")";
-
-            using (var connection = GetConnection())
+            catch (Exception ex)
             {
-                try
-                {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                int productId = reader.GetInt32(reader.GetOrdinal("product_id"));
-                                string productName = reader.GetString(reader.GetOrdinal("product_name"));
-                                productNames[productId] = productName;
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error fetching product names: {ex.Message}");
-                }
+                // Consider using a proper logging mechanism
+                MessageBox.Show($"Error fetching sales history: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            return productNames;
+            return salesHistory;
         }
 
-        //Method to fetch sale items by sale id
-        public List<SalesItemModel> FetchSaleItems(int saleId)
-        {
-            string query = "SELECT sale_item_id, product_id, quantity, item_total_price FROM Sale_Items WHERE sale_id = @saleId";
-            var salesItems = new List<SalesItemModel>();
 
-            using (var connection = GetConnection())
-            {
-                try
-                {
-                    connection.Open();
-                    List<int> productIds = new List<int>();
 
-                    // First query: collect product IDs
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@saleId", saleId);
 
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                productIds.Add(reader.GetInt32(reader.GetOrdinal("product_id")));
-                            }
-                        }
-                    }
+        // HANGGANG DITO
 
-                    // Get product names
-                    var productNames = GetProductNames(productIds);
 
-                    // Second query: fetch sale items with product names
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@saleId", saleId);
 
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                int productId = reader.GetInt32(reader.GetOrdinal("product_id"));
-
-                                var saleItem = new SalesItemModel
-                                {
-                                    SaleItemId = reader.GetInt32(reader.GetOrdinal("sale_item_id")),
-                                    ProductId = productId,
-                                    ProductName = productNames.ContainsKey(productId) ? productNames[productId] : "Unknown",
-                                    Quantity = reader.GetInt32(reader.GetOrdinal("quantity")),
-                                    ItemTotalPrice = reader.GetDecimal(reader.GetOrdinal("item_total_price"))
-                                };
-
-                                salesItems.Add(saleItem);
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error fetching sale items: {ex.Message}");
-                }
-            }
-
-            return salesItems;
-        }
-
-        //Fetch total quantity of products in sale
-        public int FetchTotalProductSold()
-        {
-            string query = "SELECT quantity FROM Sale_Items";
-            int total = 0;
-
-            using (var connection = GetConnection())
-            {
-                try
-                {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                total += reader.GetInt32(reader.GetOrdinal("quantity"));
-                            }
-
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error fetching data: {ex.Message}");
-                }
-            }
-            return total;
-        }
-
-        */
     }
 }

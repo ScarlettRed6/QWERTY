@@ -60,41 +60,6 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 OnPropertyChange();
             }
         }
-        //For pagination
-        public int CurrentPage
-        {
-            get => _currentPage;
-            set
-            {
-                if (_currentPage != value && value > 0 && value <= TotalPages)
-                {
-                    _currentPage = value;
-                    OnPropertyChange();
-                    UpdatePagedProducts();
-                }
-            }
-        }
-        //For pagination number of items per page
-        public int ItemsPerPage
-        {
-            get => _itemsPerPage;
-            set
-            {
-                _itemsPerPage = value;
-                OnPropertyChange();
-                UpdatePagedProducts();
-            }
-        }
-        //For total items in the dataset Product collection
-        public int TotalItems
-        {
-            get => _totalItems;
-            set
-            {
-                _totalItems = value;
-                OnPropertyChange();
-            }
-        }
 
         public string SearchTerm
         {

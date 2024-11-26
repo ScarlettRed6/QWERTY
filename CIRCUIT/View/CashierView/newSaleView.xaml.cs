@@ -3,6 +3,7 @@ using CIRCUIT.ViewModel;
 using CIRCUIT;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace CIRCUIT.View.CashierView
 {
@@ -18,17 +19,21 @@ namespace CIRCUIT.View.CashierView
         }
 
 
-        private void ProductBox_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ProductBox_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var product = (sender as Border)?.DataContext as Product;
-            if (product == null) return;
-
-            var modal = new ProductDetailsModal
+            ProductModel selectedProduct = (sender as FrameworkElement)?.DataContext as ProductModel;
+            if (selectedProduct != null)
             {
-                DataContext = product
-            };
-            modal.ShowDialog();
+                ProductDetailsModal productDetailsModalWindow = new ProductDetailsModal(selectedProduct);
+                productDetailsModalWindow.ProductAddedToCart += (product) =>
+                {
+                    var viewModel = this.DataContext as NewSaleViewModel;
+                    viewModel?.AddProductToCart(product);
+                };
+                productDetailsModalWindow.ShowDialog();
+            }
         }
+
 
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -52,8 +57,19 @@ namespace CIRCUIT.View.CashierView
             {
                 userinput.Visibility = Visibility.Collapsed;
                 watermark.Visibility = Visibility.Visible;
-            
+
             }
+        }
+        private void ApplyDiscount_Click(object sender, RoutedEventArgs e)
+        {
+            discountModalView discountModal = new discountModalView();
+            discountModal.ShowDialog();
+            this.Close();
+        }
+
+        private void ProcessOrder_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using CIRCUIT.ViewModel;
+﻿using CIRCUIT.Model;
+using CIRCUIT.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +16,18 @@ using System.Windows.Shapes;
 
 namespace CIRCUIT.View.CashierView
 {
-    /// <summary>
-    /// Interaction logic for ProductDetailsModal.xaml
-    /// </summary>
     public partial class ProductDetailsModal : Window
     {
-        public ProductDetailsModal()
+        public ProductModel SelectedProduct { get; set; }
+
+        // Event for notifying the parent ViewModel
+        public event Action<ProductModel> ProductAddedToCart;
+
+        public ProductDetailsModal(ProductModel product)
         {
             InitializeComponent();
-            this.DataContext = new NewSaleViewModel();
-
+            SelectedProduct = product;
+            this.DataContext = SelectedProduct;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -34,11 +37,8 @@ namespace CIRCUIT.View.CashierView
 
         private void AddToCartButton_Click(object sender, RoutedEventArgs e)
         {
+            ProductAddedToCart?.Invoke(SelectedProduct);
             this.Close();
         }
-
-
-
-
     }
 }
