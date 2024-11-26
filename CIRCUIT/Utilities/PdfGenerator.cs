@@ -13,7 +13,7 @@ namespace CIRCUIT.Utilities
 {
     public static class PdfGenerator
     {
-        public static void GenerateSalesPdf(List<SalesModel> transactions, string exportPath, SalesRepository saleConn)
+        public static void GenerateSalesPdf(List<SaleModel> transactions, string exportPath, SalesRepository saleConn)
         {
             using (var writer = new PdfWriter(exportPath))
             using (var pdf = new PdfDocument(writer))

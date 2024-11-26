@@ -64,7 +64,6 @@ namespace CIRCUIT.View.CashierView
         {
             discountModalView discountModal = new discountModalView();
             discountModal.ShowDialog();
-            this.Close();
         }
 
         private void ProcessOrder_Click(object sender, RoutedEventArgs e)

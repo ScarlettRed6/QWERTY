@@ -101,7 +101,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         public ViewSaleViewModel(){}
 
         //Constructor
-        public ViewSaleViewModel(SalesModel model, SalesTransactionsViewModel prev)
+        public ViewSaleViewModel(SaleModel model, SalesTransactionsViewModel prev)
         {
             _prevViewModel = prev;
             SaleIdGet = model.SaleId;
@@ -151,7 +151,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         }
 
         //The the groupbox details
-        private void SetDetailBoxes(SalesModel model)
+        private void SetDetailBoxes(SaleModel model)
         {
             SalesIdBox = model.SaleId;
             DateTimeBox = model.DateTime;

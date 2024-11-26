@@ -165,6 +165,7 @@ namespace CIRCUIT.Model.DataRepositories
                             {
                                 user = new UsersModel()
                                 {
+                                    UserId = reader.GetInt32(reader.GetOrdinal("user_id")),
                                     Username = reader.GetString(reader.GetOrdinal("username")),
                                     Role = reader.GetString(reader.GetOrdinal("role")),
                                     Password = reader.GetString(reader.GetOrdinal("password")),

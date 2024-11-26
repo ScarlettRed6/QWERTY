@@ -130,3 +130,9 @@ C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\bin\
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\bin\Debug\net8.0-windows\itext.bouncy-castle-adapter.dll
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\ConfirmationModal.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\DiscountModalView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\RefundView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\ConfirmationModal.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\DiscountModalView.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\RefundView.baml

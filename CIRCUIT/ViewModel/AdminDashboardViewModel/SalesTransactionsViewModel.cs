@@ -21,11 +21,11 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         private ViewSaleViewModel _saleViewModel;
 
         //Collections
-        public ObservableCollection<SalesModel> PagedSales { get; set; }
-        public ObservableCollection<SalesModel> Sales { get; set; }
+        public ObservableCollection<SaleModel> PagedSales { get; set; }
+        public ObservableCollection<SaleModel> Sales { get; set; }
 
         //Commands
-        public RelayCommand<SalesModel> ViewCommand { get; }
+        public RelayCommand<SaleModel> ViewCommand { get; }
         public RelayCommand FirstPageCommand { get; }
         public RelayCommand LastPageCommand { get; }
         public RelayCommand NextPageCommand { get; }
@@ -44,7 +44,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         //For listing selectedall
         [ObservableProperty]
-        private List<SalesModel> _items;
+        private List<SaleModel> _items;
 
         //Checks if checkbox for select all feature is true
         [ObservableProperty]
@@ -99,8 +99,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         //Constructor
         public SalesTransactionsViewModel()
         {
-            Sales = new ObservableCollection<SalesModel>();
-            PagedSales = new ObservableCollection<SalesModel>();
+            Sales = new ObservableCollection<SaleModel>();
+            PagedSales = new ObservableCollection<SaleModel>();
             FirstPageCommand = new RelayCommand(() => CurrentPage = 1);
             LastPageCommand = new RelayCommand(() => CurrentPage = TotalPages);
             NextPageCommand = new RelayCommand(() =>
@@ -116,7 +116,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
             CheckSelectAll = new RelayCommand(ChkSelectAllCommand);
             CheckSelectCell = new RelayCommand(ChkSelectCellCommand);
-            ViewCommand = new RelayCommand<SalesModel>(ExecuteViewSaleDetails);
+            ViewCommand = new RelayCommand<SaleModel>(ExecuteViewSaleDetails);
             ExportCommand = new RelayCommand(ExportSelectedTransactions);
 
             IsAllSelected = false;
@@ -149,7 +149,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         }
 
-        private void ExecuteViewSaleDetails(SalesModel? model)
+        private void ExecuteViewSaleDetails(SaleModel? model)
         {
             _saleViewModel = new ViewSaleViewModel(model, this);
             CurrentView = _saleViewModel;
@@ -193,7 +193,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             var fetchedSales = saleConn.FetchSales();
 
             Sales.Clear();
-            Items = new List<SalesModel>();
+            Items = new List<SaleModel>();
             foreach (var saleI in fetchedSales)
             {
                 Sales.Add(saleI);
@@ -209,7 +209,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         //Updates data per page
         private void UpdatePagedSales()
         {
-            IEnumerable<SalesModel> filteredItems = Sales;
+            IEnumerable<SaleModel> filteredItems = Sales;
 
             // Apply filtering if a search term is provided
             if (!string.IsNullOrWhiteSpace(SearchTerm))
@@ -219,7 +219,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             }
 
             TotalItems = filteredItems.Count();
-            PagedSales = new ObservableCollection<SalesModel>(
+            PagedSales = new ObservableCollection<SaleModel>(
                 filteredItems.Skip((CurrentPage - 1) * ItemsPerPage).Take(ItemsPerPage)
             );
 
@@ -235,7 +235,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 .ToList();
 
             TotalItems = filteredItems.Count;
-            PagedSales = new ObservableCollection<SalesModel>(
+            PagedSales = new ObservableCollection<SaleModel>(
                 filteredItems.Skip((CurrentPage - 1) * ItemsPerPage).Take(ItemsPerPage)
             );
             OnPropertyChanged(nameof(PagedSales));

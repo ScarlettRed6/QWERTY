@@ -5,20 +5,12 @@ using CIRCUIT.View.AdminDashboardView;
 using CIRCUIT.View.CashierView;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using iText.Commons.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace CIRCUIT.ViewModel
 {
-    public class LoginViewModel : ObservableObject
+    public partial class LoginViewModel : ObservableObject
     {
         //Fields
         private string _username;
@@ -31,8 +23,12 @@ namespace CIRCUIT.ViewModel
         private UsersModel _users;
         //Db dbConn;
         AccountRepository acRCon;
+        SessionRepository _sessionRCon;
 
         //Properties
+        [ObservableProperty]
+        private int _getUserId;
+
         public string Username
         {
             get { return _username; }
@@ -81,6 +77,7 @@ namespace CIRCUIT.ViewModel
         {
             //dbConn = new Db();
             acRCon = new AccountRepository();
+            _sessionRCon = new SessionRepository();
             propChange = new PropertyChange();
             LoginCommand = new RelayCommand(ExecuteLoginCommand);
         }
@@ -104,12 +101,15 @@ namespace CIRCUIT.ViewModel
             if (isPasswordValid)
             {
                 MessageBox.Show("Login successful!");
+                GetUserId = _users.UserId;
+                _sessionRCon.LogSessionStart(GetUserId);
 
                 if (_users.Role == "Admin")
                 {
                     AdminDashboardView adminDashboardView = new AdminDashboardView();
                     adminDashboardView.Show();  // Show the AdminDashboardView
                     Application.Current.MainWindow.Close();
+                    
                 }
                 else if (_users.Role == "Cashier")
                 {

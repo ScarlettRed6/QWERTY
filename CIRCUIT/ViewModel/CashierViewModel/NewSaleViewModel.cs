@@ -7,6 +7,7 @@ using CIRCUIT.Utilities;
 using CIRCUIT.Model;
 using CIRCUIT.View.CashierView;
 using CommunityToolkit.Mvvm.Input;
+using CIRCUIT.Model.DataRepositories;
 
 namespace CIRCUIT.ViewModel
 {
@@ -14,6 +15,9 @@ namespace CIRCUIT.ViewModel
     {
         #region Private Fields
         private readonly Db _db;
+        private readonly SessionRepository _sessionRepository;
+        private readonly AccountRepository _accountRepository;
+        private int _userId;
         private string _searchQuery;
         private string _amountReceived;
         private string _amountGiven;
@@ -120,8 +124,11 @@ namespace CIRCUIT.ViewModel
         #region Constructor
         public NewSaleViewModel()
         {
-            InitializeBasicInfo();
+            
             _db = new Db();
+            _accountRepository = new AccountRepository();
+            _sessionRepository = new SessionRepository();
+            InitializeBasicInfo();
             InitializeCommands();
             LoadProductsFromDatabase();
         }
@@ -132,7 +139,11 @@ namespace CIRCUIT.ViewModel
         {
             CurrentDate = DateTime.Now.ToString("MM/dd/yyyy");
             CurrentTime = DateTime.Now.ToString("hh:mm tt");
-            StaffName = "Rhenz Masarap";
+            //Add ko user name based sa nag logged : Jamero
+            _userId = (int)_sessionRepository.GetLoggedInUserId();
+            var userList = _accountRepository.FetchUser(_userId);
+            StaffName = userList[0].Username;
+
         }
 
         private void InitializeCommands()

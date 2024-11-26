@@ -34,14 +34,14 @@ namespace CIRCUIT.Model.DataRepositories
             return new SqlConnection(connectionString);
         }
 
-        public List<SalesModel> FetchSales()
+        public List<SaleModel> FetchSales()
         {
             //This also fetches from users table
             string query = @"SELECT s.sale_id, s.date_time, s.cashier_id, s.total_amount, 
                                    s.payment_method, s.customer_payment, s.change_given, 
                                    u.username AS CashierName FROM sales s INNER JOIN users u ON s.cashier_id = u.user_id";
 
-            var sales = new List<SalesModel>();
+            var sales = new List<SaleModel>();
 
             using (var connection = GetConnection())
             {
@@ -54,7 +54,7 @@ namespace CIRCUIT.Model.DataRepositories
                         {
                             while (reader.Read())
                             {
-                                var sale = new SalesModel
+                                var sale = new SaleModel
                                 {
                                     SaleId = reader.GetInt32(reader.GetOrdinal("sale_id")),
                                     DateTime = reader.GetDateTime(reader.GetOrdinal("date_time")),

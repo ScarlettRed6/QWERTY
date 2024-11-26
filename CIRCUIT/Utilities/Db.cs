@@ -1,15 +1,17 @@
 ﻿using CIRCUIT.Model;
 using CIRCUIT.Model.NewSaleModel;
 using Microsoft.Data.SqlClient;
+using System.Windows;
+
 namespace CIRCUIT.Utilities
 {
     public class Db
     {
         //Comment each of our local connection for local use
-        private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
+        //private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
 
-        //private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
-        //                                  "Trust Server Certificate=True";
+        private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
+                                          "Trust Server Certificate=True";
 
         //Method to execute non queries like INSERT or UPDATE, might change this code later idk
         public void ExecuteNonQuery(string query)
@@ -231,105 +233,6 @@ namespace CIRCUIT.Utilities
             }
 
         }
-        /*
-        // USER ACCOUNTS QUERIES !!!
-
-        //Method to insert users in the database
-        public bool InsertUser(UsersModel user)
-        {
-            string queryCheck = "SELECT COUNT(*) FROM users WHERE username = @Username";
-            string queryInsert = @"INSERT INTO users (username, password, salt, role) 
-                           VALUES (@Username, @Password, @Salt, @Role)";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-
-                using (SqlCommand checkCommand = new SqlCommand(queryCheck, connection))
-                {
-                    checkCommand.Parameters.AddWithValue("@Username", user.Username);
-                    int count = (int)checkCommand.ExecuteScalar();
-
-                    if (count > 0)
-                    {
-                        MessageBox.Show($"Username {user.Username} already exists!", "Username duplicate", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        return false;
-                    }
-                }
-
-                string salt;
-                string hashedPassword = PasswordHelper.HashPassword(user.Password, out salt);
-
-                using (SqlCommand insertCommand = new SqlCommand(queryInsert, connection))
-                {
-                    insertCommand.Parameters.AddWithValue("@Username", user.Username);
-                    insertCommand.Parameters.AddWithValue("@Password", hashedPassword);
-                    insertCommand.Parameters.AddWithValue("@Salt", salt);
-                    insertCommand.Parameters.AddWithValue("@Role", user.Role);
-
-                    insertCommand.ExecuteNonQuery();
-                }
-            }
-            return true;
-        }
-
-        //Method to update user account
-        public void UpdateUserAccount(UsersModel user)
-        {
-            string updateQuery = "UPDATE users SET username = @Username, role = @Role, password = @Password, salt = @Salt WHERE user_id = @UserId";
-
-            using (var connection = GetConnection())
-            {
-                connection.Open();
-
-                string salt;
-                MessageBox.Show($"Test {user.Password}");
-                string hashedPassword = PasswordHelper.HashPassword(user.Password, out salt);
-                using (var command = new SqlCommand(updateQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@Username", user.Username);
-                    command.Parameters.AddWithValue("@Role", user.Role);
-                    command.Parameters.AddWithValue("@Password", hashedPassword);
-                    command.Parameters.AddWithValue("@Salt", salt);
-                    command.Parameters.AddWithValue("@UserId", user.UserId);
-                    command.ExecuteNonQuery();
-                }
-            }
-
-        }
-
-        //Method to fetch users in the database
-        public List<UsersModel> FetchUser()
-        {
-            string queryUser = "SELECT user_id, username, role FROM users";
-            var users = new List<UsersModel>();
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(queryUser, connection))
-                    {
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                var user = new UsersModel()
-                                {
-                                    UserId = reader.GetInt32(reader.GetOrdinal("user_id")),
-                                    Username = reader.GetString(reader.GetOrdinal("username")),
-                                    Role = reader.GetString(reader.GetOrdinal("role"))
-
-                                };
-                                users.Add(user);
-                            }
-                        }
-
-            }
-        }
-
-
 
         //ETO UNG BAGO 
 
@@ -405,7 +308,7 @@ namespace CIRCUIT.Utilities
 
         // HANGGANG DITO
 
-
+        
 
     }
 }

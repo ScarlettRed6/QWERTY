@@ -1,9 +1,4 @@
 ﻿using CIRCUIT.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CIRCUIT.Model
 {
@@ -16,10 +11,8 @@ namespace CIRCUIT.Model
         public DateTime DateTime { get; set; }
         public int CashierId { get; set; }
         public string CashierName { get; set; }
-        public decimal TotalAmount { get; set; }
         public string PaymentMethod { get; set; }
         public decimal CustomerPayment {  get; set; }
-        public decimal ChangeGiven { get; set; }
 
         public decimal TotalAmount
         {
@@ -34,7 +27,6 @@ namespace CIRCUIT.Model
             }
         }
 
-        public string PaymentMethod { get; set; }
         public decimal CustomerPaid { get; set; }
 
         public decimal ChangeGiven
@@ -49,6 +41,19 @@ namespace CIRCUIT.Model
                 }
             }
         }
+
+        private bool _isSelected;
+        public bool IsSelected 
+        { 
+            get { return _isSelected; }
+            set 
+            { 
+                _isSelected = value;
+                OnPropertyChange();
+            }
+        
+        }
+
 
     }
 

@@ -37,7 +37,7 @@ namespace CIRCUIT.View.CashierView
             }
             else
             {
-                this.Close();
+                Close();
             }
         }
     }

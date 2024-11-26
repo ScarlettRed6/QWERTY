@@ -14,7 +14,7 @@
     //For sales and sale items queries
     public interface ISalesRepository
     {
-        List<SalesModel> FetchSales();
+        List<SaleModel> FetchSales();
         Dictionary<int, string> GetProductNames(List<int> productIds);
         List<SalesItemModel> FetchSaleItems(int saleId);
         int FetchTotalProductSold();
@@ -25,4 +25,13 @@
     {
 
     }
+
+    public interface ISessionRepository 
+    {
+        public void LogSessionStart(int userId);
+        public void LogSessionEnd(int userId);
+
+    }
+
+
 }

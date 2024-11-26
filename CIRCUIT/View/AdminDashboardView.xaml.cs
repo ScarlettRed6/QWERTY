@@ -47,6 +47,11 @@ namespace CIRCUIT.View.AdminDashboardView
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
 
-        
+        private void logoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            UserLoginView loginView = new UserLoginView();
+            loginView.Show();
+            this.Close();
+        }
     }
 }

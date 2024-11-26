@@ -61,6 +61,45 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             }
         }
 
+        public int CurrentPage
+        {
+            get => _currentPage;
+            set 
+            {
+                if (_currentPage != value && value > 0 && value <= TotalPages)
+                {
+                    _currentPage = value;
+                    OnPropertyChange();
+                    UpdatePagedProducts();
+
+                }
+
+            }
+        }
+
+        public int ItemsPerPage
+        {
+            get => _itemsPerPage;
+            set
+            {
+                _itemsPerPage = value;
+                OnPropertyChange();
+                UpdatePagedProducts();
+            }
+
+        }
+
+        public int TotalItems
+        {
+            get => _totalItems;
+            set
+            {
+                _totalItems = value;
+                OnPropertyChange();
+            }
+
+        }
+
         public string SearchTerm
         {
             get => _searchTerm;
