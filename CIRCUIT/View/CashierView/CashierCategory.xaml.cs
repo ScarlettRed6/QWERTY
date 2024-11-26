@@ -7,13 +7,10 @@ namespace CIRCUIT.View.CashierView
 {
     public partial class CashierView : Window
     {
-
         public CashierView()
         {
             InitializeComponent();
-            this.DataContext = new NewSaleViewModel();
         }
-
 
         private void NewSale_Click(object sender, RoutedEventArgs e)
         {
@@ -24,14 +21,17 @@ namespace CIRCUIT.View.CashierView
 
         private void History_Click(object sender, RoutedEventArgs e)
         {
-            HistoryTransaction HistoryTransaction = new HistoryTransaction();
-            HistoryTransaction.Show();
+            HistoryTransaction historyTransaction = new HistoryTransaction();
+            historyTransaction.Show();
             this.Close();
         }
 
         private void Refund_Click(object sender, RoutedEventArgs e)
         {
-
+            RefundView refundView = new RefundView();
+            refundView.Show();
+            this.Close();
         }
     }
+
 }

@@ -1,4 +1,5 @@
 ﻿using CIRCUIT.ViewModel;
+using CIRCUIT.ViewModel.CashierViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace CIRCUIT.View.CashierView
@@ -21,7 +23,16 @@ namespace CIRCUIT.View.CashierView
         public HistoryTransaction()
         {
             InitializeComponent();
+            DataContext = new HistoryCashierViewModel();
         }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            CashierView CashierViewWindow = new CashierView();
+            CashierViewWindow.Show();
+            this.Close();
+        }
+
 
 
     }

@@ -2,112 +2,66 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:vm="clr-namespace:CIRCUIT.ViewModel.CashierViewModel"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewmodel="clr-namespace:CIRCUIT.ViewModel"
-        Title="HistoryTransaction" Height="550" Width="1200"
+        xmlns:local="clr-namespace:CIRCUIT.View.CashierView"
+        Title="Transaction History" Height="550" Width="1200"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
 
+    <Window.DataContext>
+        <vm:HistoryCashierViewModel />
+    </Window.DataContext>
 
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
+        <!-- Header -->
+        <TextBlock Grid.Row="0" FontSize="24" FontWeight="Bold" Text="Transaction History" HorizontalAlignment="Center" Margin="0,0,0,10" />
 
-<Grid Margin="0,0,20,0">
-        <StackPanel Margin="10">
-
-            <!-- Header Section -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
-                <TextBlock FontSize="24" FontWeight="Bold" Text="TRANSACTION HISTORY" VerticalAlignment="Center"/>
-            </StackPanel>
-
-            <!-- Date and Staff Information -->
-            
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
-                <!-- Display the date and time -->
-                <TextBlock FontSize="15" Margin="0,0,0,0">
-                    <TextBlock.Text>
-                        <Binding Path="CurrentDateTime" />
-                    </TextBlock.Text>
-                </TextBlock>
-
-                <StackPanel Margin="20,0,0,0">
-                    <TextBlock Text="SALES STAFF" FontWeight="Bold" FontSize="12"/>
-                    <TextBlock Text="{Binding StaffName}"/>
-                </StackPanel>
-
-                <StackPanel Margin="20,0,0,0">
-                    <TextBlock Text="CASH REGISTER" FontWeight="Bold" FontSize="12"/>
-                    <TextBlock Text="{Binding CashRegister}"/>
-                </StackPanel>
-            </StackPanel>
-
-            <!-- Filter Section -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
-                <TextBlock Text="YEAR" Margin="5,0"/>
-                <TextBox Width="50" Text="2024" IsReadOnly="True"/>
-                <TextBlock Text="FROM" Margin="10,0"/>
-                <ComboBox Width="80">
-                    <ComboBoxItem Content="JANUARY"/>
-                    <ComboBoxItem Content="FEBRUARY"/>
-                    <ComboBoxItem Content="MARCH"/>
-                    <ComboBoxItem Content="APRIL"/>
-                    <ComboBoxItem Content="MAY"/>
-                    <ComboBoxItem Content="JUNE"/>
-                    <ComboBoxItem Content="JULY"/>
-                    <ComboBoxItem Content="AUGUST"/>
-                    <ComboBoxItem Content="SEPTEMBER"/>
-                    <ComboBoxItem Content="OCTOBER"/>
-                    <ComboBoxItem Content="NOVEMBER"/>
-                    <ComboBoxItem Content="DECEMBER"/>
-
-                </ComboBox>
-                <TextBlock Text="TILL" Margin="10,0"/>
-                <ComboBox Width="80">
-                    <ComboBoxItem Content="JANUARY"/>
-                    <ComboBoxItem Content="FEBRUARY"/>
-                    <ComboBoxItem Content="MARCH"/>
-                    <ComboBoxItem Content="APRIL"/>
-                    <ComboBoxItem Content="MAY"/>
-                    <ComboBoxItem Content="JUNE"/>
-                    <ComboBoxItem Content="JULY"/>
-                    <ComboBoxItem Content="AUGUST"/>
-                    <ComboBoxItem Content="SEPTEMBER"/>
-                    <ComboBoxItem Content="OCTOBER"/>
-                    <ComboBoxItem Content="NOVEMBER"/>
-                    <ComboBoxItem Content="DECEMBER"/>
-                </ComboBox>
-            </StackPanel>
-
-            <!-- Transaction List -->
-            <ListView Name="TransactionListView" Margin="0,10,0,10" Width="1100" Height="280" HorizontalAlignment="Center" FontSize="15">
-                <ListView.View>
-                    <GridView >
-                        <GridViewColumn Header="Order Id" Width="120" DisplayMemberBinding="{Binding OrderId}"/>
-                        <GridViewColumn Header="Date" Width="140" DisplayMemberBinding="{Binding Date}"/>
-                        <GridViewColumn Header="Product" Width="280" DisplayMemberBinding="{Binding Product}"/>
-                        <GridViewColumn Header="Quantity" Width="135" DisplayMemberBinding="{Binding Quantity}"/>
-                        <GridViewColumn Header="Price" Width="120" DisplayMemberBinding="{Binding Price}"/>
-                        <GridViewColumn Header="Cashier" Width="125" DisplayMemberBinding="{Binding CashierName}"/>
-                        <GridViewColumn Header="Time Transaction" Width="180" DisplayMemberBinding="{Binding TimeTransaction}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-
-            <!-- Total Amount -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,30,10">
-                <TextBlock Text="TOTAL" FontWeight="Bold" Margin="0,0,10,0"/>
-                <!-- Amount text muna -->
-                <TextBlock Text="PHP2,720.00" FontWeight="Bold"/>
-            </StackPanel>
-
-            <!-- Pagination Controls -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
-                <Button Content="BACK" Width="80" Background="#FFDDDD" Margin="0,0,10,0"/>
-                <Button Content="&lt;" Width="30" Margin="5,0"/>
-                <Button Content="1" Width="30" Margin="5,0"/>
-                <Button Content="2" Width="30" Margin="5,0"/>
-                <Button Content="3" Width="30" Margin="5,0"/>
-                <Button Content="&gt;" Width="30" Margin="5,0"/>
-            </StackPanel>
+        <!-- Date, Time, and Staff Info -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+            <TextBlock FontSize="15" Margin="0,0,20,0">
+                <TextBlock.Text>
+                    <Binding Path="CurrentDateTime" StringFormat="{}{0:f}" />
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock FontSize="15" Margin="0,0,0,0" Text="{Binding StaffName}" />
         </StackPanel>
-        </Grid>
+
+        <!-- Transaction List -->
+        <ListView Grid.Row="2" ItemsSource="{Binding SalesHistory}" Margin="0,10,0,10" FontSize="15">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Sale ID" Width="120" DisplayMemberBinding="{Binding SaleId}" />
+                    <GridViewColumn Header="Cashier ID" Width="120" DisplayMemberBinding="{Binding CashierId}" />
+                    <GridViewColumn Header="Date" Width="140" DisplayMemberBinding="{Binding DateTime, StringFormat={}{0:g}}" />
+                    <GridViewColumn Header="Total Amount" Width="120" DisplayMemberBinding="{Binding TotalAmount, StringFormat={}{0:C2}}" />
+                    <GridViewColumn Header="Payment Method" Width="135" DisplayMemberBinding="{Binding PaymentMethod}" />
+                    <GridViewColumn Header="Customer Paid" Width="120" DisplayMemberBinding="{Binding CustomerPaid, StringFormat={}{0:C2}}" />
+                    <GridViewColumn Header="Change Given" Width="125" DisplayMemberBinding="{Binding ChangeGiven, StringFormat={}{0:C2}}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!-- Total Amount -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <TextBlock Text="Total" FontWeight="Bold" Margin="0,0,10,0" />
+            <TextBlock FontWeight="Bold" Text="{Binding TotalSalesAmount, StringFormat={}{0:C2}}" />
+        </StackPanel>
+
+        <!-- Pagination Controls -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <Button Content="BACK" Width="80" Background="#FFDDDD" Margin="0,0,10,0" Click="BackButton_Click"/>
+            <Button Content="&lt;" Width="30" Margin="5,0" Command="{Binding PreviousPageCommand}" />
+            <Button Content="{Binding CurrentPage}" Width="30" Margin="5,0" />
+            <Button Content="{Binding NextPage}" Width="30" Margin="5,0" Command="{Binding NextPageCommand}" />
+            <Button Content="&gt;" Width="30" Margin="5,0" Command="{Binding NextPageCommand}" />
+        </StackPanel>
+    </Grid>
 </Window>
