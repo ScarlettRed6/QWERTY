@@ -2,17 +2,18 @@
 using System.Data.SqlClient;
 using System.Windows;
 using CIRCUIT.Model;
+using CIRCUIT.Model.NewSaleModel;
 using Microsoft.Data.SqlClient;
-
 namespace CIRCUIT.Utilities
 {
     public class Db
     {
 
         //Comment each of our local connection for local use
-        //private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Integrated Security=True;";
-        private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
-                                           "Trust Server Certificate=True";
+        private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
+
+        //private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
+        //                                  "Trust Server Certificate=True";
 
         //Method to execute non queries like INSERT or UPDATE, might change this code later idk
         public void ExecuteNonQuery(string query)
@@ -25,7 +26,7 @@ namespace CIRCUIT.Utilities
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.ExecuteNonQuery();
-                       
+
                     }
                 }
                 catch (Exception ex)
@@ -87,11 +88,13 @@ namespace CIRCUIT.Utilities
                                     ProductId = reader.GetInt32(reader.GetOrdinal("product_id")),
                                     ProductName = reader.GetString(reader.GetOrdinal("product_name")),
                                     Category = reader.GetString(reader.GetOrdinal("category")),
+                                    //nilagya ko ng description dito tapos dun sa catalogviewmodel mo pre
+                                    Description = reader.GetString(reader.GetOrdinal("description")),
                                     Brand = reader.GetString(reader.GetOrdinal("brand")),
                                     ModelNumber = reader.GetString(reader.GetOrdinal("model_number")),
                                     StockQuantity = reader.GetInt32(reader.GetOrdinal("stock_quantity")),
-                                    UnitCost = (double)reader.GetDecimal(reader.GetOrdinal("unit_cost")),
-                                    SellingPrice = (double)reader.GetDecimal(reader.GetOrdinal("selling_price"))
+                                    UnitCost = (decimal)reader.GetDecimal(reader.GetOrdinal("unit_cost")),
+                                    SellingPrice = (decimal)reader.GetDecimal(reader.GetOrdinal("selling_price"))
                                 };
                                 products.Add(product);
                             }
@@ -133,10 +136,10 @@ namespace CIRCUIT.Utilities
                                     Brand = reader.GetString(reader.GetOrdinal("brand")),
                                     Category = reader.GetString(reader.GetOrdinal("category")),
                                     Description = reader.GetString(reader.GetOrdinal("description")),
-                                    SellingPrice = (double)reader.GetDecimal(reader.GetOrdinal("selling_price")),
+                                    SellingPrice = (decimal)reader.GetDecimal(reader.GetOrdinal("selling_price")),
                                     MinStockLevel = reader.GetInt32(reader.GetOrdinal("min_stock_level")),
                                     StockQuantity = reader.GetInt32(reader.GetOrdinal("stock_quantity")),
-                                    UnitCost = (double)reader.GetDecimal(reader.GetOrdinal("unit_cost")),
+                                    UnitCost = (decimal)reader.GetDecimal(reader.GetOrdinal("unit_cost")),
                                     SKU = reader.GetOrdinal("sku"),
                                     //IsArchived = reader.GetBoolean(reader.GetOrdinal("is_archived"))
                                 };
@@ -145,14 +148,13 @@ namespace CIRCUIT.Utilities
                         }
                     }
 
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     MessageBox.Show($"Error fetching data: {ex.Message}");
                 }
-
             }
             return products;
-
         }
 
         //Method to update product
@@ -180,7 +182,7 @@ namespace CIRCUIT.Utilities
                     command.Parameters.AddWithValue("@productId", product.ProductId);
 
                     command.ExecuteNonQuery();
-                    
+
                 }
             }
         }
@@ -202,8 +204,85 @@ namespace CIRCUIT.Utilities
                 }
 
             }
-
         }
+
+
+
+        //ETO UNG BAGO 
+
+        public void InsertSale(SaleModel sale)
+        {
+            //string query = @"INSERT INTO sales (date_time, cashier_id, total_amount, payment_method, customer_payment, change_given)
+            //        VALUES (@DateTime, @CashierId, @TotalAmount, @PaymentMethod, @CustomerPaid, @ChangeGiven)";
+            string query = @"INSERT INTO sales (date_time, total_amount, payment_method, customer_payment, change_given)
+                    VALUES (@DateTime, @TotalAmount, @PaymentMethod, @CustomerPaid, @ChangeGiven)";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@DateTime", sale.DateTime);
+                    command.Parameters.AddWithValue("@CashierId", sale.CashierId);
+                    command.Parameters.AddWithValue("@TotalAmount", sale.TotalAmount);
+                    command.Parameters.AddWithValue("@PaymentMethod", sale.PaymentMethod);
+                    command.Parameters.AddWithValue("@CustomerPaid", sale.CustomerPaid);
+                    command.Parameters.AddWithValue("@ChangeGiven", sale.ChangeGiven);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<SaleHistoryModel> GetSalesHistory()
+        {
+            string query = @"SELECT sale_id, date_time, COALESCE(cashier_id, 0) AS cashier_id, total_amount, payment_method, customer_payment, change_given FROM sales";
+            List<SaleHistoryModel> salesHistory = new List<SaleHistoryModel>();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var sale = new SaleHistoryModel
+                                {
+                                    SaleId = reader.GetInt32(reader.GetOrdinal("sale_id")),
+                                    DateTime = reader.GetDateTime(reader.GetOrdinal("date_time")),
+                                    //papallitan nalang to if ok n ung login cashierID bawal kasi magsend here ng may null
+                                    CashierId = reader.IsDBNull(reader.GetOrdinal("cashier_id")) ? 0 : reader.GetInt32(reader.GetOrdinal("cashier_id")),
+                                    TotalAmount = reader.GetDecimal(reader.GetOrdinal("total_amount")),
+                                    PaymentMethod = reader.GetString(reader.GetOrdinal("payment_method")),
+                                    CustomerPaid = reader.GetDecimal(reader.GetOrdinal("customer_payment")),
+                                    ChangeGiven = reader.GetDecimal(reader.GetOrdinal("change_given"))
+                                };
+
+                                salesHistory.Add(sale);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Consider using a proper logging mechanism
+                MessageBox.Show($"Error fetching sales history: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            return salesHistory;
+        }
+
+
+
+
+        // HANGGANG DITO
+
+
 
     }
 }
