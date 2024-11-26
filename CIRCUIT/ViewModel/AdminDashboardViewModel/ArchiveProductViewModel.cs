@@ -34,10 +34,10 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         private string _archiveBrand;
 
         [ObservableProperty]
-        private double _archivePrice;
+        private decimal _archivePrice;
 
         [ObservableProperty]
-        private double _archiveUnitCost;
+        private decimal _archiveUnitCost;
 
         [ObservableProperty]
         private int _archiveMinStockLevel;

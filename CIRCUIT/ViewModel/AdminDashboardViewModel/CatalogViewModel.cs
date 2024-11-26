@@ -150,7 +150,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         //Refreshes the products in the datagrid
         public void UpdateCatalog()
         {
-            string query = "SELECT product_id, product_name, category, brand, model_number, stock_quantity, unit_cost, selling_price FROM Products WHERE is_archived = 0";
+            //ETO PRE NILAGYAN KO DESCRIPTION, DI KO ALAM BAT DI NAGANA KASI HAHAHAAHHAHAAHAHAHA AKO LANG MAKAKA INTIDI SA CODE KO EH
+            string query = "SELECT product_id, product_name, category, description, brand, model_number, stock_quantity, unit_cost, selling_price FROM Products WHERE is_archived = 0";
             var products = dbCon.FetchData(query);
 
             Product.Clear();

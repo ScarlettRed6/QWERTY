@@ -25,7 +25,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         private string _productDescriptionBox;
 
         [ObservableProperty]
-        private double _sellingPriceBox;
+        private decimal _sellingPriceBox;
 
         [ObservableProperty]
         private int _minStockLevel;
@@ -34,7 +34,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         private int _stockQuantityBox;
 
         [ObservableProperty]
-        private double _unitCost;
+        private decimal _unitCost;
 
         [ObservableProperty]
         private object _currentAddView;
