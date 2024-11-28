@@ -1,5 +1,8 @@
-﻿using CIRCUIT.Utilities;
+﻿using CIRCUIT.Model;
+using CIRCUIT.Model.DataRepositories;
+using CIRCUIT.Utilities;
 using LiveCharts;
+using LiveCharts.Definitions.Charts;
 using LiveCharts.Wpf;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -9,70 +12,165 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 {
     public class HomeViewModel : PropertyChange
     {
-      
-        //Test
-        //public ICommand btnTestCommand { get; }
-        //Test
+        //Fields
+        private decimal _grossProfit;
+        private decimal _totalSalesRevenue;
+        private readonly SalesRepository _salesRepository;
+        private readonly Db _dbCon;
 
         public SeriesCollection SeriesCollection { get; set; }
+        public SeriesCollection SeriesCollection2 { get; set; }
         public Func<double, string> YFormatter { get; set; }
         public string[] labels { get; set; }
-        //public ObservableCollection<double> _data; 
+        public ObservableCollection<SaleModel> Sales { get; set; }
+        public ObservableCollection<ProductModel> Products { get; set; }
 
+        public decimal GrossProfit
+        {
+            get 
+            { 
+                return _grossProfit; 
+            }
+            set 
+            { 
+                _grossProfit = value;
+                OnPropertyChange();
+            }
+        }
+
+        public decimal TotalSalesRevenue
+        {
+            get 
+            { 
+                return _totalSalesRevenue;
+            }
+            set 
+            { 
+                _totalSalesRevenue = value;
+                OnPropertyChange();
+            }
+        }
+
+
+        //Constructor
         public HomeViewModel()
         {
-
-            //_data = new ObservableCollection<double> { Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
-            SalesPerDay();
-            GrossProfit();
-            //btnTestCommand = new CommandRelay(ExecuteTest); Part of the testButton, remove or use later
+            _dbCon = new Db();
+            _salesRepository = new SalesRepository();
+            Products = new ObservableCollection<ProductModel>();
+            Sales = new ObservableCollection<SaleModel>();
+            InitializeCalculations();
+            UpdateLatestTransaction();
+            UpdateStockAlert();
 
         }
 
-        /* This is for testing the graphs, remove later or use later
-        private void ExecuteTest(object obj)
+        //Method for barchart to display total revenues for the last 7 days , it shows revenues per day
+        private void UpdateBarChart()
         {
-            if (SeriesCollection[0].Values.Count >= 7)
-            {
-                SeriesCollection[0].Values.RemoveAt(0);
-            }
-            SeriesCollection[0].Values.Add(48d);
-            
-        }*/
+            var revenues = _dbCon.FetchLast7DaysRevenue();
 
-        //Sales per day chart
-        private void SalesPerDay()
-        {
-            double Sunday = 123.53;
-            double Monday = 154.73;
-            double Tuesday = 215.62;
-            double Wednesday = 153.86;
-            double Thursday = 674.60;
-            double Friday = 1256.90;
-            double Saturday = 174.78;
+            var labels = new string[7];
+            var values = new ChartValues<double>();
+            DateTime today = DateTime.Today;
+
+            for (int i = 0; i < 7; i++)
+            {
+                labels[i] = today.AddDays(-6 + i).ToString("dddd");
+                values.Add(0); // Default revenue
+            }
+
+            //Map revenue data to the correct day in the 7 days
+            foreach (var revenue in revenues)
+            {
+                int index = (revenue.SaleDate - today.AddDays(-6)).Days;
+                if (index >= 0 && index < 7)
+                {
+                    values[index] = (double)revenue.TotalRevenue;
+                }
+            }
 
             SeriesCollection = new SeriesCollection
             {
                 new ColumnSeries
                 {
-                    Title = "Sales",
-                    Values = new ChartValues<double> {Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday},
-                    Fill = Brushes.Red,
-
-
+                    Title = "Revenue",
+                    Values = values,
+                    Fill = Brushes.Red
                 }
-
             };
 
-            labels = new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+            this.labels = labels;
             YFormatter = value => value.ToString("C");
+            OnPropertyChange(nameof(SeriesCollection));
+            OnPropertyChange(nameof(labels));
+            OnPropertyChange(nameof(YFormatter));
+        }
+
+        private void UpdatePieChart()
+        {
+            var revenueData = _dbCon.FetchRevenuePerCategory();
+
+            SeriesCollection2 = new SeriesCollection();
+
+            foreach (var item in revenueData)
+            {
+                SeriesCollection2.Add(new PieSeries
+                {
+                    Title = item.Key, // Category name
+                    Values = new ChartValues<double> { (double)item.Value }, // Revenue value
+                    DataLabels = false,
+                    LabelPoint = chartPoint => $"{chartPoint.Y} ({chartPoint.Participation:P})",
+                    LabelPosition = PieLabelPosition.OutsideSlice
+                });
+            }
+
+            OnPropertyChange(nameof(SeriesCollection2));
+        }
+
+        //Updates the latest transactions list
+        private void UpdateLatestTransaction()
+        {
+            var fetchedSales = _salesRepository.FetchSales();
+            //DateTime sevenDaysAgo = DateTime.Now.AddDays(-7); 
+            DateTime currentTime = DateTime.Now.AddHours(-48);
+
+            Sales.Clear();
+            var recentSales = fetchedSales
+                              .Where(sale => sale.DateTime >= currentTime)
+                              .Take(4) 
+                              .ToList();
+
+            foreach (var sale in recentSales)
+            {
+                Sales.Add(sale);
+            }
+
+        }
+
+        private void UpdateStockAlert()
+        {
+            var query = "SELECT * FROM products WHERE stock_quantity < 5 AND is_archived = 0";
+            var fetchedProducts = _dbCon.FetchProducts(query);
+
+            Products.Clear();
+            foreach (var product in fetchedProducts)
+            {
+                Products.Add(product);
+            }
         }
 
         //Gross pofit chart
-        private void GrossProfit()
+        private void InitializeCalculations()
         {
-            
+            var result = _dbCon.FetchGrossProfit(DateTime.Now.AddYears(-1), DateTime.Now);
+            GrossProfit = result.GrossProfit;
+            TotalSalesRevenue = result.TotalRevenue;
+            UpdatePieChart();
+            UpdateBarChart();
+
         }
+
 
     }
 }

@@ -70,5 +70,12 @@ namespace CIRCUIT.View.CashierView
         {
 
         }
+
+        private void logoutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            UserLoginView loginView = new UserLoginView();
+            loginView.Show();
+            this.Close();
+        }
     }
 }

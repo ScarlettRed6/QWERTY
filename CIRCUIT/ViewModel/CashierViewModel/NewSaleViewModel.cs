@@ -119,6 +119,7 @@ namespace CIRCUIT.ViewModel
         public ICommand CheckoutCommand { get; set; }
         public ICommand ProcessOrderCommand { get; set; }
         public ICommand ConfirmOrderCommand { get; private set; }
+        public RelayCommand LogOutBtnCommand { get; set; }
         #endregion
 
         #region Constructor
@@ -156,6 +157,7 @@ namespace CIRCUIT.ViewModel
             CheckoutCommand = new RelayCommand(Checkout);
             ProcessOrderCommand = new RelayCommand(ExecuteProcessOrder);
             ProcessOrderCommand = new RelayCommand(ExecuteProcessOrder);
+            LogOutBtnCommand = new RelayCommand(ExecuteLogout);
         }
         #endregion
 
@@ -314,6 +316,11 @@ namespace CIRCUIT.ViewModel
             confirmationModal.ShowDialog();
         }
 
+        private void ExecuteLogout()
+        {
+            _sessionRepository.LogSessionEnd(_userId);
+        }
+
         public void ExecuteProcessOrder()
         {
             try
@@ -327,6 +334,7 @@ namespace CIRCUIT.ViewModel
 
                 SaleModel newSale = new SaleModel
                 {
+                    CashierId = _userId,
                     DateTime = DateTime.Now,
                     TotalAmount = TotalAmount,
                     PaymentMethod = "Cash",

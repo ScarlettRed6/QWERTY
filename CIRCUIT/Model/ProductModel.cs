@@ -39,4 +39,11 @@ namespace CIRCUIT.Model
 
 
     }
+
+    //For charts
+    public class DailyRevenue
+    {
+        public DateTime SaleDate { get; set; }
+        public decimal TotalRevenue { get; set; }
+    }
 }

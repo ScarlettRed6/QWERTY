@@ -41,6 +41,42 @@ namespace CIRCUIT.Utilities
 
         // PRODUCTS QUERIES
 
+        public List<ProductModel> FetchProducts(string query)
+        {
+            var products = new List<ProductModel>();    
+
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var product = new ProductModel
+                            {
+                                ProductId = reader.GetInt32(reader.GetOrdinal("product_id")),
+                                ProductName = reader.GetString(reader.GetOrdinal("product_name")),
+                                Category = reader.GetString(reader.GetOrdinal("category")),
+                                Description = reader.GetString(reader.GetOrdinal("description")),
+                                Brand = reader.GetString(reader.GetOrdinal("brand")),
+                                ModelNumber = reader.GetString(reader.GetOrdinal("model_number")),
+                                StockQuantity = reader.GetInt32(reader.GetOrdinal("stock_quantity")),
+                                UnitCost = (decimal)reader.GetDecimal(reader.GetOrdinal("unit_cost")),
+                                SellingPrice = (decimal)reader.GetDecimal(reader.GetOrdinal("selling_price"))
+                            };
+                            products.Add(product);
+                        }
+                    }
+
+                }
+
+            }
+
+            return products;
+        }
+
         //Method to insert new products to the database
         public void InsertProduct(ProductModel product)
         {
@@ -234,14 +270,157 @@ namespace CIRCUIT.Utilities
 
         }
 
+        //Method to fetch day for the last 7 days
+        public List<DailyRevenue> FetchLast7DaysRevenue()
+        {
+            string query = @"
+                            SELECT 
+                                CAST(s.date_time AS DATE) AS SaleDate, 
+                                SUM(s.total_amount) AS TotalRevenue
+                            FROM 
+                                sales s
+                            WHERE 
+                                s.date_time >= DATEADD(DAY, -7, GETDATE())
+                            GROUP BY 
+                                CAST(s.date_time AS DATE)
+                            ORDER BY 
+                                SaleDate;";
+
+            var revenues = new List<DailyRevenue>();
+
+            using (var connection = GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var revenue = new DailyRevenue
+                                {
+                                    SaleDate = reader.GetDateTime(reader.GetOrdinal("SaleDate")),
+                                    TotalRevenue = reader.GetDecimal(reader.GetOrdinal("TotalRevenue"))
+                                };
+
+                                revenues.Add(revenue);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error fetching revenue: " + ex.Message + "\n" + ex.StackTrace);
+                }
+            }
+
+            return revenues;
+        }
+
+        //Method to get the grossprofit and total revenue
+        public (decimal TotalRevenue, decimal TotalCOGS, decimal GrossProfit) FetchGrossProfit(DateTime? startDate = null, DateTime? endDate = null)
+        {
+            string query = @"
+                            SELECT 
+                                SUM(s.total_amount) AS TotalRevenue, 
+                                SUM(si.quantity * p.unit_cost) AS TotalCOGS
+                            FROM 
+                                sales s
+                            JOIN 
+                                sale_items si ON s.sale_id = si.sale_id
+                            JOIN 
+                                products p ON si.product_id = p.product_id";
+
+            // Add date filter if specified
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                query += " WHERE s.date_time >= @StartDate AND s.date_time <= @EndDate";
+            }
+
+            decimal totalRevenue = 0;
+            decimal totalCOGS = 0;
+
+            using (var connection = GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        if (startDate.HasValue && endDate.HasValue)
+                        {
+                            command.Parameters.AddWithValue("@StartDate", startDate.Value);
+                            command.Parameters.AddWithValue("@EndDate", endDate.Value);
+                        }
+
+                        using (var reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                totalRevenue = reader.IsDBNull(reader.GetOrdinal("TotalRevenue")) ? 0 : reader.GetDecimal(reader.GetOrdinal("TotalRevenue"));
+                                totalCOGS = reader.IsDBNull(reader.GetOrdinal("TotalCOGS")) ? 0 : reader.GetDecimal(reader.GetOrdinal("TotalCOGS"));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error calculating gross profit: " + ex.Message);
+                }
+            }
+
+            decimal grossProfit = totalRevenue - totalCOGS;
+            return (totalRevenue, totalCOGS, grossProfit);
+        }
+
+        //Method to fetch revenue per category
+        public Dictionary<string, decimal> FetchRevenuePerCategory()
+        {
+            string query = @"SELECT p.category AS Category, SUM(si.quantity * si.item_total_price) AS TotalRevenue
+                            FROM products p JOIN sale_items si ON p.product_id = si.product_id
+                            JOIN sales s ON si.sale_id = s.sale_id
+                            GROUP BY p.category";
+
+            var revenuePerCategory = new Dictionary<string, decimal>();
+
+            using (var connection = GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var category = reader.GetString(reader.GetOrdinal("Category"));
+                                var totalRevenue = reader.GetDecimal(reader.GetOrdinal("TotalRevenue"));
+
+                                revenuePerCategory[category] = totalRevenue;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error fetching revenue data: " + ex.Message);
+                }
+            }
+
+            return revenuePerCategory;
+        }
+
         //ETO UNG BAGO 
 
         public void InsertSale(SaleModel sale)
         {
             //string query = @"INSERT INTO sales (date_time, cashier_id, total_amount, payment_method, customer_payment, change_given)
             //        VALUES (@DateTime, @CashierId, @TotalAmount, @PaymentMethod, @CustomerPaid, @ChangeGiven)";
-            string query = @"INSERT INTO sales (date_time, total_amount, payment_method, customer_payment, change_given)
-                    VALUES (@DateTime, @TotalAmount, @PaymentMethod, @CustomerPaid, @ChangeGiven)";
+            string query = @"INSERT INTO sales (date_time, total_amount, payment_method, customer_payment, change_given, cashier_id)
+                    VALUES (@DateTime, @TotalAmount, @PaymentMethod, @CustomerPaid, @ChangeGiven, @CashierId)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

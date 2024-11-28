@@ -20,6 +20,7 @@
             <!-- For the header -->
             <RowDefinition Height="*"/>
             <!-- For the buttons -->
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <!-- Header -->
@@ -92,6 +93,21 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
+
         </StackPanel>
+        <Button x:Name="logoutBtn"
+                Grid.Row="2"
+                Height="50"
+                Width="130"
+                Content="Log out"
+                FontSize="20"
+                FontWeight="Medium"
+                Command="{Binding LogOutBtnCommand}"
+                Click="logoutBtn_Click"
+                HorizontalAlignment="Right"
+                Margin="10"
+                Style="{StaticResource addCatalogButton}">
+
+        </Button>
     </Grid>
 </Window>

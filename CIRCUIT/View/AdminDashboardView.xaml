@@ -55,7 +55,7 @@
             </LinearGradientBrush>
         </Border.BorderBrush>
         <Border.Background>
-            <SolidColorBrush Color="{StaticResource primary2}"/>
+            <SolidColorBrush Color="#170C1D"/>
         </Border.Background>
 
         <Grid>
@@ -67,7 +67,7 @@
             <!-- Border and Border background for the side nav -->
             <Border CornerRadius="7,0,0,5">
                 <Border.Background>
-                    <SolidColorBrush Color="{StaticResource primary1}"/>
+                    <SolidColorBrush Color="#040203"/>
                 </Border.Background>
 
                 <Grid>
@@ -96,12 +96,13 @@
                                      Command="{Binding ShowHomeCommand}">
 
                             <StackPanel Orientation="Horizontal">
-                                <fa:IconImage Icon="Home" Style="{StaticResource menuButtonIcon}"/>
-                                <TextBlock Text="Home" Style="{StaticResource menuButtonText}"/>
+                                <fa:IconImage Icon="ChartBar" Style="{StaticResource menuButtonIcon}"/>
+                                <TextBlock Text="Reports" Style="{StaticResource menuButtonText}"/>
                             </StackPanel>
 
                         </RadioButton>
 
+                        <!-- supposed to be for a separate reports, might implement later
                         <RadioButton Style="{StaticResource menuButton}"
                                      Tag="{StaticResource panelColor2}"
                                      Command="{Binding ShowAnalyticsCommand}">
@@ -112,7 +113,8 @@
                             </StackPanel>
 
                         </RadioButton>
-
+                        -->
+                        
                         <RadioButton Style="{StaticResource menuButton}"
                                      Tag="{StaticResource panelColor2}"
                                      Command="{Binding ShowSalesCommand}">
@@ -179,7 +181,8 @@
                             FontSize="20"
                             FontWeight="Medium"
                             Command="{Binding LogOutBtnCommand}"
-                            Click="logoutBtn_Click">
+                            Click="logoutBtn_Click"
+                            Style="{StaticResource addCatalogButton}">
                         
                     </Button>
                     
