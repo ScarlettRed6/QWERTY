@@ -14,6 +14,8 @@ namespace CIRCUIT.Utilities
     {
         void Maximize();
         void Minimize();
+        void OpenWindow(Window window);
+        void CloseCurrentWindow();
     }
 
     public class WindowControlService : IWindowService
@@ -39,10 +41,14 @@ namespace CIRCUIT.Utilities
             _windowService.WindowState = WindowState.Minimized;
         }
 
-        public void NavigateToLogin()
+        public void OpenWindow(Window window)
         {
-            UserLoginView loginView = new UserLoginView();
-            loginView.Show();
+            window.Show(); // Opens the specified window
+        }
+
+        public void CloseCurrentWindow()
+        {
+            _windowService.Close(); // Closes the current window
         }
     }
 }

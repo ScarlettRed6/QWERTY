@@ -26,12 +26,4 @@
 
     }
 
-    public interface ISessionRepository 
-    {
-        public void LogSessionStart(int userId);
-        public void LogSessionEnd(int userId);
-
-    }
-
-
 }

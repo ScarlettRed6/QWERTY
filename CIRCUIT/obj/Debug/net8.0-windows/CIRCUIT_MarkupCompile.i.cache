@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\App.xaml
 301201719585
 
-69-1491016026
+692133900556
 250449164345
 CustomControls\CustomPasswordBox.xaml;MainWindow.xaml;Styles\ButtonStyles.xaml;Styles\ComboBoxStyles.xaml;Styles\DataGridStyles.xaml;Styles\ExpanderStyles.xaml;Styles\TextBoxStyles.xaml;Styles\UIColors.xaml;View\AdminDashboardView.xaml;View\AdminDashboardViews\AddNewUserView.xaml;View\AdminDashboardViews\AddProductView.xaml;View\AdminDashboardViews\AnalyticsView.xaml;View\AdminDashboardViews\ArchivedProductsView.xaml;View\AdminDashboardViews\CatalogView.xaml;View\AdminDashboardViews\EditAccountView.xaml;View\AdminDashboardViews\EditProductView.xaml;View\AdminDashboardViews\HomeView.xaml;View\AdminDashboardViews\SalesTransactionsView.xaml;View\AdminDashboardViews\StaffView.xaml;View\AdminDashboardViews\ViewAccountView.xaml;View\AdminDashboardViews\ViewProductView.xaml;View\AdminDashboardViews\ViewSaleView.xaml;View\CashierView\CashierCategory.xaml;View\CashierView\ConfirmationModal.xaml;View\CashierView\DiscountModalView.xaml;View\CashierView\HistoryTransaction.xaml;View\CashierView\newSaleView.xaml;View\CashierView\ProductDetailsModal.xaml;View\CashierView\RefundView.xaml;View\UserLoginView.xaml;
 
-False
+True
 

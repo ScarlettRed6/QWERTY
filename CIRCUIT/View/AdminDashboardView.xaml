@@ -185,7 +185,6 @@
                             FontSize="20"
                             FontWeight="Medium"
                             Command="{Binding LogOutBtnCommand}"
-                            Click="logoutBtn_Click"
                             Style="{StaticResource addCatalogButton}">
                         
                     </Button>

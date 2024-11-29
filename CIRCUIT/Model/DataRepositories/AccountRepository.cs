@@ -243,5 +243,83 @@ namespace CIRCUIT.Model.DataRepositories
                 }
             }
         }
+
+        public void LogUserIn(int userId)
+        {
+            string query = @"
+                            UPDATE users 
+                            SET is_logged_in = 1, last_login_time = GETDATE() 
+                            WHERE user_id = @userId;";
+
+            using (var connection = GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@userId", userId);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error logging in user: " + ex.Message);
+                }
+            }
+        }
+
+        public void LogUserOut(int userId)
+        {
+            string query = @"
+                            UPDATE users 
+                            SET is_logged_in = 0, last_logout_time = GETDATE() 
+                            WHERE user_id = @userId;";
+
+            using (var connection = GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@userId", userId);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error logging out user: " + ex.Message);
+                }
+            }
+        }
+
+        public bool IsUserLoggedIn(int userId)
+        {
+            string query = @"
+                            SELECT is_logged_in 
+                            FROM users 
+                            WHERE user_id = @userId;";
+
+            using (var connection = GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@userId", userId);
+                        var result = command.ExecuteScalar();
+                        return result != null && (bool)result;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error checking user login status: " + ex.Message);
+                    return false;
+                }
+            }
+        }
+
     }
 }

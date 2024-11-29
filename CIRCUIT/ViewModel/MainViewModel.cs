@@ -14,7 +14,6 @@ namespace CIRCUIT.ViewModel
     {
         //Fields
         private int _userId;
-        SessionRepository _sessionRCon;
         AccountRepository _accountRCon;
 
         //Subscribing to window service interface
@@ -50,10 +49,10 @@ namespace CIRCUIT.ViewModel
 
         //public MainViewModel() : this(null) { }
 
-        public MainViewModel(IWindowService windowService)
+        public MainViewModel(IWindowService windowService, int userId)
         {
             _windowService = windowService;
-            _sessionRCon = new SessionRepository();
+            _userId = userId;
             _accountRCon = new AccountRepository();
             btnCloseCommand = new RelayCommand(ExecuteClose);
             btnMinimizeCommand = new RelayCommand<object>(_ => _windowService.Minimize());
@@ -73,19 +72,21 @@ namespace CIRCUIT.ViewModel
             SetUserName();
 
         }
-
+        //Execute logout function
         private void ExecuteLogout()
         {
-            _sessionRCon.LogSessionEnd(_userId);
+            _accountRCon.LogUserOut(_userId);
+            _windowService.OpenWindow(new UserLoginView());
+            _windowService.CloseCurrentWindow();
         }
 
         private void SetUserName()
         {
             if (_currentAdminView != null)
             {
-                _userId = (int)_sessionRCon.GetLoggedInUserId();
                 var userList = _accountRCon.FetchUser(_userId);
                 LoggedInAdmin = userList[0].Username;
+
             }
         }
 

@@ -22,9 +22,9 @@ namespace CIRCUIT
         {
             //Initialize the windowcontrolservice and set datacontext to mainviewmodel
             InitializeComponent();
-            var windowService = new WindowControlService(this);
-            var mainViewModel = new MainViewModel(windowService);
-            DataContext = mainViewModel;
+            //var windowService = new WindowControlService(this);
+            //var mainViewModel = new MainViewModel(windowService);
+           // DataContext = mainViewModel;
             
         }
 

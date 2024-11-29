@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
+﻿using CIRCUIT.Model;
+using CIRCUIT.Model.DataRepositories;
+using CIRCUIT.Model.SingleTons;
 using CIRCUIT.Utilities;
-using CIRCUIT.Model;
 using CIRCUIT.View.CashierView;
 using CommunityToolkit.Mvvm.Input;
-using CIRCUIT.Model.DataRepositories;
+using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
 
 namespace CIRCUIT.ViewModel
 {
@@ -15,13 +14,13 @@ namespace CIRCUIT.ViewModel
     {
         #region Private Fields
         private readonly Db _db;
-        private readonly SessionRepository _sessionRepository;
         private readonly AccountRepository _accountRepository;
         private int _userId;
         private string _searchQuery;
         private string _amountReceived;
         private string _amountGiven;
         private ObservableCollection<ProductModel> _allProducts = new ObservableCollection<ProductModel>();
+        private List<UsersModel> _users = new List<UsersModel>();
         #endregion
 
         #region Public Properties
@@ -127,9 +126,10 @@ namespace CIRCUIT.ViewModel
         {
             
             _db = new Db();
+            _userId = UserSessionService.Instance.UserId;
             _accountRepository = new AccountRepository();
-            _sessionRepository = new SessionRepository();
             InitializeBasicInfo();
+            InitializeStaffName();
             InitializeCommands();
             LoadProductsFromDatabase();
         }
@@ -140,10 +140,17 @@ namespace CIRCUIT.ViewModel
         {
             CurrentDate = DateTime.Now.ToString("MM/dd/yyyy");
             CurrentTime = DateTime.Now.ToString("hh:mm tt");
-            //Add ko user name based sa nag logged : Jamero
-            _userId = (int)_sessionRepository.GetLoggedInUserId();
+
+        }
+        //Initialize staff name
+        private void InitializeStaffName()
+        {
             var userList = _accountRepository.FetchUser(_userId);
-            StaffName = userList[0].Username;
+            foreach (var user in userList)
+            {
+                _users.Add(user);
+                StaffName = user.Username;
+            }
 
         }
 
@@ -316,9 +323,10 @@ namespace CIRCUIT.ViewModel
             confirmationModal.ShowDialog();
         }
 
+        //Execute log out function
         private void ExecuteLogout()
         {
-            _sessionRepository.LogSessionEnd(_userId);
+            _accountRepository.LogUserOut(_userId);
         }
 
         public void ExecuteProcessOrder()

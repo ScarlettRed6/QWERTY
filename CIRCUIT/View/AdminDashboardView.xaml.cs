@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Runtime.InteropServices;
-using System.Windows.Interop;
-using CIRCUIT.Utilities;
+﻿using CIRCUIT.Utilities;
 using CIRCUIT.ViewModel;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace CIRCUIT.View.AdminDashboardView
 {
@@ -23,12 +12,12 @@ namespace CIRCUIT.View.AdminDashboardView
     /// </summary>
     public partial class AdminDashboardView : Window
     {
-        public AdminDashboardView()
+        public AdminDashboardView(int userId)
         {
             InitializeComponent();
             //Do this WindowControlService interface for every window with custom window controls hahaha
             var windowService = new WindowControlService(this);
-            DataContext = new MainViewModel(windowService);
+            DataContext = new MainViewModel(windowService, userId);
 
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
@@ -47,11 +36,5 @@ namespace CIRCUIT.View.AdminDashboardView
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
 
-        private void logoutBtn_Click(object sender, RoutedEventArgs e)
-        {
-            UserLoginView loginView = new UserLoginView();
-            loginView.Show();
-            this.Close();
-        }
     }
 }

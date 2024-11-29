@@ -1,6 +1,8 @@
 ﻿using CIRCUIT.Model;
 using CIRCUIT.Model.DataRepositories;
+using CIRCUIT.Model.SingleTons;
 using CIRCUIT.Utilities;
+using CIRCUIT.View;
 using CIRCUIT.View.AdminDashboardView;
 using CIRCUIT.View.CashierView;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -23,7 +25,6 @@ namespace CIRCUIT.ViewModel
         private UsersModel _users;
         //Db dbConn;
         AccountRepository acRCon;
-        SessionRepository _sessionRCon;
 
         //Properties
         [ObservableProperty]
@@ -77,7 +78,6 @@ namespace CIRCUIT.ViewModel
         {
             //dbConn = new Db();
             acRCon = new AccountRepository();
-            _sessionRCon = new SessionRepository();
             propChange = new PropertyChange();
             LoginCommand = new RelayCommand(ExecuteLoginCommand);
         }
@@ -88,39 +88,61 @@ namespace CIRCUIT.ViewModel
 
             _users = acRCon.FetchUserPassAndSalt(Username);
 
-            //Verifies user
+            // Verifies user
             if (_users == null)
             {
                 MessageBox.Show($"{Username} does not exist!");
                 return;
             }
 
-            //Verifies password
+            // Verifies password
             bool isPasswordValid = PasswordHelper.VerifyPassword(plainPass, _users.Password, _users.Salt);
 
             if (isPasswordValid)
             {
-                MessageBox.Show("Login successful!");
+                //Get and set the user id for use
                 GetUserId = _users.UserId;
-                _sessionRCon.LogSessionStart(GetUserId);
+                UserSessionService.Instance.UserId = GetUserId;
+                //Check  if the user account is currently logged in on another device
+                if (acRCon.IsUserLoggedIn(GetUserId))
+                {
+                    MessageBox.Show("User currently logged in on another device");
+                    return;
+                }
 
+                //Show a successful login
+                MessageBox.Show("Login successful!");
+
+                //Updates the users table to set the logged in user by userid
+                acRCon.LogUserIn(GetUserId);
+
+                //Declare a new window
+                Window newWindow = null;
+
+                //Condition to check if the logging user account is an admin or a staff/cashier
                 if (_users.Role == "Admin")
                 {
-                    AdminDashboardView adminDashboardView = new AdminDashboardView();
-                    adminDashboardView.Show();  // Show the AdminDashboardView
-                    Application.Current.MainWindow.Close();
-                    
+                    newWindow = new AdminDashboardView(GetUserId);
                 }
                 else if (_users.Role == "Cashier")
                 {
-                    CashierView cashierView = new CashierView();
-                    cashierView.Show();
-                    Application.Current.MainWindow.Close();
+                    newWindow = new CashierView();
                 }
 
+                //If log in is successful open the new window and close the login window
+                if (newWindow != null)
+                {
+                    // Set the new window as the main window
+                    Application.Current.MainWindow = newWindow;
+                    newWindow.Show();
+
+                    // Close the login window
+                    Application.Current.Windows.OfType<UserLoginView>().FirstOrDefault()?.Close();
+                }
             }
             else
             {
+                //Message box if password is invalid
                 MessageBox.Show("Invalid password.");
             }
 
