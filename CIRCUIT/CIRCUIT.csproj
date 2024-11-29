@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Images\Circuit hd.png" />
     <None Remove="Assets\Images\Personalpic.jpg" />
   </ItemGroup>
 
@@ -24,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Images\Circuit hd.png" />
     <Resource Include="Assets\Images\Personalpic.jpg" />
   </ItemGroup>
 

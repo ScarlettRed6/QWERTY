@@ -75,7 +75,7 @@
                         Width="auto">
 
                     <StackPanel>
-                        <TextBlock Text="Total Sales by Category"
+                        <TextBlock Text="Sales by Category"
                                    FontSize="20"
                                    Foreground="{StaticResource panelColor4}"
                                    Margin="10,0,0,0"/>

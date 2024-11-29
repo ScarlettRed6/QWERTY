@@ -55,7 +55,7 @@
             </LinearGradientBrush>
         </Border.BorderBrush>
         <Border.Background>
-            <SolidColorBrush Color="#170C1D"/>
+            <SolidColorBrush Color="{StaticResource primary2}"/>
         </Border.Background>
 
         <Grid>
@@ -82,13 +82,17 @@
                         <StackPanel Orientation="Horizontal" Height="35"
                                     Margin="15,25,0,40">
 
-                            <Image Source="/Assets/Images/Personalpic.jpg" Height="30"/>
+                            <Image Source="/Assets/Images/Circuit hd.png" Height="30"/>
                             <TextBlock Text="CIRCUIT" Foreground="Red"
                                        FontSize="20" FontWeight="Medium"
                                        VerticalAlignment="Center" Margin="10,0,0,0"/>
 
                         </StackPanel>
-
+                        <TextBlock Text="Dashboard"
+                                   Foreground="{StaticResource panelColor4}"
+                                   FontSize="18"
+                                   FontWeight="Medium"
+                                   Margin="30,0,0,10"/>
                         <!-- Side menu buttons -->
 
                         <RadioButton Style="{StaticResource menuButton}"
