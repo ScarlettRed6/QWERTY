@@ -78,27 +78,23 @@ namespace CIRCUIT.ViewModel.CashierViewModel
         /// </summary>
         private void InitializeAccount()
         {
-            try
-            {
-                var userList = _accountRepository.FetchUser(_userId);
+           
+             var userList = _accountRepository.FetchUser(_userId);
 
-                _currentUser = userList.FirstOrDefault();
-                if (_currentUser == null)
+             if (userList == null)
                 {
-                    MessageBox.Show("User data could not be loaded.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+                MessageBox.Show("User test data could not be loaded.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+             }
 
-                // Populate properties for binding
-                StaffName = _currentUser.Username;
-                UserId = _currentUser.UserId;
-                Username = _currentUser.Username;
-                Fullname = _currentUser.FullName;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred while loading user data: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+              _currentUser = userList.FirstOrDefault();
+
+              // Populate properties for binding
+              StaffName = _currentUser.Username;
+              UserId = _currentUser.UserId;
+              Username = _currentUser.Username;
+              Fullname = _currentUser.FullName;
+
         }
 
         /// <summary>

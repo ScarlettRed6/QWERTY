@@ -80,7 +80,7 @@ namespace CIRCUIT.View.AdminDashboardViews {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/CIRCUIT;V1.0.0.0;component/view/admindashboardviews/salestransactionsview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/CIRCUIT;component/view/admindashboardviews/salestransactionsview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\View\AdminDashboardViews\SalesTransactionsView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

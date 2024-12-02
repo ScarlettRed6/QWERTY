@@ -137,3 +137,17 @@ C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\DiscountModalView.baml
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\RefundView.baml
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\Styles\CheckAndRadioBoxStyles.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\CashierProfileView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\inventoryView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\layawayView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\preorderView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\quickpayView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\reprintreceiptView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\voidOrderView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\CashierProfileView.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\inventoryView.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\layawayView.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\preorderView.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\quickpayView.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\reprintreceiptView.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\voidOrderView.baml

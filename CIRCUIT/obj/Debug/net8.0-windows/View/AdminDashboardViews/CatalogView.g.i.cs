@@ -74,7 +74,7 @@ namespace CIRCUIT.View.AdminDashboard {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/CIRCUIT;V1.0.0.0;component/view/admindashboardviews/catalogview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/CIRCUIT;component/view/admindashboardviews/catalogview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\View\AdminDashboardViews\CatalogView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
