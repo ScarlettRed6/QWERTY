@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:CIRCUIT.ViewModel"
-        
         xmlns:local="clr-namespace:CIRCUIT.View.CashierView"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
@@ -252,7 +251,7 @@
                          Style="{StaticResource SectionHeaderStyle}"
                          VerticalAlignment="Center"/>
                             <TextBlock Grid.Column="1"
-                         Text="{Binding TotalAmount, StringFormat='₱{0:N2}'}"
+                         Text="{Binding ViewModel.TotalAmount, StringFormat='₱{0:N2}'}"
                          FontSize="18"
                          FontWeight="Bold"
                          VerticalAlignment="Center"
@@ -267,10 +266,13 @@
                          Style="{StaticResource SectionHeaderStyle}"/>
 
                             <TextBlock Text="Payment Method"
+                                       
                          Style="{StaticResource LabelStyle}"
                          Margin="0,8,0,4"/>
+                            
                             <ComboBox Margin="0,0,0,16"
-                         VerticalContentAlignment="Center">
+                                      VerticalContentAlignment="Center"
+                                      SelectedItem="{Binding PaymentMethod, Mode=TwoWay}">>
                                 <ComboBoxItem Content="GCash"/>
                                 <ComboBoxItem Content="Card"/>
                                 <ComboBoxItem Content="Cash"/>
@@ -279,7 +281,7 @@
                             <TextBlock Text="Amount Received"
                          Style="{StaticResource LabelStyle}"
                          Margin="0,0,0,4"/>
-                            <TextBox Text="{Binding ViewModel.AmountReceived, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Name="AmountGivenTextBox" Text="{Binding ViewModel.AmountReceived, UpdateSourceTrigger=PropertyChanged}"
                         PreviewTextInput="AmountTextBox_PreviewTextInput"
                         MaxLength="11"
                         VerticalContentAlignment="Center"
@@ -288,7 +290,7 @@
                             <TextBlock Text="Change Given"
                          Style="{StaticResource LabelStyle}"
                          Margin="0,0,0,4"/>
-                            <TextBox Text="{Binding ViewModel.AmountGiven, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Name="AmountReceivedTextBox" Text="{Binding ViewModel.AmountGiven, UpdateSourceTrigger=PropertyChanged}"
                         PreviewTextInput="AmountTextBox_PreviewTextInput"
                         MaxLength="11"
                         VerticalContentAlignment="Center"/>
@@ -298,24 +300,39 @@
             </ScrollViewer>
 
             <!-- Action Buttons -->
-            <Grid Grid.Row="2" Margin="0,10,0,0">
+            <Grid Grid.Row="2" Margin="0,20,0,0">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Content="RETURN TO CART"
-            Style="{StaticResource ButtonBase}"
-            Background="#3F3F46"
-            Margin="0,0,8,0"
-            Click="ReturnToCart"/>
+                <Button Grid.Column="0"
+                        Content="RETURN TO CART"
+                        Style="{StaticResource ButtonBase}"
+                        Background="#3F3F46"
+                        Margin="8,0,0,0"
+                        Height="70"
+                        Command="{Binding ViewModel.returncartCommand}"
+                        Click="ReturnToCart"/>
 
                 <Button Grid.Column="1"
-            Content="PROCESS ORDER"
-            Style="{StaticResource ButtonBase}"
-            Background="#4CAF50"
-            Margin="8,0,0,0"
-            Command="{Binding ViewModel.ProcessOrderCommand}"/>
+                        Content="Apply Discount" 
+                        Style="{StaticResource ButtonBase}"
+                        Background="#FFA500"
+                        Height="70"
+                        Margin="8,0,0,0"
+                        Command="{Binding ViewModel.ApplyDiscountCommand}"/>
+
+
+                <Button Grid.Column="2"
+                        Content="PROCESS ORDER"
+                        Style="{StaticResource ButtonBase}"
+                        Background="#4CAF50"
+                        Height="70"
+                        Margin="8,0,0,0"
+                        Command="{Binding ViewModel.ProcessOrderCommand}"
+                        Click="order_click"/>
             </Grid>
         </Grid>
     </Border>

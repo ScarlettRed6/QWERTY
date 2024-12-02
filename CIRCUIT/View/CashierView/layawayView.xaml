@@ -1,0 +1,31 @@
+﻿<Window x:Class="CIRCUIT.View.CashierView.layawayView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CIRCUIT.View.CashierView"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Layaway View" Height="400" Width="600">
+    <Grid Margin="10">
+        <!-- Header -->
+        <TextBlock Text="Layaway Transactions" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+        <!-- Layaway DataGrid -->
+        <DataGrid Name="LayawayDataGrid" Margin="0,50,0,10" AutoGenerateColumns="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Item" Width="*" />
+                <DataGridTextColumn Header="Price" Width="2*" />
+                <DataGridTextColumn Header="Quantity" Width="1*" />
+                <DataGridTextColumn Header="Total" Width="2*" />
+                <DataGridTextColumn Header="Status" Width="1*" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Bottom Panel with only Process Button -->
+        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0,10,0,10" Orientation="Horizontal">
+            <!-- Button to process -->
+            <Button Content="Process Layaway" HorizontalAlignment="Right" VerticalAlignment="Center" Width="120" Height="30" Background="LightGreen" />
+        </StackPanel>
+    </Grid>
+</Window>

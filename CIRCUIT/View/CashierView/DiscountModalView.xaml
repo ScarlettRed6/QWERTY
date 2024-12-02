@@ -10,7 +10,13 @@
         Width="300"
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource panelColor6}"
+        xmlns:vm="clr-namespace:CIRCUIT.ViewModel"
         ResizeMode="NoResize">
+
+
+    <Window.DataContext>
+        <vm:NewSaleViewModel />
+    </Window.DataContext>
 
     <Window.Resources>
         <Style x:Key="CustomButtonStyle" TargetType="Button">
@@ -55,22 +61,30 @@
             Margin="10"
             CornerRadius="3">
         <Grid Margin="20">
-            <StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="9*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25*"/>
+                <RowDefinition Height="249*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.RowSpan="2" Grid.ColumnSpan="2">
                 <TextBlock Text="Authorization"
+                           HorizontalAlignment="Center"
                          Foreground="White"
                          FontSize="16"
                          Margin="0,0,0,20"/>
 
-                <ComboBox Height="30"
-                          Style="{StaticResource CustomComboBoxStyle}"
-                          Margin="0,0,0,15"/>
-
-                <TextBox Height="30"
-                        x:Name="AuthTextBox"
-                        Background="{StaticResource panelColor5}"
-                        Margin="0,0,0,15"/>
+                <TextBlock Text="Avail for 20% Discount"
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"
+                          FontSize="20"
+                          Foreground="White"
+                          Margin="0,0,0,30"/>
 
                 <TextBlock Text="Authorization PIN"
+                           HorizontalAlignment="Center"
                           Foreground="White"
                           Margin="0,0,0,5"/>
 
@@ -82,12 +96,13 @@
 
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Right">
-                    <Button Content="CANCEL"
+                    <Button Content="Cancel"
                             Click="Button_Click"
                             Style="{StaticResource CustomButtonStyle}"
                             Margin="0,0,10,0"/>
 
-                    <Button Content="CONTINUE"
+                    <Button Content="Apply Discount"
+                            Command="{Binding ApplyDiscountCommand}"
                             Style="{StaticResource CustomButtonStyle}"/>
                 </StackPanel>
             </StackPanel>

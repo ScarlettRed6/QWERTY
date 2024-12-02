@@ -3,14 +3,17 @@ using CIRCUIT.Model.DataRepositories;
 using CIRCUIT.Model.SingleTons;
 using CIRCUIT.Utilities;
 using CIRCUIT.View.CashierView;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Numerics;
 using System.Windows;
+
 using System.Windows.Input;
 
 namespace CIRCUIT.ViewModel
 {
-    public class NewSaleViewModel : PropertyChange
+    public class NewSaleViewModel : ObservableObject
     {
         #region Private Fields
         private readonly Db _db;
@@ -21,7 +24,17 @@ namespace CIRCUIT.ViewModel
         private string _amountGiven;
         private ObservableCollection<ProductModel> _allProducts = new ObservableCollection<ProductModel>();
         private List<UsersModel> _users = new List<UsersModel>();
+        private decimal _totalAmountBeforeDiscount;
+        private decimal _adjustedTotalAmount;
+        private bool _isDiscountApplied;
+        private decimal _discountPercentage = 20m;
         #endregion
+
+
+
+
+        private decimal _originalTotalAmount;
+        private bool _discountAlreadyUsed = false;
 
         #region Public Properties
         // Time and Staff Information
@@ -31,7 +44,7 @@ namespace CIRCUIT.ViewModel
             set
             {
                 _currentDate = value;
-                OnPropertyChange(nameof(CurrentDate));
+                OnPropertyChanged(nameof(CurrentDate));
             }
         }
         private string _currentDate;
@@ -42,7 +55,7 @@ namespace CIRCUIT.ViewModel
             set
             {
                 _currentTime = value;
-                OnPropertyChange(nameof(CurrentTime));
+                OnPropertyChanged(nameof(CurrentTime));
             }
         }
         private string _currentTime;
@@ -53,7 +66,7 @@ namespace CIRCUIT.ViewModel
             set
             {
                 _staffName = value;
-                OnPropertyChange(nameof(StaffName));
+                OnPropertyChanged(nameof(StaffName));
             }
         }
         private string _staffName;
@@ -65,7 +78,7 @@ namespace CIRCUIT.ViewModel
             set
             {
                 _searchQuery = value;
-                OnPropertyChange(nameof(SearchQuery));
+                OnPropertyChanged(nameof(SearchQuery));
                 FilterProducts();
             }
         }
@@ -76,16 +89,92 @@ namespace CIRCUIT.ViewModel
             set
             {
                 _filteredProducts = value;
-                OnPropertyChange(nameof(FilteredProducts));
+                OnPropertyChanged(nameof(FilteredProducts));
             }
         }
         private ObservableCollection<ProductModel> _filteredProducts = new ObservableCollection<ProductModel>();
 
         // Cart and Order Information
         public ObservableCollection<CartItem> CartItems { get; set; } = new ObservableCollection<CartItem>();
+
+
         public string ConfirmationText { get; set; } = "Please review your order before processing.";
 
-        public decimal TotalAmount => CartItems.Sum(item => item.Price * item.Quantity);
+
+        public decimal TotalAmount
+        {
+            get => _totalAmountBeforeDiscount;
+            private set
+            {
+                SetProperty(ref _totalAmountBeforeDiscount, value);
+                _adjustedTotalAmount = value;
+                _isDiscountApplied = false;
+                OnPropertyChanged(nameof(AdjustedTotalAmount));
+            }
+        }
+
+        public decimal AdjustedTotalAmount
+        {
+            get
+            {
+                if (_isDiscountApplied)
+                {
+                    decimal discountAmount = _originalTotalAmount * (_discountPercentage / 100m);
+                    return _originalTotalAmount - discountAmount;
+                }
+                return TotalAmount;
+            }
+        }
+
+        #region Discount Method
+        private void ApplyDiscount()
+        {
+            if (_discountAlreadyUsed)
+            {
+                MessageBox.Show("Discount has already been applied.", "Discount Limit",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            if (CartItems.Count == 0)
+            {
+                MessageBox.Show("Cannot apply discount. Cart is empty.", "No Items",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            // Activate discount flag
+            _isDiscountApplied = true;
+            _discountAlreadyUsed = true;
+
+            // Recalculate total with discount
+            RecalculateTotalAmount();
+
+            MessageBox.Show($"A {_discountPercentage}% discount has been applied!", "Discount Applied",
+                MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        #endregion
+
+        private void RecalculateTotalAmount()
+        {
+            decimal newCartTotal = CartItems.Sum(i => i.Price * i.Quantity);
+
+            if (_isDiscountApplied)
+            {
+                // Always recalculate the discount based on the full new cart total
+                decimal discountAmount = newCartTotal * (_discountPercentage / 100m);
+                TotalAmount = newCartTotal - discountAmount;
+            }
+            else
+            {
+                // Normal calculation if no discount applied
+                TotalAmount = newCartTotal;
+                _originalTotalAmount = TotalAmount;
+            }
+
+            OnPropertyChanged(nameof(TotalAmount));
+            OnPropertyChanged(nameof(AdjustedTotalAmount));
+        }
 
         // Payment Information
         public string AmountReceived
@@ -94,7 +183,7 @@ namespace CIRCUIT.ViewModel
             set
             {
                 _amountReceived = value;
-                OnPropertyChange(nameof(AmountReceived));
+                OnPropertyChanged(nameof(AmountReceived));
             }
         }
 
@@ -104,20 +193,34 @@ namespace CIRCUIT.ViewModel
             set
             {
                 _amountGiven = value;
-                OnPropertyChange(nameof(AmountGiven));
+                OnPropertyChanged(nameof(AmountGiven));
             }
         }
         #endregion
 
         #region Commands
+        public ICommand ApplyDiscountCommand { get; }
         public ICommand BackCommand { get; set; }
         public ICommand IncrementQuantityCommand { get; set; }
         public ICommand DecrementQuantityCommand { get; set; }
         public ICommand CancelOrderCommand { get; set; }
+        public ICommand returncartCommand { get; set; }
         public ICommand DeleteItemCommand { get; set; }
         public ICommand CheckoutCommand { get; set; }
         public ICommand ProcessOrderCommand { get; set; }
         public ICommand ConfirmOrderCommand { get; private set; }
+        //new added features
+        public ICommand MyProfileCommand { get; set; }
+        public ICommand LayawayCommand { get; set; }
+        public ICommand QuickPayCommand { get; set; }
+        public ICommand PreorderCommand { get; set; }
+        public ICommand VoidCommand { get; set; }
+        public ICommand ReprintReceiptCommand { get; set; }
+        public ICommand ViewInventoryCommand { get; set; }
+        public ICommand ResetOrderDetailsCommand { get; set; }
+
+
+
         public RelayCommand LogOutBtnCommand { get; set; }
         #endregion
 
@@ -131,6 +234,7 @@ namespace CIRCUIT.ViewModel
             InitializeBasicInfo();
             InitializeStaffName();
             InitializeCommands();
+            ApplyDiscountCommand = new RelayCommand(ApplyDiscount);
             LoadProductsFromDatabase();
         }
         #endregion
@@ -160,13 +264,81 @@ namespace CIRCUIT.ViewModel
             IncrementQuantityCommand = new RelayCommand<CartItem>(IncrementQuantity);
             DecrementQuantityCommand = new RelayCommand<CartItem>(DecrementQuantity);
             CancelOrderCommand = new RelayCommand(CancelOrder);
+            returncartCommand = new RelayCommand(returncart);
             DeleteItemCommand = new RelayCommand<CartItem>(DeleteItem);
             CheckoutCommand = new RelayCommand(Checkout);
             ProcessOrderCommand = new RelayCommand(ExecuteProcessOrder);
-            ProcessOrderCommand = new RelayCommand(ExecuteProcessOrder);
             LogOutBtnCommand = new RelayCommand(ExecuteLogout);
+            //new added features
+            MyProfileCommand = new RelayCommand(OpenMyProfile);
+            LayawayCommand = new RelayCommand(OpenLayawaySale);
+            QuickPayCommand = new RelayCommand(ExecuteQuickPay);
+            PreorderCommand = new RelayCommand(OpenPreOrder);
+            VoidCommand = new RelayCommand(VoidOrder);
+            ReprintReceiptCommand = new RelayCommand(ReprintReceipt);
+            ViewInventoryCommand = new RelayCommand(ViewInventory);
+            ResetOrderDetailsCommand = new RelayCommand(ResetOrderDetails);
         }
         #endregion
+
+        //new added features
+        private void OpenMyProfile()
+        {
+            CashierProfileView cashierProfileView = new CashierProfileView();
+            cashierProfileView.Show();
+        }
+
+        private void OpenLayawaySale()
+        {
+            layawayView layawayWindow = new layawayView();
+            layawayWindow.Show();
+        }
+
+        private void ExecuteQuickPay()
+        {
+            if (CartItems.Count == 0)
+            {
+                MessageBox.Show("The cart is empty.", "No items can process",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            if (CartItems.Count > 5)
+            {
+                MessageBox.Show("Only 5 items can be processed.", "Too many items",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            quickpayView quickpayWindow = new quickpayView(CartItems, TotalAmount, this);
+            quickpayWindow.Show();
+        }
+
+
+        private void OpenPreOrder()
+        {
+            preorderView preorderWindow = new preorderView();
+            preorderWindow.Show();
+        }
+
+        private void VoidOrder()
+        {
+            voidOrderView voidOrderWindow = new voidOrderView();
+            voidOrderWindow.Show();
+        }
+
+        private void ReprintReceipt()
+        {
+            reprintreceiptView reprintWindow = new reprintreceiptView();
+            reprintWindow.Show();
+        }
+
+        private void ViewInventory()
+        {
+            inventoryView inventoryWindow = new inventoryView();
+            inventoryWindow.Show();
+        }
+
+
+
 
         #region Database Operations
         private void LoadProductsFromDatabase()
@@ -242,11 +414,11 @@ namespace CIRCUIT.ViewModel
                     Quantity = 1,
                     SellingPrice = product.SellingPrice,
                     Price = product.SellingPrice,
-                    Description = product.Description // Description should be set here
+                    Description = product.Description
                 });
             }
 
-            OnPropertyChange(nameof(TotalAmount));
+            RecalculateTotalAmount();
         }
         #endregion
 
@@ -257,7 +429,7 @@ namespace CIRCUIT.ViewModel
             if (product != null && item.Quantity < product.StockQuantity)
             {
                 item.Quantity++;
-                OnPropertyChange(nameof(TotalAmount));
+                RecalculateTotalAmount();
             }
             else
             {
@@ -271,7 +443,7 @@ namespace CIRCUIT.ViewModel
             if (item.Quantity > 1)
             {
                 item.Quantity--;
-                OnPropertyChange(nameof(TotalAmount));
+                RecalculateTotalAmount();
             }
             else
             {
@@ -285,9 +457,11 @@ namespace CIRCUIT.ViewModel
             if (item != null)
             {
                 CartItems.Remove(item);
-                OnPropertyChange(nameof(TotalAmount));
+                RecalculateTotalAmount();
             }
         }
+
+
 
         private void CancelOrder()
         {
@@ -304,10 +478,27 @@ namespace CIRCUIT.ViewModel
             if (result == MessageBoxResult.Yes)
             {
                 CartItems.Clear();
-                OnPropertyChange(nameof(TotalAmount));
+                TotalAmount = 0;
+                _isDiscountApplied = false;
+                _discountAlreadyUsed = false;
+                OnPropertyChanged(nameof(AdjustedTotalAmount));
             }
         }
+        
+        private void returncart()
+        {
+
+            _isDiscountApplied = false;
+            _discountAlreadyUsed = false;
+            OnPropertyChanged(nameof(AdjustedTotalAmount));
+        }
         #endregion
+
+
+
+
+
+
 
         #region Order Processing
         private void Checkout()
@@ -318,12 +509,13 @@ namespace CIRCUIT.ViewModel
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-
-            var confirmationModal = new ConfirmationModal(CartItems, TotalAmount, this); // 'this' refers to NewSaleViewModel
+             
+            var confirmationModal = new ConfirmationModal(CartItems, TotalAmount, this);
             confirmationModal.ShowDialog();
         }
 
-        //Execute log out function
+
+
         private void ExecuteLogout()
         {
             _accountRepository.LogUserOut(_userId);
@@ -340,6 +532,7 @@ namespace CIRCUIT.ViewModel
 
                 decimal change = receivedAmount - TotalAmount;
 
+                // Insert the sale record
                 SaleModel newSale = new SaleModel
                 {
                     CashierId = _userId,
@@ -349,23 +542,45 @@ namespace CIRCUIT.ViewModel
                     CustomerPaid = receivedAmount,
                     ChangeGiven = change
                 };
+                int newSaleId = _db.InsertSale(newSale);
 
-                // Insert the sale record into the database
-                _db.InsertSale(newSale);
+                foreach (var cartItem in CartItems)
+                {
+                    SaleItemModel saleItem = new SaleItemModel
+                    {
+                        SaleId = newSaleId,
+                        ProductId = cartItem.ProductId,
+                        Quantity = cartItem.Quantity,
+                        ItemTotalPrice = cartItem.Quantity * cartItem.SellingPrice
+                    };
+                    _db.InsertSaleItem(saleItem);
+                    _db.UpdateProductStockQuantity(cartItem.ProductId, cartItem.Quantity);
+                }
 
-                // Notify the user that the order was processed successfully
+                LoadProductsFromDatabase();
+                ResetOrderDetails();
+
                 MessageBox.Show("Order processed successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                // Clear the cart items after successful processing
                 CartItems.Clear();
             }
             catch (Exception ex)
             {
-                // Handle any exception that occurs during order processing
                 MessageBox.Show($"An error occurred while processing the order: {ex.Message}", "Error",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
+        private void ResetOrderDetails()
+        {
+            CartItems.Clear();
+            TotalAmount = 0;
+            _isDiscountApplied = false;
+            _discountAlreadyUsed = false;
+            OnPropertyChanged(nameof(AdjustedTotalAmount));
+
+        }
+
 
         private bool ValidatePayment(out decimal receivedAmount)
         {
@@ -377,7 +592,8 @@ namespace CIRCUIT.ViewModel
                 return false;
             }
 
-            if (receivedAmount < TotalAmount)
+            decimal totalToCompare = AdjustedTotalAmount > 0 ? AdjustedTotalAmount : TotalAmount;
+            if (receivedAmount < totalToCompare)
             {
                 MessageBox.Show("Amount received is less than the total amount. Please provide sufficient funds.",
                     "Insufficient Payment", MessageBoxButton.OK, MessageBoxImage.Warning);
