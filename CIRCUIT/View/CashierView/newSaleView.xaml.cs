@@ -60,11 +60,6 @@ namespace CIRCUIT.View.CashierView
 
             }
         }
-        private void ApplyDiscount_Click(object sender, RoutedEventArgs e)
-        {
-            discountModalView discountModal = new discountModalView();
-            discountModal.ShowDialog();
-        }
 
         private void ProcessOrder_Click(object sender, RoutedEventArgs e)
         {

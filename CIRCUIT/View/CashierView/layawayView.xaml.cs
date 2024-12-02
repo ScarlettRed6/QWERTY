@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace CIRCUIT.View.CashierView
 {
     /// <summary>
-    /// Interaction logic for RefundView.xaml
+    /// Interaction logic for layawayView.xaml
     /// </summary>
-    public partial class RefundView : Window
+    public partial class layawayView : Window
     {
-        public RefundView()
+        public layawayView()
         {
             InitializeComponent();
-        }
-        private void close_clicked(object sender, RoutedEventArgs e)
-        {
-            CashierView CashierViewWindow = new CashierView();
-            CashierViewWindow.Show();
-            this.Close();
         }
     }
 }

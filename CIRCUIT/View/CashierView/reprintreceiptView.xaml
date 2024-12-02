@@ -1,0 +1,49 @@
+﻿<Window x:Class="CIRCUIT.View.CashierView.reprintreceiptView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CIRCUIT.View.CashierView"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Reprint Receipt" Height="450" Width="800">
+    <Grid Margin="20">
+        <!-- Header -->
+        <TextBlock Text="Reprint Receipt" 
+                   FontSize="18" 
+                   FontWeight="Bold" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,10,0,20" 
+                   Foreground="#333"/>
+
+        <!-- Receipt Data Table (DataGrid) -->
+        <DataGrid Name="ReceiptDataGrid" 
+                  Margin="10,0,10,0" 
+                  AutoGenerateColumns="False" 
+                  HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Stretch" 
+                  IsReadOnly="True" 
+                  SelectionMode="Single"
+                  CanUserAddRows="False" 
+                  CanUserDeleteRows="False" 
+                  PreviewKeyDown="ReceiptDataGrid_PreviewKeyDown"
+                  SelectionChanged="ReceiptDataGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Receipt Number" Binding="{Binding ReceiptNumber}" Width="*"/>
+                <DataGridTextColumn Header="Customer Name" Binding="{Binding CustomerName}" Width="*"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="*"/>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Reprint Button -->
+        <Button Content="Reprint Receipt" 
+                Width="120" 
+                Height="30" 
+                Margin="0,20,10,10" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Bottom" 
+                Background="LightGreen" 
+                Click="ReprintButton_Click"/>
+    </Grid>
+</Window>

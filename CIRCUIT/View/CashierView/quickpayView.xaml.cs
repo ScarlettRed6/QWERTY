@@ -1,19 +1,18 @@
-﻿using System.Collections.ObjectModel;
+﻿using CIRCUIT.ViewModel;
+using System.Collections.ObjectModel;
 using System.Windows;
-using CIRCUIT.Model;
-using System.Text.RegularExpressions;
-using CIRCUIT.ViewModel;
 using System.Windows.Input;
-
+using CIRCUIT.ViewModel;
+using CIRCUIT.Model;
 namespace CIRCUIT.View.CashierView
 {
-    public partial class ConfirmationModal : Window
+    public partial class quickpayView : Window
     {
         public NewSaleViewModel ViewModel { get; private set; }
         public ObservableCollection<CartItem> OrderItems { get; private set; }
         public decimal TotalAmount { get; private set; }
 
-        public ConfirmationModal(ObservableCollection<CartItem> cartItems, decimal totalAmount, NewSaleViewModel viewModel)
+        public quickpayView(ObservableCollection<CartItem> cartItems, decimal totalAmount, NewSaleViewModel viewModel)
         {
             InitializeComponent();
 
@@ -31,21 +30,23 @@ namespace CIRCUIT.View.CashierView
             };
         }
 
-        private void AmountTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void ProcessPayment_Click(object sender, RoutedEventArgs e)
         {
-            e.Handled = !Regex.IsMatch(e.Text, @"^\d+(\.\d{0,2})?$");
+            // Handle the payment processing logic here
+            MessageBox.Show("Processing payment...");
         }
 
-        private void ReturnToCart(object sender, RoutedEventArgs e)
+        private void ItemsDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            Close();
+            if (e.Key == Key.Enter)
+            {
+                MessageBox.Show("Enter key pressed in ItemsDataGrid.");
+            }
         }
 
-        private void order_click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            //this.Close();
-            //AmountGivenTextBox.Clear();
-            //AmountReceivedTextBox.Clear();
+            this.Close();
         }
     }
 }

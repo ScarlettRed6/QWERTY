@@ -3,10 +3,122 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CIRCUIT.View.CashierView"
         mc:Ignorable="d"
-        Title="RefundView" Height="450" Width="800">
-    <Grid>
-        
+        xmlns:vm="clr-namespace:CIRCUIT.ViewModel.CashierViewModel"
+        WindowStartupLocation="CenterScreen"
+        Title="RefundView" Height="450" Width="1400" Background="#F3F4F6">
+
+    <Window.DataContext>
+        <vm:RefundViewModel />
+    </Window.DataContext>
+
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <!-- Sales List Section -->
+            <ColumnDefinition Width="3*"/>
+            <!-- Refund Details Section -->
+        </Grid.ColumnDefinitions>
+
+        <!-- Sales List Section -->
+        <Border Grid.Column="0" CornerRadius="10" Background="White" Margin="10" Padding="10">
+            <StackPanel>
+                <TextBlock Text="Sales" 
+                           FontSize="18" 
+                           FontWeight="SemiBold" 
+                           Foreground="#4A5568" 
+                           Margin="0,0,0,10"/>
+
+                <DataGrid Name="SalesDataGrid" 
+                          ItemsSource="{Binding SalesHistory}" 
+                          AutoGenerateColumns="False" 
+                          Height="350" 
+                          Background="White" 
+                          Foreground="#2D3748" 
+                          BorderBrush="#CBD5E0" 
+                          BorderThickness="1"
+                          SelectionMode="Single" 
+                          SelectedItem="{Binding SelectedSale, Mode=TwoWay}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Transaction ID" Binding="{Binding SaleId}" Width="*"/>
+                        <DataGridTextColumn Header="Date/Time" Binding="{Binding DateTime}" Width="*"/>
+                        <DataGridTextColumn Header="Payment Method" Binding="{Binding PaymentMethod}" Width="*"/>
+                        <DataGridTextColumn Header="Total" Binding="{Binding TotalAmount}" Width="*"/>
+                        <DataGridTextColumn Header="Staff Name" Binding="{Binding StaffName}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Border>
+
+        <!-- Refund Details Section -->
+        <Border Grid.Column="1" CornerRadius="10" Background="White" Margin="10" Padding="10">
+            <StackPanel>
+                <TextBlock Text="Refund Details" 
+                           FontSize="18" 
+                           FontWeight="SemiBold" 
+                           Foreground="#4A5568" 
+                           Margin="0,0,0,10"/>
+
+                <StackPanel Margin="0,10">
+                    <TextBlock Text="Transaction ID:" FontWeight="Bold" Foreground="#718096"/>
+                    <TextBox Name="TransactionIDTextBox" 
+                             Text="{Binding SelectedSale.SaleId}" 
+                             Margin="0,5,0,10" 
+                             Height="30" 
+                             Padding="5" 
+                             BorderBrush="#CBD5E0" 
+                             BorderThickness="1" 
+                             Background="#EDF2F7" 
+                             IsReadOnly="True"/>
+                </StackPanel>
+
+                <StackPanel Margin="0,10">
+                    <TextBlock Text="Reason for Refund:" FontWeight="Bold" Foreground="#718096"/>
+                    <ComboBox Name="RefundReasonComboBox" 
+                              Margin="0,5,0,10" 
+                              Height="40" 
+                              Padding="5" 
+                              BorderBrush="#CBD5E0" 
+                              BorderThickness="1" 
+                              Background="#EDF2F7" 
+                              Foreground="#2D3748" 
+                              FontSize="14" 
+                              IsEditable="False" 
+                              SelectedIndex="0">
+                        <ComboBox.Items>
+                            <ComboBoxItem Content="Damaged Item" />
+                            <ComboBoxItem Content="Wrong Item Delivered" />
+                            <ComboBoxItem Content="Customer Changed Mind" />
+                            <ComboBoxItem Content="Delayed Delivery" />
+                            <ComboBoxItem Content="Duplicate Order" />
+                            <ComboBoxItem Content="Incorrect Payment" />
+                            <ComboBoxItem Content="Product Defect" />
+                            <ComboBoxItem Content="Missing Parts" />
+                            <ComboBoxItem Content="Other" />
+                        </ComboBox.Items>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <Button Content="Process Refund" 
+                            Width="120" 
+                            Height="40" 
+                            Margin="5" 
+                            Background="#4299E1" 
+                            Foreground="White" 
+                            FontWeight="SemiBold" 
+                            BorderThickness="0" />
+                    <Button Content="Cancel" 
+                            Width="120" 
+                            Height="40" 
+                            Margin="5" 
+                            Background="#E53E3E" 
+                            Foreground="White" 
+                            FontWeight="SemiBold"
+                            BorderThickness="0"
+                            Click="close_clicked"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
