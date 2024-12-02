@@ -25,9 +25,9 @@
         <Grid>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="65"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
                 <Grid>
@@ -109,22 +109,29 @@
 
                 </DataGrid>
 
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                    <Button Content=" First" 
-                        Command="{Binding FirstPageCommand}" />
-                    <Button Content=" Prev" 
-                        Command="{Binding PreviousPageCommand}" />
-                    <TextBlock Text="{Binding CurrentPage}" Margin="2" 
-                           Foreground="{StaticResource panelColor4}"/>
-                    <TextBlock Text="of" Margin="2" 
-                           Foreground="{StaticResource panelColor4}"/>
-                    <TextBlock Text="{Binding TotalPages}" Margin="2"
-                           Foreground="{StaticResource panelColor4}"/>
-                    <Button Content="Next >" 
-                        Command="{Binding NextPageCommand}" />
-                    <Button Content="Last >>" 
-                        Command="{Binding LastPageCommand}" />
-                    
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10"
+                            Style="{StaticResource PaginationStackPanelStyle}">
+                    <Button Content=" First" Style="{StaticResource PaginationButtonStyle}"
+                            Command="{Binding FirstPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Button Content=" Prev" Style="{StaticResource PaginationButtonStyle}"
+                            Command="{Binding PreviousPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <TextBlock Text="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged}" 
+                                Style="{StaticResource PaginationTextStyle}"/>
+
+                    <TextBlock Text="of" 
+                               Style="{StaticResource PaginationTextStyle}"/>
+
+                    <TextBlock Text="{Binding TotalPages, UpdateSourceTrigger=PropertyChanged}"
+                               Style="{StaticResource PaginationTextStyle}"/>
+
+                    <Button Content="Next >" Style="{StaticResource PaginationButtonStyle}"
+                            Command="{Binding NextPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Button Content="Last >>" Style="{StaticResource PaginationButtonStyle}"
+                            Command="{Binding LastPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
                 </StackPanel>
             </Grid>
 

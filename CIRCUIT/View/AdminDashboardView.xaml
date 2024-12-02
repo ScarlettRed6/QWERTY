@@ -10,6 +10,7 @@
         xmlns:Views3="clr-namespace:CIRCUIT.View.AdminDashboardViews"
         xmlns:adminVm="clr-namespace:CIRCUIT.ViewModel.AdminDashboardViewModel"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+        Icon="/Assets/Images/Circuit hd.png"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" WindowStyle="None"
         Background="Transparent" AllowsTransparency="True"
@@ -45,17 +46,17 @@
     
     
     <!-- Outer border -->
-    <Border CornerRadius="10" BorderThickness="5,0,0,7">
+    <Border CornerRadius="10" BorderThickness="3,2,2,5">
         <!-- Border color gradient -->
         <Border.BorderBrush>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="{StaticResource primary3}" Offset="0"/>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#000B22" Offset="0"/>
                 <GradientStop Color="#AE445A" Offset="0.75"/>
-                <GradientStop Color="#E8BCB9" Offset="1"/>
+                <GradientStop Color="#FF8C00" Offset="1"/>
             </LinearGradientBrush>
         </Border.BorderBrush>
         <Border.Background>
-            <SolidColorBrush Color="{StaticResource primary2}"/>
+            <SolidColorBrush Color="#001744"/>
         </Border.Background>
 
         <Grid>
@@ -67,15 +68,15 @@
             <!-- Border and Border background for the side nav -->
             <Border CornerRadius="7,0,0,5">
                 <Border.Background>
-                    <SolidColorBrush Color="#040203"/>
+                    <SolidColorBrush Color="#000B22"/>
                 </Border.Background>
 
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition Height="80"/>
-                    </Grid.RowDefinitions>    
-                    
+                    </Grid.RowDefinitions>
+
                     <StackPanel>
 
                         <!-- LOGO and Text either Dashboard or app Name or Current user -->
@@ -83,21 +84,23 @@
                                     Margin="15,25,0,40">
 
                             <Image Source="/Assets/Images/Circuit hd.png" Height="30"/>
-                            <TextBlock Text="CIRCUIT" Foreground="Red"
+                            <TextBlock Text="CIRCUIT" Foreground="{StaticResource palette1}"
                                        FontSize="20" FontWeight="Medium"
                                        VerticalAlignment="Center" Margin="10,0,0,0"/>
 
                         </StackPanel>
+
                         <TextBlock Text="Dashboard"
                                    Foreground="{StaticResource panelColor4}"
-                                   FontSize="18"
+                                   FontSize="15"
                                    FontWeight="Medium"
                                    Margin="30,0,0,10"/>
                         <!-- Side menu buttons -->
 
                         <RadioButton Style="{StaticResource menuButton}"
-                                     Tag="{StaticResource panelColor2}"
-                                     Command="{Binding ShowHomeCommand}">
+                                     Tag="{StaticResource palette1}"
+                                     Command="{Binding ShowHomeCommand}"
+                                     IsChecked="True">
 
                             <StackPanel Orientation="Horizontal">
                                 <fa:IconImage Icon="ChartBar" Style="{StaticResource menuButtonIcon}"/>
@@ -118,9 +121,9 @@
 
                         </RadioButton>
                         -->
-                        
+
                         <RadioButton Style="{StaticResource menuButton}"
-                                     Tag="{StaticResource panelColor2}"
+                                     Tag="{StaticResource palette1}"
                                      Command="{Binding ShowSalesCommand}">
 
                             <StackPanel Orientation="Horizontal">
@@ -131,7 +134,7 @@
                         </RadioButton>
 
                         <RadioButton Style="{StaticResource menuButton}"
-                                     Tag="{StaticResource panelColor2}"
+                                     Tag="{StaticResource palette1}"
                                      Command="{Binding ShowCatalogCommand}">
 
                             <StackPanel Orientation="Horizontal">
@@ -142,7 +145,7 @@
                         </RadioButton>
 
                         <RadioButton Style="{StaticResource menuButton}"
-                                     Tag="{StaticResource panelColor2}">
+                                     Tag="{StaticResource palette1}">
 
                             <StackPanel Orientation="Horizontal">
                                 <fa:IconImage Icon="Box" Style="{StaticResource menuButtonIcon}"/>
@@ -152,7 +155,7 @@
                         </RadioButton>
 
                         <RadioButton Style="{StaticResource menuButton}"
-                                     Tag="{StaticResource panelColor2}"
+                                     Tag="{StaticResource palette1}"
                                      Command="{Binding ShowArchivedCommand}">
 
                             <StackPanel Orientation="Horizontal">
@@ -162,8 +165,11 @@
 
                         </RadioButton>
 
+                        <Separator Height="2" Background="Orange"
+                                   Margin="10,0,10,0"/>
+
                         <RadioButton Style="{StaticResource menuButton}"
-                                     Tag="{StaticResource panelColor2}"
+                                     Tag="{StaticResource palette1}"
                                      Command="{Binding ShowEmployeeManagementCommand}">
 
                             <StackPanel Orientation="Horizontal">
@@ -173,22 +179,25 @@
 
                         </RadioButton>
 
+                        <Button x:Name="logoutBtn"
+                                Height="25"
+                                Width="140"
+                                FontSize="15"
+                                FontWeight="Medium"
+                                Command="{Binding LogOutBtnCommand}"
+                                Style="{StaticResource logoutButtonStyle}">
+                            
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0,0,40,0">
+                                <fa:IconImage Icon="SignOut" Style="{StaticResource logoutIcon}"/>
+                                <TextBlock Text="Log out" Style="{StaticResource logoutText}"/>
+                            </StackPanel>
+
+                        </Button>
+
                         <!-- End of menu buttons -->
                     </StackPanel>
-                    
-                    <!-- Grid row 1 -->
-                    <Button x:Name="logoutBtn"
-                            Grid.Row="1"
-                            Height="50"
-                            Width="130"
-                            Content="Log out"
-                            FontSize="20"
-                            FontWeight="Medium"
-                            Command="{Binding LogOutBtnCommand}"
-                            Style="{StaticResource addCatalogButton}">
-                        
-                    </Button>
-                    
+
                 </Grid>
             </Border>
 
@@ -242,9 +251,9 @@
                     <StackPanel Orientation="Horizontal"
                                 VerticalAlignment="Center">
                         <fa:IconImage Icon="{Binding Icon}" Height="20"
-                                      Width="20" Foreground="{StaticResource panelColor2}"
+                                      Width="20" Foreground="{StaticResource palette1}"
                                       Margin="35,0,10,0"/>
-                        <TextBlock Text="{Binding Caption}" Foreground="{StaticResource panelColor4}"
+                        <TextBlock Text="{Binding Caption}" Foreground="{StaticResource palette6}"
                                    FontSize="20" FontWeight="Medium"
                                    VerticalAlignment="Center"/>
 
@@ -252,15 +261,17 @@
 
                     <StackPanel Grid.Column="1" Orientation="Horizontal"
                                 FlowDirection="LeftToRight"
-                                VerticalAlignment="Center" Margin="100,0,10,0">
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="10,0,0,0">
 
-                        <TextBlock Text="WELCOME, " Foreground="{StaticResource panelColor4}"
+                        <TextBlock Text="WELCOME, " Foreground="{StaticResource palette6}"
                                    FontSize="20" VerticalAlignment="Center"
                                    FontWeight="Medium"/>
 
                         <!-- Apply a binding here for the current user logged in -->
                         <TextBlock Text="{Binding LoggedInAdmin}" 
-                                   Foreground="{StaticResource panelColor4}"
+                                   Foreground="{StaticResource palette6}"
                                    FontSize="20" VerticalAlignment="Center"
                                    FontWeight="Medium"/>
                     </StackPanel>

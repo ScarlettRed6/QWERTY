@@ -66,6 +66,9 @@
     <Page Update="Styles\ButtonStyles.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Styles\CheckAndRadioBoxStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Styles\ComboBoxStyles.xaml">
       <SubType>Designer</SubType>
     </Page>

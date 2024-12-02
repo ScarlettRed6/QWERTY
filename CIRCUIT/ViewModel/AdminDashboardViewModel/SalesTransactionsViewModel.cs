@@ -15,7 +15,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         private int _currentPage = 1;
         private int _itemsPerPage = 10; // Adjust number of items per page
         private string _searchTerm;
-        Db dbCon = new Db();
+        private string _categoryBox;
+        private string _timeFilter;
         SalesRepository saleConn = new SalesRepository();
         public int TotalPages => (int)Math.Ceiling((double)TotalItems / ItemsPerPage);
         private ViewSaleViewModel _saleViewModel;
@@ -47,8 +48,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         private List<SaleModel> _items;
 
         //Checks if checkbox for select all feature is true
-        [ObservableProperty]
-        private bool? _isAllSelected;
+        //[ObservableProperty]
+        //private bool? _isAllSelected;
 
         [ObservableProperty]
         private int _totalProductSold;
@@ -96,6 +97,34 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             }
         }
 
+        public string CategoryBox
+        {
+            get => _categoryBox;
+            set
+            {
+                if (_categoryBox != value)
+                {
+                    _categoryBox = value;
+                    OnPropertyChanged();
+                    UpdatePagedSales();
+                }
+            }
+        }
+
+        public string TimeFilter
+        {
+            get => _timeFilter;
+            set
+            {
+                if (_timeFilter != value)
+                {
+                    _timeFilter = value;
+                    OnPropertyChanged();
+                    UpdatePagedSales();
+                }
+            }
+        }
+
         //Constructor
         public SalesTransactionsViewModel()
         {
@@ -114,12 +143,12 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                     CurrentPage--;
             });
 
-            CheckSelectAll = new RelayCommand(ChkSelectAllCommand);
-            CheckSelectCell = new RelayCommand(ChkSelectCellCommand);
+            //CheckSelectAll = new RelayCommand(ChkSelectAllCommand);
+            //CheckSelectCell = new RelayCommand(ChkSelectCellCommand);
             ViewCommand = new RelayCommand<SaleModel>(ExecuteViewSaleDetails);
             ExportCommand = new RelayCommand(ExportSelectedTransactions);
 
-            IsAllSelected = false;
+            //IsAllSelected = false;
 
             UpdateList();
 
@@ -127,24 +156,27 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         private void ExportSelectedTransactions()
         {
-            var selectedTransaction = PagedSales.Where(x => x.IsSelected).ToList();
+            // Use all transactions from PagedSales instead of filtering by selection
+            var allTransactions = PagedSales.ToList();
 
-            if (!selectedTransaction.Any())
+            if (!allTransactions.Any())
             {
-                MessageBox.Show("No transactions selected for export.", "Export", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("No transactions available for export.", "Export", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             var saveFileDialog = new SaveFileDialog
             {
                 Filter = "PDF Files (*.pdf)|*.pdf",
-                FileName = "ExportedTransactions.pdf"
+                FileName = "AllTransactionsExport.pdf"
             };
 
             if (saveFileDialog.ShowDialog() == true)
             {
                 string exportPath = saveFileDialog.FileName;
-                PdfGenerator.GenerateSalesPdf(selectedTransaction, exportPath, saleConn);
+                PdfGenerator.GenerateSalesPdf(allTransactions, exportPath, saleConn);
+
+                MessageBox.Show("Transactions exported successfully.", "Export", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
         }
@@ -156,6 +188,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         }
 
         //Checks if all items are selected
+        /* Might use this later for check box function
         private void ChkSelectAllCommand()
         {
             if (IsAllSelected == true)
@@ -186,6 +219,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             }
 
         }
+        */
 
         //Refreshes the products in the datagrid
         public void UpdateList()
@@ -211,11 +245,30 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         {
             IEnumerable<SaleModel> filteredItems = Sales;
 
-            // Apply filtering if a search term is provided
+            // For search term filter
             if (!string.IsNullOrWhiteSpace(SearchTerm))
             {
                 filteredItems = filteredItems.Where(p =>
                     p.CashierName.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // For category filter
+            if (!string.IsNullOrWhiteSpace(CategoryBox) && CategoryBox != "Payment Method")
+            {
+                filteredItems = filteredItems.Where(p => p.PaymentMethod.Equals(CategoryBox, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // For time filter
+            if (!string.IsNullOrWhiteSpace(TimeFilter))
+            {
+                var now = DateTime.Now;
+                filteredItems = TimeFilter switch
+                {
+                    "Week" => filteredItems.Where(p => p.DateTime >= now.AddDays(-7)),
+                    "Month" => filteredItems.Where(p => p.DateTime >= now.AddMonths(-1)),
+                    "Year" => filteredItems.Where(p => p.DateTime >= now.AddYears(-1)),
+                    _ => filteredItems
+                };
             }
 
             TotalItems = filteredItems.Count();

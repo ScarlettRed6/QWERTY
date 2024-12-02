@@ -15,8 +15,8 @@
             <view:SalesTransactionsView/>
         </DataTemplate>
     </UserControl.Resources>
-    
-    <Border Background="{StaticResource panelColor6}"
+
+    <Border Background="{StaticResource palette12}"
             CornerRadius="10">
 
         <Grid>
@@ -41,15 +41,15 @@
                             Height="35" Width="35"
                             Command="{Binding ReturnBtnCommand}"
                             HorizontalAlignment="Left">
-                        <fa:IconImage Icon="ArrowAltCircleLeft" 
+                        <fa:IconImage 
                                       Style="{StaticResource returnIcon}"
                                       Height="35"/>
                     </Button>
                     
                     <!-- Transaction details group box -->
                     <GroupBox Grid.Row="1" Header="Transaction Details"
-                              Background="{StaticResource panelColor5}"
-                              Foreground="{StaticResource panelColor4}"
+                              Background="{StaticResource palette10}"
+                              Foreground="{StaticResource palette6}"
                               FontSize="15">
                         <Grid Margin="10">
                             <Grid.ColumnDefinitions>
@@ -101,44 +101,42 @@
                 </Grid>
                 <!-- Sales Items Header -->
                 <Border Grid.Row="1"
-                        Background="{StaticResource panelColor7}"
-                        Margin="5"
+                        Background="{StaticResource palette10}"
+                        Margin="0,3,0,0"
                         CornerRadius="5">
 
                     <TextBlock Text="Sales Items" 
                                FontSize="16" 
                                FontWeight="Bold" 
                                Margin="5"
-                               Foreground="{StaticResource panelColor4}"/>  
+                               Foreground="{StaticResource palette6}"/>  
                 </Border>
 
                 <!-- Sales Items DataGrid -->
                 <Border Grid.Row="2"
-                        CornerRadius="10"
-                        Margin="5,0,5,5">
+                        CornerRadius="10">
 
                     <DataGrid x:Name="ProductDataGrid" 
                               AutoGenerateColumns="False" 
+                              CanUserResizeColumns="False"
                               CanUserAddRows="False"
                               Grid.Row="2"
                               IsReadOnly="True"
                               ItemsSource="{Binding PagedSales}"
                               SelectionMode="Extended"
                               RowHeaderWidth="0"
-                              Style="{StaticResource catalogGrid}"
-                              CellStyle="{StaticResource catalogCellStyle}"
-                              RowStyle="{StaticResource catalogRowStyle}"
-                              ColumnHeaderStyle="{StaticResource columnHeadersStyle}"
-                              BorderThickness="2,7,2,7"
-                              BorderBrush="{StaticResource panelColor7}">
+                              Style="{StaticResource ModernDataGrid}"
+                              CellStyle="{StaticResource ModernDataGridCell}"
+                              RowStyle="{StaticResource ModernDataGridRow}"
+                              ColumnHeaderStyle="{StaticResource ModernDataGridColumnHeader}">
 
                         <!-- Column context -->
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding SaleItemId, UpdateSourceTrigger=PropertyChanged}" Width="50" />
-                            <DataGridTextColumn Header="Product Id" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="140" />
-                            <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="140" />
-                            <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Width="140" />
-                            <DataGridTextColumn Header="Item Total Price" Binding="{Binding ItemTotalPrice, UpdateSourceTrigger=PropertyChanged}" Width="140" />
+                            <DataGridTextColumn Header=" ID" Binding="{Binding SaleItemId, UpdateSourceTrigger=PropertyChanged}" Width="50" />
+                            <DataGridTextColumn Header=" Product Id" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="140" />
+                            <DataGridTextColumn Header=" Product Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="140" />
+                            <DataGridTextColumn Header=" Quantity" Binding="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Width="140" />
+                            <DataGridTextColumn Header=" Item Total Price" Binding="{Binding ItemTotalPrice, UpdateSourceTrigger=PropertyChanged}" Width="140" />
 
                         </DataGrid.Columns>
 
@@ -147,23 +145,30 @@
 
                 <Border Grid.Row="3"
                          CornerRadius="0,0,10,10"
-                         Background="{StaticResource panelColor7}">
+                         Background="{StaticResource palette10}">
 
-                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                        <Button Content=" First" 
-                 Command="{Binding FirstPageCommand, UpdateSourceTrigger=PropertyChanged}" />
-                        <Button Content=" Prev" 
-                 Command="{Binding PreviousPageCommand, UpdateSourceTrigger=PropertyChanged}" />
-                        <TextBlock Text="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged}" Margin="2" 
-                    Foreground="{StaticResource panelColor4}"/>
-                        <TextBlock Text="of" Margin="2" 
-                    Foreground="{StaticResource panelColor4}"/>
-                        <TextBlock Text="{Binding TotalPages, UpdateSourceTrigger=PropertyChanged}" Margin="2"
-                    Foreground="{StaticResource panelColor4}"/>
-                        <Button Content="Next >" 
-                 Command="{Binding NextPageCommand, UpdateSourceTrigger=PropertyChanged}" />
-                        <Button Content="Last >>" 
-                 Command="{Binding LastPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5"
+                                Style="{StaticResource PaginationStackPanelStyle}">
+                        <Button Content=" First" Style="{StaticResource PaginationButtonStyle}"
+                                Command="{Binding FirstPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <Button Content=" Prev" Style="{StaticResource PaginationButtonStyle}"
+                                Command="{Binding PreviousPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <TextBlock Text="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged}" 
+                                   Style="{StaticResource PaginationTextStyle}"/>
+
+                        <TextBlock Text="of" 
+                                   Style="{StaticResource PaginationTextStyle}"/>
+
+                        <TextBlock Text="{Binding TotalPages, UpdateSourceTrigger=PropertyChanged}"
+                                   Style="{StaticResource PaginationTextStyle}"/>
+
+                        <Button Content="Next >" Style="{StaticResource PaginationButtonStyle}"
+                                Command="{Binding NextPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <Button Content="Last >>" Style="{StaticResource PaginationButtonStyle}"
+                                Command="{Binding LastPageCommand, UpdateSourceTrigger=PropertyChanged}" />
 
                     </StackPanel>
                 </Border>

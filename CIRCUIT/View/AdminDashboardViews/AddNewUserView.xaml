@@ -46,9 +46,8 @@
                                     Height="35" Width="35"
                                     Command="{Binding ReturnBtnCommand}"
                                     HorizontalAlignment="Left">
-                            <fa:IconImage Icon="ArrowAltCircleLeft" 
-                                              Style="{StaticResource returnIcon}"
-                                              Height="35"/>
+                            <fa:IconImage Style="{StaticResource returnIcon}"
+                                          Height="35"/>
                         </Button>
 
                         <Border Height="180"

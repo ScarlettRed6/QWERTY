@@ -21,6 +21,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         private object _addProductView;
         private string _searchTerm;
         private bool? isAllSelected;
+        private string _filterPriceRange;
+        private string _filterBrandBox;
 
         //database connection instance of an object
         private Db dbCon = new Db();
@@ -134,6 +136,33 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             }
         }
 
+        public string FilterPriceRange
+        {
+            get => _filterPriceRange;
+            set
+            {
+                if (_filterPriceRange != value)
+                {
+                    _filterPriceRange = value;
+                    OnPropertyChange();
+                    FilterProductsByPrice();
+                }
+            }
+        }
+
+        public string FilterBrandBox
+        {
+            get => _filterBrandBox;
+            set
+            {
+                if (_filterBrandBox != value)
+                {
+                    _filterBrandBox = value;
+                    OnPropertyChange();
+                    UpdatePagedProducts();
+                }
+            }
+        }
 
         //Constructor
         public CatalogViewModel()
@@ -269,6 +298,11 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                     p.ProductName.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase));
             }
 
+            if (!string.IsNullOrWhiteSpace(FilterBrandBox) && FilterBrandBox != "Brand")
+            {
+                filteredProducts = filteredProducts.Where(p => p.Brand.Equals(FilterBrandBox, StringComparison.OrdinalIgnoreCase));
+            }
+
             // Update TotalItems dynamically
             TotalItems = filteredProducts.Count();
 
@@ -298,6 +332,39 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
             // Notify UI about changes
             OnPropertyChange(nameof(PagedProducts));
+        }
+
+        // method to filter products by price range
+        private void FilterProductsByPrice()
+        {
+            if (string.IsNullOrEmpty(FilterPriceRange) || FilterPriceRange == "Price Range")
+            {
+                UpdatePagedProducts(); // Reset to show all products
+                return;
+            }
+
+            var ranges = new Dictionary<string, (decimal Min, decimal Max)>
+            {
+                { "Below $1000", (0, 1000) },
+                { "$1000 - $5000", (1000, 5000) },
+                { "$5001 - $10000", (5001, 10000) },
+                { "Above $10000", (10000, decimal.MaxValue) }
+            };
+
+            if (ranges.TryGetValue(FilterPriceRange, out var range))
+            {
+                var filteredProducts = Product
+                    .Where(p => p.SellingPrice >= range.Min && p.SellingPrice < range.Max)
+                    .ToList();
+
+                // Update the paginated products
+                TotalItems = filteredProducts.Count;
+                PagedProducts = new ObservableCollection<ProductModel>(
+                    filteredProducts.Skip((CurrentPage - 1) * ItemsPerPage).Take(ItemsPerPage)
+                );
+
+                OnPropertyChange(nameof(PagedProducts));
+            }
         }
 
         //Execute AddNewProduct command

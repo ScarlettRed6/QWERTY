@@ -18,7 +18,7 @@ namespace CIRCUIT
             //{
                 //if (loginView.IsVisible == false && loginView.IsLoaded)
                 //{
-                   // var adminView = new AdminDashboardView();
+                   //var adminView = new AdminDashboardView();
                     //adminView.Show();
                     //loginView.Close();
                 //}

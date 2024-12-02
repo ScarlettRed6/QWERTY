@@ -23,12 +23,24 @@
     <SolidColorBrush x:Key="panelColor6">#000000</SolidColorBrush>
     <SolidColorBrush x:Key="panelColor7">#1E1E1E</SolidColorBrush>
 
-
-
     <SolidColorBrush x:Key="hoverBackground" Color="#FFD6EAF8" />
     <SolidColorBrush x:Key="hoverForeground" Color="#FF1F618D" />
     <SolidColorBrush x:Key="openBackground" Color="#FFAED6F1" />
     <SolidColorBrush x:Key="openForeground" Color="#FF154360" />
-
+    
+    
+    <!-- App color palette -->
+    <SolidColorBrush x:Key="palette1">#FF8C00</SolidColorBrush>
+    <SolidColorBrush x:Key="palette2">#002366</SolidColorBrush>
+    <SolidColorBrush x:Key="palette3">#001F3F</SolidColorBrush>
+    <SolidColorBrush x:Key="palette4">#666666</SolidColorBrush>
+    <SolidColorBrush x:Key="palette5">#FFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="palette6">#E8FAFF</SolidColorBrush>
+    <SolidColorBrush x:Key="palette7">#00C8FF</SolidColorBrush>
+    <SolidColorBrush x:Key="palette8">#552E00</SolidColorBrush>
+    <SolidColorBrush x:Key="palette9">#FEAC01</SolidColorBrush>
+    <SolidColorBrush x:Key="palette10">#001744</SolidColorBrush>
+    <SolidColorBrush x:Key="palette11">#0000AA</SolidColorBrush>
+    <SolidColorBrush x:Key="palette12">#000B22</SolidColorBrush>
 
 </ResourceDictionary>

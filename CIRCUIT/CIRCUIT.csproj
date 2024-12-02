@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <None Remove="Assets\Images\Circuit hd.png" />
+    <None Remove="Assets\Images\Icons\PasswordIcon.png" />
+    <None Remove="Assets\Images\Icons\UserIcon.png" />
     <None Remove="Assets\Images\Personalpic.jpg" />
   </ItemGroup>
 
@@ -25,7 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Images\Backgrounds\LoginBackground.jpg" />
     <Resource Include="Assets\Images\Circuit hd.png" />
+    <Resource Include="Assets\Images\Icons\PasswordIcon.png" />
+    <Resource Include="Assets\Images\Icons\UserIcon.png" />
     <Resource Include="Assets\Images\Personalpic.jpg" />
   </ItemGroup>
 
