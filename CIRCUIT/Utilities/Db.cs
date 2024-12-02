@@ -8,10 +8,10 @@ namespace CIRCUIT.Utilities
     public class Db
     {
         //Comment each of our local connection for local use
-        //private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
+        private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
 
-        private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
-                                          "Trust Server Certificate=True";
+        //private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
+        //                                "Trust Server Certificate=True";
 
         //Method to execute non queries like INSERT or UPDATE, might change this code later idk
         public void ExecuteNonQuery(string query)
@@ -228,6 +228,25 @@ namespace CIRCUIT.Utilities
             }
         }
 
+        // Method to update only the product's stock quantity by product Id
+        public void UpdateProductStockQuantity(int productId, int quantitySold)
+        {
+            string updateQuery = "UPDATE Products SET stock_quantity = stock_quantity - @quantitySold WHERE product_id = @productId";
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (var command = new SqlCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@quantitySold", quantitySold);
+                    command.Parameters.AddWithValue("@productId", productId);
+
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+
         //Method to archive a product by product Id
         public void ArchiveProduct(List<int> productId)
         {
@@ -415,12 +434,11 @@ namespace CIRCUIT.Utilities
 
         //ETO UNG BAGO 
 
-        public void InsertSale(SaleModel sale)
+        public int InsertSale(SaleModel sale)
         {
-            //string query = @"INSERT INTO sales (date_time, cashier_id, total_amount, payment_method, customer_payment, change_given)
-            //        VALUES (@DateTime, @CashierId, @TotalAmount, @PaymentMethod, @CustomerPaid, @ChangeGiven)";
             string query = @"INSERT INTO sales (date_time, total_amount, payment_method, customer_payment, change_given, cashier_id)
-                    VALUES (@DateTime, @TotalAmount, @PaymentMethod, @CustomerPaid, @ChangeGiven, @CashierId)";
+                    VALUES (@DateTime, @TotalAmount, @PaymentMethod, @CustomerPaid, @ChangeGiven, @CashierId);
+                    SELECT SCOPE_IDENTITY();";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -434,14 +452,19 @@ namespace CIRCUIT.Utilities
                     command.Parameters.AddWithValue("@ChangeGiven", sale.ChangeGiven);
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    int newSaleId = Convert.ToInt32(command.ExecuteScalar());
+                    return newSaleId;
                 }
             }
         }
 
         public List<SaleHistoryModel> GetSalesHistory()
         {
-            string query = @"SELECT sale_id, date_time, COALESCE(cashier_id, 0) AS cashier_id, total_amount, payment_method, customer_payment, change_given FROM sales";
+            string query = @"SELECT sale_id, date_time, COALESCE(cashier_id, 0) AS cashier_id, 
+                             total_amount, payment_method, customer_payment, change_given, 
+                             is_void, VoidReason
+                     FROM sales";
+
             List<SaleHistoryModel> salesHistory = new List<SaleHistoryModel>();
 
             try
@@ -459,12 +482,13 @@ namespace CIRCUIT.Utilities
                                 {
                                     SaleId = reader.GetInt32(reader.GetOrdinal("sale_id")),
                                     DateTime = reader.GetDateTime(reader.GetOrdinal("date_time")),
-                                    //papallitan nalang to if ok n ung login cashierID bawal kasi magsend here ng may null
                                     CashierId = reader.IsDBNull(reader.GetOrdinal("cashier_id")) ? 0 : reader.GetInt32(reader.GetOrdinal("cashier_id")),
                                     TotalAmount = reader.GetDecimal(reader.GetOrdinal("total_amount")),
                                     PaymentMethod = reader.GetString(reader.GetOrdinal("payment_method")),
                                     CustomerPaid = reader.GetDecimal(reader.GetOrdinal("customer_payment")),
-                                    ChangeGiven = reader.GetDecimal(reader.GetOrdinal("change_given"))
+                                    ChangeGiven = reader.GetDecimal(reader.GetOrdinal("change_given")),
+                                    IsVoid = reader.GetBoolean(reader.GetOrdinal("is_void")),
+                                    VoidReason = reader.IsDBNull(reader.GetOrdinal("VoidReason")) ? null : reader.GetString(reader.GetOrdinal("VoidReason"))
                                 };
 
                                 salesHistory.Add(sale);
@@ -475,7 +499,6 @@ namespace CIRCUIT.Utilities
             }
             catch (Exception ex)
             {
-                // Consider using a proper logging mechanism
                 MessageBox.Show($"Error fetching sales history: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
@@ -485,9 +508,108 @@ namespace CIRCUIT.Utilities
 
 
 
+
+        public void InsertSaleItem(SaleItemModel saleItem)
+        {
+            string query = @"INSERT INTO Sale_Items (sale_id, product_id, quantity, item_total_price)
+                     VALUES (@SaleId, @ProductId, @Quantity, @ItemTotalPrice)";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    // Use parameters to prevent SQL injection
+                    command.Parameters.AddWithValue("@SaleId", saleItem.SaleId);
+                    command.Parameters.AddWithValue("@ProductId", saleItem.ProductId);
+                    command.Parameters.AddWithValue("@Quantity", saleItem.Quantity);
+                    command.Parameters.AddWithValue("@ItemTotalPrice", saleItem.ItemTotalPrice);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<SaleItemModel> GetSaleItemsBySaleId(int saleId)
+        {
+            string query = @"SELECT 
+                        sale_item_id, 
+                        sale_id, 
+                        product_id, 
+                        quantity, 
+                        item_total_price
+                     FROM Sale_Items
+                     WHERE sale_id = @SaleId";
+
+            var saleItems = new List<SaleItemModel>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@SaleId", saleId);
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var saleItem = new SaleItemModel
+                                {
+                                    SaleItemId = reader.GetInt32(reader.GetOrdinal("sale_item_id")),
+                                    SaleId = reader.GetInt32(reader.GetOrdinal("sale_id")),
+                                    ProductId = reader.GetInt32(reader.GetOrdinal("product_id")),
+                                    Quantity = reader.GetInt32(reader.GetOrdinal("quantity")),
+                                    ItemTotalPrice = reader.GetDecimal(reader.GetOrdinal("item_total_price"))
+                                };
+
+                                saleItems.Add(saleItem);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error fetching sale items: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+            return saleItems;
+        }
+
+        public bool UpdateVoidOrder(int saleId, string voidReason)
+        {
+            string query = @"UPDATE sales
+                     SET is_void = 1, VoidReason = @VoidReason
+                     WHERE sale_id = @SaleId";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@VoidReason", voidReason);
+                        command.Parameters.AddWithValue("@SaleId", saleId);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        return rowsAffected > 0;  // Return true if update was successful
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating void order: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+        }
+
+
         // HANGGANG DITO
 
-        
+
 
     }
 }
