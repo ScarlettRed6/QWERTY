@@ -47,5 +47,23 @@ namespace CIRCUIT.View.CashierView
             //AmountGivenTextBox.Clear();
             //AmountReceivedTextBox.Clear();
         }
+
+        private void PaymentMethodComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void processOrder_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to proceed with payment?",
+                              "Confirm Payment",
+                              MessageBoxButton.YesNo,
+                              MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                this.Close();
+            }
+        }
     }
 }

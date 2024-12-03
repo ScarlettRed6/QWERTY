@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CIRCUIT.View.CashierView"
         mc:Ignorable="d"
+        xmlns:vm="clr-namespace:CIRCUIT.ViewModel"
         WindowStartupLocation="CenterScreen"
         Title="Quick Pay View" Height="400" Width="600">
+
+
+    <Window.DataContext>
+        <vm:NewSaleViewModel />
+    </Window.DataContext>
+
+
+
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -96,7 +105,8 @@
                 Grid.Row="5" 
                 Grid.Column="1" 
                 Background="LightGreen" 
-                Click="ProcessPayment_Click"/>
+                
+                Command="{Binding ViewModel.ExecuteQuickOrderCommand}" Click="ProcessPayment_Click"/>
 
         <!-- Back Button -->
         <Button Content="Back" 

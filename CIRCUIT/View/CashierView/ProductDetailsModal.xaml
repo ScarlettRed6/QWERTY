@@ -75,14 +75,14 @@
                 </Border>
 
                 <!-- Right Side - Details -->
-                <StackPanel Grid.Column="1" >
+                <StackPanel Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Hidden" >
                     <TextBlock Text="{Binding ProductName}" 
                              FontSize="24" 
                              FontWeight="Bold" 
                              Foreground="White"
                              TextWrapping="Wrap"/>
 
-                    <TextBlock Text="{Binding SellingPrice, StringFormat='Price: {0:C}'}" 
+                    <TextBlock Text="{Binding SellingPrice, StringFormat=₱{0:N2}}" 
                              FontSize="20" 
                              Foreground="#4CAF50"
                              Margin="0,10"/>

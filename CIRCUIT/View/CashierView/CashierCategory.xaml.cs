@@ -35,9 +35,15 @@ namespace CIRCUIT.View.CashierView
 
         private void logoutBtn_Click(object sender, RoutedEventArgs e)
         {
-            UserLoginView loginView = new UserLoginView();
-            loginView.Show();
-            this.Close();
+            var result = MessageBox.Show("Are you sure you want to log out?",
+                 "Confirm Logout",
+                 MessageBoxButton.YesNo,
+                 MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                this.Close();
+            }
         }
     }
 

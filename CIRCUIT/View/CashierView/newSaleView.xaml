@@ -3,12 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:CIRCUIT.ViewModel"
         Title="New Sale" Height="760" Width="1400"
-        WindowStartupLocation="CenterScreen"
-        Background="{StaticResource panelColor6}">
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <vm:NewSaleViewModel />
     </Window.DataContext>
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <!-- Dark Blue at the top -->
+            <GradientStop Color="#1e2a47" Offset="0" />
+            <!-- Light Blue in the middle -->
+            <GradientStop Color="#2e2e2e" Offset="0.5" />
+            <!-- Dark Blue at the bottom -->
+            <GradientStop Color="#1e2a47" Offset="1" />
+        </LinearGradientBrush>
+    </Window.Background>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -116,7 +127,7 @@
                                        TextAlignment="Center"
                                        Foreground="White"/>
                                     <TextBlock Grid.Row="2" Margin="5"
-                                       Text="{Binding SellingPrice}"
+                                       Text="{Binding SellingPrice , StringFormat=₱{0:N2}}"
                                        TextAlignment="Center"
                                        FontWeight="Bold"
                                        Foreground="White"/>
@@ -133,35 +144,38 @@
             </ScrollViewer>
 
             <!-- Action Buttons -->
-            <UniformGrid Grid.Row="4" Rows="2" Margin="0,10,0,0">
+            <UniformGrid Grid.Row="4" Rows="1" Margin="0,20,0,0">
                 <!-- Profile Button -->
                 <Button Content="MY PROFILE"
                         Margin="5"
-                        Height="90"
+                        Height="100"
                         Background="{StaticResource panelColor2}"
                         Foreground="White"
                         Command="{Binding MyProfileCommand}"/>
 
                 <!-- Apply LAYAWAY SALE Button -->
+                <!-- 
                 <Button Content="LAYAWAY SALE"
                         Margin="5"
                         Height="90"
                         Background="{StaticResource panelColor2}"
                         Foreground="White"
                         Command="{Binding LayawayCommand}"/>
-
-                <!-- Hold Order Button -->
+                -->
+                
+                <!-- Hold Order Button 
                 <Button Content="PRE-ORDER"
                         Margin="5"
                         Height="90"
                         Background="{StaticResource panelColor2}"
                         Foreground="White"
                         Command="{Binding PreorderCommand}"/>
-
+                -->
+                
                 <!-- Void Transaction Button -->
                 <Button Content="VOID ORDER"
                         Margin="5"
-                        Height="90"
+                        Height="100"
                         Background="{StaticResource panelColor2}"
                         Foreground="White"
                         Command="{Binding VoidCommand}"/>
@@ -171,7 +185,7 @@
                 <!-- Check Inventory Button -->
                 <Button Content="VIEW INVENTORY"
                         Margin="5"
-                        Height="90"
+                        Height="100"
                         Background="{StaticResource panelColor2}"
                         Foreground="White"
                         Command="{Binding ViewInventoryCommand}"/>
@@ -179,8 +193,8 @@
                 <Button x:Name="logoutBtn"
                         Content="LOG OUT"
                         Margin="5,5,4,5"
-                        Height="90"
-                        Background="{StaticResource panelColor2}"
+                        Height="100"
+                        Background="{StaticResource palette1}"
                         Foreground="White"
                         Click="logoutBtn_Click"
                         Command="{Binding LogOutBtnCommand}"/>
@@ -196,7 +210,7 @@
 
 
         <!-- Right Side - Cart -->
-        <Grid Grid.Column="1" Background="{StaticResource panelColor7}">
+        <Grid Grid.Column="1" Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -328,8 +342,8 @@
                                    VerticalAlignment="Center"
                                    FontSize="16"
                                    Foreground="White"/>
-                        <TextBlock Text="{Binding TotalAmount, StringFormat='{}{0:C}'}"
-                                   HorizontalAlignment="Right"
+                        <TextBlock Text="{Binding TotalAmount, StringFormat=₱{0:N2}}"
+                        HorizontalAlignment="Right"
                                    VerticalAlignment="Center"
                                    FontSize="16"
                                    FontWeight="Bold"
