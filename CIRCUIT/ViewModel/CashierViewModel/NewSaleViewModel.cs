@@ -6,6 +6,7 @@ using CIRCUIT.View.CashierView;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Numerics;
 using System.Windows;
 
@@ -15,6 +16,7 @@ namespace CIRCUIT.ViewModel
 {
     public class NewSaleViewModel : ObservableObject
     {
+
         #region Private Fields
         private readonly Db _db;
         private readonly AccountRepository _accountRepository;
@@ -22,7 +24,10 @@ namespace CIRCUIT.ViewModel
         private string _searchQuery;
         private string _amountReceived;
         private string _amountGiven;
+        private string _paymentMethod;
         private ObservableCollection<ProductModel> _allProducts = new ObservableCollection<ProductModel>();
+        public ObservableCollection<string> PaymentMethods { get; } = new ObservableCollection<string> {"Card", "Cash" };
+
         private List<UsersModel> _users = new List<UsersModel>();
         private decimal _totalAmountBeforeDiscount;
         private decimal _adjustedTotalAmount;
@@ -126,6 +131,27 @@ namespace CIRCUIT.ViewModel
             }
         }
 
+
+        private void CalculateChange()
+        {
+            if (decimal.TryParse(AmountReceived, out decimal amountReceived))
+            {
+                decimal totalAmount = AdjustedTotalAmount > 0 ? AdjustedTotalAmount : TotalAmount;
+                decimal change = amountReceived - totalAmount;
+
+                // Ensure change is not negative
+                AmountGiven = change >= 0 ? change.ToString("N2") : "0.00";
+            }
+            else
+            {
+                AmountGiven = "0.00";
+            }
+        }
+
+
+
+
+
         #region Discount Method
         private void ApplyDiscount()
         {
@@ -176,7 +202,6 @@ namespace CIRCUIT.ViewModel
             OnPropertyChanged(nameof(AdjustedTotalAmount));
         }
 
-        // Payment Information
         public string AmountReceived
         {
             get => _amountReceived;
@@ -184,6 +209,7 @@ namespace CIRCUIT.ViewModel
             {
                 _amountReceived = value;
                 OnPropertyChanged(nameof(AmountReceived));
+                CalculateChange();
             }
         }
 
@@ -196,6 +222,17 @@ namespace CIRCUIT.ViewModel
                 OnPropertyChanged(nameof(AmountGiven));
             }
         }
+
+        public string PaymentMethod
+        {
+            get => _paymentMethod;
+            set
+            {
+                _paymentMethod = value;
+                OnPropertyChanged(nameof(PaymentMethod));
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -218,6 +255,7 @@ namespace CIRCUIT.ViewModel
         public ICommand ReprintReceiptCommand { get; set; }
         public ICommand ViewInventoryCommand { get; set; }
         public ICommand ResetOrderDetailsCommand { get; set; }
+        public ICommand ExecuteQuickOrderCommand { get; set; }
 
 
 
@@ -253,7 +291,8 @@ namespace CIRCUIT.ViewModel
             foreach (var user in userList)
             {
                 _users.Add(user);
-                StaffName = user.Username;
+                StaffName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(user.Username.ToLower());
+
             }
 
         }
@@ -268,14 +307,15 @@ namespace CIRCUIT.ViewModel
             DeleteItemCommand = new RelayCommand<CartItem>(DeleteItem);
             CheckoutCommand = new RelayCommand(Checkout);
             ProcessOrderCommand = new RelayCommand(ExecuteProcessOrder);
+            ExecuteQuickOrderCommand = new RelayCommand(ExecuteQuickOrder);
             LogOutBtnCommand = new RelayCommand(ExecuteLogout);
             //new added features
             MyProfileCommand = new RelayCommand(OpenMyProfile);
             LayawayCommand = new RelayCommand(OpenLayawaySale);
             QuickPayCommand = new RelayCommand(ExecuteQuickPay);
-            PreorderCommand = new RelayCommand(OpenPreOrder);
+            //PreorderCommand = new RelayCommand(OpenPreOrder);
             VoidCommand = new RelayCommand(VoidOrder);
-            ReprintReceiptCommand = new RelayCommand(ReprintReceipt);
+            //ReprintReceiptCommand = new RelayCommand(ReprintReceipt);
             ViewInventoryCommand = new RelayCommand(ViewInventory);
             ResetOrderDetailsCommand = new RelayCommand(ResetOrderDetails);
         }
@@ -312,12 +352,13 @@ namespace CIRCUIT.ViewModel
             quickpayWindow.Show();
         }
 
-
+        /*
         private void OpenPreOrder()
         {
             preorderView preorderWindow = new preorderView();
             preorderWindow.Show();
         }
+        */
 
         private void VoidOrder()
         {
@@ -325,12 +366,14 @@ namespace CIRCUIT.ViewModel
             voidOrderWindow.Show();
         }
 
+        /*DISREGARD
         private void ReprintReceipt()
         {
             reprintreceiptView reprintWindow = new reprintreceiptView();
             reprintWindow.Show();
         }
 
+        */
         private void ViewInventory()
         {
             inventoryView inventoryWindow = new inventoryView();
@@ -345,9 +388,8 @@ namespace CIRCUIT.ViewModel
         {
             try
             {
-                string query = "SELECT * FROM Products WHERE is_archived = 0";
+                string query = "SELECT * FROM Products WHERE is_archived = 0 AND stock_quantity > 5";
                 var productsFromDb = _db.FetchData(query);
-
                 _allProducts.Clear();
                 foreach (var product in productsFromDb)
                 {
@@ -368,11 +410,18 @@ namespace CIRCUIT.ViewModel
                     });
                 }
                 FilteredProducts = new ObservableCollection<ProductModel>(_allProducts);
+
+                if (_allProducts.Count == 0)
+                {
+                    MessageBox.Show("No products available with stock quantity greater than 5.", "Low Stock",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading products: {ex.Message}");
-                // TODO: Implement proper error handling
+                MessageBox.Show($"Error loading products: {ex.Message}", "Database Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+                // Replace Console.WriteLine with a proper error handling mechanism
             }
         }
         #endregion
@@ -494,12 +543,6 @@ namespace CIRCUIT.ViewModel
         }
         #endregion
 
-
-
-
-
-
-
         #region Order Processing
         private void Checkout()
         {
@@ -521,7 +564,8 @@ namespace CIRCUIT.ViewModel
             _accountRepository.LogUserOut(_userId);
         }
 
-        public void ExecuteProcessOrder()
+
+        private void ExecuteProcessOrder()
         {
             try
             {
@@ -532,13 +576,18 @@ namespace CIRCUIT.ViewModel
 
                 decimal change = receivedAmount - TotalAmount;
 
-                // Insert the sale record
+                if (string.IsNullOrEmpty(PaymentMethod))
+                {
+                    MessageBox.Show("Please select a payment method.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
                 SaleModel newSale = new SaleModel
                 {
                     CashierId = _userId,
                     DateTime = DateTime.Now,
                     TotalAmount = TotalAmount,
-                    PaymentMethod = "Cash",
+                    PaymentMethod = PaymentMethod,
                     CustomerPaid = receivedAmount,
                     ChangeGiven = change
                 };
@@ -560,6 +609,49 @@ namespace CIRCUIT.ViewModel
                 LoadProductsFromDatabase();
                 ResetOrderDetails();
 
+                AmountReceived = string.Empty;
+                AmountGiven = string.Empty;
+                PaymentMethod = string.Empty;
+                MessageBox.Show("Order processed successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                CartItems.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while processing the order: {ex.Message}", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
+        private void ExecuteQuickOrder()
+        {
+            try
+            {
+                SaleModel newSale = new SaleModel
+                {
+                    CashierId = _userId,
+                    DateTime = DateTime.Now,
+                    PaymentMethod = "Cash",
+                    TotalAmount = TotalAmount,
+                };
+                int newSaleId = _db.InsertSale(newSale);
+
+                foreach (var cartItem in CartItems)
+                {
+                    SaleItemModel saleItem = new SaleItemModel
+                    {
+                        SaleId = newSaleId,
+                        ProductId = cartItem.ProductId,
+                        Quantity = cartItem.Quantity,
+                        ItemTotalPrice = cartItem.Quantity * cartItem.SellingPrice
+                    };
+                    _db.InsertSaleItem(saleItem);
+                    _db.UpdateProductStockQuantity(cartItem.ProductId, cartItem.Quantity);
+                }
+                LoadProductsFromDatabase();
+
+                ResetOrderDetails();
+                TotalAmount = 0;
                 MessageBox.Show("Order processed successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 CartItems.Clear();
             }
@@ -577,6 +669,8 @@ namespace CIRCUIT.ViewModel
             TotalAmount = 0;
             _isDiscountApplied = false;
             _discountAlreadyUsed = false;
+            PaymentMethod = string.Empty;
+            PaymentMethod = "";
             OnPropertyChanged(nameof(AdjustedTotalAmount));
 
         }

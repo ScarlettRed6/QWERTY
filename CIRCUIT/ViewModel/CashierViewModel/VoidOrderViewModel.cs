@@ -80,11 +80,13 @@ namespace CIRCUIT.ViewModel.CashierViewModel
             try
             {
                 var users = accountRepository.FetchUser();
+                var today = DateTime.Today;
+
                 var voidOrders = _database.GetSalesHistory()
-                                          .Where(s => !s.IsVoid)
+                                          .Where(s => !s.IsVoid && s.DateTime.Date == today) // Filter only today's orders
+                                          .OrderByDescending(s => s.DateTime) // Sort by DateTime descending
                                           .ToList();
 
-                // Combine data
                 foreach (var order in voidOrders)
                 {
                     var matchingUser = users.FirstOrDefault(u => u.UserId == order.UserId);
@@ -94,13 +96,17 @@ namespace CIRCUIT.ViewModel.CashierViewModel
                         order.CashierRole = matchingUser.Role;
                     }
                 }
+
+                // Bind filtered and sorted data to VoidOrders
                 VoidOrders = new ObservableCollection<SaleHistoryModel>(voidOrders);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error loading non-voided orders: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error loading today's non-voided orders: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
 
         private void VoidOrder()
         {
