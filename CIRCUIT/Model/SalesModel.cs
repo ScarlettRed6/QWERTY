@@ -6,6 +6,7 @@ namespace CIRCUIT.Model
     {
         private decimal _totalAmount;
         private decimal _changeGiven;
+        private decimal _paymentMethod;
 
         public int SaleId { get; set; }
         public DateTime DateTime { get; set; }
@@ -26,6 +27,7 @@ namespace CIRCUIT.Model
                 }
             }
         }
+
 
         public decimal CustomerPaid { get; set; }
 
