@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Background="{StaticResource panelColor7}"
-        WindowStyle="SingleBorderWindow">
+        WindowStyle="None">
 
     <Window.DataContext>
         <vm:NewSaleViewModel />

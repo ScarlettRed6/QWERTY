@@ -9,6 +9,7 @@
         ResizeMode="NoResize"
         xmlns:vm="clr-namespace:CIRCUIT.ViewModel.CashierViewModel"
         Background="#27272A"
+        WindowStyle="None"
         Title="Inventory View" Height="500" Width="850">
     
     
