@@ -14,6 +14,8 @@ namespace CIRCUIT.Model
         public string Description { get; set; }
         public int StockQuantity { get; set; }
         public decimal UnitCost { get; set; }
+        public string StockStatus { get; set; }
+
         public string ImagePath { get; set; }
 
         private bool _isSelected;

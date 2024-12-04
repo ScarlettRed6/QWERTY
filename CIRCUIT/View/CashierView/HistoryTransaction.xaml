@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:vm="clr-namespace:CIRCUIT.ViewModel.CashierViewModel"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CIRCUIT.View.CashierView"
-        Title="Transaction History" Height="550" Width="1200"
+        Title="Transaction History" Height="640" Width="1000"
         WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
         ResizeMode="NoResize">
 
     <Window.DataContext>
@@ -22,46 +22,132 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <TextBlock Grid.Row="0" FontSize="24" FontWeight="Bold" Text="Transaction History" HorizontalAlignment="Center" Margin="0,0,0,10" />
+        <TextBlock Grid.Row="0" FontSize="26" FontWeight="Bold" Text="Transaction History" 
+                   HorizontalAlignment="Center" Margin="0,0,0,10" Foreground="#2E86C1" />
 
-        <!-- Date, Time, and Staff Info -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
-            <TextBlock FontSize="15" Margin="0,0,20,0">
-                <TextBlock.Text>
-                    <Binding Path="CurrentDateTime" StringFormat="{}{0:f}" />
-                </TextBlock.Text>
-            </TextBlock>
-            <TextBlock FontSize="15" Margin="0,0,0,0" Text="{Binding StaffName}" />
-        </StackPanel>
 
         <!-- Transaction List -->
-        <ListView Grid.Row="2" ItemsSource="{Binding SalesHistory}" Margin="0,10,0,10" FontSize="15">
+        <ListView Grid.Row="2" ItemsSource="{Binding SalesHistory}" 
+          SelectedItem="{Binding SelectedTransaction}"
+          Margin="0,10,0,10"
+          FontSize="15" BorderBrush="#CCCCCC" BorderThickness="1" 
+          VerticalAlignment="Center" 
+          Height="450"
+          ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Sale ID" Width="120" DisplayMemberBinding="{Binding SaleId}" />
-                    <GridViewColumn Header="Cashier ID" Width="120" DisplayMemberBinding="{Binding CashierId}" />
-                    <GridViewColumn Header="Date" Width="140" DisplayMemberBinding="{Binding DateTime, StringFormat={}{0:g}}" />
-                    <GridViewColumn Header="Total Amount" Width="120" DisplayMemberBinding="{Binding TotalAmount, StringFormat={}{0:C2}}" />
-                    <GridViewColumn Header="Payment Method" Width="135" DisplayMemberBinding="{Binding PaymentMethod}" />
-                    <GridViewColumn Header="Customer Paid" Width="120" DisplayMemberBinding="{Binding CustomerPaid, StringFormat={}{0:C2}}" />
-                    <GridViewColumn Header="Change Given" Width="125" DisplayMemberBinding="{Binding ChangeGiven, StringFormat={}{0:C2}}" />
+                    <GridViewColumn  Header="Sale ID" Width="100" DisplayMemberBinding="{Binding SaleId}">
+                        <GridViewColumn.HeaderContainerStyle>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Style>
+                        </GridViewColumn.HeaderContainerStyle>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding SaleId}" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Cashier ID" Width="100" DisplayMemberBinding="{Binding CashierId}">
+                        <GridViewColumn.HeaderContainerStyle>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Style>
+                        </GridViewColumn.HeaderContainerStyle>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding CashierId}" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Date" Width="150" DisplayMemberBinding="{Binding DateTime, StringFormat={}{0:g}}">
+                        <GridViewColumn.HeaderContainerStyle>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Style>
+                        </GridViewColumn.HeaderContainerStyle>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DateTime, StringFormat={}{0:g}}" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Total Amount" Width="120" DisplayMemberBinding="{Binding TotalAmount, StringFormat={}{0:C2}}">
+                        <GridViewColumn.HeaderContainerStyle>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Style>
+                        </GridViewColumn.HeaderContainerStyle>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding TotalAmount, StringFormat={}{0:C2}}" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Payment Method" Width="135" DisplayMemberBinding="{Binding PaymentMethod}">
+                        <GridViewColumn.HeaderContainerStyle>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Style>
+                        </GridViewColumn.HeaderContainerStyle>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding PaymentMethod}" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Customer Paid" Width="125" DisplayMemberBinding="{Binding CustomerPaid, StringFormat={}{0:C2}}">
+                        <GridViewColumn.HeaderContainerStyle>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Style>
+                        </GridViewColumn.HeaderContainerStyle>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding CustomerPaid, StringFormat={}{0:C2}}" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Change Given" Width="125" DisplayMemberBinding="{Binding ChangeGiven, StringFormat={}{0:C2}}">
+                        <GridViewColumn.HeaderContainerStyle>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Style>
+                        </GridViewColumn.HeaderContainerStyle>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ChangeGiven, StringFormat={}{0:C2}}" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
 
         <!-- Total Amount -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-            <TextBlock Text="Total" FontWeight="Bold" Margin="0,0,10,0" />
-            <TextBlock FontWeight="Bold" Text="{Binding TotalSalesAmount, StringFormat={}{0:C2}}" />
+            
+            <TextBlock Text="Total Sales:" FontWeight="SemiBold" Margin="0,0,10,0" FontSize="25" Foreground="#333" />
+            <TextBlock FontWeight="Bold" FontSize="25" Text="{Binding TotalSalesAmount, StringFormat='₱{0:N2}'}" Foreground="Green" />
+            
         </StackPanel>
 
-        <!-- Pagination Controls -->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-            <Button Content="BACK" Width="80" Background="#FFDDDD" Margin="0,0,10,0" Click="BackButton_Click"/>
-            <Button Content="&lt;" Width="30" Margin="5,0" Command="{Binding PreviousPageCommand}" />
-            <Button Content="{Binding CurrentPage}" Width="30" Margin="5,0" />
-            <Button Content="{Binding NextPage}" Width="30" Margin="5,0" Command="{Binding NextPageCommand}" />
-            <Button Content="&gt;" Width="30" Margin="5,0" Command="{Binding NextPageCommand}" />
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,0,0">
+            <Button Content="Back" Width="100" Height="35" Margin="0,0,0,0" Background="#FF6347" 
+                    Foreground="White" FontWeight="Bold" Click="BackButton_Click" BorderThickness="0" ToolTip="Go back to the previous screen" />
         </StackPanel>
     </Grid>
 </Window>

@@ -8,10 +8,10 @@ namespace CIRCUIT.Utilities
     public class Db
     {
         //Comment each of our local connection for local use
-        //private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
+        private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
 
-        private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
-                                        "Trust Server Certificate=True";
+        //private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
+        //                               "Trust Server Certificate=True";
 
         //Method to execute non queries like INSERT or UPDATE, might change this code later idk
         public void ExecuteNonQuery(string query)

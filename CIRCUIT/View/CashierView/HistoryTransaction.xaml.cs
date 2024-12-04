@@ -35,5 +35,6 @@ namespace CIRCUIT.View.CashierView
 
 
 
+
     }
 }

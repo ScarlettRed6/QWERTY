@@ -35,7 +35,7 @@ namespace CIRCUIT.ViewModel.CashierViewModel
             }
         }
 
-        // Calculated total sales amount
+        // Calculated total sales amount for today
         public decimal TotalSalesAmount => SalesHistory.Sum(s => s.TotalAmount);
 
         // Command to refresh the sales history
@@ -44,15 +44,15 @@ namespace CIRCUIT.ViewModel.CashierViewModel
         // Constructor
         public HistoryCashierViewModel()
         {
-            _database = new Db(); 
+            _database = new Db();
             SalesHistory = new ObservableCollection<SaleHistoryModel>();
             RefreshHistoryCommand = new RelayCommand(LoadSalesHistory);
 
-            StaffName = "Rhenz Pogi"; 
-            LoadSalesHistory(); 
+            StaffName = "Rhenz Pogi";
+            LoadSalesHistory();
         }
 
-        // Load sales history data
+
         private void LoadSalesHistory()
         {
             try
@@ -65,8 +65,16 @@ namespace CIRCUIT.ViewModel.CashierViewModel
                     return;
                 }
 
+
+                var today = DateTime.Today;
+                var todaysSales = allSales
+                    .Where(s => s.DateTime.Date == today)
+                    .OrderByDescending(s => s.DateTime)
+                    .ToList();
+
+                // Clear and add today's sales
                 SalesHistory.Clear();
-                foreach (var sale in allSales)
+                foreach (var sale in todaysSales)
                 {
                     SalesHistory.Add(sale);
                 }

@@ -32,9 +32,17 @@ namespace CIRCUIT.View.CashierView
 
         private void ProcessPayment_Click(object sender, RoutedEventArgs e)
         {
-            // Handle the payment processing logic here
-            MessageBox.Show("Processing payment...");
+            MessageBoxResult result = MessageBox.Show("Are the items finalized? Do you want to proceed with payment?",
+                                                      "Confirm Payment",
+                                                      MessageBoxButton.YesNo,
+                                                      MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                this.Close();
+            }
         }
+
 
         private void ItemsDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {

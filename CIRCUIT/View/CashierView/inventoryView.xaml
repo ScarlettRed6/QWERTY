@@ -8,61 +8,90 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         xmlns:vm="clr-namespace:CIRCUIT.ViewModel.CashierViewModel"
-        Title="Inventory View" Height="450" Width="800">
+        Background="#27272A"
+        WindowStyle="None"
+        Title="Inventory View" Height="500" Width="850">
+    
+    
+    
     <Window.DataContext>
         <vm:InventoryViewModel/>
     </Window.DataContext>
     <Grid Margin="20">
         <!-- Header -->
-        <TextBlock Text="Product Inventory" 
-                   FontSize="18" 
-                   FontWeight="Bold" 
-                   HorizontalAlignment="Center" 
-                   Margin="0,10,0,20" 
-                   Foreground="#333"/>
+        <TextBlock Text="Product Inventory"
+                   FontSize="22"
+                   FontWeight="SemiBold"
+                   HorizontalAlignment="Center"
+                   Margin="0,10,0,20"
+                   Foreground="#2E86C1"/>
 
-        <!-- Search Bar -->
-        <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
-                 Name="SearchTextBox"
-                 Height="30"
-                 HorizontalAlignment="Left"
-                 Width="300"
-                 Margin="10,40,10,0"
-                 VerticalAlignment="Top"
-                 Padding="5,0"
-                 FontSize="14"
-                 Foreground="#333"
-                 BorderBrush="#CCCCCC"
-                 BorderThickness="1"/>
+        <!-- Search Bar Section -->
+        <DockPanel Margin="0,40,0,0">
+            <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
+                     Name="SearchTextBox"
+                     Height="35"
+                     Width="400"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Top"
+                     Padding="10"
+                     FontSize="10"
+                     Foreground="#333"
+                     BorderBrush="#CCCCCC"
+                     Background="#F2F2F2"
+                     BorderThickness="1"
+                     ToolTip="Search products by name or ID"
+                     DockPanel.Dock="Left"
+                     Margin="10,0,0,10"/>
+        </DockPanel>
 
-        <!-- Inventory Data Table (DataGrid) -->
-        <DataGrid Name="InventoryDataGrid" 
-                  Margin="10,80,10,64" 
-                  AutoGenerateColumns="False" 
-                  IsReadOnly="True"
-                  SelectionMode="Single"
-                  CanUserAddRows="False" 
-                  CanUserDeleteRows="False"
-                  ItemsSource="{Binding FilteredProducts}">
+        <DataGrid Name="InventoryDataGrid"
+          Margin="10,90,10,54"
+          AutoGenerateColumns="False"
+          IsReadOnly="True"
+          SelectionMode="Single"
+          CanUserAddRows="False"
+          CanUserDeleteRows="False"
+          ItemsSource="{Binding FilteredProducts}"
+          RowBackground="#F2F2F2"
+          AlternatingRowBackground="#FFFFFF"
+          GridLinesVisibility="None"
+          BorderBrush="#CCCCCC"
+          BorderThickness="1">
+            <DataGrid.Resources>
+                <!-- Center alignment style for the text -->
+                <Style x:Key="CenterTextStyle" TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </DataGrid.Resources>
+
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}" Width="*"/>
-                <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" Width="*"/>
-                <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="*"/>
-                <DataGridTextColumn Header="Stock Quantity" Binding="{Binding StockQuantity}" Width="*"/>
+                <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}" Width="*"
+                            ElementStyle="{StaticResource CenterTextStyle}"/>
+                <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" Width="350"/>
+                <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="*"
+                            ElementStyle="{StaticResource CenterTextStyle}"/>
+                <DataGridTextColumn Header="Stock Quantity" Binding="{Binding StockQuantity}" Width="*"
+                            ElementStyle="{StaticResource CenterTextStyle}" />
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Back Button -->
-        <Button Content="Back" 
-                Width="120" 
-                Height="35" 
-                Margin="0,20,10,10" 
-                HorizontalAlignment="Right" 
-                VerticalAlignment="Bottom" 
-                Background="#FF6347" 
-                Foreground="White" 
-                BorderThickness="0" 
-                Click="BackButton_Click"
-                ToolTip="Click to go back to the previous screen"/>
+
+        <!-- Bottom Navigation -->
+        <DockPanel VerticalAlignment="Bottom" Margin="10">
+            <Button Content="Back"
+                    Width="100"
+                    Height="35"
+                    Background="#3F3F46"
+                    Foreground="White"
+                    FontWeight="Bold"
+                    BorderThickness="0"
+                    
+                    HorizontalAlignment="Left"
+                    ToolTip="Click to go back to the previous screen"
+                    DockPanel.Dock="Left"
+                    Click="BackButton_Click"/>
+        </DockPanel>
     </Grid>
 </Window>

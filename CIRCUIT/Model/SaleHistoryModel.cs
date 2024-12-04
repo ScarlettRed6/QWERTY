@@ -20,6 +20,7 @@ namespace CIRCUIT.Model
         public decimal ChangeGiven { get; set; }
         public decimal _staffName { get; set;}
         public bool IsVoid { get; set; }
+        public DateTime SaleDate { get; set; }
 
     }
 
