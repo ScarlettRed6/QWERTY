@@ -187,6 +187,16 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
+                        <DataGridTemplateColumn Header="Image" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding ImagePath}" 
+                                           Width="80" 
+                                           Height="80" 
+                                           Stretch="Uniform"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
                         <DataGridTextColumn Header="ID" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="10*"/>
                         <DataGridTextColumn Header="Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="50*" />

@@ -151,3 +151,15 @@ C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\quickpayView.baml
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\reprintreceiptView.baml
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\CashierView\voidOrderView.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\StockControlView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\StockControlView.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\StockSuppliersView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\StockSuppliersView.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\StockOrdersView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\StockOrdersView.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\OrderNewStockView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\OrderNewStockView.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\ReviewOrderWindow.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\ReviewOrderWindow.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\ReceiveStockOrdersView.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\ReceiveStockOrdersView.baml

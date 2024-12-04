@@ -37,10 +37,28 @@
     <Compile Update="View\AdminDashboardViews\HomeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\AdminDashboardViews\OrderNewStockView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardViews\ReceiveStockOrdersView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardViews\ReviewOrderWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\AdminDashboardViews\SalesTransactionsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\AdminDashboardViews\StaffView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardViews\StockControlView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardViews\StockOrdersView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\AdminDashboardViews\StockSuppliersView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\AdminDashboardViews\ViewAccountView.xaml.cs">
@@ -99,7 +117,25 @@
     <Page Update="View\AdminDashboardViews\HomeView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\AdminDashboardViews\OrderNewStockView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardViews\ReceiveStockOrdersView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardViews\ReviewOrderWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\AdminDashboardViews\SalesTransactionsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardViews\StockControlView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardViews\StockOrdersView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AdminDashboardViews\StockSuppliersView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\AdminDashboardViews\ViewAccountView.xaml">

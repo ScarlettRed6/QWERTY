@@ -290,21 +290,18 @@
                                 
                             </Grid>
                             <!-- Image drop box , implement later -->
-                            <Border AllowDrop="True" Grid.Column="2"
-                                    BorderBrush="{StaticResource panelColor1}" 
-                                    BorderThickness="1" 
-                                    Width="200" 
-                                    Height="170"
-                                    Margin="10"
-                                    VerticalAlignment="Center" 
-                                    HorizontalAlignment="Center"
-                                    CornerRadius="5"
-                                    Background="{StaticResource panelColor7}">
-                                <TextBlock Text="Drag and drop image files here" 
-                                           HorizontalAlignment="Center" 
-                                           VerticalAlignment="Center"
-                                           Foreground="{StaticResource panelColor4}"/>
-                            </Border>
+                            <Button Grid.Column="2"
+                                    Width="170"
+                                    Height="50"
+                                    Style="{StaticResource addCatalogButton}"
+                                    Command="{Binding UploadImageCommand}">
+                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="Upload Image"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Foreground="{StaticResource panelColor4}"/>
+                                </StackPanel>
+                            </Button>
 
                         </Grid>
                         

@@ -2,6 +2,7 @@
 using CIRCUIT.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.IO;
 using System.Windows;
 
 namespace CIRCUIT.ViewModel.AdminDashboardViewModel
@@ -39,6 +40,9 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         [ObservableProperty]
         private object _currentAddView;
 
+        [ObservableProperty]
+        private string _imagePath;
+
         //Random number integer for sku placeholder
         private Random _random;
 
@@ -48,6 +52,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         //Commands
         public RelayCommand ReturnBtnCommand { get; }
         public RelayCommand SaveProductCommand { get; }
+        public RelayCommand UploadImageCommand { get; }
 
         //Constructor
         public AddProductViewModel()
@@ -55,9 +60,52 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             _dbCon = new Db();
             ReturnBtnCommand = new RelayCommand(ExecuteReturnBtn);
             SaveProductCommand = new RelayCommand(ExecuteSaveProductCommand);
+            UploadImageCommand = new RelayCommand(UploadImage);
 
         }
 
+        //Method to upload image
+        private void UploadImage()
+        {
+            // Create and configure the OpenFileDialog
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Title = "Select an Image",
+                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp;*.tiff|All Files|*.*" // Filter for image files
+            };
+
+            // Show the dialog and check if the user selected a file
+            if (openFileDialog.ShowDialog() == true)
+            {
+                // Get the file path of the selected image
+                string originalImagePath = openFileDialog.FileName;
+
+                // Generate a unique file name (you could use a GUID or timestamp to ensure uniqueness)
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(originalImagePath);
+
+                // Define the folder path where you want to store the image
+                string imagesFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Images", "ProductImages");
+
+                // Ensure the directory exists
+                if (!Directory.Exists(imagesFolderPath))
+                {
+                    Directory.CreateDirectory(imagesFolderPath);
+                }
+
+                // Define the new image path
+                string newImagePath = Path.Combine(imagesFolderPath, fileName);
+
+                // Copy the selected image to the new location
+                File.Copy(originalImagePath, newImagePath);
+
+                // Store the image path (relative or absolute depending on how you will use it)
+                ImagePath = Path.Combine("Assets", "Images", "ProductImages", fileName); // Store relative path or full path
+
+                MessageBox.Show("Image uploaded successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        //Execute to save product
         private void ExecuteSaveProductCommand()
         {
             if (ProductNameBox == null || ProductModelBox == null || BrandBox == null || CategoryBox == null ||
@@ -90,7 +138,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 StockQuantity = StockQuantityBox,
                 UnitCost = UnitCost,
                 SKU = _random.Next(1, 9),
-                IsArchived = false
+                IsArchived = false,
+                ImagePath = ImagePath  // Include the image path here
             };
             return _products;
 

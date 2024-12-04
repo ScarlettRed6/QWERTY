@@ -1,0 +1,144 @@
+﻿<UserControl x:Class="CIRCUIT.View.AdminDashboardViews.StockOrdersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboardViews"
+             xmlns:vm="clr-namespace:CIRCUIT.ViewModel.AdminDashboardViewModel"
+             xmlns:view="clr-namespace:CIRCUIT.View.AdminDashboardViews"
+             xmlns:utils="clr-namespace:CIRCUIT.Utilities"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="1000">
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vm:OrderNewStockViewModel}">
+            <view:OrderNewStockView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ReceiveStockOrdersViewModel}">
+            <view:ReceiveStockOrdersView/>
+        </DataTemplate>
+
+        <utils:StatusToButtonContentConverter x:Key="StatusToButtonContentConverter"/>
+        <utils:StatusToButtonEnabledConverter x:Key="StatusToButtonEnabledConverter"/>
+
+    </UserControl.Resources>
+
+    <Grid>
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <!-- Grid row 0 -->
+            <Border Grid.Row="0"
+                 Background="{StaticResource palette10}"
+                 Margin="5,0,5,0">
+
+                <StackPanel Orientation="Horizontal"
+                         HorizontalAlignment="Right">
+
+                    <Button Width="140" Height="40"
+                            BorderThickness="0"
+                            Style="{StaticResource ExportButtonStyle}"
+                            HorizontalAlignment="Right"
+                            Command="{Binding OrderStockCommand}">
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Order Stock" FontSize="20"
+                                    FontWeight="Medium"
+                                    Margin="0,0,0,2"/>
+                        </StackPanel>
+
+                    </Button>
+
+                </StackPanel>
+
+            </Border>
+
+            <!-- Grid row 1 -->
+            <Border Grid.Row="1"
+                 Background="{StaticResource palette10}"
+                 Margin="5,0,5,0">
+                <DataGrid x:Name="StockOrders" 
+                       AutoGenerateColumns="False" 
+                       CanUserResizeColumns="False"
+                       CanUserAddRows="False"
+                       Grid.Row="2"
+                       IsReadOnly="True"
+                       ItemsSource="{Binding PagedOrders}"
+                       SelectionMode="Extended"
+                       RowHeaderWidth="0"
+                       Style="{StaticResource ModernDataGrid}"
+                       RowStyle="{StaticResource ModernDataGridRow}"
+                       CellStyle="{StaticResource ModernDataGridCell }"
+                       ColumnHeaderStyle="{StaticResource ModernDataGridColumnHeader}">
+
+                    <!-- Column context -->
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header=" OrderID" Binding="{Binding OrderID, UpdateSourceTrigger=PropertyChanged}" Width="70"/>
+                        <DataGridTextColumn Header="Supplier" Binding="{Binding SupplierName, UpdateSourceTrigger=PropertyChanged}" Width="150" />
+                        <DataGridTextColumn Header="Order Date" Binding="{Binding OrderDate, UpdateSourceTrigger=PropertyChanged}" Width="160" />
+                        <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged}" Width="150" />
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+
+                        <!-- Implement Edit/Archive button here later -->
+                        <DataGridTemplateColumn Width="5*" Header="Operations">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Height="30" Width="100"
+                                                Content="{Binding Status, Converter={StaticResource StatusToButtonContentConverter}}"
+                                                Margin="2"
+                                                Command="{Binding DataContext.ReceiveCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource PaginationButtonStyle}"
+                                                IsEnabled="{Binding Status, Converter={StaticResource StatusToButtonEnabledConverter}}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+            </Border>
+
+            <!-- Grid row 2 -->
+            <Border Grid.Row="2"
+                    Background="{StaticResource palette10}"
+                    Margin="5,0,5,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5"
+                         Style="{StaticResource PaginationStackPanelStyle}">
+                    <Button Content=" First" Style="{StaticResource PaginationButtonStyle}"
+                         Command="{Binding FirstPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Button Content=" Prev" Style="{StaticResource PaginationButtonStyle}"
+                         Command="{Binding PreviousPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <TextBlock Text="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged}" 
+                            Style="{StaticResource PaginationTextStyle}"/>
+
+                    <TextBlock Text="of" 
+                            Style="{StaticResource PaginationTextStyle}"/>
+
+                    <TextBlock Text="{Binding TotalPages, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource PaginationTextStyle}"/>
+
+                    <Button Content="Next >" Style="{StaticResource PaginationButtonStyle}"
+                         Command="{Binding NextPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Button Content="Last >>" Style="{StaticResource PaginationButtonStyle}"
+                         Command="{Binding LastPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                </StackPanel>
+            </Border>
+
+        </Grid>
+        <ContentControl Content="{Binding CurrentView}"/>
+    </Grid>
+</UserControl>

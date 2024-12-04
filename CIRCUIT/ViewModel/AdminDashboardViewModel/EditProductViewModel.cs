@@ -3,6 +3,7 @@ using CIRCUIT.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 
 namespace CIRCUIT.ViewModel.AdminDashboardViewModel
@@ -43,11 +44,15 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         [ObservableProperty]
         private object _currentAddView;
 
+        [ObservableProperty]
+        private string _imagePath;
+
         private Db _dbCon;
 
         //Commands
         public RelayCommand UpdateProductCommand { get; }
         public RelayCommand ReturnBtnCommand { get; }
+        public RelayCommand UploadImageCommand { get; }
 
         // Default constructor
         public EditProductViewModel() => _dbCon = new Db();
@@ -60,7 +65,44 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             ProductID = data.ProductId;
             ReturnBtnCommand = new RelayCommand(ExecuteReturnBtn);
             UpdateProductCommand = new RelayCommand(ExecuteUpdateCommand);
+            UploadImageCommand = new RelayCommand(UploadImage);
             LoadProductById(data.ProductId);
+        }
+
+        //Method to upload image
+        private void UploadImage()
+        {
+            
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Title = "Select an Image",
+                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp;*.tiff|All Files|*.*" // Filter for image files
+            };
+
+            // Show the dialog and check if the user selected a file
+            if (openFileDialog.ShowDialog() == true)
+            {
+                
+                string originalImagePath = openFileDialog.FileName;
+
+                //Generates a unique file name
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(originalImagePath);
+
+                string imagesFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Images", "ProductImages");
+
+                if (!Directory.Exists(imagesFolderPath))
+                {
+                    Directory.CreateDirectory(imagesFolderPath);
+                }
+
+                string newImagePath = Path.Combine(imagesFolderPath, fileName);
+
+                File.Copy(originalImagePath, newImagePath);
+
+                ImagePath = Path.Combine("Assets", "Images", "ProductImages", fileName);
+
+                MessageBox.Show("Image uploaded successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         //Execute UpdateProductCommand
@@ -85,6 +127,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 MinStockLevel = EditMinStockLevel,
                 StockQuantity = EditStockQuantity,
                 UnitCost = EditUnitCost,
+                ImagePath = ImagePath,
                 
             };
 

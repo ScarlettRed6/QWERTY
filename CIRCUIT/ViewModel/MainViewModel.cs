@@ -21,6 +21,7 @@ namespace CIRCUIT.ViewModel
         private AnalyticsAndReportsVM _analyticsAndReports;
         private CatalogViewModel _catalog;
         private HomeViewModel _home;
+        private StockControlViewModel _stockControl;
 
         //Subscribing to window service interface
         private readonly IWindowService _windowService;
@@ -37,6 +38,7 @@ namespace CIRCUIT.ViewModel
         public RelayCommand ShowArchivedCommand { get; set; }
         public RelayCommand ShowEmployeeManagementCommand { get; set; }
         public RelayCommand ShowSalesCommand { get; set; }
+        public RelayCommand ShowStockControlCommand { get; set; }
 
 
         //For side nav content control for current right panel/child view
@@ -78,6 +80,7 @@ namespace CIRCUIT.ViewModel
             _analyticsAndReports = new AnalyticsAndReportsVM();
             _catalog = new CatalogViewModel();
             _home = new HomeViewModel();
+            _stockControl = new StockControlViewModel();
         }
         //Initialized the commands
         private void InitializeCommands()
@@ -95,6 +98,7 @@ namespace CIRCUIT.ViewModel
             ShowArchivedCommand = new RelayCommand(ExecuteShowArchived);
             ShowEmployeeManagementCommand = new RelayCommand(ExecuteShowEmployee);
             ShowSalesCommand = new RelayCommand(ExecuteShowSales);
+            ShowStockControlCommand = new RelayCommand(ExecuteShowStockControl);
         }
 
         //Execute logout function
@@ -163,7 +167,14 @@ namespace CIRCUIT.ViewModel
             Caption = "Summary";
             Icon = IconChar.Home;
         }
-        
+
+        private void ExecuteShowStockControl()
+        {
+            CurrentAdminView = _stockControl;
+            Caption = "Stock Control";
+            Icon = IconChar.BoxesStacked;
+        }
+
         private void ExecuteClose()
         {
             var result = MessageBox.Show("Are you sure you want to close the app? Current account will be logged out","Close the application",MessageBoxButton.YesNo,MessageBoxImage.Question);

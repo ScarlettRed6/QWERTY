@@ -41,6 +41,10 @@
         <DataTemplate DataType="{x:Type adminVm:SalesTransactionsViewModel}">
             <Views3:SalesTransactionsView/>
         </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type adminVm:StockControlViewModel}">
+            <Views3:StockControlView/>
+        </DataTemplate>
 
     </Window.Resources>
     
@@ -145,7 +149,8 @@
                         </RadioButton>
 
                         <RadioButton Style="{StaticResource menuButton}"
-                                     Tag="{StaticResource palette1}">
+                                     Tag="{StaticResource palette1}"
+                                     Command="{Binding ShowStockControlCommand}">
 
                             <StackPanel Orientation="Horizontal">
                                 <fa:IconImage Icon="Box" Style="{StaticResource menuButtonIcon}"/>

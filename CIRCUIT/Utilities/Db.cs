@@ -81,8 +81,8 @@ namespace CIRCUIT.Utilities
         public void InsertProduct(ProductModel product)
         {
             string query = @"INSERT INTO Products 
-                            (product_name, model_number, brand, category, description, selling_price, min_stock_level, stock_quantity, unit_cost, sku, is_archived)
-                            VALUES (@ProductName, @ModelNumber, @Brand, @Category, @Description, @SellingPrice, @MinStockLevel, @StockQuantity, @UnitCost, @SKU, @IsArchived)";
+                            (product_name, model_number, brand, category, description, selling_price, min_stock_level, stock_quantity, unit_cost, sku, is_archived, image_path)
+                            VALUES (@ProductName, @ModelNumber, @Brand, @Category, @Description, @SellingPrice, @MinStockLevel, @StockQuantity, @UnitCost, @SKU, @IsArchived, @ImagePath)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -100,6 +100,7 @@ namespace CIRCUIT.Utilities
                     command.Parameters.AddWithValue("@UnitCost", product.UnitCost);
                     command.Parameters.AddWithValue("@SKU", product.SKU);
                     command.Parameters.AddWithValue("@IsArchived", product.IsArchived);
+                    command.Parameters.AddWithValue("@ImagePath", product.ImagePath);
 
                     connection.Open();
                     command.ExecuteNonQuery();
@@ -129,13 +130,13 @@ namespace CIRCUIT.Utilities
                                     ProductId = reader.GetInt32(reader.GetOrdinal("product_id")),
                                     ProductName = reader.GetString(reader.GetOrdinal("product_name")),
                                     Category = reader.GetString(reader.GetOrdinal("category")),
-                                    //nilagya ko ng description dito tapos dun sa catalogviewmodel mo pre
                                     Description = reader.GetString(reader.GetOrdinal("description")),
                                     Brand = reader.GetString(reader.GetOrdinal("brand")),
                                     ModelNumber = reader.GetString(reader.GetOrdinal("model_number")),
                                     StockQuantity = reader.GetInt32(reader.GetOrdinal("stock_quantity")),
                                     UnitCost = (decimal)reader.GetDecimal(reader.GetOrdinal("unit_cost")),
-                                    SellingPrice = (decimal)reader.GetDecimal(reader.GetOrdinal("selling_price"))
+                                    SellingPrice = (decimal)reader.GetDecimal(reader.GetOrdinal("selling_price")),
+                                    ImagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, reader.GetString(reader.GetOrdinal("image_path")))
                                 };
                                 products.Add(product);
                             }
@@ -202,7 +203,7 @@ namespace CIRCUIT.Utilities
         public void UpdateProductData(ProductModel product)
         {
             string updateQuery = "UPDATE Products SET product_name = @productName, model_number = @modelNumber, brand = @brand, category = @category, description = @description, " +
-                                 "selling_price = @sellingPrice, min_stock_level = @minStockLevel, stock_quantity = @stockQuantity, unit_cost = @unitCost WHERE product_id = @productId";
+                                 "selling_price = @sellingPrice, min_stock_level = @minStockLevel, stock_quantity = @stockQuantity, unit_cost = @unitCost, image_path = @ImagePath WHERE product_id = @productId";
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -220,6 +221,7 @@ namespace CIRCUIT.Utilities
                     command.Parameters.AddWithValue("@unitCost", product.UnitCost);
                     //command.Parameters.AddWithValue("@sku", product.SKU);
                     //command.Parameters.AddWithValue("@isArchived", product.IsArchived);
+                    command.Parameters.AddWithValue("@ImagePath", product.ImagePath);
                     command.Parameters.AddWithValue("@productId", product.ProductId);
 
                     command.ExecuteNonQuery();

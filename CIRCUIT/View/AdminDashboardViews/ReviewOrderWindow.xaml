@@ -1,0 +1,69 @@
+﻿<Window x:Class="CIRCUIT.View.AdminDashboardViews.ReviewOrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboardViews"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="ReviewOrderWindow" Height="550" Width="400">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <!-- Grid row 0-->
+        <TextBlock Text="{Binding SupplierSelected}"
+                   FontSize="20"/>
+        
+        <!-- Order Details , Grid row 1-->
+        <DataGrid ItemsSource="{Binding FilteredProducts}" 
+                  AutoGenerateColumns="False" 
+                  CanUserAddRows="False"
+                  Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding ProductName}"/>
+                <DataGridTextColumn Header="Quantity" Binding="{Binding OrderQuantity}"/>
+                <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitCost}"/>
+                <DataGridTextColumn Header="Total" Binding="{Binding TotalCost}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="SubTotal:     "/>
+                <TextBlock Text="{Binding SubTotal, StringFormat={}{0:C}}"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="1">
+                <TextBlock Text="Shipping:     "/>
+                <TextBlock Text="{Binding ShippingFee, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="2">
+                <TextBlock Text="Total Amount:     "/>
+                <TextBlock Text="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            
+        </Grid>
+        
+        <!-- Grid row 3-->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button Content="Confirm" Width="100" Margin="5" Command="{Binding ConfirmOrderCommand}"/>
+            <Button Content="Cancel" Width="100" Margin="5" Command="{Binding CancelCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>
