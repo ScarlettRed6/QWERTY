@@ -31,7 +31,7 @@
                 VerticalAlignment="Top" 
                 Padding="10,5"
                 FontSize="12"
-                Command="{Binding BackCommand}" Click="back_Click"/>
+                Command="{Binding BackCommand}"/>
 
         <Grid Margin="0,50,0,0">
             <Grid.RowDefinitions>
