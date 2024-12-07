@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using LiveCharts.Wpf;
+using Microsoft.Data.SqlClient;
 using System.Windows;
 
 namespace CIRCUIT.Model.DataRepositories
@@ -35,43 +36,97 @@ namespace CIRCUIT.Model.DataRepositories
             return new SqlConnection(connectionString);
         }
 
-        public void DeleteUserAccount(int userId)
+        // Method to deactivate user account(s)
+        public void DeactivateUserAccount(List<int> userIds)
         {
-            string deleteQuery = "DELETE FROM users WHERE user_id = @UserId";
+            string updateQuery = "UPDATE users SET status = 'Inactive' WHERE user_id IN (";
 
-            using (var connection = GetConnection())  // Assuming GetConnection() returns the connection object
+            // Add a parameter for each user ID
+            var parameters = new List<SqlParameter>();
+            for (int i = 0; i < userIds.Count; i++)
+            {
+                updateQuery += $"@UserId{i},";
+                parameters.Add(new SqlParameter($"@UserId{i}", userIds[i]));
+            }
+
+            // Remove the last comma
+            updateQuery = updateQuery.TrimEnd(',');
+
+            // Close the IN clause
+            updateQuery += ")";
+
+            using (var connection = GetConnection())
             {
                 try
                 {
                     connection.Open();
-
-                    using (SqlCommand command = new SqlCommand(deleteQuery, connection))
+                    using (var command = new SqlCommand(updateQuery, connection))
                     {
-                        command.Parameters.AddWithValue("@UserId", userId);
+                        // Add the parameters to the command
+                        foreach (var parameter in parameters)
+                        {
+                            command.Parameters.Add(parameter);
+                        }
 
-                        // Execute the query and check how many rows were affected
                         int rowsAffected = command.ExecuteNonQuery();
 
-                        if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("User deleted successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("No user found with the specified ID.", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        }
+                        MessageBox.Show($"{rowsAffected} user account(s) deactivated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error deleting user: {ex.Message}", "Delete Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Error deactivating user accounts: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        // Method to update user account to active
+        public void ActivateUserAccount(List<int> userIds)
+        {
+            string updateQuery = "UPDATE users SET status = 'Active' WHERE user_id IN (";
+
+            // Add a parameter for each user ID
+            var parameters = new List<SqlParameter>();
+            for (int i = 0; i < userIds.Count; i++)
+            {
+                updateQuery += $"@UserId{i},";
+                parameters.Add(new SqlParameter($"@UserId{i}", userIds[i]));
+            }
+
+            // Remove the last comma
+            updateQuery = updateQuery.TrimEnd(',');
+
+            // Close the IN clause
+            updateQuery += ")";
+
+            using (var connection = GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand(updateQuery, connection))
+                    {
+                        // Add the parameters to the command
+                        foreach (var parameter in parameters)
+                        {
+                            command.Parameters.Add(parameter);
+                        }
+
+                        int rowsAffected = command.ExecuteNonQuery();
+
+                        MessageBox.Show($"{rowsAffected} user account(s) activated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error activating user accounts: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
 
         public List<UsersModel> FetchUser()
         {
-            string queryUser = "SELECT user_id, username, role FROM users";
+            string queryUser = "SELECT fullname, user_id, username, role, status, user_image FROM users";
             var users = new List<UsersModel>();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -87,9 +142,12 @@ namespace CIRCUIT.Model.DataRepositories
                             {
                                 var user = new UsersModel()
                                 {
+                                    FullName = reader.GetString(reader.GetOrdinal("fullname")),
                                     UserId = reader.GetInt32(reader.GetOrdinal("user_id")),
                                     Username = reader.GetString(reader.GetOrdinal("username")),
-                                    Role = reader.GetString(reader.GetOrdinal("role"))
+                                    Role = reader.GetString(reader.GetOrdinal("role")),
+                                    UserStatus = reader.GetString(reader.GetOrdinal("status")),
+                                    UserImagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, reader.GetString(reader.GetOrdinal("user_image")))
 
                                 };
                                 users.Add(user);
@@ -132,6 +190,7 @@ namespace CIRCUIT.Model.DataRepositories
                                     Password = reader.GetString(reader.GetOrdinal("password")),
                                     Role = reader.GetString(reader.GetOrdinal("role")),
                                     Salt = reader.GetString(reader.GetOrdinal("salt")),
+                                    UserImagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, reader.GetString(reader.GetOrdinal("user_image")))
                                 };
                                 user.Add(account);
                             }
@@ -189,8 +248,8 @@ namespace CIRCUIT.Model.DataRepositories
         public bool InsertUser(UsersModel user)
         {
             string queryCheck = "SELECT COUNT(*) FROM users WHERE username = @Username";
-            string queryInsert = @"INSERT INTO users (username, password, salt, role) 
-                           VALUES (@Username, @Password, @Salt, @Role)";
+            string queryInsert = @"INSERT INTO users (fullname, username, password, salt, role, user_image) 
+                                 VALUES (@FullName, @Username, @Password, @Salt, @Role, @UserImagePath)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -213,10 +272,12 @@ namespace CIRCUIT.Model.DataRepositories
 
                 using (SqlCommand insertCommand = new SqlCommand(queryInsert, connection))
                 {
+                    insertCommand.Parameters.AddWithValue("@FullName", user.FullName);
                     insertCommand.Parameters.AddWithValue("@Username", user.Username);
                     insertCommand.Parameters.AddWithValue("@Password", hashedPassword);
                     insertCommand.Parameters.AddWithValue("@Salt", salt);
                     insertCommand.Parameters.AddWithValue("@Role", user.Role);
+                    insertCommand.Parameters.AddWithValue("@UserImagePath", user.UserImagePath);
 
                     insertCommand.ExecuteNonQuery();
                 }
@@ -226,22 +287,43 @@ namespace CIRCUIT.Model.DataRepositories
 
         public void UpdateUserAccount(UsersModel user)
         {
-            string updateQuery = "UPDATE users SET username = @Username, role = @Role, password = @Password, salt = @Salt WHERE user_id = @UserId";
+            string updateQuery = "UPDATE users SET fullname = @FullName, username = @Username, role = @Role, password = @Password, salt = @Salt, user_image = @UserImagePath WHERE user_id = @UserId";
 
             using (var connection = GetConnection())
             {
                 connection.Open();
 
                 string salt;
-                MessageBox.Show($"Test {user.Password}");
+
                 string hashedPassword = PasswordHelper.HashPassword(user.Password, out salt);
                 using (var command = new SqlCommand(updateQuery, connection))
                 {
+                    command.Parameters.AddWithValue("@FullName", user.FullName);
                     command.Parameters.AddWithValue("@Username", user.Username);
                     command.Parameters.AddWithValue("@Role", user.Role);
                     command.Parameters.AddWithValue("@Password", hashedPassword);
                     command.Parameters.AddWithValue("@Salt", salt);
                     command.Parameters.AddWithValue("@UserId", user.UserId);
+                    command.Parameters.AddWithValue("@UserImagePath", user.UserImagePath);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void UpdateAccountWithoutPassword(UsersModel user)
+        {
+            string updateQuery = "UPDATE users SET fullname = @FullName, username = @Username, role = @Role, user_image = @UserImagePath WHERE user_id = @UserId";
+
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                using (var command = new SqlCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@FullName", user.FullName);
+                    command.Parameters.AddWithValue("@Username", user.Username);
+                    command.Parameters.AddWithValue("@Role", user.Role);
+                    command.Parameters.AddWithValue("@UserId", user.UserId);
+                    command.Parameters.AddWithValue("@UserImagePath", user.UserImagePath);
                     command.ExecuteNonQuery();
                 }
             }

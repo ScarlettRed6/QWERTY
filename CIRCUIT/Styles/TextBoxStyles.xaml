@@ -135,40 +135,34 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- Icon -->
-                        <Border Grid.Column="0" 
-                                Margin="0,0,5,0" 
-                                Background="Transparent">
+                        <Border Grid.Column="0" Margin="0,0,5,0" Background="Transparent">
                             <Image Source="/Assets/Images/Icons/PasswordIcon.png" 
-                                   Width="20" 
-                                   Height="20" 
-                                   Stretch="Uniform"/>
+                               Width="20" Height="20" Stretch="Uniform"/>
                         </Border>
 
                         <!-- Main Input Area -->
                         <Grid Grid.Column="1">
                             <TextBlock x:Name="Watermark" 
-                                       Text="Password" 
-                                       Foreground="{StaticResource palette4}" 
-                                       VerticalAlignment="Center"
-                                       FontSize="14"
-                                       Visibility="Visible"/>
+                                   Text="Password" 
+                                   Foreground="{StaticResource palette4}" 
+                                   VerticalAlignment="Center" 
+                                   FontSize="14"
+                                   Visibility="Visible"/>
 
                             <ScrollViewer Margin="0" 
-                                          BorderThickness="0" 
-                                          x:Name="PART_ContentHost"/>
+                                      BorderThickness="0" 
+                                      x:Name="PART_ContentHost"/>
 
                             <Border x:Name="BottomBorder"
-                                    Height="1"
-                                    Background="{StaticResource palette1}"
-                                    VerticalAlignment="Bottom"/>
+                                Height="1"
+                                Background="{StaticResource palette1}"
+                                VerticalAlignment="Bottom"/>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <!-- Focus Effect -->
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="BottomBorder" Property="Opacity" Value="1"/>
-                            <Setter TargetName="BottomBorder" Property="Height" Value="2"/>
                             <Setter TargetName="Watermark" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="BottomBorder" Property="Height" Value="2"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

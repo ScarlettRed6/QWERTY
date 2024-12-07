@@ -87,6 +87,53 @@ namespace CIRCUIT.Utilities
             }
         }
 
+        public static void GenerateReceiptPdf(SaleModel sale, int saleId, List<CartItem> cartItems, string exportPath)
+        {
+            using (var writer = new PdfWriter(exportPath))
+            using (var pdf = new PdfDocument(writer))
+            using (var document = new Document(pdf))
+            {
+                PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
 
+                document.Add(new Paragraph("Receipt")
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetFont(boldFont)
+                        .SetFontSize(16));
+                document.Add(new Paragraph($"\nDate: {sale.DateTime}\nCashier ID: {sale.CashierId}")
+                    .SetFontSize(12));
+
+                // Sale details
+                document.Add(new Paragraph($"Sale ID: {saleId}")
+                        .SetFontSize(12));
+                document.Add(new Paragraph($"Payment Method: {sale.PaymentMethod}")
+                        .SetFontSize(12));
+                document.Add(new Paragraph($"Total Amount: {sale.TotalAmount:C}")
+                        .SetFontSize(12));
+                document.Add(new Paragraph($"Customer Paid: {sale.CustomerPaid:C}")
+                        .SetFontSize(12));
+                document.Add(new Paragraph($"Change Given: {sale.ChangeGiven:C}")
+                        .SetFontSize(12));
+                document.Add(new Paragraph("\n"));
+
+                // Table for sale items
+                Table saleItemsTable = new Table(UnitValue.CreatePercentArray(new float[] { 4, 1, 2 }));
+                saleItemsTable.SetWidth(UnitValue.CreatePercentValue(100));
+
+                // Table headers
+                saleItemsTable.AddHeaderCell(new Cell().Add(new Paragraph("Product Name").SetFont(boldFont)));
+                saleItemsTable.AddHeaderCell(new Cell().Add(new Paragraph("Quantity").SetFont(boldFont)));
+                saleItemsTable.AddHeaderCell(new Cell().Add(new Paragraph("Total Price").SetFont(boldFont)));
+
+                // Table rows
+                foreach (var item in cartItems)
+                {
+                    saleItemsTable.AddCell(new Paragraph(item.ProductName));
+                    saleItemsTable.AddCell(new Paragraph(item.Quantity.ToString()));
+                    saleItemsTable.AddCell(new Paragraph(item.TotalPrice.ToString("C")));
+                }
+
+                document.Add(saleItemsTable);
+            }
+        }
     }
 }

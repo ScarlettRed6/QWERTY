@@ -35,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Assets\Images\AccountImages\" />
     <Folder Include="Assets\Images\ProductImages\" />
     <Folder Include="Assets\Images\UploadedImages\" />
   </ItemGroup>

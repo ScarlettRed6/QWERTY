@@ -207,8 +207,8 @@
                         <DataGridTextColumn Header=" ID" Binding="{Binding SaleId, UpdateSourceTrigger=PropertyChanged}" Width="50"/>
                         <DataGridTextColumn Header="Cashier" Binding="{Binding CashierName, UpdateSourceTrigger=PropertyChanged}" Width="150" />
                         <DataGridTextColumn Header="Payment Method" Binding="{Binding PaymentMethod, UpdateSourceTrigger=PropertyChanged}" Width="160" />
-                        <DataGridTextColumn Header="Amount Received" Binding="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged}" Width="150" />
-                        <DataGridTextColumn Header="Change" Binding="{Binding ChangeGiven, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+                        <DataGridTextColumn Header="Amount Received" Binding="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged, StringFormat=P{0:N2}}" Width="150" />
+                        <DataGridTextColumn Header="Change" Binding="{Binding ChangeGiven, UpdateSourceTrigger=PropertyChanged, StringFormat=P{0:N2}}" Width="120" />
                         <DataGridTextColumn Header="Date" Binding="{Binding DateTime, UpdateSourceTrigger=PropertyChanged}" Width="180" />
 
                         <!-- Implement Edit/Archive button here later -->

@@ -5,6 +5,7 @@ using CIRCUIT.Utilities;
 using CIRCUIT.View.CashierView;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Numerics;
@@ -14,7 +15,7 @@ using System.Windows.Input;
 
 namespace CIRCUIT.ViewModel
 {
-    public class NewSaleViewModel : ObservableObject
+    public partial class NewSaleViewModel : ObservableObject
     {
 
         #region Private Fields
@@ -33,6 +34,10 @@ namespace CIRCUIT.ViewModel
         private decimal _adjustedTotalAmount;
         private bool _isDiscountApplied;
         private decimal _discountPercentage = 20m;
+
+        [ObservableProperty]
+        private string _imagePath;
+
         #endregion
 
 
@@ -256,6 +261,8 @@ namespace CIRCUIT.ViewModel
         public ICommand ViewInventoryCommand { get; set; }
         public ICommand ResetOrderDetailsCommand { get; set; }
         public ICommand ExecuteQuickOrderCommand { get; set; }
+        //Button close command
+        public RelayCommand BtnCloseCommand { get; set; }
 
 
 
@@ -318,6 +325,7 @@ namespace CIRCUIT.ViewModel
             //ReprintReceiptCommand = new RelayCommand(ReprintReceipt);
             ViewInventoryCommand = new RelayCommand(ViewInventory);
             ResetOrderDetailsCommand = new RelayCommand(ResetOrderDetails);
+            BtnCloseCommand = new RelayCommand(ExecuteClose);
         }
         #endregion
 
@@ -380,7 +388,18 @@ namespace CIRCUIT.ViewModel
             inventoryWindow.Show();
         }
 
+        //Button close method
+        private void ExecuteClose()
+        {
+            var result = MessageBox.Show("Are you sure you want to close the app? Current account will be logged out", "Close the application", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result != MessageBoxResult.Yes)
+            {
+                return;
+            }
+            _accountRepository.LogUserOut(_userId);
+            Application.Current.Shutdown();
 
+        }
 
 
         #region Database Operations
@@ -407,10 +426,11 @@ namespace CIRCUIT.ViewModel
                         SellingPrice = (decimal)product.SellingPrice,
                         MinStockLevel = product.MinStockLevel,
                         IsArchived = product.IsArchived,
+                        ImagePath = product.ImagePath,
                     });
                 }
                 FilteredProducts = new ObservableCollection<ProductModel>(_allProducts);
-
+                
                 if (_allProducts.Count == 0)
                 {
                     MessageBox.Show("No products available with stock quantity greater than 5.", "Low Stock",
@@ -564,7 +584,7 @@ namespace CIRCUIT.ViewModel
             _accountRepository.LogUserOut(_userId);
         }
 
-
+        //Modified executeprocessorder to print a receipt
         private void ExecuteProcessOrder()
         {
             try
@@ -582,6 +602,7 @@ namespace CIRCUIT.ViewModel
                     return;
                 }
 
+                // Create a new sale record
                 SaleModel newSale = new SaleModel
                 {
                     CashierId = _userId,
@@ -606,13 +627,29 @@ namespace CIRCUIT.ViewModel
                     _db.UpdateProductStockQuantity(cartItem.ProductId, cartItem.Quantity);
                 }
 
+                // Open a SaveFileDialog to save the receipt
+                var saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "PDF Files (*.pdf)|*.pdf",
+                    FileName = $"Receipt_{newSaleId}.pdf"
+                };
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string exportPath = saveFileDialog.FileName;
+
+                    // Generate the receipt PDF
+                    PdfGenerator.GenerateReceiptPdf(newSale, newSaleId, CartItems.ToList(), exportPath);
+
+                    MessageBox.Show("Receipt generated and order processed successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                // Reset the order details
                 LoadProductsFromDatabase();
                 ResetOrderDetails();
-
                 AmountReceived = string.Empty;
                 AmountGiven = string.Empty;
                 PaymentMethod = string.Empty;
-                MessageBox.Show("Order processed successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 CartItems.Clear();
             }
             catch (Exception ex)

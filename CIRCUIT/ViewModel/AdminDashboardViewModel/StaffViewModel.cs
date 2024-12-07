@@ -1,5 +1,6 @@
 ﻿using CIRCUIT.Model;
 using CIRCUIT.Model.DataRepositories;
+using CIRCUIT.Model.SingleTons;
 using CIRCUIT.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -37,6 +38,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         public RelayCommand PreviousPageCommand { get; }
         public RelayCommand CheckSelectAll { get; private set; }
         public RelayCommand CheckSelectCell { get; private set; }
+        public RelayCommand<UsersModel> DeactivateCommand { get; }
+        public RelayCommand<UsersModel> ActivateCommand { get; }
 
         //Class objects
         EditAccountViewModel _editAccountViewModel;
@@ -110,7 +113,6 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             AddNewUser = new RelayCommand(ExecuteAddUser);
             EditCommand = new RelayCommand<UsersModel>(ExecuteEditCommand);
             ViewCommand = new RelayCommand<UsersModel>(ExecuteViewCommand);
-            DeleteCommand = new RelayCommand<UsersModel>(ExecuteDeleteCommand);
             FirstPageCommand = new RelayCommand(() => CurrentPage = 1);
             LastPageCommand = new RelayCommand(() => CurrentPage = TotalPages);
             NextPageCommand = new RelayCommand(() =>
@@ -126,6 +128,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
             CheckSelectAll = new RelayCommand(ChkSelectAllCommand);
             CheckSelectCell = new RelayCommand(ChkSelectCellCommand);
+            DeactivateCommand = new RelayCommand<UsersModel>(ExecuteDeactivate);
+            ActivateCommand = new RelayCommand<UsersModel>(ExecuteActivate);
 
             IsAllSelected = false;
 
@@ -133,16 +137,88 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         }
 
-        private void ExecuteDeleteCommand(UsersModel? model)
+        //Method to execute activate account
+        private void ExecuteActivate(UsersModel? model)
         {
-            var result = MessageBox.Show($"Are you sure you want to delete user {model.Username}?","Delete account",MessageBoxButton.YesNo,MessageBoxImage.Warning);
+            var selectedItems = Items.Where(x => x.IsSelected).ToList();
+            if (selectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select at least one account.");
+                return;
+            }
+
+            var alreadyActivate = selectedItems.Where(x => x.IsActivated).ToList();
+            if (alreadyActivate.Any())
+            {
+                var usernames = string.Join(", ", alreadyActivate.Select(x => x.Username));
+                MessageBox.Show($"The following accounts are already active and will be skipped: {usernames}",
+                                "Partial Activation", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+            var validAccounts = selectedItems.Except(alreadyActivate).ToList();
+            if (validAccounts.Count == 0)
+            {
+                MessageBox.Show("No valid accounts to activate.");
+                return;
+            }
+
+            var result = MessageBox.Show($"Are you sure you want to activate the following accounts: " +
+                                         $"{string.Join(", ", validAccounts.Select(x => x.Username))}?",
+                                         "Activate Accounts", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result != MessageBoxResult.Yes)
                 return;
 
-            acRCon.DeleteUserAccount(model.UserId);
-            TotalUsers = 0;
-            UpdateList();
+            var userId = validAccounts.Select(p => p.UserId).ToList();
+            acRCon.ActivateUserAccount(userId);
 
+            UpdateList();
+        }
+
+        //Method to execute deactivate account
+        private void ExecuteDeactivate(UsersModel? model)
+        {
+            var selectedItems = Items.Where(x => x.IsSelected).ToList();
+            if (selectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select at least one account.");
+                return;
+            }
+
+            //Gets the currentLogged in admin user id
+            int currentLoggedIn = UserSessionService.Instance.UserId;
+
+            var currentUserAccount = selectedItems.FirstOrDefault(x => x.UserId == currentLoggedIn);
+            if (currentUserAccount != null)
+            {
+                MessageBox.Show("You cannot deactivate your own account.", "Deactivation Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var alreadyDeactivated = selectedItems.Where(x => !x.IsActivated).ToList();
+            if (alreadyDeactivated.Any())
+            {
+                var usernames = string.Join(", ", alreadyDeactivated.Select(x => x.Username));
+                MessageBox.Show($"The following accounts are already deactivated and will be skipped: {usernames}",
+                                "Partial Deactivation", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+            var validAccounts = selectedItems.Except(alreadyDeactivated).ToList();
+            if (validAccounts.Count == 0)
+            {
+                MessageBox.Show("No valid accounts to deactivate.");
+                return;
+            }
+
+            var result = MessageBox.Show($"Are you sure you want to deactivate the following accounts: " +
+                                         $"{string.Join(", ", validAccounts.Select(x => x.Username))}?",
+                                         "Deactivate Accounts", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result != MessageBoxResult.Yes)
+                return;
+
+            var userId = validAccounts.Select(p => p.UserId).ToList();
+            acRCon.DeactivateUserAccount(userId);
+
+            UpdateList();
         }
 
         //Checks if all items are selected
@@ -156,6 +232,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             {
                 Items.ForEach(x => x.IsSelected = false);
             }
+            //DisactivateCommand.NotifyCanExecuteChanged();
 
         }
 
@@ -174,6 +251,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             {
                 IsAllSelected = null; // Indicates an indeterminate state, meaning not all are selected
             }
+            //DisactivateCommand.NotifyCanExecuteChanged();
 
         }
 

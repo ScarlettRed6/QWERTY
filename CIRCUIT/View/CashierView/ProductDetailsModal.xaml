@@ -69,7 +69,7 @@
                         BorderBrush="#3F3F3F" 
                         CornerRadius="10" 
                         Margin="0,0,20,0">
-                    <Image Source="{Binding ImageSource}" 
+                    <Image Source="{Binding ImagePath}" 
                            Stretch="Uniform" 
                            Margin="10"/>
                 </Border>

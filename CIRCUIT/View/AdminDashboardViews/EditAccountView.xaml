@@ -54,19 +54,25 @@
                                 CornerRadius="30"
                                 BorderBrush="{StaticResource panelColor4}"
                                 BorderThickness="2"
-                                Background="{StaticResource panelColor7}">
+                                Background="Transparent">
 
+                            <Image Source="{Binding UserImagePath, UpdateSourceTrigger=PropertyChanged}" 
+                                   Width="150" 
+                                   Height="150" 
+                                   Stretch="Uniform"/>
+                            
                         </Border>
 
                         <StackPanel Margin="5"
                                     Orientation="Horizontal">
                             <Button Content="Upload Photo"
-                                FontSize="15"
-                                FontWeight="Medium"
-                                Height="45"
-                                Width="180"
-                                HorizontalAlignment="Left"
-                                Margin="10,5,5,5"/>
+                                    FontSize="15"
+                                    FontWeight="Medium"
+                                    Height="45"
+                                    Width="180"
+                                    HorizontalAlignment="Left"
+                                    Margin="10,5,5,5"
+                                    Command="{Binding UploadImageCommand, UpdateSourceTrigger=PropertyChanged   }"/>
 
                             <Button Content="Update"
                                 FontSize="15"
@@ -103,13 +109,13 @@
                                Margin="8,0,0,0"/>
 
                             <TextBox x:Name="FullName" Height="35"
-                                 Width="230" 
-                                 Margin="10,0,0,0"
-                                 FontSize="20"
-                                 HorizontalAlignment="Left"
-                                 Foreground="{StaticResource panelColor4}"
-                                 Style="{StaticResource catalogBox}"
-                                 Text="{Binding UserFullName, UpdateSourceTrigger=PropertyChanged}"/>
+                                     Width="230" 
+                                     Margin="10,0,0,0"
+                                     FontSize="20"
+                                     HorizontalAlignment="Left"
+                                     Foreground="{StaticResource panelColor4}"
+                                     Style="{StaticResource catalogBox}"
+                                     Text="{Binding UserFullName, UpdateSourceTrigger=PropertyChanged}"/>
 
                             <!-- Username textbox -->
                             <Label Content="Username"

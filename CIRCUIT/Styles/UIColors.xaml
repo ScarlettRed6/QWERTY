@@ -42,5 +42,6 @@
     <SolidColorBrush x:Key="palette10">#001744</SolidColorBrush>
     <SolidColorBrush x:Key="palette11">#0000AA</SolidColorBrush>
     <SolidColorBrush x:Key="palette12">#000B22</SolidColorBrush>
+    <SolidColorBrush x:Key="palette13">#BB6700</SolidColorBrush>
 
 </ResourceDictionary>

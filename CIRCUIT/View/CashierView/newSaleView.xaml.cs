@@ -4,6 +4,8 @@ using CIRCUIT;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 namespace CIRCUIT.View.CashierView
 {
@@ -18,7 +20,6 @@ namespace CIRCUIT.View.CashierView
             this.DataContext = new NewSaleViewModel();
         }
 
-
         private void ProductBox_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ProductModel selectedProduct = (sender as FrameworkElement)?.DataContext as ProductModel;
@@ -27,7 +28,9 @@ namespace CIRCUIT.View.CashierView
                 ProductDetailsModal productDetailsModalWindow = new ProductDetailsModal(selectedProduct);
                 productDetailsModalWindow.ProductAddedToCart += (product) =>
                 {
+                    
                     var viewModel = this.DataContext as NewSaleViewModel;
+                    viewModel.ImagePath = selectedProduct.ImagePath;
                     viewModel?.AddProductToCart(product);
                 };
                 productDetailsModalWindow.ShowDialog();
@@ -81,5 +84,33 @@ namespace CIRCUIT.View.CashierView
             }
 
         }
+
+        private void btnMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void btnMaximize_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Normal)
+                WindowState = WindowState.Maximized;
+            else
+                WindowState = WindowState.Normal;
+        }
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+        private void ControlBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            WindowInteropHelper helper = new WindowInteropHelper(this);
+            SendMessage(helper.Handle, 161, 2, 0);
+        }
+
+        private void ControlBar_MouseEnter(object sender, MouseEventArgs e)
+        {
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+        }
+
     } 
 }

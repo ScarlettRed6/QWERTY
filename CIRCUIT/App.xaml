@@ -17,6 +17,7 @@
                 <ResourceDictionary Source="/Styles/ComboBoxStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/ExpanderStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/CheckAndRadioBoxStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/ScrollViewerStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
   

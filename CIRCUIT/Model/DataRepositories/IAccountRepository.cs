@@ -8,7 +8,8 @@
         List<UsersModel> FetchUser();
         List<UsersModel> FetchUser(int userId);
         UsersModel FetchUserPassAndSalt(string username);
-        void DeleteUserAccount(int userId);
+        void DeactivateUserAccount(List<int> userIds);
+        void ActivateUserAccount(List<int> userIds);
     }
 
     //For sales and sale items queries

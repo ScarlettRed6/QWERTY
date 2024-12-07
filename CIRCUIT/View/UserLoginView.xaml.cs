@@ -33,6 +33,19 @@ namespace CIRCUIT.View
             if (DataContext is LoginViewModel vm && sender is PasswordBox passwordBox)
             {
                 vm.SecurePassword = passwordBox.SecurePassword;
+                
+                var template = passwordBox.Template;
+                if (template != null)
+                {
+                    var watermark = (TextBlock)template.FindName("Watermark", passwordBox);
+                    if (watermark != null)
+                    {
+                        watermark.Visibility = string.IsNullOrEmpty(passwordBox.Password)
+                        ? Visibility.Visible
+                        : Visibility.Collapsed;
+                    }
+                }
+                
             }
         }
     }

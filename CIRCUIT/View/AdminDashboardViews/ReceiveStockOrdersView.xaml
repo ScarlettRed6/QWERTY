@@ -107,15 +107,15 @@
                                 Orientation="Horizontal">
                         
                         <TextBlock Text="SubTotal:     " Foreground="White"/>
-                        <TextBlock Text="{Binding SubTotal, StringFormat={}{0:C}}"
+                        <TextBlock Text="{Binding SubTotal, StringFormat=P{0:N2}}"
                                    Margin="0,0,30,0"
                                    Foreground="White"/>
                         <TextBlock Text="Shipping:     " Foreground="White"/>
-                        <TextBlock Text="{Binding ShippingFee, StringFormat={}{0:C}}"
+                        <TextBlock Text="{Binding ShippingFee, StringFormat=P{0:N2}}"
                                    Margin="0,0,30,0"
                                    Foreground="White"/>
                         <TextBlock Text="Total:     " Foreground="White"/>
-                        <TextBlock Text="{Binding TotalAmount, StringFormat={}{0:C}}"
+                        <TextBlock Text="{Binding TotalAmount, StringFormat=P{0:N2}}"
                                    Margin="0,0,30,0"
                                    Foreground="White"/>
 

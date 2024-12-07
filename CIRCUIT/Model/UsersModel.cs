@@ -1,10 +1,4 @@
 ﻿using CIRCUIT.Utilities;
-using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CIRCUIT.Model
 {
@@ -16,6 +10,21 @@ namespace CIRCUIT.Model
         public string Role { get; set; }
         public string Salt { get; set; }
         public string FullName { get; set; }
+        public string UserImagePath { get; set; }
+
+        private string _userStatus;
+        public string UserStatus
+        {
+            get { return _userStatus; }
+            set
+            {
+                _userStatus = value;
+                OnPropertyChange();
+                OnPropertyChange(nameof(IsActivated));
+            }
+        }
+
+        public bool IsActivated => UserStatus.Equals("Active", StringComparison.OrdinalIgnoreCase);
 
         private bool _isSelected;
         public bool IsSelected 

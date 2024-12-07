@@ -78,7 +78,7 @@
                             <!-- Middle Column -->
                             <StackPanel Grid.Column="2" Grid.Row="0" Margin="0,0,20,0">
                                 <TextBlock Text="Total Amount:" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding TotalAmountBox, StringFormat=C}" Margin="0,0,0,10"/>
+                                <TextBlock Text="{Binding TotalAmountBox, StringFormat=P{0:N2}}" Margin="0,0,0,10"/>
 
                                 <TextBlock Text="Date/Time:" FontWeight="Bold"/>
                                 <TextBlock Text="{Binding DateTimeBox}" Margin="0,0,0,10"/>
@@ -90,10 +90,10 @@
                             <!-- Right Column -->
                             <StackPanel Grid.Column="3" Grid.Row="0">
                                 <TextBlock Text="Customer Payment:" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding CustomerPaymentBox, StringFormat=C}" Margin="0,0,0,10"/>
+                                <TextBlock Text="{Binding CustomerPaymentBox}" Margin="0,0,0,10"/>
 
                                 <TextBlock Text="Change Given:" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding ChangeGivenBox, StringFormat=C}"/>
+                                <TextBlock Text="{Binding ChangeGivenBox, StringFormat=P{0:N2}}"/>
                             </StackPanel>
                         </Grid>
                     </GroupBox>

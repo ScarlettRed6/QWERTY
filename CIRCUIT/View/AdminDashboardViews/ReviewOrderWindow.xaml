@@ -3,67 +3,133 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboardViews"
+        xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboardViews" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
         WindowStartupLocation="CenterScreen"
-        Title="ReviewOrderWindow" Height="550" Width="400">
+        Title="ReviewOrderWindow" Height="550" Width="500">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="50"/>
-        </Grid.RowDefinitions>
-
-        <!-- Grid row 0-->
-        <TextBlock Text="{Binding SupplierSelected}"
-                   FontSize="20"/>
-        
-        <!-- Order Details , Grid row 1-->
-        <DataGrid ItemsSource="{Binding FilteredProducts}" 
-                  AutoGenerateColumns="False" 
-                  CanUserAddRows="False"
-                  Grid.Row="1">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding ProductName}"/>
-                <DataGridTextColumn Header="Quantity" Binding="{Binding OrderQuantity}"/>
-                <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitCost}"/>
-                <DataGridTextColumn Header="Total" Binding="{Binding TotalCost}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-
-        <Grid Grid.Row="2">
+    <Border Background="{StaticResource palette12}"
+            CornerRadius="10"
+            BorderThickness="2"
+            BorderBrush="{StaticResource palette2}">
+       
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="SubTotal:     "/>
-                <TextBlock Text="{Binding SubTotal, StringFormat={}{0:C}}"/>
+            <StackPanel x:Name="ControlBar" Orientation="Horizontal"
+                        FlowDirection="RightToLeft" Background="Transparent"
+                        Margin="0,3,5,0"
+                        MouseLeftButtonDown="ControlBar_MouseLeftButtonDown"
+                        MouseEnter="ControlBar_MouseEnter">
+
+                <!-- Button Close control -->
+                <Button x:Name="btnClose" Style="{StaticResource controlButton}"
+                        Tag="{StaticResource palette1}" Click="btnClose_Click">
+                    <fa:IconImage Icon="Xmark" 
+                          Style="{StaticResource controlButtonIcon}"/>
+
+                </Button>
+
             </StackPanel>
-            
-            <StackPanel Orientation="Horizontal"
-                        Grid.Row="1">
-                <TextBlock Text="Shipping:     "/>
-                <TextBlock Text="{Binding ShippingFee, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
-            
-            <StackPanel Orientation="Horizontal"
-                        Grid.Row="2">
-                <TextBlock Text="Total Amount:     "/>
-                <TextBlock Text="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
-            
-        </Grid>
+
+            <!-- Grid row 1 -->
+            <Border Grid.Row="1"
+                    Margin="3"
+                    Background="{StaticResource palette10}"
+                    CornerRadius="5">
+                
+            <TextBlock Text="{Binding SupplierSelected}"
+                       FontSize="20"
+                       Margin="4"
+                       Style="{StaticResource menuButtonText}"
+                       Foreground="{StaticResource palette6}"/>
+            </Border>
         
-        <!-- Grid row 3-->
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-            <Button Content="Confirm" Width="100" Margin="5" Command="{Binding ConfirmOrderCommand}"/>
-            <Button Content="Cancel" Width="100" Margin="5" Command="{Binding CancelCommand}"/>
-        </StackPanel>
-    </Grid>
+            <!-- Order Details , Grid row 2-->
+            <DataGrid ItemsSource="{Binding FilteredProducts}" 
+                      AutoGenerateColumns="False" 
+                      CanUserResizeColumns="False"
+                      CanUserAddRows="False"
+                      IsReadOnly="True"
+                      SelectionMode="Single"
+                      RowHeaderWidth="0"
+                      Grid.Row="2"
+                      Style="{StaticResource ModernDataGrid}"
+                      RowStyle="{StaticResource ModernDataGridRow}"
+                      CellStyle="{StaticResource ModernDataGridCell}"
+                      ColumnHeaderStyle="{StaticResource ModernDataGridColumnHeader}"
+                      BorderThickness="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header=" Product ID" Binding="{Binding ProductId}" Width="80"/>
+                    <DataGridTextColumn Header=" Name" Binding="{Binding ProductName}" Width="120"/>
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding OrderQuantity}" Width="100"/>
+                    <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitCost}" Width="100"/>
+                    <DataGridTextColumn Header="Total" Binding="{Binding TotalCost}" Width="100"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Grid row 3 -->
+            <Border Grid.Row="3"
+                    Background="{StaticResource palette10}"
+                    CornerRadius="5"
+                    Margin="3">
+                
+                <Grid Margin="4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="SubTotal:     "
+                                   Style="{StaticResource menuButtonText}"
+                                   Foreground="{StaticResource palette6}"/>
+                        <TextBlock Text="{Binding SubTotal, StringFormat={}{0:C}}"
+                                   Style="{StaticResource menuButtonText}"
+                                   Foreground="{StaticResource palette6}"/>
+                    </StackPanel>
+            
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Row="1">
+                        <TextBlock Text="Shipping:     "
+                                   Style="{StaticResource menuButtonText}"
+                                   Foreground="{StaticResource palette6}"/>
+                        <TextBlock Text="{Binding ShippingFee, UpdateSourceTrigger=PropertyChanged}"
+                                   Style="{StaticResource menuButtonText}"
+                                   Foreground="{StaticResource palette6}"/>
+                    </StackPanel>
+            
+                    <StackPanel Orientation="Horizontal"
+                                Grid.Row="2">
+                        <TextBlock Text="Total Amount:     "
+                                   Style="{StaticResource menuButtonText}"
+                                   Foreground="{StaticResource palette6}"/>
+                        <TextBlock Text="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged}"
+                                   Style="{StaticResource menuButtonText}"
+                                   Foreground="{StaticResource palette6}"/>
+                    </StackPanel>
+            
+                </Grid>
+            </Border>
+
+            <!-- Grid row 4 -->
+            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+                <Button Content="Confirm" Width="100" Margin="5" Command="{Binding ConfirmOrderCommand}"
+                        Style="{StaticResource ExportButtonStyle}"/>
+                <Button Content="Cancel" Width="100" Margin="5" Command="{Binding CancelCommand}"
+                        Style="{StaticResource ExportButtonStyle}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>
