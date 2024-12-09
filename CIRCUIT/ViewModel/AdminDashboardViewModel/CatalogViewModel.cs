@@ -16,7 +16,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
     {
         //Fields
         private int _currentPage = 1;
-        private int _itemsPerPage = 10; // Adjust as needed
+        private int _itemsPerPage = 5; // Adjust as needed
         private int _totalItems;
         private object _addProductView;
         private string _searchTerm;

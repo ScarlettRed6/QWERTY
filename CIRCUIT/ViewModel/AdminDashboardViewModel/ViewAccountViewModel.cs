@@ -16,8 +16,14 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         [ObservableProperty]
         private string _userName;
 
+        [ObservableProperty] 
+        private string _userFullName;
+
         [ObservableProperty]
         private string _roleBox;
+
+        [ObservableProperty]
+        private string _userImage;
 
         [ObservableProperty]
         private object _currentView;
@@ -56,8 +62,10 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             if (account != null && account.Count > 0)
             {
                 var user = account[0];
+                UserFullName = user.FullName;
                 UserName = user.Username;
                 RoleBox = user.Role;
+                UserImage = user.UserImagePath;
             }
             else
                 MessageBox.Show("Product not found.");

@@ -79,7 +79,7 @@
         <Setter Property="GridLinesVisibility" Value="Horizontal"/>
         <Setter Property="CanUserResizeRows" Value="False"/>
         <Setter Property="CanUserResizeColumns" Value="True"/>
-        <Setter Property="RowHeight" Value="50"/>
+        <Setter Property="RowHeight" Value="95"/>
         <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource palette4}"/>
         <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
         <Setter Property="SelectionMode" Value="Single"/>
@@ -92,7 +92,7 @@
         <Setter Property="Foreground" Value="{StaticResource palette3}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FontWeight" Value="Medium"/>
-        <Setter Property="Height" Value="50"/>
+        <Setter Property="Height" Value="95"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="10,0,0,0"/>
         <Style.Triggers>
@@ -176,6 +176,28 @@
                 <Setter Property="Background" Value="{StaticResource palette13}" />
                 <Setter Property="BorderBrush" Value="{StaticResource palette8}" />
             </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    
+    
+    <!-- For specific datagrids -->
+    <Style x:Key="StockAlertGridRowStyle" TargetType="DataGridRow">
+        <Setter Property="Foreground" Value="{StaticResource palette3}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Height" Value="55"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="10,0,0,0"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource palette9}"/>
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{StaticResource palette9}"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+            </Trigger>
         </Style.Triggers>
     </Style>
 

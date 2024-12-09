@@ -9,169 +9,169 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         MouseDown="Window_MouseDown"
-        BorderBrush="{ StaticResource palette1}" 
-        BorderThickness="1"
+        Background="Transparent"
+        AllowsTransparency="True"
         Title="CashierView" Height="600" Width="800">
 
     <Window.DataContext>
         <vm:NewSaleViewModel />
     </Window.DataContext>
 
+    <!--
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-            <!-- Dark Blue at the top -->
             <GradientStop Color="#1e2a47" Offset="0" />
-            <!-- Light Blue in the middle -->
             <GradientStop Color="#2e2e2e" Offset="0.5" />
-            <!-- Dark Blue at the bottom -->
             <GradientStop Color="#1e2a47" Offset="1" />
         </LinearGradientBrush>
-    </Window.Background>
+    </Window.Background>-->
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+    <Border CornerRadius="10" BorderThickness="3,2,2,5">
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#000B22" Offset="0"/>
+                <GradientStop Color="#AE445A" Offset="0.75"/>
+                <GradientStop Color="#FF8C00" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Border.Background>
+            <SolidColorBrush Color="#001744"/>
+        </Border.Background>
 
-        <StackPanel x:Name="ControlBar" Orientation="Horizontal"
-                    FlowDirection="RightToLeft" Background="Transparent"
-                    Margin="0,3,5,0"
-                    MouseLeftButtonDown="ControlBar_MouseLeftButtonDown"
-                    MouseEnter="ControlBar_MouseEnter">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-            <!-- Button Close control -->
-            <Button x:Name="btnClose" Style="{StaticResource controlButton}"
-                    Tag="{StaticResource panelColor2}" Command="{Binding BtnCloseCommand}">
-                <fa:IconImage Icon="Xmark" 
-                              Style="{StaticResource controlButtonIcon}"/>
+            <StackPanel x:Name="ControlBar" Orientation="Horizontal"
+                        FlowDirection="RightToLeft" Background="Transparent"
+                        Margin="0,3,5,0"
+                        MouseLeftButtonDown="ControlBar_MouseLeftButtonDown"
+                        MouseEnter="ControlBar_MouseEnter">
 
-            </Button>
-            <!-- Button Maximize control -->
-            <Button x:Name="btnMaximize" Style="{StaticResource controlButton}"
-                    Tag="{StaticResource panelColor2}" Click="btnMaximize_Click">
-                <fa:IconImage Icon="Square" 
-                              Style="{StaticResource controlButtonIcon}"/>
+                <!-- Button Close control -->
+                <Button x:Name="btnClose" Style="{StaticResource controlButton}"
+                        Tag="{StaticResource panelColor2}" Command="{Binding BtnCloseCommand}">
+                    <fa:IconImage Icon="Xmark" 
+                                  Style="{StaticResource controlButtonIcon}"/>
 
-            </Button>
-            <!-- Button Minimize control -->
-            <Button x:Name="btnMinimize" Style="{StaticResource controlButton}"
-                    Tag="{StaticResource panelColor2}" Click="btnMinimize_Click">
-                <fa:IconImage Icon="WindowMinimize" 
-                              Style="{StaticResource controlButtonIcon}"/>
+                </Button>
+                <!-- Button Maximize control -->
+                <Button x:Name="btnMaximize" Style="{StaticResource controlButton}"
+                        Tag="{StaticResource panelColor2}" Click="btnMaximize_Click">
+                    <fa:IconImage Icon="Square" 
+                                  Style="{StaticResource controlButtonIcon}"/>
 
-            </Button>
+                </Button>
+                <!-- Button Minimize control -->
+                <Button x:Name="btnMinimize" Style="{StaticResource controlButton}"
+                        Tag="{StaticResource panelColor2}" Click="btnMinimize_Click">
+                    <fa:IconImage Icon="WindowMinimize" 
+                                  Style="{StaticResource controlButtonIcon}"/>
 
-        </StackPanel>
-
-
-        <!-- Welcome Message Section -->
-        <Border Height="80" VerticalAlignment="Top" Margin="0,90,0,0" Grid.Row="1">
-            <Grid VerticalAlignment="Center">
-                <TextBlock Text="WELCOME " FontSize="36" FontFamily="Montserrat" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding StaffName}" FontSize="36" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,30,0,0"/>
-            </Grid>
-        </Border>
-
-        <!-- Header Section with Date -->
-        <Border Height="50" Grid.Row="1" VerticalAlignment="Top" Margin="0,10,0,0" CornerRadius="2">
-            <Border.Effect>
-                <DropShadowEffect ShadowDepth="1" BlurRadius="4" Opacity="0.2"/>
-            </Border.Effect>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="0*" />
-                    <ColumnDefinition Width="2*" />
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Column="0" VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                </Grid>
-
-                <Grid Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="Date: " VerticalAlignment="Center" Margin="10,0" FontWeight="Bold" Grid.Column="0" Foreground="#000B22"/>
-                    <TextBlock Text="{Binding CurrentDate, StringFormat='{}{0:MM/dd/yyyy}'}" 
-                             FontSize="12" Margin="5,0,10,0" FontWeight="Bold" Grid.Column="1" Foreground="#000B22"/>
-                </Grid>
-            </Grid>
-        </Border>
-
-        <!-- Buttons Section -->
-        <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <!-- Start New Sale Button -->
-                <Button x:Name="newSale" FontSize="25" Height="90" Click="NewSale_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="#FF1F618D" BorderThickness="0" CornerRadius="5" Margin="10">
-                                <Border.Effect>
-                                    <DropShadowEffect ShadowDepth="2" BlurRadius="5" Opacity="0.2"/>
-                                </Border.Effect>
-                                <TextBlock Text="Start New Sale" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
                 </Button>
 
-                <!-- View Transaction History Button -->
-                <Button x:Name="History" FontSize="25" Height="100" Width="400" Click="History_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="#f0f9ff" BorderBrush="#bae6fd" BorderThickness="2" CornerRadius="5" Margin="10">
-                                <Border.Effect>
-                                    <DropShadowEffect ShadowDepth="1" BlurRadius="4" Opacity="0.1"/>
-                                </Border.Effect>
-                                <TextBlock Text="View Transaction History" Foreground="#0284c7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-                <!-- Refund Button -->
-                <Button x:Name="Refund" FontSize="25" Height="90" Click="Refund_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="#fee2e2" BorderBrush="#fecaca" BorderThickness="2" CornerRadius="5" Margin="10">
-                                <Border.Effect>
-                                    <DropShadowEffect ShadowDepth="1" BlurRadius="4" Opacity="0.1"/>
-                                </Border.Effect>
-                                <TextBlock Text="Refund" Foreground="#dc2626" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
             </StackPanel>
-        </StackPanel>
 
-        <!-- Logout Button -->
-        <Button x:Name="logoutBtn"
-                Grid.Row="3"
-                Height="50"
-                Width="130"
-                FontSize="20"
-                FontWeight="Medium"
-                Command="{Binding LogOutBtnCommand}"
-                Click="logoutBtn_Click"
-                HorizontalAlignment="Right"
-                Margin="10">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="#f1f5f9" BorderBrush="#cbd5e1" BorderThickness="1" CornerRadius="10">
-                        <TextBlock Text="Log out" Foreground="#64748b" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
-    </Grid>
+
+            <!-- Welcome Message Section -->
+            <Border Height="80" VerticalAlignment="Top" Margin="0,90,0,0" Grid.Row="1">
+                <Grid VerticalAlignment="Center">
+                    <TextBlock Text="WELCOME " FontSize="36" FontFamily="Montserrat" FontWeight="Bold" Foreground="{StaticResource palette6}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding StaffName}" FontSize="36" FontWeight="Bold" Foreground="{StaticResource palette6}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,30,0,0"/>
+                </Grid>
+            </Border>
+
+            <!-- Header Section with Date -->
+            <Border Height="50" Grid.Row="1" VerticalAlignment="Top" Margin="0,10,0,0" CornerRadius="2">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="1" BlurRadius="4" Opacity="0.2"/>
+                </Border.Effect>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="0*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0" VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+
+                    <Grid Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Date: " VerticalAlignment="Center" Margin="10,0" FontWeight="Bold" Grid.Column="0" Foreground="{StaticResource palette6}"/>
+                        <TextBlock Text="{Binding CurrentDate, StringFormat='{}{0:MM/dd/yyyy}'}" 
+                                 FontSize="12" Margin="5,0,10,0" FontWeight="Bold" Grid.Column="1" Foreground="{StaticResource palette6}"/>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- Buttons Section -->
+            <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!-- Start New Sale Button -->
+                    <Button x:Name="newSale" 
+                            FontSize="25" 
+                            Height="90" 
+                            Width="370"
+                            Click="NewSale_Click"
+                            Content="Start New Sale"
+                            Style="{StaticResource StartNewSaleButton}">
+                        
+                    </Button>
+
+                    <!-- View Transaction History Button -->
+                    <Button x:Name="History" 
+                            FontSize="25" 
+                            Height="90" 
+                            Width="370" 
+                            Content="View Transaction History"
+                            Click="History_Click"
+                            Margin="10"
+                            Style="{StaticResource ViewTransactionHistoryBtn}">
+                       
+                    </Button>
+
+                    <!-- Refund Button -->
+                    <Button x:Name="Refund" 
+                            FontSize="25" 
+                            Height="90" 
+                            Width="370"
+                            Click="Refund_Click"
+                            Content="Refund"
+                            Style="{StaticResource RefundBtn}">
+                        
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Logout Button -->
+            <Button x:Name="logoutBtn"
+                    Grid.Row="3"
+                    Height="50"
+                    Width="130"
+                    FontSize="20"
+                    FontWeight="Medium"
+                    Command="{Binding LogOutBtnCommand}"
+                    Click="logoutBtn_Click"
+                    HorizontalAlignment="Right"
+                    Margin="10"
+                    Content="Log out"
+                    Style="{StaticResource ExportButtonStyle}"
+                    Foreground="{StaticResource palette6}">
+               
+            </Button>
+        </Grid>
+    </Border>
 </Window>

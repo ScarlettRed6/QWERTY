@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System.Windows.Controls;
 using CIRCUIT.ViewModel.CashierViewModel;
+using CIRCUIT.ViewModel;
 
 namespace CIRCUIT.View.CashierView
 {
@@ -10,6 +11,7 @@ namespace CIRCUIT.View.CashierView
         public CashierProfileView()
         {
             InitializeComponent();
+            DataContext = new CashierProfileViewModel();
         }
 
         private void CurrentPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
@@ -30,6 +32,9 @@ namespace CIRCUIT.View.CashierView
             ((CashierProfileViewModel)DataContext).ConfirmNewPassword = passwordBox.Password;
         }
 
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

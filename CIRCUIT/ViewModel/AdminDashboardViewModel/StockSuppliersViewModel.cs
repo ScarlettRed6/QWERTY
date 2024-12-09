@@ -12,7 +12,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
     {
         //Fields
         private int _currentPage = 1;
-        private int _itemsPerPage = 10; // Adjust number of items per page
+        private int _itemsPerPage = 5; // Adjust number of items per page
         private string _searchTerm;
         private StockControlRepository _sControlRepo;
         public int TotalPages => (int)Math.Ceiling((double)TotalItems / ItemsPerPage);

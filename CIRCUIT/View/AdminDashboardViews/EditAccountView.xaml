@@ -16,7 +16,7 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <Border Background="{StaticResource panelColor6}"
+    <Border Background="{StaticResource palette12}"
         CornerRadius="10" BorderThickness="0">
 
         <Grid>
@@ -27,77 +27,85 @@
                 </Grid.RowDefinitions>
 
                 <!-- Grid row 0 -->
-                <Grid Background="{StaticResource panelColor3}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="60*"/>
-                        <ColumnDefinition Width="40*"/>
-                    </Grid.ColumnDefinitions>
+                <Border Background="{StaticResource palette2}"
+                        CornerRadius="10"
+                        Margin="5,5,5,0">
 
-                    <!-- grid column 0 -->
-                    <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60*"/>
+                            <ColumnDefinition Width="40*"/>
+                        </Grid.ColumnDefinitions>
 
-                        <!-- Return button -->
-                        <Button Style="{StaticResource returnBtn}"
-                                Margin="5,5,0,0"
-                                Height="35" Width="35"
-                                Command="{Binding ReturnBtnCommand}"
-                                HorizontalAlignment="Left">
-                            <fa:IconImage Icon="ArrowAltCircleLeft" 
-                                          Style="{StaticResource returnIcon}"
-                                          Height="35"/>
-                        </Button>
+                        <!-- grid column 0 -->
+                        <StackPanel>
 
-                        <Border Height="180"
-                                Width="180"
-                                Margin="20,10,0,0"
-                                HorizontalAlignment="Left"
-                                CornerRadius="30"
-                                BorderBrush="{StaticResource panelColor4}"
-                                BorderThickness="2"
-                                Background="Transparent">
+                            <!-- Return button -->
+                            <Button Style="{StaticResource returnBtn}"
+                                    Margin="5,5,0,0"
+                                    Height="35" Width="35"
+                                    Command="{Binding ReturnBtnCommand}"
+                                    HorizontalAlignment="Left">
+                                <fa:IconImage Icon="ArrowAltCircleLeft" 
+                                              Style="{StaticResource returnIcon}"
+                                              Height="35"/>
+                            </Button>
 
-                            <Image Source="{Binding UserImagePath, UpdateSourceTrigger=PropertyChanged}" 
-                                   Width="150" 
-                                   Height="150" 
-                                   Stretch="Uniform"/>
-                            
-                        </Border>
+                            <Border Height="180"
+                                    Width="180"
+                                    Margin="20,2,0,0"
+                                    HorizontalAlignment="Left"
+                                    CornerRadius="30"
+                                    BorderBrush="{StaticResource palette1}"
+                                    BorderThickness="2"
+                                    Background="Transparent">
 
-                        <StackPanel Margin="5"
-                                    Orientation="Horizontal">
-                            <Button Content="Upload Photo"
+                                <Image Source="{Binding UserImagePath, UpdateSourceTrigger=PropertyChanged}" 
+                                       Stretch="UniformToFill">
+                                    <Image.Clip>
+                                        <RectangleGeometry RadiusX="30" RadiusY="30"
+                                                           Rect="0,0,177,177"/>
+                                    </Image.Clip>
+                                </Image>
+                            </Border>
+
+                            <StackPanel Margin="10,5,0,0"
+                                        Orientation="Horizontal">
+                                <Button Content="Upload Photo"
+                                        FontSize="15"
+                                        FontWeight="Medium"
+                                        Height="45"
+                                        Width="180"
+                                        HorizontalAlignment="Left"
+                                        Margin="10,5,5,5"
+                                        Command="{Binding UploadImageCommand, UpdateSourceTrigger=PropertyChanged}"
+                                        Style="{StaticResource ExportButtonStyle}"/>
+
+                                <Button Content="Update"
                                     FontSize="15"
                                     FontWeight="Medium"
                                     Height="45"
-                                    Width="180"
+                                    Width="150"
                                     HorizontalAlignment="Left"
                                     Margin="10,5,5,5"
-                                    Command="{Binding UploadImageCommand, UpdateSourceTrigger=PropertyChanged   }"/>
+                                    Command="{Binding UpdateAccountCommand}"
+                                    Style="{StaticResource ExportButtonStyle}"/>
 
-                            <Button Content="Update"
-                                FontSize="15"
-                                FontWeight="Medium"
-                                Height="45"
-                                Width="150"
-                                HorizontalAlignment="Left"
-                                Margin="10,5,5,5"
-                                Command="{Binding UpdateAccountCommand}"/>
-
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </Grid>
-
+                    </Grid>
+                </Border>
                 <!-- Grid row 1 -->
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1"
+                      Margin="0,0,5,3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="60*"/>
                         <ColumnDefinition Width="40*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Border Margin="5"
-                        Background="{StaticResource panelColor3}"
-                        CornerRadius="10"
-                        BorderThickness="5">
+                    <Border Background="{StaticResource palette2}"
+                            CornerRadius="10"
+                            BorderThickness="5">
 
                         <StackPanel>
                             
@@ -145,7 +153,7 @@
                                   FontSize="15"
                                   SelectedValuePath="Content"
                                   HorizontalAlignment="Left"
-                                  Style="{StaticResource categoryBox}"
+                                  Style="{StaticResource FilterComboBoxStyle}"
                                   SelectedValue="{Binding RoleBox, UpdateSourceTrigger=PropertyChanged}">
                                 <ComboBoxItem Content="Admin"/>
                                 <ComboBoxItem Content="Cashier"/>
@@ -164,7 +172,8 @@
                                  FontSize="20"
                                  HorizontalAlignment="Left"
                                  Foreground="{StaticResource panelColor4}"
-                                 PasswordChanged="OldPass_PasswordChanged"/>
+                                 PasswordChanged="OldPass_PasswordChanged"
+                                 Style="{StaticResource passWordBoxStyle}"/>
                             
                             <!-- User new password -->
                             <Label Content="NewPass"
@@ -179,7 +188,8 @@
                                  FontSize="20"
                                  HorizontalAlignment="Left"
                                  Foreground="{StaticResource panelColor4}"
-                                 PasswordChanged="NewPass_PasswordChanged"/>
+                                 PasswordChanged="NewPass_PasswordChanged"
+                                 Style="{StaticResource passWordBoxStyle}"/>
 
                         </StackPanel>
 

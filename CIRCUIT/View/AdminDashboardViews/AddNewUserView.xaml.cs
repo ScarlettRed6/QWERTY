@@ -21,5 +21,10 @@ namespace CIRCUIT.View.AdminDashboardViews
                 vm.SecurePassword = passwordBox.SecurePassword;
             }
         }
+
+        private void Button_PreviewStylusSystemGesture(object sender, System.Windows.Input.StylusSystemGestureEventArgs e)
+        {
+
+        }
     }
 }

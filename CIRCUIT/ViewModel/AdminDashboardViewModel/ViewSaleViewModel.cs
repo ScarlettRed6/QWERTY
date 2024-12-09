@@ -12,7 +12,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
     {
         //Fields
         private int _currentPage = 1;
-        private int _itemsPerPage = 10; // Adjust number of items per page
+        private int _itemsPerPage = 3; // Adjust number of items per page
         Db dbCon = new Db();
         SalesRepository saleConn = new SalesRepository();
         SalesTransactionsViewModel _prevViewModel;

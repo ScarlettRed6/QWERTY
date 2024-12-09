@@ -10,7 +10,7 @@
 
 
     <Border CornerRadius="10" 
-        Background="{StaticResource panelColor5}">
+            Background="{StaticResource palette12}">
 
         <Grid>
             <Grid>
@@ -19,135 +19,138 @@
                     <RowDefinition Height="70*"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0"
-                  Background="{StaticResource panelColor7}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="500"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Grid column 0 -->
-                    <StackPanel Margin="5">
-                        <!-- Archive product title and product name -->
-                        <TextBlock Text="View Product:"
-                               FontSize="35"
-                               FontWeight="Medium"
-                               Margin="10,0,0,10"
-                               Foreground="{StaticResource panelColor4}"
-                               VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding ViewProductName}"
-                               FontSize="25"
-                               FontWeight="Medium"
-                               Margin="10,0,0,0"
-                               Foreground="{StaticResource panelColor4}"
-                               VerticalAlignment="Center"/>
-
-                        <TextBlock Text="{Binding ViewCategory}"
-                               FontSize="20"
-                               Margin="10,0,0,0"
-                               Foreground="{StaticResource panelColor4}"
-                               VerticalAlignment="Center"/>
-
-                    </StackPanel>
-
-                    <!-- Grid column 1-->
-                    <Grid Grid.Column="1">
+                <!-- Grid row 0 -->
+                <Border Background="{StaticResource palette10}"
+                        CornerRadius="10"
+                        Margin="5,5,5,3">
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="500"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Stock quantity -->
-                        <StackPanel Margin="100,20,0,0"
-                                VerticalAlignment="Center">
-                            <Label Content="In stock"
-                               FontSize="20"
-                               FontWeight="Medium"
-                               Foreground="{StaticResource panelColor4}"
-                               Margin="0,0,0,10"/>
-
-                            <TextBlock Text="{Binding ViewStockQuantity}"
-                                   FontSize="20"
+                        <!-- Grid column 0 -->
+                        <StackPanel Margin="5">
+                            <!-- Archive product title and product name -->
+                            <TextBlock Text="View Product:"
+                                   FontSize="35"
                                    FontWeight="Medium"
-                                   Margin="35,0,0,0"
-                                   PreviewTextInput="NumberValidationTextBox"
-                                   Foreground="{StaticResource panelColor4}"
+                                   Margin="10,0,0,10"
+                                   Foreground="{StaticResource palette6}"
                                    VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding ViewProductName}"
+                                   FontSize="25"
+                                   FontWeight="Medium"
+                                   Margin="10,0,0,0"
+                                   Foreground="{StaticResource palette6}"
+                                   VerticalAlignment="Center"/>
+
+                            <TextBlock Text="{Binding ViewCategory}"
+                                   FontSize="20"
+                                   Margin="10,0,0,0"
+                                   Foreground="{StaticResource palette6}"
+                                   VerticalAlignment="Center"/>
+
                         </StackPanel>
 
-                        <Button Style="{StaticResource returnBtn}"
-                                Margin="5"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Right"
-                                Grid.Column="1"
-                                Height="35" Width="35"
-                                Command="{Binding ReturnBtnCommand}">
-                            <fa:IconImage Icon="ArrowAltCircleRight" 
-                                          Style="{StaticResource returnIcon}"
-                                          Height="35"/>
-                        </Button>
-                    </Grid>
+                        <!-- Grid column 1-->
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
 
-                </Grid>
+                            <!-- Stock quantity -->
+                            <StackPanel Margin="100,20,0,0"
+                                    VerticalAlignment="Center">
+                                <Label Content="In stock"
+                                       FontSize="20"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource palette6}"
+                                       Margin="0,0,0,10"/>
+
+                                <TextBlock Text="{Binding ViewStockQuantity}"
+                                           FontSize="20"
+                                           FontWeight="Medium"
+                                           Margin="35,0,0,0"
+                                           PreviewTextInput="NumberValidationTextBox"
+                                           Foreground="{StaticResource palette6}"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <Button Style="{StaticResource returnBtn}"
+                                    Margin="5"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Right"
+                                    Grid.Column="1"
+                                    Height="35" Width="35"
+                                    Command="{Binding ReturnBtnCommand}">
+                                <fa:IconImage Icon="ArrowAltCircleRight" 
+                                              Style="{StaticResource returnIcon}"
+                                              Height="35"/>
+                            </Button>
+                        </Grid>
+
+                    </Grid>
+                </Border>
 
                 <!-- Grid row 1-->
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" Margin="5,0,5,3">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40*"/>
+                        <RowDefinition Height="32*"/>
                         <RowDefinition Height="60*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Margin="10">
-                        <Label Background="{StaticResource panelColor3}" 
-                           Content="Description" 
-                           BorderThickness="0,0,0,3"
-                           BorderBrush="{StaticResource panelColor2}"
-                           Height="40"
-                           FontSize="20"
-                           FontWeight="Medium"
-                           Foreground="{StaticResource panelColor4}"/>
+                    <StackPanel>
+                        <Label Background="{StaticResource palette10}" 
+                               Content="Description" 
+                               BorderThickness="0,0,0,3"
+                               BorderBrush="{StaticResource palette1}"
+                               Height="40"
+                               FontSize="20"
+                               FontWeight="Medium"
+                               Foreground="{StaticResource palette6}"/>
 
-                        <TextBox x:Name="descriptionBox" Height="120"
-                             FontSize="15"
-                             IsEnabled="False"
-                             Foreground="{StaticResource panelColor4}"
-                             Style="{StaticResource catalogBox}"
-                             TextWrapping="Wrap"
-                             VerticalScrollBarVisibility="Auto" 
-                             HorizontalScrollBarVisibility="Disabled"
-                             Text="{Binding ViewDescription, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock x:Name="descriptionBox" Height="120"
+                                 FontSize="15"
+                                 IsEnabled="False"
+                                 Foreground="{StaticResource palette6}"
+                                 TextWrapping="Wrap"
+                                 Padding="5"
+                                 Text="{Binding ViewDescription, UpdateSourceTrigger=PropertyChanged}"
+                                 Background="{StaticResource palette2}"/>
 
                     </StackPanel>
 
-                    <Grid Grid.Row="1" Margin="5,-10,5,5">
+                    <Grid Grid.Row="1" Margin="5,0,5,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
                         <Border Grid.Column="0"
-                               BorderBrush="{StaticResource panelColor7}"
-                               BorderThickness="2"
-                               Margin="5">
+                                Background="{StaticResource palette10}"
+                                Margin="5,0,5,3"
+                                CornerRadius="10">
 
                             <StackPanel>
-                                <Label Background="{StaticResource panelColor3}" 
+                                <Label Background="{StaticResource palette10}" 
                                       Content="Identifiers" 
                                       BorderThickness="0,0,0,3"
-                                      BorderBrush="{StaticResource panelColor2}"
+                                      BorderBrush="{StaticResource palette1}"
                                       Height="40"
                                       FontSize="20"
                                       FontWeight="Medium"
-                                      Foreground="{StaticResource panelColor4}"/>
+                                      Foreground="{StaticResource palette6}"/>
 
                                 <Label Content="SKU"
-                                   FontSize="15"
-                                   FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
-                                   Margin="8,0,0,0"/>
+                                       FontSize="15"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource palette6}"
+                                       Margin="8,0,0,0"/>
 
                                 <TextBlock Text="{Binding ViewSKU}"
-                                       Foreground="{StaticResource panelColor4}"
+                                       Foreground="{StaticResource palette6}"
                                        FontSize="20"
                                        Padding="5,0,0,0"
                                        HorizontalAlignment="Left"
@@ -155,109 +158,109 @@
                                        Height="30"
                                        Width="465"
                                        PreviewTextInput="NumberValidationTextBox"
-                                       Background="{StaticResource panelColor7}"/>
+                                       Background="{StaticResource palette2}"/>
 
                                 <Label Content="Model"
-                                   FontSize="15"
-                                   FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
-                                   Margin="8,0,0,0"/>
+                                       FontSize="15"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource palette6}"
+                                       Margin="8,0,0,0"/>
 
                                 <TextBlock Text="{Binding ViewModel}"
-                                       Foreground="{StaticResource panelColor4}"
+                                       Foreground="{StaticResource palette6}"
                                        FontSize="20"
                                        Padding="5,0,0,0"
                                        HorizontalAlignment="Left"
                                        Margin="10,0,0,0"
                                        Height="30"
                                        Width="465"
-                                       Background="{StaticResource panelColor7}"/>
+                                       Background="{StaticResource palette2}"/>
 
                                 <Label Content="Brand"
-                                   FontSize="15"
-                                   FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
-                                   Margin="8,0,0,0"/>
+                                       FontSize="15"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource palette6}"
+                                       Margin="8,0,0,0"/>
 
                                 <TextBlock Text="{Binding ViewBrand}"
-                                       Foreground="{StaticResource panelColor4}"
-                                       FontSize="20"
-                                       Padding="5,0,0,0"
-                                       HorizontalAlignment="Left"
-                                       Margin="10,0,0,0"
-                                       Height="30"
-                                       Width="465"
-                                       Background="{StaticResource panelColor7}"/>
+                                           Foreground="{StaticResource palette6}"
+                                           FontSize="20"
+                                           Padding="5,0,0,0"
+                                           HorizontalAlignment="Left"
+                                           Margin="10,0,0,0"
+                                           Height="30"
+                                           Width="465"
+                                           Background="{StaticResource palette2}"/>
 
                             </StackPanel>
                         </Border>
 
                         <Border Grid.Column="1"
-                            BorderBrush="{StaticResource panelColor7}"
-                            BorderThickness="2"
-                            Margin="5">
+                                Background="{StaticResource palette10}"
+                                Margin="5,0,5,3"
+                                CornerRadius="10">
 
                             <StackPanel>
-                                <Label Background="{StaticResource panelColor3}" 
-                                   Content="Prices/Reorder point" 
-                                   BorderThickness="0,0,0,3"
-                                   BorderBrush="{StaticResource panelColor2}"
-                                   Height="40"
-                                   FontSize="20"
-                                   FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"/>
+                                <Label Background="{StaticResource palette10}" 
+                                       Content="Prices/Reorder point" 
+                                       BorderThickness="0,0,0,3"
+                                       BorderBrush="{StaticResource palette1}"
+                                       Height="40"
+                                       FontSize="20"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource palette6}"/>
                                 <!-- Selling price box -->
                                 <Label Content="Selling price"
-                                   FontSize="15"
-                                   FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
-                                   Margin="8,0,0,0"/>
+                                       FontSize="15"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource palette6}"
+                                       Margin="8,0,0,0"/>
 
                                 <TextBlock Text="{Binding ViewPrice}"
-                                       Foreground="{StaticResource panelColor4}"
-                                       FontSize="20"
-                                       Padding="5,0,0,0"
-                                       HorizontalAlignment="Left"
-                                       Margin="10,0,0,0"
-                                       Height="30"
-                                       Width="300"
-                                       PreviewTextInput="NumberValidationTextBox"
-                                       Background="{StaticResource panelColor7}"/>
+                                           Foreground="{StaticResource palette6}"
+                                           FontSize="20"
+                                           Padding="5,0,0,0"
+                                           HorizontalAlignment="Left"
+                                           Margin="10,0,0,0"
+                                           Height="30"
+                                           Width="300"
+                                           PreviewTextInput="NumberValidationTextBox"
+                                           Background="{StaticResource palette2}"/>
                                 <!-- Unit Cost box -->
                                 <Label Content="Unit Cost"
-                                   FontSize="15"
-                                   FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
-                                   Margin="8,0,0,0"/>
+                                       FontSize="15"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource palette6}"
+                                       Margin="8,0,0,0"/>
 
                                 <TextBlock Text="{Binding ViewUnitCost}"
-                                       Foreground="{StaticResource panelColor4}"
-                                       FontSize="20"
-                                       Padding="5,0,0,0"
-                                       HorizontalAlignment="Left"
-                                       Margin="10,0,0,0"
-                                       Height="30"
-                                       Width="300"
-                                       PreviewTextInput="NumberValidationTextBox"
-                                       Background="{StaticResource panelColor7}"/>
+                                           Foreground="{StaticResource palette6}"
+                                           FontSize="20"
+                                           Padding="5,0,0,0"
+                                           HorizontalAlignment="Left"
+                                           Margin="10,0,0,0"
+                                           Height="30"
+                                           Width="300"
+                                           PreviewTextInput="NumberValidationTextBox"
+                                           Background="{StaticResource palette2}"/>
 
                                 <!-- Reorder point box -->
                                 <Label Content="Min Reorder point"
-                                   FontSize="15"
-                                   FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
-                                   Margin="8,0,0,0"/>
+                                       FontSize="15"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource palette6}"
+                                       Margin="8,0,0,0"/>
 
                                 <TextBlock Text="{Binding ViewMinStockLevel}"
-                                       Foreground="{StaticResource panelColor4}"
-                                       FontSize="20"
-                                       Padding="5,0,0,0"
-                                       HorizontalAlignment="Left"
-                                       Margin="10,0,0,0"
-                                       Height="30"
-                                       Width="300"
-                                       PreviewTextInput="NumberValidationTextBox"
-                                       Background="{StaticResource panelColor7}"/>
+                                           Foreground="{StaticResource palette6}"
+                                           FontSize="20"
+                                           Padding="5,0,0,0"
+                                           HorizontalAlignment="Left"
+                                           Margin="10,0,0,0"
+                                           Height="30"
+                                           Width="300"
+                                           PreviewTextInput="NumberValidationTextBox"
+                                           Background="{StaticResource palette2}"/>
 
                             </StackPanel>
                         </Border>

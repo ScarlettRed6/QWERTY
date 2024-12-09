@@ -8,10 +8,6 @@
         Title="Cashier Profile" Height="450" Width="700"
         WindowStyle="None"
         xmlns:vm="clr-namespace:CIRCUIT.ViewModel.CashierViewModel">
-    
-    <Window.DataContext>
-        <vm:CashierProfileViewModel/>
-    </Window.DataContext>
 
     <Window.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -31,7 +27,7 @@
                 VerticalAlignment="Top" 
                 Padding="10,5"
                 FontSize="12"
-                Command="{Binding BackCommand}"/>
+                Click="Button_Click"/>
 
         <Grid Margin="0,50,0,0">
             <Grid.RowDefinitions>

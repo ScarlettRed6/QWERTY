@@ -2,11 +2,18 @@
 using CIRCUIT.Model.DataRepositories;
 using CIRCUIT.Utilities;
 using LiveCharts;
-using LiveCharts.Definitions.Charts;
 using LiveCharts.Wpf;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using System.Windows.Media;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.Painting.Effects;
+using SkiaSharp;
+using Axis = LiveChartsCore.SkiaSharpView.Axis;
+using System.Windows;
+using System;
+using static Org.BouncyCastle.Asn1.Cmp.Challenge;
 
 namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 {
@@ -17,9 +24,13 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         private decimal _totalSalesRevenue;
         private readonly SalesRepository _salesRepository;
         private readonly Db _dbCon;
+        private List<SKColor> availableColors;
+        private Random random;
 
-        public SeriesCollection SeriesCollection { get; set; }
-        public SeriesCollection SeriesCollection2 { get; set; }
+        public ObservableCollection<ISeries> SeriesCollection { get; set; }
+        public ObservableCollection<Axis> XAxes { get; set; }
+        public ObservableCollection<Axis> YAxes { get; set; }
+        public ISeries[] SeriesCollection2 { get; set; }
         public Func<double, string> YFormatter { get; set; }
         public string[] labels { get; set; }
         public ObservableCollection<SaleModel> Sales { get; set; }
@@ -51,7 +62,6 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             }
         }
 
-
         //Constructor
         public HomeViewModel()
         {
@@ -59,6 +69,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             _salesRepository = new SalesRepository();
             Products = new ObservableCollection<ProductModel>();
             Sales = new ObservableCollection<SaleModel>();
+            availableColors = new List<SKColor>();
+            random = new Random();
             InitializeCalculations();
             UpdateLatestTransaction();
             UpdateStockAlert();
@@ -70,17 +82,16 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         {
             var revenues = _dbCon.FetchLast7DaysRevenue();
 
+            // Prepare the chart data
             var labels = new string[7];
-            var values = new ChartValues<double>();
+            var values = new List<double>(new double[7]); // Initial values as placeholder
             DateTime today = DateTime.Today;
 
             for (int i = 0; i < 7; i++)
             {
-                labels[i] = today.AddDays(-6 + i).ToString("dddd");
-                values.Add(0); // Default revenue
+                labels[i] = today.AddDays(-6 + i).ToString("ddd");
             }
 
-            //Map revenue data to the correct day in the 7 days
             foreach (var revenue in revenues)
             {
                 int index = (revenue.SaleDate - today.AddDays(-6)).Days;
@@ -90,42 +101,91 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 }
             }
 
-            SeriesCollection = new SeriesCollection
+            // Define the series
+            SeriesCollection = new ObservableCollection<ISeries>
             {
-                new ColumnSeries
+                new ColumnSeries<double>
                 {
-                    Title = "Revenue",
                     Values = values,
-                    Fill = Brushes.Red
+                    Fill = new SolidColorPaint(SKColors.Orange)
                 }
             };
 
-            this.labels = labels;
-            YFormatter = value => value.ToString("C");
+            // Define axes
+            XAxes = new ObservableCollection<Axis>
+            {
+                new Axis
+                {
+                    Labels = labels,
+                    LabelsPaint = new SolidColorPaint(SKColors.White), // Set axis text color
+                    TextSize = 14
+                }
+            };
+
+            YAxes = new ObservableCollection<Axis>
+            {
+                new Axis
+                {
+                    MinLimit = values.Min() > 0 ? values.Min() : 0, // Avoid negative or invalid ranges
+                    Labeler = value => value.ToString("C"),
+                    LabelsPaint = new SolidColorPaint(SKColors.White),
+                    TextSize = 14
+                }
+            };
+
             OnPropertyChange(nameof(SeriesCollection));
-            OnPropertyChange(nameof(labels));
-            OnPropertyChange(nameof(YFormatter));
+            OnPropertyChange(nameof(XAxes));
+            OnPropertyChange(nameof(YAxes));
         }
 
         private void UpdatePieChart()
         {
             var revenueData = _dbCon.FetchRevenuePerCategory();
 
-            SeriesCollection2 = new SeriesCollection();
+            if (revenueData == null || !revenueData.Any())
+            {
+                Console.WriteLine("No data available for pie chart.");
+                return;
+            }
+
+            // Create an array of ISeries
+            var series = new List<ISeries>();
 
             foreach (var item in revenueData)
             {
-                SeriesCollection2.Add(new PieSeries
+                series.Add(new PieSeries<double>
                 {
-                    Title = item.Key, // Category name
-                    Values = new ChartValues<double> { (double)item.Value }, // Revenue value
-                    DataLabels = false,
-                    LabelPoint = chartPoint => $"{chartPoint.Y} ({chartPoint.Participation:P})",
-                    LabelPosition = PieLabelPosition.OutsideSlice
+                    Name = item.Key,  // Category name
+                    Values = new double[] { (double)item.Value },  // Format label
+                    DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,  // Position of the label
+                    Fill = new SolidColorPaint(RandomColor())  // Set random color
                 });
             }
 
+            // Set the series collection to be bound to the PieChart
+            SeriesCollection2 = series.ToArray();  // Convert the list to an array
+
+            // Notify the UI that SeriesCollection2 has been updated
             OnPropertyChange(nameof(SeriesCollection2));
+        }
+        
+        private SKColor RandomColor()
+        {
+            if (availableColors.Count == 0)
+            {
+                availableColors.AddRange(new List<SKColor>
+                {
+                    new SKColor(0, 0, 170),     
+                    new SKColor(255, 140, 0),   
+                    new SKColor(246, 246, 246)  
+                });
+            }
+
+            var colorIndex = random.Next(availableColors.Count);
+            var selectedColor = availableColors[colorIndex];
+            availableColors.RemoveAt(colorIndex);
+
+            return selectedColor;
         }
 
         //Updates the latest transactions list

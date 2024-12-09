@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboard"
              xmlns:vm="clr-namespace:CIRCUIT.ViewModel.AdminDashboardViewModel"
-             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
+             xmlns:wpf="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              mc:Ignorable="d" 
              Background="Transparent"
              d:DesignHeight="650" d:DesignWidth="1000">
@@ -14,7 +15,7 @@
         <vm:HomeViewModel/>
     </UserControl.DataContext>
     
-    <Border CornerRadius="10" Background="{StaticResource panelColor6}">
+    <Border CornerRadius="10" Background="{StaticResource palette12}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="20*"/>
@@ -32,18 +33,18 @@
 
                 <!-- Gross profit -->
                 <Border CornerRadius="10" Margin="2"
-                        Background="{StaticResource panelColor5}"
+                        Background="{StaticResource palette10}"
                         Width="auto">
                     <StackPanel>
                         <TextBlock Text="Gross Profit" 
-                                   Foreground="{StaticResource panelColor4}"
+                                   Foreground="{StaticResource palette6}"
                                    FontSize="25"
                                    FontWeight="Medium"
                                    Margin="10,10,0,0"/>
                         <TextBlock Text="{Binding GrossProfit, StringFormat='{}{0:C}'}" 
                                    FontSize="40"
                                    FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
+                                   Foreground="{StaticResource palette6}"
                                    Margin="10,0,0,0"/>
                     </StackPanel>
 
@@ -51,19 +52,19 @@
 
                 <!-- Total sales revenue -->
                 <Border CornerRadius="10" Grid.Column="1" Margin="2"
-                        Background="{StaticResource panelColor5}"
+                        Background="{StaticResource palette10}"
                         Width="auto">
 
                     <StackPanel>
                         <TextBlock Text="Total Sales Revenue" 
                                    FontSize="25"
                                    FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
+                                   Foreground="{StaticResource palette6}"
                                    Margin="10,10,0,0"/>
                         <TextBlock Text="{Binding TotalSalesRevenue, StringFormat='{}{0:C}'}"
                                    FontSize="40"
                                    FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
+                                   Foreground="{StaticResource palette6}"
                                    Margin="10,0,0,0"/>
                     </StackPanel>
 
@@ -71,27 +72,21 @@
 
                 <!-- Total sales by Category -->
                 <Border CornerRadius="10" Grid.Column="2" Margin="2"
-                        Background="{StaticResource panelColor5}"
+                        Background="{StaticResource palette10}"
                         Width="auto">
 
                     <StackPanel>
                         <TextBlock Text="Sales by Category"
                                    FontSize="20"
-                                   Foreground="{StaticResource panelColor4}"
+                                   Foreground="{StaticResource palette6}"
                                    Margin="10,0,0,0"/>
 
-                        <lvc:PieChart Series="{Binding SeriesCollection2}" LegendLocation="Bottom"
-                                      Height="125"
-                                      Margin="100,0,0,0"
-                                      Foreground="{StaticResource panelColor4}">
-                            <lvc:PieChart.DataTooltip>
-                                <lvc:DefaultTooltip Background="LightSkyBlue" 
-                                                    Foreground="Black"
-                                                    BorderBrush="DarkSlateGray" 
-                                                    BorderThickness="1">
-                                </lvc:DefaultTooltip>
-                            </lvc:PieChart.DataTooltip>
-                        </lvc:PieChart>
+                        <wpf:PieChart Series="{Binding SeriesCollection2}"
+                                      LegendPosition="Hidden"
+                                      Width="130"
+                                      Height="130">
+                            
+                        </wpf:PieChart>
                     </StackPanel>
 
 
@@ -102,7 +97,7 @@
             
             <!-- Grid row 1 -->
             <Border CornerRadius="5" Grid.Row="1"
-                    Background="{StaticResource panelColor5}"
+                    Background="{StaticResource palette10}"
                     Margin="5,-1,5,0"
                     Height="300"
                     VerticalAlignment="Top">
@@ -116,34 +111,20 @@
                         <TextBlock Text="Revenue over 7 days"
                                    FontSize="15"
                                    FontWeight="Medium"
-                                   Foreground="{StaticResource panelColor4}"
+                                   Foreground="{StaticResource palette6}"
                                    HorizontalAlignment="Center"/>
 
-                        <lvc:CartesianChart Margin="10" Grid.Column="0"
+                        <wpf:CartesianChart x:Name="MyCartesianChart"
                                             Series="{Binding SeriesCollection}"
-                                            Foreground="{StaticResource panelColor4}"
-                                            FontWeight="Bold"
-                                            Width="590"
-                                            Height="275">
-
-                            <lvc:CartesianChart.AxisY>
-                                <lvc:Axis Title="" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
-                            </lvc:CartesianChart.AxisY>
-                            <lvc:CartesianChart.AxisX>
-                                <lvc:Axis Title="Days" Labels="{Binding labels}"
-                                          Foreground="{StaticResource panelColor4}"
-                                          FontWeight="Bold">
-                                    <lvc:Axis.Separator>
-                                        <lvc:Separator Step="1" />
-                                    </lvc:Axis.Separator>
-                                </lvc:Axis>
-                            </lvc:CartesianChart.AxisX>
-
-                        </lvc:CartesianChart>
+                                            YAxes="{Binding YAxes}"
+                                            XAxes="{Binding XAxes}"
+                                            LegendPosition="Hidden"
+                                            Height="280"
+                                            Padding="10" />
                     </StackPanel>
                         
                     <Border CornerRadius="5" Grid.Column="1"
-                            Background="{StaticResource panelColor3}"
+                            Background="{StaticResource palette2}"
                             Width="auto"
                             Margin="5">
 
@@ -156,14 +137,13 @@
                             <StackPanel Orientation="Horizontal"
                                         Margin="5">
                                 <TextBlock Text="Stock Alert"
-                                           Foreground="{StaticResource panelColor4}"
+                                           Foreground="{StaticResource palette6}"
                                            FontSize="17"
                                            Margin="10,5,0,0"/>
-                                <Button Content="View All >"
-                                        Background="Transparent"
-                                        Foreground="{StaticResource panelColor4}"
-                                        FontSize="17"
-                                        Margin="180,0,0,0"/>
+                                <Button Content="View All"
+                                        Foreground="{StaticResource palette6}"
+                                        Margin="200,0,0,0"
+                                        Style="{StaticResource ExportButtonStyle}"/>
                             </StackPanel>
 
                             <DataGrid x:Name="stockAlerts" 
@@ -174,17 +154,15 @@
                                       ItemsSource="{Binding Products}"
                                       SelectionMode="Extended"
                                       RowHeaderWidth="0"
-                                      Style="{StaticResource catalogGrid}"
-                                      RowStyle="{StaticResource catalogRowStyle}"
-                                      CellStyle="{StaticResource catalogCellStyle}"
-                                      ColumnHeaderStyle="{StaticResource columnHeadersStyle}"
-                                      BorderThickness="2,7,2,7"
-                                      BorderBrush="{StaticResource panelColor7}">
+                                      Style="{StaticResource ModernDataGrid}"
+                                      RowStyle="{StaticResource StockAlertGridRowStyle}"
+                                      CellStyle="{StaticResource ModernDataGridCell}"
+                                      ColumnHeaderStyle="{StaticResource ModernDataGridColumnHeader}">
 
                                 <!-- Column context -->
                                 <DataGrid.Columns>
 
-                                    <DataGridTextColumn Header="ID" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
+                                    <DataGridTextColumn Header=" ID" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
                                     <DataGridTextColumn Header="Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="*" />
                                     <DataGridTextColumn Header="Brand" Binding="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" Width="*" />
                                     <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity, UpdateSourceTrigger=PropertyChanged}" Width="120" />
@@ -201,7 +179,7 @@
             
             <!-- Grid row 2 -->
             <Border Grid.Row="2"
-                    Background="{StaticResource panelColor7}"
+                    Background="{StaticResource palette10}"
                     CornerRadius="5"
                     Margin="4">
                 <Grid>
@@ -240,22 +218,20 @@
                               ItemsSource="{Binding Sales}"
                               SelectionMode="Extended"
                               RowHeaderWidth="0"
-                              Style="{StaticResource catalogGrid}"
-                              RowStyle="{StaticResource catalogRowStyle}"
-                              CellStyle="{StaticResource catalogCellStyle}"
-                              ColumnHeaderStyle="{StaticResource columnHeadersStyle}"
-                              BorderThickness="2,7,2,7"
-                              BorderBrush="{StaticResource panelColor7}">
+                              Style="{StaticResource ModernDataGrid}"
+                              RowStyle="{StaticResource StockAlertGridRowStyle}"
+                              CellStyle="{StaticResource ModernDataGridCell}"
+                              ColumnHeaderStyle="{StaticResource ModernDataGridColumnHeader}">
 
                         <!-- Column context -->
                         <DataGrid.Columns>
 
-                            <DataGridTextColumn Header="ID" Binding="{Binding SaleId, UpdateSourceTrigger=PropertyChanged}" Width="50" />
-                            <DataGridTextColumn Header="Cashier" Binding="{Binding CashierName, UpdateSourceTrigger=PropertyChanged}" Width="150" />
-                            <DataGridTextColumn Header="Payment Method" Binding="{Binding PaymentMethod, UpdateSourceTrigger=PropertyChanged}" Width="100" />
-                            <DataGridTextColumn Header="Amount Received" Binding="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged}" Width="120" />
-                            <DataGridTextColumn Header="Change" Binding="{Binding ChangeGiven, UpdateSourceTrigger=PropertyChanged}" Width="120" />
-                            <DataGridTextColumn Header="Date" Binding="{Binding DateTime, UpdateSourceTrigger=PropertyChanged}" Width="180" />
+                            <DataGridTextColumn Header=" ID" Binding="{Binding SaleId, UpdateSourceTrigger=PropertyChanged}" Width="10*" />
+                            <DataGridTextColumn Header="Cashier" Binding="{Binding CashierName, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
+                            <DataGridTextColumn Header="Payment Method" Binding="{Binding PaymentMethod, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
+                            <DataGridTextColumn Header="Amount Received" Binding="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
+                            <DataGridTextColumn Header="Change" Binding="{Binding ChangeGiven, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
+                            <DataGridTextColumn Header="Date" Binding="{Binding DateTime, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
 
                         </DataGrid.Columns>
 

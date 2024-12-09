@@ -8,7 +8,7 @@
              xmlns:view="clr-namespace:CIRCUIT.View.AdminDashboardViews"
              mc:Ignorable="d" 
              Background="Transparent"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="650" d:DesignWidth="1000">
 
     <UserControl.DataContext>
         <vm:ArchivedProductsViewModel/>
@@ -20,7 +20,7 @@
         </DataTemplate>
     </UserControl.Resources>
     
-    <Border CornerRadius="10" Background="{StaticResource panelColor6}">
+    <Border CornerRadius="10" Background="{StaticResource palette12}">
 
         <Grid>
             <Grid>
@@ -30,76 +30,81 @@
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
+                <Border Background="{StaticResource palette2}"
+                        CornerRadius="5"
+                        Margin="5,5,5,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
 
-                    <!-- Search textbox -->
-                    <!-- Implement product search later on bindings -->
-                    <StackPanel Orientation="Horizontal">
+                        <!-- Search textbox -->
+                        <!-- Implement product search later on bindings -->
+                        <StackPanel Orientation="Horizontal">
 
-                        <fa:IconImage Icon="Search"
-                                  Foreground="{StaticResource panelColor5}"
-                                  Height="30"
-                                  Margin="5"/>
-                        <TextBox x:Name="txtUser" FontSize="15"
-                             FontWeight="Medium" Background="Transparent"
-                             CaretBrush="LightGray" BorderBrush="DarkGray"
-                             BorderThickness="0,0,0,2" Height="30"
-                             VerticalAlignment="Center" Margin="0,4,0,0"
-                             Foreground="{StaticResource panelColor5}" 
-                             Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
-                             Width="230"/>
-                    </StackPanel>
+                            <fa:IconImage Icon="Search"
+                                          Foreground="{StaticResource palette6}"
+                                          Height="30"
+                                          Margin="5"/>
+                            <TextBox x:Name="txtUser" FontSize="15"
+                                     FontWeight="Medium" Background="Transparent"
+                                     BorderBrush="{StaticResource palette1}"
+                                     BorderThickness="0,0,0,2" Height="30"
+                                     VerticalAlignment="Center" Margin="0,4,0,0"
+                                     Foreground="{StaticResource palette6}" 
+                                     CaretBrush="{StaticResource palette1}"
+                                     Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                                     Width="230"/>
+                        </StackPanel>
                     
-                </Grid>
-
+                    </Grid>
+                </Border>
+                
                 <DataGrid x:Name="ProductDataGrid" 
-                      AutoGenerateColumns="False" 
-                      CanUserAddRows="False"
-                      Grid.Row="1"
-                      IsReadOnly="True"
-                      ItemsSource="{Binding PagedProducts}"
-                      SelectionMode="Extended"
-                      RowHeaderWidth="0"
-                      Style="{StaticResource catalogGrid}"
-                      RowStyle="{StaticResource catalogRowStyle}"
-                      CellStyle="{StaticResource catalogCellStyle}"
-                      ColumnHeaderStyle="{StaticResource columnHeadersStyle}"
-                      BorderThickness="2,7,2,7"
-                      BorderBrush="{StaticResource panelColor7}">
+                          AutoGenerateColumns="False" 
+                          CanUserAddRows="False"
+                          Grid.Row="1"
+                          IsReadOnly="True"
+                          ItemsSource="{Binding PagedProducts}"
+                          SelectionMode="Extended"
+                          RowHeaderWidth="0"
+                          Style="{StaticResource ModernDataGrid}"
+                          RowStyle="{StaticResource ModernDataGridRow}"
+                          CellStyle="{StaticResource ModernDataGridCell}"
+                          ColumnHeaderStyle="{StaticResource ModernDataGridColumnHeader}">
 
                     <!-- Column context -->
                     <DataGrid.Columns>
 
-                        <DataGridTextColumn Header="ID" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
-                        <DataGridTextColumn Header="Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                        <DataGridTextColumn Header=" ID" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
                         <!-- <DataGridTextColumn Header="Category" Binding="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Width="*" /> -->
-                        <DataGridTextColumn Header="Brand" Binding="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" Width="*" />
-                        <DataGridTextColumn Header="Model" Binding="{Binding ModelNumber, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                        <DataGridTextColumn Header="Brand" Binding="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" Width="15*" />
+                        <DataGridTextColumn Header="Model" Binding="{Binding ModelNumber, UpdateSourceTrigger=PropertyChanged}" Width="10*" />
                         <!-- <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity, UpdateSourceTrigger=PropertyChanged}" Width="70" /> -->
-                        <DataGridTextColumn Header="Cost" Binding="{Binding UnitCost, UpdateSourceTrigger=PropertyChanged}" Width="70" />
-                        <DataGridTextColumn Header="Price" Binding="{Binding SellingPrice, UpdateSourceTrigger=PropertyChanged}" Width="70" />
+                        <DataGridTextColumn Header="Cost" Binding="{Binding UnitCost, UpdateSourceTrigger=PropertyChanged}" Width="10*" />
+                        <DataGridTextColumn Header="Price" Binding="{Binding SellingPrice, UpdateSourceTrigger=PropertyChanged}" Width="10*" />
 
                         <!-- Implement Edit/Archive button here later -->
-                        <DataGridTemplateColumn Width="100" Header="Operations">
+                        <DataGridTemplateColumn Width="15*" Header="Operations">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Height="20" Width="30" 
+                                        <Button Height="30" Width="70" 
                                             Content="Recover"
                                             Margin="2"
                                             Command="{Binding DataContext.RecoverCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                            CommandParameter="{Binding}"/>
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource PaginationButtonStyle}"/>
 
-                                        <Button Height="20" Width="50" 
+                                        <Button Height="30" Width="55" 
                                             Content="View"
                                             Margin="2"
                                             Command="{Binding DataContext.ViewCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                            CommandParameter="{Binding}"/>
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource PaginationButtonStyle}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

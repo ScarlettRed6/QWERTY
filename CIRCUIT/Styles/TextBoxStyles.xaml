@@ -10,7 +10,36 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border x:Name="bg" BorderBrush="{StaticResource panelColor1}" BorderThickness="1,0,0,5" Background="{StaticResource panelColor7}">
+                    <Border x:Name="bg" BorderBrush="{StaticResource palette1}" BorderThickness="1,0,0,5" Background="{StaticResource palette3}">
+                        <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" TargetName="bg" Value="{StaticResource palette1}"/>
+                            <Setter Property="BorderThickness" TargetName="bg" Value="1,0,0,1"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" TargetName="bg" Value="{StaticResource palette1}"/>
+                            <Setter Property="BorderThickness" TargetName="bg" Value="1,0,0,1"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- For password box style -->
+    <Style x:Key="passWordBoxStyle" BasedOn="{x:Null}" TargetType="{x:Type PasswordBox}">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <Border x:Name="bg" BorderBrush="{StaticResource palette1}" BorderThickness="1,0,0,5" Background="{StaticResource palette3}">
                         <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                     </Border>
                     <ControlTemplate.Triggers>
