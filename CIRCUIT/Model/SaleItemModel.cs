@@ -12,7 +12,15 @@ namespace CIRCUIT.Model
         public int SaleId { get; set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
+
+        public string ProductName { get; set; }
+        public decimal UnitPrice { get; set; }
+        public decimal TotalPrice => Quantity * UnitPrice;
         public decimal ItemTotalPrice { get; set; }
+        public int RefundQuantity { get; set; }
+        public bool RefundSelected { get; set; }
+        public int totalRefundAmount { get; set; }
+
     }
 
 }

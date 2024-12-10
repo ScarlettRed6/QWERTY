@@ -18,10 +18,11 @@ namespace CIRCUIT.Model
         public string PaymentMethod { get; set; }
         public decimal CustomerPaid { get; set; }
         public decimal ChangeGiven { get; set; }
-        public decimal _staffName { get; set;}
+        public decimal _staffName { get; set; }
         public bool IsVoid { get; set; }
         public DateTime SaleDate { get; set; }
-
+        public int Quantity { get; set; }
+        public List<SaleItemModel> SaleItems { get; set; }
     }
 
 }

@@ -7,10 +7,10 @@ namespace CIRCUIT.Model.DataRepositories
     public class StockControlRepository
     {
         //Comment each of our local connection for local use
-        //private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
+        private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
 
-        private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
-                                        "Trust Server Certificate=True";
+        //private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
+        //                                "Trust Server Certificate=True";
 
         //Method to execute non queries like INSERT or UPDATE, might change this code later idk
         public void ExecuteNonQuery(string query)
@@ -48,7 +48,7 @@ namespace CIRCUIT.Model.DataRepositories
                 connection.Open();
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    using(SqlDataReader reader = command.ExecuteReader())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
@@ -246,7 +246,7 @@ namespace CIRCUIT.Model.DataRepositories
                     command.Parameters.AddWithValue("@TotalAmount", totalAmount);
                     command.Parameters.AddWithValue("@ShippingFee", shippingFee);
 
-                    return (int)command.ExecuteScalar(); 
+                    return (int)command.ExecuteScalar();
                 }
             }
         }
@@ -288,7 +288,7 @@ namespace CIRCUIT.Model.DataRepositories
                     using (SqlCommand command = new SqlCommand("UPDATE products SET stock_quantity = stock_quantity + @Quantity WHERE product_id = @product_id", connection))
                     {
                         command.Parameters.AddWithValue("@Quantity", item.Quantity);
-                        command.Parameters.AddWithValue("@product_id", item.ProductID); 
+                        command.Parameters.AddWithValue("@product_id", item.ProductID);
 
                         command.ExecuteNonQuery();
                     }
