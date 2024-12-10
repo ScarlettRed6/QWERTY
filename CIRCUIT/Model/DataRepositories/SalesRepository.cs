@@ -6,10 +6,10 @@ namespace CIRCUIT.Model.DataRepositories
 {
     public class SalesRepository : ISalesRepository
     {
-        //private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
+        private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
 
-        private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
-                                          "Trust Server Certificate=True";
+        //private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
+        //                                  "Trust Server Certificate=True";
 
         //Method to execute non queries like INSERT or UPDATE, might change this code later idk
         public void ExecuteNonQuery(string query)
@@ -84,6 +84,7 @@ namespace CIRCUIT.Model.DataRepositories
 
         //Method to fetch product names for fetching many data reducing the queries, this is an enchanced version of GetProductById method query but only gets the product name
         //Main used for sale item where i fetch the product name based on the product id from sale item table
+
         public Dictionary<int, string> GetProductNames(List<int> productIds)
         {
             var productNames = new Dictionary<int, string>();
@@ -210,5 +211,218 @@ namespace CIRCUIT.Model.DataRepositories
             }
             return total;
         }
+
+        public List<SaleHistoryModel> GetSalesHistoryWithItems()
+        {
+            string query = @"
+    SELECT s.sale_id, s.date_time, COALESCE(s.cashier_id, 0) AS cashier_id, 
+           s.total_amount, s.payment_method, s.customer_payment, s.change_given, 
+           s.is_void, s.VoidReason,
+           p.product_name, p.selling_price, 
+           si.product_id, si.quantity, si.item_total_price
+    FROM sales s
+    INNER JOIN Sale_Items si ON s.sale_id = si.sale_id
+    INNER JOIN products p ON si.product_id = p.product_id";
+
+            var salesHistory = new List<SaleHistoryModel>();
+            var salesDict = new Dictionary<int, SaleHistoryModel>();
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (var command = new SqlCommand(query, connection))
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int saleId = reader.GetInt32(reader.GetOrdinal("sale_id"));
+
+                            if (!salesDict.TryGetValue(saleId, out var sale))
+                            {
+                                sale = new SaleHistoryModel
+                                {
+                                    SaleId = saleId,
+                                    DateTime = reader.GetDateTime(reader.GetOrdinal("date_time")),
+                                    CashierId = reader.IsDBNull(reader.GetOrdinal("cashier_id")) ? 0 : reader.GetInt32(reader.GetOrdinal("cashier_id")),
+                                    TotalAmount = reader.GetDecimal(reader.GetOrdinal("total_amount")),
+                                    PaymentMethod = reader.GetString(reader.GetOrdinal("payment_method")),
+                                    CustomerPaid = reader.GetDecimal(reader.GetOrdinal("customer_payment")),
+                                    ChangeGiven = reader.GetDecimal(reader.GetOrdinal("change_given")),
+                                    IsVoid = reader.GetBoolean(reader.GetOrdinal("is_void")),
+                                    VoidReason = reader.IsDBNull(reader.GetOrdinal("VoidReason")) ? null : reader.GetString(reader.GetOrdinal("VoidReason")),
+                                    SaleItems = new List<SaleItemModel>()
+                                };
+                                salesDict[saleId] = sale;
+                                salesHistory.Add(sale);
+                            }
+
+                            var saleItem = new SaleItemModel
+                            {
+                                SaleId = saleId,
+                                ProductId = reader.GetInt32(reader.GetOrdinal("product_id")),
+                                ProductName = reader.GetString(reader.GetOrdinal("product_name")),
+                                Quantity = reader.GetInt32(reader.GetOrdinal("quantity")),
+                                ItemTotalPrice = reader.GetDecimal(reader.GetOrdinal("item_total_price")),
+                                UnitPrice = reader.GetDecimal(reader.GetOrdinal("selling_price"))
+                            };
+                            sale.SaleItems.Add(saleItem);
+                        }
+                    }
+                }
+            }
+            return salesHistory;
+        }
+
+        public void MarkSaleAsRefunded(int saleId, string refundReason)
+        {
+            string query = "UPDATE sales SET is_void = 1, VoidReason = @Reason WHERE sale_id = @SaleId";
+
+            using (var connection = GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@SaleId", saleId);
+                        command.Parameters.AddWithValue("@Reason", refundReason);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to mark sale as refunded: {ex.Message}");
+                }
+            }
+        }
+
+
+        public void MarkItemAsRefunded(int saleItemId, int refundQuantity)
+        {
+            string query = "UPDATE Sale_Items SET is_refunded = 1 WHERE sale_item_id = @saleItemId";
+            using (var connection = GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@saleItemId", saleItemId);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error marking item as refunded: {ex.Message}");
+                }
+            }
+        }
+
+        // Adjust inventory for refunded items
+        public void RestockItem(int productId, int quantity)
+        {
+            string query = "UPDATE Products SET stock_quantity = stock_quantity + @quantity WHERE product_id = @productId";
+            using (var connection = GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@quantity", quantity);
+                        command.Parameters.AddWithValue("@productId", productId);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error restocking item: {ex.Message}");
+                }
+            }
+        }
+
+        public void RefundSale(string saleId, string reason)
+        {
+            string query = "UPDATE sales SET is_void = 1, VoidReason = @Reason WHERE sale_id = @SaleId";
+
+            using (var connection = GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@SaleId", saleId);
+                        command.Parameters.AddWithValue("@Reason", reason);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error processing refund: {ex.Message}");
+                }
+            }
+        }
+
+
+        public void UpdateTotalAmountAfterRefund(int saleId, decimal totalRefundAmount)
+        {
+            string query = "UPDATE sales SET total_amount = total_amount - @RefundAmount WHERE sale_id = @SaleId";
+
+            using (var connection = GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@SaleId", saleId);
+                        command.Parameters.AddWithValue("@RefundAmount", totalRefundAmount);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error updating total amount: {ex.Message}");
+                }
+            }
+        }
+
+
+        //INSERT DATA DI KO ALAM IF GAGAMITIN KO PA TO OR HINDI NA, pwede naman kasi sya ma filter
+        /*
+        public void InsertRefundItem(int saleId, int productId, int quantity, decimal refundAmount, string refundReason, DateTime refundDateTime)
+        {
+            string query = "INSERT INTO RefundedItems (sale_item_id, refund_quantity, refund_datetime, refund_amount, refund_reason, product_id) " +
+                           "VALUES (@saleItemId, @quantity, @refundDateTime, @refundAmount, @refundReason, @productId)";
+
+            using (var connection = GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@saleItemId", saleId);
+                        command.Parameters.AddWithValue("@quantity", quantity);
+                        command.Parameters.AddWithValue("@refundAmount", refundAmount);
+                        command.Parameters.AddWithValue("@refundReason", refundReason);
+                        command.Parameters.AddWithValue("@refundDateTime", refundDateTime);
+                        command.Parameters.AddWithValue("@productId", productId);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Error inserting refund item: {ex.Message}");
+                }
+            }
+        }
+        */
+
     }
 }

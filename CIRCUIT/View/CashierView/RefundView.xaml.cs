@@ -29,5 +29,23 @@ namespace CIRCUIT.View.CashierView
             CashierViewWindow.Show();
             this.Close();
         }
+
+        private void process_clicked(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to proceed with Refund?",
+                  "Confirm Refund",
+                  MessageBoxButton.YesNo,
+                  MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+
+            }
+        }
+
+        private void ValidateNumericInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !int.TryParse(e.Text, out _);
+        }
     }
 }
