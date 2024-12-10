@@ -27,7 +27,7 @@ namespace CIRCUIT.ViewModel
         private string _amountGiven;
         private string _paymentMethod;
         private ObservableCollection<ProductModel> _allProducts = new ObservableCollection<ProductModel>();
-        public ObservableCollection<string> PaymentMethods { get; } = new ObservableCollection<string> {"Card", "Cash" };
+        public ObservableCollection<string> PaymentMethods { get; } = new ObservableCollection<string> { "Card", "Cash" };
 
         private List<UsersModel> _users = new List<UsersModel>();
         private decimal _totalAmountBeforeDiscount;
@@ -272,7 +272,7 @@ namespace CIRCUIT.ViewModel
         #region Constructor
         public NewSaleViewModel()
         {
-            
+
             _db = new Db();
             _userId = UserSessionService.Instance.UserId;
             _accountRepository = new AccountRepository();
@@ -430,10 +430,10 @@ namespace CIRCUIT.ViewModel
                     });
                 }
                 FilteredProducts = new ObservableCollection<ProductModel>(_allProducts);
-                
+
                 if (_allProducts.Count == 0)
                 {
-                    MessageBox.Show("No products available with stock quantity greater than 5.", "Low Stock",
+                    MessageBox.Show("No products available", "Low Stock",
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
@@ -553,7 +553,7 @@ namespace CIRCUIT.ViewModel
                 OnPropertyChanged(nameof(AdjustedTotalAmount));
             }
         }
-        
+
         private void returncart()
         {
 
@@ -572,7 +572,7 @@ namespace CIRCUIT.ViewModel
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-             
+
             var confirmationModal = new ConfirmationModal(CartItems, TotalAmount, this);
             confirmationModal.ShowDialog();
         }

@@ -35,7 +35,7 @@ namespace CIRCUIT.ViewModel.CashierViewModel
             }
         }
 
-        // Calculated total sales amount for today
+
         public decimal TotalSalesAmount => SalesHistory.Sum(s => s.TotalAmount);
 
         // Command to refresh the sales history
@@ -65,14 +65,12 @@ namespace CIRCUIT.ViewModel.CashierViewModel
                     return;
                 }
 
-
                 var today = DateTime.Today;
                 var todaysSales = allSales
                     .Where(s => s.DateTime.Date == today)
                     .OrderByDescending(s => s.DateTime)
                     .ToList();
 
-                // Clear and add today's sales
                 SalesHistory.Clear();
                 foreach (var sale in todaysSales)
                 {
@@ -86,5 +84,8 @@ namespace CIRCUIT.ViewModel.CashierViewModel
                 Console.WriteLine($"Error loading sales history: {ex.Message}");
             }
         }
+
+
+
     }
 }
