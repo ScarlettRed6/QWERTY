@@ -24,7 +24,6 @@
 
         <!-- Grid content holder-->
         <Grid>
-
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="120"/>
@@ -157,18 +156,9 @@
                             </Button>
                             
                             <!-- Filter by payment method -->
-                            <ComboBox Width="150" Height="35"
-                                      Margin="8,0,0,0"
-                                      FontSize="15"
-                                      SelectedValuePath="Content"
-                                      Style="{StaticResource FilterComboBoxStyle}"
-                                      SelectedValue="{Binding CategoryBox, UpdateSourceTrigger=PropertyChanged}">
-                                <ComboBoxItem Content="Payment Method" IsSelected="True"/>
-                                <ComboBoxItem Content="Cash"/>
-                                <ComboBoxItem Content="Card"/>
-                            </ComboBox>
                             
                             <!-- Filter by date -->
+                            <!--
                             <ComboBox Width="150" Height="35"
                                       Margin="8,0,0,0"
                                       FontSize="15"
@@ -179,7 +169,12 @@
                                 <ComboBoxItem Content="Week"/>
                                 <ComboBoxItem Content="Month"/>
                                 <ComboBoxItem Content="Year"/>
-                            </ComboBox>
+                            </ComboBox>-->
+                            <Button Content="Filter"
+                                    Height="40"
+                                    Width="150"
+                                    Margin="10,0,0,0"
+                                    Command="{Binding FilterButtonCommand}"/>
 
                         </StackPanel>
 

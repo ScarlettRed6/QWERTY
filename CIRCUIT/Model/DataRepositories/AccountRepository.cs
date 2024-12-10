@@ -231,7 +231,8 @@ namespace CIRCUIT.Model.DataRepositories
                                     Username = reader.GetString(reader.GetOrdinal("username")),
                                     Role = reader.GetString(reader.GetOrdinal("role")),
                                     Password = reader.GetString(reader.GetOrdinal("password")),
-                                    Salt = reader.GetString(reader.GetOrdinal("salt"))
+                                    Salt = reader.GetString(reader.GetOrdinal("salt")),
+                                    UserStatus = reader.GetString(reader.GetOrdinal("status"))
                                 };
                             }
                         }

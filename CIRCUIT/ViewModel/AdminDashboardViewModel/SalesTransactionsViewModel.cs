@@ -1,6 +1,7 @@
 ﻿using CIRCUIT.Model;
 using CIRCUIT.Model.DataRepositories;
 using CIRCUIT.Utilities;
+using CIRCUIT.View.AdminDashboardViews;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
@@ -34,6 +35,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         public RelayCommand CheckSelectAll { get; private set; }
         public RelayCommand CheckSelectCell { get; private set; }
         public RelayCommand ExportCommand { get; }
+        public RelayCommand ApplyDateFilterCommand { get; }
+        public RelayCommand FilterButtonCommand { get; }
 
         //Properties
         [ObservableProperty]
@@ -106,7 +109,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 {
                     _categoryBox = value;
                     OnPropertyChanged();
-                    UpdatePagedSales();
+                    //UpdatePagedSales();
                 }
             }
         }
@@ -121,6 +124,34 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                     _timeFilter = value;
                     OnPropertyChanged();
                     UpdatePagedSales();
+                }
+            }
+        }
+
+        private DateTime? _startDate;
+        public DateTime? StartDate
+        {
+            get => _startDate;
+            set
+            {
+                if (_startDate != value)
+                {
+                    _startDate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private DateTime? _endDate;
+        public DateTime? EndDate
+        {
+            get => _endDate;
+            set
+            {
+                if (_endDate != value)
+                {
+                    _endDate = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -147,11 +178,27 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             //CheckSelectCell = new RelayCommand(ChkSelectCellCommand);
             ViewCommand = new RelayCommand<SaleModel>(ExecuteViewSaleDetails);
             ExportCommand = new RelayCommand(ExportSelectedTransactions);
+            ApplyDateFilterCommand = new RelayCommand(ApplyDateFilter);
+            FilterButtonCommand = new RelayCommand(OpenWindowFilter);
 
             //IsAllSelected = false;
 
             UpdateList();
 
+        }
+
+        private void OpenWindowFilter()
+        {
+            SalesFilterWindow filterWindow = new SalesFilterWindow
+            {
+                DataContext = this // Share the same ViewModel
+            };
+            filterWindow.ShowDialog();
+        }
+
+        private void ApplyDateFilter()
+        {
+            UpdatePagedSales();
         }
 
         private void ExportSelectedTransactions()
@@ -186,40 +233,6 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             _saleViewModel = new ViewSaleViewModel(model, this);
             CurrentView = _saleViewModel;
         }
-
-        //Checks if all items are selected
-        /* Might use this later for check box function
-        private void ChkSelectAllCommand()
-        {
-            if (IsAllSelected == true)
-            {
-                Items.ForEach(x => x.IsSelected = true);
-            }
-            else if (IsAllSelected == false)
-            {
-                Items.ForEach(x => x.IsSelected = false);
-            }
-
-        }
-
-        //Checks the selected cells
-        private void ChkSelectCellCommand()
-        {
-            if (Items.All(x => x.IsSelected))
-            {
-                IsAllSelected = true;
-            }
-            else if (Items.All(x => !x.IsSelected))
-            {
-                IsAllSelected = false;
-            }
-            else
-            {
-                IsAllSelected = null;
-            }
-
-        }
-        */
 
         //Refreshes the products in the datagrid
         public void UpdateList()
@@ -269,6 +282,11 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                     "Year" => filteredItems.Where(p => p.DateTime >= now.AddYears(-1)),
                     _ => filteredItems
                 };
+            }
+
+            if (StartDate.HasValue && EndDate.HasValue)
+            {
+                filteredItems = filteredItems.Where(p => p.DateTime >= StartDate.Value && p.DateTime <= EndDate.Value);
             }
 
             TotalItems = filteredItems.Count();

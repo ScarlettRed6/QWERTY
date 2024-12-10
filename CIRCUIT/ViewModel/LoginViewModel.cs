@@ -100,6 +100,13 @@ namespace CIRCUIT.ViewModel
 
             if (isPasswordValid)
             {
+                //Verifies if user is active or inactive
+                if (_users.UserStatus == "Inactive")
+                {
+                    MessageBox.Show("This account has been disabled.", "Login Denied", MessageBoxButton.OK,MessageBoxImage.Information);
+                    return;
+                }
+
                 //Get and set the user id for use
                 GetUserId = _users.UserId;
                 UserSessionService.Instance.UserId = GetUserId;

@@ -182,3 +182,6 @@ C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\bin\
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\bin\Debug\net8.0-windows\runtimes\win-arm64\native\libSkiaSharp.dll
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\bin\Debug\net8.0-windows\runtimes\win-x64\native\libSkiaSharp.dll
 C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\bin\Debug\net8.0-windows\runtimes\win-x86\native\libSkiaSharp.dll
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\SalesFilterWindow.g.cs
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\View\AdminDashboardViews\SalesFilterWindow.baml
+C:\Users\Dreadlord\VSCommunityProjects\CIRCUIT-GROUPPROJECT\CIRCUIT\CIRCUIT\obj\Debug\net8.0-windows\Styles\DatePickerStyles.baml
