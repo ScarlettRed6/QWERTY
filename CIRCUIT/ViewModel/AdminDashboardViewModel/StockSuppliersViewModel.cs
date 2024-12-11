@@ -116,7 +116,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         //Refreshes the products in the datagrid
         public void UpdateList()
         {
-            string query = "SELECT * FROM suppliers";
+            string query = "SELECT * FROM tbl_suppliers";
 
             var fetchedSales = _sControlRepo.FetchSuppliers(query);
 

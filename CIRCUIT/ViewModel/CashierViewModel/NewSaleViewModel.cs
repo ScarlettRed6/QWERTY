@@ -407,7 +407,7 @@ namespace CIRCUIT.ViewModel
         {
             try
             {
-                string query = "SELECT * FROM Products WHERE is_archived = 0 AND stock_quantity > 5";
+                string query = "SELECT * FROM tbl_Products WHERE is_archived = 0 AND stock_quantity > 5";
                 var productsFromDb = _db.FetchData(query);
                 _allProducts.Clear();
                 foreach (var product in productsFromDb)

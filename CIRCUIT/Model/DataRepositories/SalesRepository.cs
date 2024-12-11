@@ -6,10 +6,10 @@ namespace CIRCUIT.Model.DataRepositories
 {
     public class SalesRepository : ISalesRepository
     {
-        private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
+        //private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
 
-        //private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
-        //                                  "Trust Server Certificate=True";
+        private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
+                                          "Trust Server Certificate=True";
 
         //Method to execute non queries like INSERT or UPDATE, might change this code later idk
         public void ExecuteNonQuery(string query)
@@ -41,7 +41,7 @@ namespace CIRCUIT.Model.DataRepositories
             //This also fetches from users table
             string query = @"SELECT s.sale_id, s.date_time, s.cashier_id, s.total_amount, 
                                    s.payment_method, s.customer_payment, s.change_given, 
-                                   u.username AS CashierName FROM sales s INNER JOIN users u ON s.cashier_id = u.user_id";
+                                   u.username AS CashierName FROM tbl_sales s INNER JOIN tbl_users u ON s.cashier_id = u.user_id";
 
             var sales = new List<SaleModel>();
 
@@ -88,7 +88,7 @@ namespace CIRCUIT.Model.DataRepositories
         public Dictionary<int, string> GetProductNames(List<int> productIds)
         {
             var productNames = new Dictionary<int, string>();
-            string query = "SELECT product_id, product_name FROM Products WHERE product_id IN (" + string.Join(",", productIds) + ")";
+            string query = "SELECT product_id, product_name FROM tbl_Products WHERE product_id IN (" + string.Join(",", productIds) + ")";
 
             using (var connection = GetConnection())
             {
@@ -120,7 +120,7 @@ namespace CIRCUIT.Model.DataRepositories
         //Method to fetch sale items by sale id
         public List<SalesItemModel> FetchSaleItems(int saleId)
         {
-            string query = "SELECT sale_item_id, product_id, quantity, item_total_price FROM Sale_Items WHERE sale_id = @saleId";
+            string query = "SELECT sale_item_id, product_id, quantity, item_total_price FROM tbl_Sale_Items WHERE sale_id = @saleId";
             var salesItems = new List<SalesItemModel>();
 
             using (var connection = GetConnection())
@@ -184,7 +184,7 @@ namespace CIRCUIT.Model.DataRepositories
         //Fetch total quantity of products in sale
         public int FetchTotalProductSold()
         {
-            string query = "SELECT quantity FROM Sale_Items";
+            string query = "SELECT quantity FROM tbl_Sale_Items";
             int total = 0;
 
             using (var connection = GetConnection())
@@ -220,9 +220,9 @@ namespace CIRCUIT.Model.DataRepositories
            s.is_void, s.VoidReason,
            p.product_name, p.selling_price, 
            si.product_id, si.quantity, si.item_total_price
-    FROM sales s
-    INNER JOIN Sale_Items si ON s.sale_id = si.sale_id
-    INNER JOIN products p ON si.product_id = p.product_id";
+    FROM tbl_sales s
+    INNER JOIN tbl_Sale_Items si ON s.sale_id = si.sale_id
+    INNER JOIN tbl_products p ON si.product_id = p.product_id";
 
             var salesHistory = new List<SaleHistoryModel>();
             var salesDict = new Dictionary<int, SaleHistoryModel>();
@@ -276,7 +276,7 @@ namespace CIRCUIT.Model.DataRepositories
 
         public void MarkSaleAsRefunded(int saleId, string refundReason)
         {
-            string query = "UPDATE sales SET is_void = 1, VoidReason = @Reason WHERE sale_id = @SaleId";
+            string query = "UPDATE tbl_sales SET is_void = 1, VoidReason = @Reason WHERE sale_id = @SaleId";
 
             using (var connection = GetConnection())
             {
@@ -301,7 +301,7 @@ namespace CIRCUIT.Model.DataRepositories
 
         public void MarkItemAsRefunded(int saleItemId, int refundQuantity)
         {
-            string query = "UPDATE Sale_Items SET is_refunded = 1 WHERE sale_item_id = @saleItemId";
+            string query = "UPDATE tbl_Sale_Items SET is_refunded = 1 WHERE sale_item_id = @saleItemId";
             using (var connection = GetConnection())
             {
                 try
@@ -323,7 +323,7 @@ namespace CIRCUIT.Model.DataRepositories
         // Adjust inventory for refunded items
         public void RestockItem(int productId, int quantity)
         {
-            string query = "UPDATE Products SET stock_quantity = stock_quantity + @quantity WHERE product_id = @productId";
+            string query = "UPDATE tbl_Products SET stock_quantity = stock_quantity + @quantity WHERE product_id = @productId";
             using (var connection = GetConnection())
             {
                 try
@@ -345,7 +345,7 @@ namespace CIRCUIT.Model.DataRepositories
 
         public void RefundSale(string saleId, string reason)
         {
-            string query = "UPDATE sales SET is_void = 1, VoidReason = @Reason WHERE sale_id = @SaleId";
+            string query = "UPDATE tbl_sales SET is_void = 1, VoidReason = @Reason WHERE sale_id = @SaleId";
 
             using (var connection = GetConnection())
             {
@@ -370,7 +370,7 @@ namespace CIRCUIT.Model.DataRepositories
 
         public void UpdateTotalAmountAfterRefund(int saleId, decimal totalRefundAmount)
         {
-            string query = "UPDATE sales SET total_amount = total_amount - @RefundAmount WHERE sale_id = @SaleId";
+            string query = "UPDATE tbl_sales SET total_amount = total_amount - @RefundAmount WHERE sale_id = @SaleId";
 
             using (var connection = GetConnection())
             {

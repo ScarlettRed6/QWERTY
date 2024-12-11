@@ -162,6 +162,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 EditMinStockLevel = prod.MinStockLevel;
                 EditStockQuantity = prod.StockQuantity;
                 EditUnitCost = prod.UnitCost;
+                ImagePath = prod.ImagePath;
             }
             else
                 MessageBox.Show("Product not found.");

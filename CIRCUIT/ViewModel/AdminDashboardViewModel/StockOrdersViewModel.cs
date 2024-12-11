@@ -134,7 +134,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         //Refreshes the products in the datagrid
         public void UpdateList()
         {
-            string query = "SELECT po.OrderID, po.SupplierID, s.SupplierName, po.OrderDate, po.Status, po.TotalAmount, po.ShippingFee FROM purchaseorders po INNER JOIN suppliers s ON po.SupplierID = s.SupplierID";
+            string query = "SELECT po.OrderID, po.SupplierID, s.SupplierName, po.OrderDate, po.Status, po.TotalAmount, po.ShippingFee FROM tbl_purchaseorders po INNER JOIN tbl_suppliers s ON po.SupplierID = s.SupplierID";
             var fetchedSales = _sControlRepo.FetchPurchaseOrders(query);
 
             Orders.Clear();

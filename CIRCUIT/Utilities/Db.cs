@@ -8,10 +8,10 @@ namespace CIRCUIT.Utilities
     public class Db
     {
         //Comment each of our local connection for local use
-        private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
+        //private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
 
-        //private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
-        //                               "Trust Server Certificate=True";
+        private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
+                                       "Trust Server Certificate=True";
 
         //Method to execute non queries like INSERT or UPDATE, might change this code later idk
         public void ExecuteNonQuery(string query)
@@ -80,7 +80,7 @@ namespace CIRCUIT.Utilities
         //Method to insert new products to the database
         public void InsertProduct(ProductModel product)
         {
-            string query = @"INSERT INTO Products 
+            string query = @"INSERT INTO tbl_products 
                             (product_name, model_number, brand, category, description, selling_price, min_stock_level, stock_quantity, unit_cost, sku, is_archived, image_path)
                             VALUES (@ProductName, @ModelNumber, @Brand, @Category, @Description, @SellingPrice, @MinStockLevel, @StockQuantity, @UnitCost, @SKU, @IsArchived, @ImagePath)";
 
@@ -156,7 +156,7 @@ namespace CIRCUIT.Utilities
         public List<ProductModel> GetProductById(int productId)
         {
             var products = new List<ProductModel>();
-            string query = "SELECT * FROM Products WHERE product_id = @productId";
+            string query = "SELECT * FROM tbl_Products WHERE product_id = @productId";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -183,6 +183,7 @@ namespace CIRCUIT.Utilities
                                     StockQuantity = reader.GetInt32(reader.GetOrdinal("stock_quantity")),
                                     UnitCost = (decimal)reader.GetDecimal(reader.GetOrdinal("unit_cost")),
                                     SKU = reader.GetOrdinal("sku"),
+                                    ImagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, reader.GetString(reader.GetOrdinal("image_path")))
                                     //IsArchived = reader.GetBoolean(reader.GetOrdinal("is_archived"))
                                 };
                                 products.Add(product);
@@ -202,7 +203,7 @@ namespace CIRCUIT.Utilities
         //Method to update product by product Id
         public void UpdateProductData(ProductModel product)
         {
-            string updateQuery = "UPDATE Products SET product_name = @productName, model_number = @modelNumber, brand = @brand, category = @category, description = @description, " +
+            string updateQuery = "UPDATE tbl_Products SET product_name = @productName, model_number = @modelNumber, brand = @brand, category = @category, description = @description, " +
                                  "selling_price = @sellingPrice, min_stock_level = @minStockLevel, stock_quantity = @stockQuantity, unit_cost = @unitCost, image_path = @ImagePath WHERE product_id = @productId";
 
             using (var connection = new SqlConnection(connectionString))
@@ -233,7 +234,7 @@ namespace CIRCUIT.Utilities
         // Method to update only the product's stock quantity by product Id
         public void UpdateProductStockQuantity(int productId, int quantitySold)
         {
-            string updateQuery = "UPDATE Products SET stock_quantity = stock_quantity - @quantitySold WHERE product_id = @productId";
+            string updateQuery = "UPDATE tbl_Products SET stock_quantity = stock_quantity - @quantitySold WHERE product_id = @productId";
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -252,7 +253,7 @@ namespace CIRCUIT.Utilities
         //Method to archive a product by product Id
         public void ArchiveProduct(List<int> productId)
         {
-            string archiveQuery = "UPDATE Products SET is_archived = 1 WHERE product_id IN (" +
+            string archiveQuery = "UPDATE tbl_Products SET is_archived = 1 WHERE product_id IN (" +
                            string.Join(",", productId.Select(id => $"@Product{id}")) + ")";
             using (var connection = new SqlConnection(connectionString))
             {
@@ -273,7 +274,7 @@ namespace CIRCUIT.Utilities
         //Recover archived products
         public void RecoverArchived(ProductModel product)
         {
-            string recoverQuery = "UPDATE Products SET is_archived = 0 WHERE product_id = @productId";
+            string recoverQuery = "UPDATE tbl_Products SET is_archived = 0 WHERE product_id = @productId";
 
             using (var connection = new SqlConnection(connectionString))
             {
@@ -299,7 +300,7 @@ namespace CIRCUIT.Utilities
                                 CAST(s.date_time AS DATE) AS SaleDate, 
                                 SUM(s.total_amount) AS TotalRevenue
                             FROM 
-                                sales s
+                                tbl_sales s
                             WHERE 
                                 s.date_time >= DATEADD(DAY, -7, GETDATE())
                             GROUP BY 
@@ -345,28 +346,39 @@ namespace CIRCUIT.Utilities
         {
             string query = @"
                             SELECT 
-                                SUM(s.total_amount) AS TotalRevenue, 
-                                SUM(si.quantity * p.unit_cost) AS TotalCOGS
-                            FROM 
-                                sales s
-                            JOIN 
-                                sale_items si ON s.sale_id = si.sale_id
-                            JOIN 
-                                products p ON si.product_id = p.product_id";
+                                SUM(SaleRevenue) AS TotalRevenue,
+                                SUM(COGS) AS TotalCOGS
+                            FROM (
+                                SELECT 
+                                    s.total_amount AS SaleRevenue, 
+                                    SUM(si.quantity * p.unit_cost) AS COGS
+                                FROM 
+                                    tbl_sales s
+                                JOIN 
+                                    tbl_sale_items si ON s.sale_id = si.sale_id
+                                JOIN 
+                                    tbl_products p ON si.product_id = p.product_id
+                                WHERE 
+                                    (@StartDate IS NULL OR s.date_time >= @StartDate) 
+                                    AND 
+                                    (@EndDate IS NULL OR s.date_time <= @EndDate)
+                                GROUP BY 
+                                    s.sale_id, s.total_amount
+                            ) AS SubQuery";
 
             // Add date filter if specified
+            /*
             if (startDate.HasValue && endDate.HasValue)
             {
                 query += " WHERE s.date_time >= @StartDate AND s.date_time <= @EndDate";
-            }
+            }*/
 
             decimal totalRevenue = 0;
             decimal totalCOGS = 0;
 
             using (var connection = GetConnection())
             {
-                try
-                {
+                
                     connection.Open();
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -385,14 +397,11 @@ namespace CIRCUIT.Utilities
                             }
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error calculating gross profit: " + ex.Message);
-                }
+               
             }
 
             decimal grossProfit = totalRevenue - totalCOGS;
+            //MessageBox.Show($"test {totalRevenue} {totalCOGS}");
             return (totalRevenue, totalCOGS, grossProfit);
         }
 
@@ -400,8 +409,8 @@ namespace CIRCUIT.Utilities
         public Dictionary<string, decimal> FetchRevenuePerCategory()
         {
             string query = @"SELECT p.category AS Category, SUM(si.quantity * si.item_total_price) AS TotalRevenue
-                            FROM products p JOIN sale_items si ON p.product_id = si.product_id
-                            JOIN sales s ON si.sale_id = s.sale_id
+                            FROM tbl_products p JOIN tbl_sale_items si ON p.product_id = si.product_id
+                            JOIN tbl_sales s ON si.sale_id = s.sale_id
                             GROUP BY p.category";
 
             var revenuePerCategory = new Dictionary<string, decimal>();
@@ -438,7 +447,7 @@ namespace CIRCUIT.Utilities
 
         public int InsertSale(SaleModel sale)
         {
-            string query = @"INSERT INTO sales (date_time, total_amount, payment_method, customer_payment, change_given, cashier_id)
+            string query = @"INSERT INTO tbl_sales (date_time, total_amount, payment_method, customer_payment, change_given, cashier_id)
                     VALUES (@DateTime, @TotalAmount, @PaymentMethod, @CustomerPaid, @ChangeGiven, @CashierId);
                     SELECT SCOPE_IDENTITY();";
 
@@ -465,7 +474,7 @@ namespace CIRCUIT.Utilities
             string query = @"SELECT sale_id, date_time, COALESCE(cashier_id, 0) AS cashier_id, 
                              total_amount, payment_method, customer_payment, change_given, 
                              is_void, VoidReason
-                     FROM sales";
+                     FROM tbl_sales";
 
             List<SaleHistoryModel> salesHistory = new List<SaleHistoryModel>();
 
@@ -513,7 +522,7 @@ namespace CIRCUIT.Utilities
 
         public void InsertSaleItem(SaleItemModel saleItem)
         {
-            string query = @"INSERT INTO Sale_Items (sale_id, product_id, quantity, item_total_price)
+            string query = @"INSERT INTO tbl_Sale_Items (sale_id, product_id, quantity, item_total_price)
                      VALUES (@SaleId, @ProductId, @Quantity, @ItemTotalPrice)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -541,7 +550,7 @@ namespace CIRCUIT.Utilities
                         product_id, 
                         quantity, 
                         item_total_price
-                     FROM Sale_Items
+                     FROM tbl_Sale_Items
                      WHERE sale_id = @SaleId";
 
             var saleItems = new List<SaleItemModel>();
@@ -584,7 +593,7 @@ namespace CIRCUIT.Utilities
 
         public bool UpdateVoidOrder(int saleId, string voidReason)
         {
-            string query = @"UPDATE sales
+            string query = @"UPDATE tbl_sales
                      SET is_void = 1, VoidReason = @VoidReason
                      WHERE sale_id = @SaleId";
 
@@ -614,8 +623,81 @@ namespace CIRCUIT.Utilities
         // HANGGANG DITO
 
 
+        //Methods to insert new brands and categories , as well as fetch categories and brands
+        public List<string> GetBrands()
+        {
+            var brands = new List<string>();
+            string query = "SELECT DISTINCT brand FROM tbl_products";
 
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            brands.Add(reader["brand"].ToString());
+                        }
+                    }
+                }
+            }
 
+            return brands;
+        }
 
+        public List<string> GetCategories()
+        {
+            var categories = new List<string>();
+            string query = "SELECT DISTINCT category FROM tbl_products";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            categories.Add(reader["category"].ToString());
+                        }
+                    }
+                }
+            }
+
+            return categories;
+        }
+
+        public void AddBrand(string brand)
+        {
+            string query = "INSERT INTO tbl_products (brand) VALUES (@Brand)";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Brand", brand);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void AddCategory(string category)
+        {
+            string query = "INSERT INTO tbl_products (category) VALUES (@Category)";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Category", category);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

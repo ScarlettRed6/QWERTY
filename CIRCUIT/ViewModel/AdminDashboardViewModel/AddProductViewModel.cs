@@ -2,6 +2,7 @@
 using CIRCUIT.Utilities;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 
@@ -41,7 +42,23 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         private object _currentAddView;
 
         [ObservableProperty]
-        private string _imagePath;
+        private string _imagePath = "no image";
+
+        [ObservableProperty]
+        private string _newBrand;
+
+        [ObservableProperty]
+        private string _newCategory;
+
+        //For category and brand comboxes and textboxes, disables if either has value or selection
+        public bool IsBrandBoxEnabled => string.IsNullOrWhiteSpace(NewBrand);
+        public bool IsNewBrandEnabled => string.IsNullOrWhiteSpace(BrandBox);
+        public bool IsCategoryBoxEnabled => string.IsNullOrWhiteSpace(NewCategory);
+        public bool IsNewCategoryEnabled => string.IsNullOrWhiteSpace(CategoryBox);
+
+        //Collections
+        public ObservableCollection<string> Brands { get; set; }
+        public ObservableCollection<string> Categories { get; set; }
 
         //Random number integer for sku placeholder
         private Random _random;
@@ -58,10 +75,32 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         public AddProductViewModel()
         {
             _dbCon = new Db();
+            Brands = new ObservableCollection<string>();
+            Categories = new ObservableCollection<string>();
+
+            LoadBrandsAndCategories();
+
             ReturnBtnCommand = new RelayCommand(ExecuteReturnBtn);
             SaveProductCommand = new RelayCommand(ExecuteSaveProductCommand);
             UploadImageCommand = new RelayCommand(UploadImage);
 
+        }
+
+        private void LoadBrandsAndCategories()
+        {
+            Brands.Clear();
+            Brands.Add("None"); // Placeholder option
+            foreach (var brand in _dbCon.GetBrands())
+            {
+                Brands.Add(brand);
+            }
+
+            Categories.Clear();
+            Categories.Add("None"); // Placeholder option
+            foreach (var category in _dbCon.GetCategories())
+            {
+                Categories.Add(category);
+            }
         }
 
         //Method to upload image
@@ -108,39 +147,109 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         //Execute to save product
         private void ExecuteSaveProductCommand()
         {
-            if (ProductNameBox == null || ProductModelBox == null || BrandBox == null || CategoryBox == null ||
-                ProductDescriptionBox == null || SellingPriceBox <= 0 || MinStockLevel <= 0 || StockQuantityBox <= 0 || UnitCost <= 0)
+            // Check if required fields are empty
+            if (string.IsNullOrWhiteSpace(ProductNameBox) ||
+                string.IsNullOrWhiteSpace(ProductModelBox) ||
+                string.IsNullOrWhiteSpace(ProductDescriptionBox) ||
+                SellingPriceBox <= 0 ||
+                MinStockLevel <= 0 ||
+                StockQuantityBox <= 0 ||
+                UnitCost <= 0)
             {
-                MessageBox.Show("Empty details is not allowed!", "Missing Product Details", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Mandatory product details are missing or invalid!", "Missing Product Details", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
+            // Check if both Brand and NewBrand are empty
+            if (string.IsNullOrWhiteSpace(BrandBox) && string.IsNullOrWhiteSpace(NewBrand))
+            {
+                MessageBox.Show("Please specify a brand (existing or new)!", "Missing Brand", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Check if both Category and NewCategory are empty
+            if (string.IsNullOrWhiteSpace(CategoryBox) && string.IsNullOrWhiteSpace(NewCategory))
+            {
+                MessageBox.Show("Please specify a category (existing or new)!", "Missing Category", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Proceed with adding the product
             _random = new Random();
             var _products = AddProduct(_random);
 
-            _dbCon = new Db();
-            _dbCon.InsertProduct(_products);
-            CurrentAddView = new CatalogViewModel();
+            if (_products != null)
+            {
+                _dbCon = new Db();
+                _dbCon.InsertProduct(_products);
+                CurrentAddView = new CatalogViewModel();
+                MessageBox.Show("Product added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
 
         }
 
         private ProductModel AddProduct(Random _random)
         {
-            var _products = new ProductModel
+            var _products = new ProductModel();
+
+            // Handle Brand
+            if (!string.IsNullOrWhiteSpace(NewBrand))
             {
-                ProductName = ProductNameBox,
-                ModelNumber = ProductModelBox,
-                Brand = BrandBox,
-                Category = CategoryBox,
-                Description = ProductDescriptionBox,
-                SellingPrice = SellingPriceBox,
-                MinStockLevel = MinStockLevel,
-                StockQuantity = StockQuantityBox,
-                UnitCost = UnitCost,
-                SKU = _random.Next(1, 9),
-                IsArchived = false,
-                ImagePath = ImagePath  // Include the image path here
-            };
+                if (Brands.Contains(NewBrand, StringComparer.OrdinalIgnoreCase))
+                {
+                    MessageBox.Show($"The brand '{NewBrand}' already exists!", "Duplicate Brand", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return null; // Exit early if there's a conflict
+                }
+                else
+                {
+                    _products.Brand = NewBrand;
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(BrandBox))
+            {
+                _products.Brand = BrandBox;
+            }
+            else
+            {
+                MessageBox.Show("Please specify a brand.", "Brand Missing", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return null;
+            }
+
+            // Handle Category
+            if (!string.IsNullOrWhiteSpace(NewCategory))
+            {
+                if (Categories.Contains(NewCategory, StringComparer.OrdinalIgnoreCase))
+                {
+                    MessageBox.Show($"The category '{NewCategory}' already exists!", "Duplicate Category", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return null; // Exit early if there's a conflict
+                }
+                else
+                {
+                    _products.Category = NewCategory;
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(CategoryBox))
+            {
+                _products.Category = CategoryBox;
+            }
+            else
+            {
+                MessageBox.Show("Please specify a category.", "Category Missing", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return null;
+            }
+
+            // Populate remaining fields
+            _products.ProductName = ProductNameBox;
+            _products.ModelNumber = ProductModelBox;
+            _products.Description = ProductDescriptionBox;
+            _products.SellingPrice = SellingPriceBox;
+            _products.MinStockLevel = MinStockLevel;
+            _products.StockQuantity = StockQuantityBox;
+            _products.UnitCost = UnitCost;
+            _products.SKU = _random.Next(1, 9);
+            _products.IsArchived = false;
+            _products.ImagePath = ImagePath;
+
             return _products;
 
         }
@@ -148,6 +257,47 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         private void ExecuteReturnBtn()
         {
             CurrentAddView = new CatalogViewModel();
+        }
+
+
+        partial void OnNewBrandChanged(string value)
+        {
+            OnPropertyChanged(nameof(IsBrandBoxEnabled));
+        }
+
+        partial void OnBrandBoxChanged(string value)
+        {
+            if (value == "None")
+            {
+                BrandBox = null;
+            }
+
+            // Enable or clear NewBrand based on selection
+            if (!string.IsNullOrEmpty(value) && value != "None")
+            {
+                NewBrand = null; // Clear new brand if an existing brand is selected
+            }
+            OnPropertyChanged(nameof(IsNewBrandEnabled));
+        }
+
+        partial void OnNewCategoryChanged(string value)
+        {
+            OnPropertyChanged(nameof(IsCategoryBoxEnabled));
+        }
+
+        partial void OnCategoryBoxChanged(string value)
+        {
+            if (value == "None")
+            {
+                CategoryBox = null;
+            }
+
+            // Enable or clear NewCategory based on selection
+            if (!string.IsNullOrEmpty(value) && value != "None")
+            {
+                NewCategory = null; // Clear new category if an existing category is selected
+            }
+            OnPropertyChanged(nameof(IsNewCategoryEnabled));
         }
     }
 }

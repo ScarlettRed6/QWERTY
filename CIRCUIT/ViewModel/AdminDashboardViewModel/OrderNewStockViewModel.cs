@@ -137,7 +137,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         private void LoadProducts()
         {
-            string query = "SELECT * FROM products WHERE is_archived = 0";
+            string query = "SELECT * FROM tbl_products WHERE is_archived = 0";
             var products = _dbCon.FetchProducts(query);
 
             Products.Clear();

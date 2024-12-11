@@ -6,10 +6,10 @@ namespace CIRCUIT.Model.DataRepositories
 {
     public class AccountRepository : IAccountRepository
     {
-        private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
+        //private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
 
-        //private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
-        //                                  "Trust Server Certificate=True";
+        private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
+                                          "Trust Server Certificate=True";
 
         //Method to execute non queries like INSERT or UPDATE, might change this code later idk
         public void ExecuteNonQuery(string query)
@@ -39,7 +39,7 @@ namespace CIRCUIT.Model.DataRepositories
         // Method to deactivate user account(s)
         public void DeactivateUserAccount(List<int> userIds)
         {
-            string updateQuery = "UPDATE users SET status = 'Inactive' WHERE user_id IN (";
+            string updateQuery = "UPDATE tbl_users SET status = 'Inactive' WHERE user_id IN (";
 
             // Add a parameter for each user ID
             var parameters = new List<SqlParameter>();
@@ -83,7 +83,7 @@ namespace CIRCUIT.Model.DataRepositories
         // Method to update user account to active
         public void ActivateUserAccount(List<int> userIds)
         {
-            string updateQuery = "UPDATE users SET status = 'Active' WHERE user_id IN (";
+            string updateQuery = "UPDATE tbl_users SET status = 'Active' WHERE user_id IN (";
 
             // Add a parameter for each user ID
             var parameters = new List<SqlParameter>();
@@ -126,7 +126,7 @@ namespace CIRCUIT.Model.DataRepositories
 
         public List<UsersModel> FetchUser()
         {
-            string queryUser = "SELECT fullname, user_id, username, role, status, user_image FROM users";
+            string queryUser = "SELECT fullname, user_id, username, role, status, user_image FROM tbl_users";
             var users = new List<UsersModel>();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -168,7 +168,7 @@ namespace CIRCUIT.Model.DataRepositories
         public List<UsersModel> FetchUser(int userId)
         {
             var user = new List<UsersModel>();
-            string query = "SELECT * FROM users WHERE user_id = @userId";
+            string query = "SELECT * FROM tbl_users WHERE user_id = @userId";
 
             using (var connection = GetConnection())
             {
@@ -209,7 +209,7 @@ namespace CIRCUIT.Model.DataRepositories
 
         public UsersModel FetchUserPassAndSalt(string username)
         {
-            string queryUser = "SELECT * FROM Users WHERE username = @username";
+            string queryUser = "SELECT * FROM tbl_Users WHERE username = @username";
             UsersModel user = null;
 
             using (var connection = GetConnection())
@@ -248,8 +248,8 @@ namespace CIRCUIT.Model.DataRepositories
 
         public bool InsertUser(UsersModel user)
         {
-            string queryCheck = "SELECT COUNT(*) FROM users WHERE username = @Username";
-            string queryInsert = @"INSERT INTO users (fullname, username, password, salt, role, user_image) 
+            string queryCheck = "SELECT COUNT(*) FROM tbl_users WHERE username = @Username";
+            string queryInsert = @"INSERT INTO tbl_users (fullname, username, password, salt, role, user_image) 
                                  VALUES (@FullName, @Username, @Password, @Salt, @Role, @UserImagePath)";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -288,7 +288,7 @@ namespace CIRCUIT.Model.DataRepositories
 
         public void UpdateUserAccount(UsersModel user)
         {
-            string updateQuery = "UPDATE users SET fullname = @FullName, username = @Username, role = @Role, password = @Password, salt = @Salt, user_image = @UserImagePath WHERE user_id = @UserId";
+            string updateQuery = "UPDATE tbl_users SET fullname = @FullName, username = @Username, role = @Role, password = @Password, salt = @Salt, user_image = @UserImagePath WHERE user_id = @UserId";
 
             using (var connection = GetConnection())
             {
@@ -313,7 +313,7 @@ namespace CIRCUIT.Model.DataRepositories
 
         public void UpdateAccountWithoutPassword(UsersModel user)
         {
-            string updateQuery = "UPDATE users SET fullname = @FullName, username = @Username, role = @Role, user_image = @UserImagePath WHERE user_id = @UserId";
+            string updateQuery = "UPDATE tbl_users SET fullname = @FullName, username = @Username, role = @Role, user_image = @UserImagePath WHERE user_id = @UserId";
 
             using (var connection = GetConnection())
             {
@@ -333,7 +333,7 @@ namespace CIRCUIT.Model.DataRepositories
         public void LogUserIn(int userId)
         {
             string query = @"
-                            UPDATE users 
+                            UPDATE tbl_users 
                             SET is_logged_in = 1, last_login_time = GETDATE() 
                             WHERE user_id = @userId;";
 
@@ -358,7 +358,7 @@ namespace CIRCUIT.Model.DataRepositories
         public void LogUserOut(int userId)
         {
             string query = @"
-                            UPDATE users 
+                            UPDATE tbl_users 
                             SET is_logged_in = 0, last_logout_time = GETDATE() 
                             WHERE user_id = @userId;";
 
@@ -384,7 +384,7 @@ namespace CIRCUIT.Model.DataRepositories
         {
             string query = @"
                             SELECT is_logged_in 
-                            FROM users 
+                            FROM tbl_users 
                             WHERE user_id = @userId;";
 
             using (var connection = GetConnection())

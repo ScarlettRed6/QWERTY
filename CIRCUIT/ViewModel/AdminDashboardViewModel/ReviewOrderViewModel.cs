@@ -85,7 +85,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         //Load supplier data
         private void LoadSupplierDetails()
         {
-            string query = "SELECT * FROM suppliers WHERE SupplierName = @SupplierName";
+            string query = "SELECT * FROM tbl_suppliers WHERE SupplierName = @SupplierName";
             var supplierDetails = _sControlRepo.FetchSuppliers(query, SupplierSelected);
 
             _suppliersDetails.Clear();

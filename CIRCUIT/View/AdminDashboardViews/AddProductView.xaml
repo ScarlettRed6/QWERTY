@@ -29,6 +29,7 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="80"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
                 <!-- Kaya nasa stackpanel kac baka mag add ako ng text later idk haha -->
@@ -153,12 +154,15 @@
                                 <ComboBox Width="150" Height="35"
                                           Margin="8,0,0,0"
                                           FontSize="15"
-                                          SelectedValuePath="Content"
                                           Style="{StaticResource FilterComboBoxStyle}"
-                                          SelectedValue="{Binding BrandBox, UpdateSourceTrigger=PropertyChanged}">
-                                    <ComboBoxItem Content="Brand1"/>
-                                    <ComboBoxItem Content="Brand2"/>
-                                    <ComboBoxItem Content="Brand3"/>
+                                          ItemsSource="{Binding Brands}"
+                                          SelectedValue="{Binding BrandBox, UpdateSourceTrigger=PropertyChanged}"
+                                          IsEnabled="{Binding IsBrandBoxEnabled}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
                                 </ComboBox>
                             </StackPanel>
 
@@ -169,16 +173,19 @@
                                        FontWeight="Medium"
                                        Foreground="{StaticResource palette6}"
                                        Margin="8,0,0,0"/>
-        
+
                                 <ComboBox Width="150" Height="35"
                                           Margin="8,0,0,0"
                                           FontSize="15"
-                                          SelectedValuePath="Content"
                                           Style="{StaticResource FilterComboBoxStyle}"
-                                          SelectedValue="{Binding CategoryBox, UpdateSourceTrigger=PropertyChanged}">
-                                    <ComboBoxItem Content="cat1"/>
-                                    <ComboBoxItem Content="cat2"/>
-                                    <ComboBoxItem Content="cat3"/>
+                                          ItemsSource="{Binding Categories}"
+                                          SelectedValue="{Binding CategoryBox, UpdateSourceTrigger=PropertyChanged}"
+                                          IsEnabled="{Binding IsCategoryBoxEnabled}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
                                 </ComboBox>
                             </StackPanel>
                         
@@ -317,6 +324,28 @@
                     
                     </Grid>
                 </Border>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="3">
+
+                    <Label Content="new brand"
+                           Foreground="{StaticResource palette6}"/>
+                    <TextBox Text="{Binding NewBrand}"
+                             Height="30"
+                             Width="200"
+                             FontSize="18"
+                             Margin="2"
+                             IsEnabled="{Binding IsNewBrandEnabled}"/>
+
+                    <Label Content="new Category"
+                           Foreground="{StaticResource palette6}"/>
+                    <TextBox Text="{Binding NewCategory}"
+                             Height="30"
+                             Width="200"
+                             FontSize="18"
+                             Margin="2"
+                             IsEnabled="{Binding IsNewCategoryEnabled}"/>
+                </StackPanel>
+                
             </Grid>
             
             <!-- Content Control for panel switching -->

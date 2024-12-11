@@ -7,10 +7,10 @@ namespace CIRCUIT.Model.DataRepositories
     public class StockControlRepository
     {
         //Comment each of our local connection for local use
-        private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
+        //private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
 
-        //private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
-        //                                "Trust Server Certificate=True";
+        private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
+                                        "Trust Server Certificate=True";
 
         //Method to execute non queries like INSERT or UPDATE, might change this code later idk
         public void ExecuteNonQuery(string query)
@@ -110,7 +110,7 @@ namespace CIRCUIT.Model.DataRepositories
         public List<string> FetchSupplierNames()
         {
             var supplierNames = new List<string>();
-            string query = "SELECT SupplierName FROM suppliers";
+            string query = "SELECT SupplierName FROM tbl_suppliers";
 
             using (SqlConnection connection = GetConnection())
             {
@@ -194,7 +194,7 @@ namespace CIRCUIT.Model.DataRepositories
         //Method to fetch purchaseorder items and also product name based on product id
         public List<PurchaseOrderDetailModel> FetchPurchaseOrderItems(int orderid)
         {
-            string query = "SELECT pod.OrderDetailID, pod.OrderID, pod.ProductID, pod.Quantity, pod.UnitPrice, p.product_name FROM purchaseorderdetails pod INNER JOIN products p ON pod.ProductID = p.product_id WHERE pod.OrderID = @OrderID";
+            string query = "SELECT pod.OrderDetailID, pod.OrderID, pod.ProductID, pod.Quantity, pod.UnitPrice, p.product_name FROM tbl_purchaseorderdetails pod INNER JOIN tbl_products p ON pod.ProductID = p.product_id WHERE pod.OrderID = @OrderID";
 
             var orderDetails = new List<PurchaseOrderDetailModel>();
             using (SqlConnection connection = GetConnection())
@@ -231,7 +231,7 @@ namespace CIRCUIT.Model.DataRepositories
         //Insert values to purchaseorders and return the id
         public int InsertOrder(int supplierId, decimal totalAmount, decimal shippingFee)
         {
-            string query = "INSERT INTO PurchaseOrders (SupplierID, OrderDate, Status, TotalAmount, ShippingFee) " +
+            string query = "INSERT INTO tbl_PurchaseOrders (SupplierID, OrderDate, Status, TotalAmount, ShippingFee) " +
                    "OUTPUT INSERTED.OrderID " +
                    "VALUES (@SupplierID, @OrderDate, @Status, @TotalAmount, @ShippingFee)";
 
@@ -254,7 +254,7 @@ namespace CIRCUIT.Model.DataRepositories
         //Insert values to orderdetails for list of products in the purchase order
         public void InsertOrderDetails(int orderId, ObservableCollection<ProductModel> products)
         {
-            string query = "INSERT INTO PurchaseOrderDetails (OrderID, ProductID, Quantity, UnitPrice) " +
+            string query = "INSERT INTO tbl_PurchaseOrderDetails (OrderID, ProductID, Quantity, UnitPrice) " +
                            "VALUES (@OrderID, @ProductID, @Quantity, @UnitPrice)";
 
             using (SqlConnection connection = GetConnection())
@@ -285,7 +285,7 @@ namespace CIRCUIT.Model.DataRepositories
                 // Update stock quantities for each product
                 foreach (var item in orders)
                 {
-                    using (SqlCommand command = new SqlCommand("UPDATE products SET stock_quantity = stock_quantity + @Quantity WHERE product_id = @product_id", connection))
+                    using (SqlCommand command = new SqlCommand("UPDATE tbl_products SET stock_quantity = stock_quantity + @Quantity WHERE product_id = @product_id", connection))
                     {
                         command.Parameters.AddWithValue("@Quantity", item.Quantity);
                         command.Parameters.AddWithValue("@product_id", item.ProductID);
@@ -295,7 +295,7 @@ namespace CIRCUIT.Model.DataRepositories
                 }
 
                 // Updates the order status
-                using (SqlCommand updateOrderCommand = new SqlCommand("UPDATE purchaseorders SET Status = 'Completed' WHERE OrderID = @OrderID", connection))
+                using (SqlCommand updateOrderCommand = new SqlCommand("UPDATE tbl_purchaseorders SET Status = 'Completed' WHERE OrderID = @OrderID", connection))
                 {
                     updateOrderCommand.Parameters.AddWithValue("@OrderID", OrderId);
                     updateOrderCommand.ExecuteNonQuery();

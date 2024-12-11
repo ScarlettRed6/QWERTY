@@ -210,7 +210,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         private void UpdateStockAlert()
         {
-            var query = "SELECT * FROM products WHERE stock_quantity < 5 AND is_archived = 0";
+            var query = "SELECT * FROM tbl_products WHERE stock_quantity < 5 AND is_archived = 0";
             var fetchedProducts = _dbCon.FetchProducts(query);
 
             Products.Clear();
