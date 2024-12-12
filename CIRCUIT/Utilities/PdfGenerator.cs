@@ -93,47 +93,162 @@ namespace CIRCUIT.Utilities
             using (var pdf = new PdfDocument(writer))
             using (var document = new Document(pdf))
             {
+                // Fonts
+                PdfFont regularFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
                 PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
 
-                document.Add(new Paragraph("Receipt")
+                // Header
+                document.Add(new Paragraph("QWERTY")
                         .SetTextAlignment(TextAlignment.CENTER)
                         .SetFont(boldFont)
-                        .SetFontSize(16));
-                document.Add(new Paragraph($"\nDate: {sale.DateTime}\nCashier ID: {sale.CashierId}")
-                    .SetFontSize(12));
+                        .SetFontSize(18)
+                        .SetMarginBottom(10));
+                document.Add(new Paragraph("12345 Main Street, City, Country")
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetFont(regularFont)
+                        .SetFontSize(10));
+                document.Add(new Paragraph("Phone: (123) 456-7890 | Email: support@qwerty.com")
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetFont(regularFont)
+                        .SetFontSize(10));
+                document.Add(new Paragraph("------------------------------------------------------------------------------------------------------------------------")
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetFont(regularFont));
 
-                // Sale details
-                document.Add(new Paragraph($"Sale ID: {saleId}")
-                        .SetFontSize(12));
-                document.Add(new Paragraph($"Payment Method: {sale.PaymentMethod}")
-                        .SetFontSize(12));
-                document.Add(new Paragraph($"Total Amount: {sale.TotalAmount:C}")
-                        .SetFontSize(12));
-                document.Add(new Paragraph($"Customer Paid: {sale.CustomerPaid:C}")
-                        .SetFontSize(12));
-                document.Add(new Paragraph($"Change Given: {sale.ChangeGiven:C}")
-                        .SetFontSize(12));
-                document.Add(new Paragraph("\n"));
+                // Sale Information
+                document.Add(new Paragraph($"Receipt #: {saleId}")
+                        .SetFontSize(12)
+                        .SetFont(boldFont));
+                document.Add(new Paragraph($"Date: {sale.DateTime}")
+                        .SetFontSize(12)
+                        .SetFont(regularFont));
+                document.Add(new Paragraph($"Cashier ID: {sale.CashierId}")
+                        .SetFontSize(12)
+                        .SetFont(regularFont));
+                document.Add(new Paragraph("------------------------------------------------------------------------------------------------------------------------")
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetFont(regularFont));
 
                 // Table for sale items
                 Table saleItemsTable = new Table(UnitValue.CreatePercentArray(new float[] { 4, 1, 2 }));
                 saleItemsTable.SetWidth(UnitValue.CreatePercentValue(100));
 
                 // Table headers
-                saleItemsTable.AddHeaderCell(new Cell().Add(new Paragraph("Product Name").SetFont(boldFont)));
-                saleItemsTable.AddHeaderCell(new Cell().Add(new Paragraph("Quantity").SetFont(boldFont)));
-                saleItemsTable.AddHeaderCell(new Cell().Add(new Paragraph("Total Price").SetFont(boldFont)));
+                saleItemsTable.AddHeaderCell(new Cell().Add(new Paragraph("Product").SetFont(boldFont).SetFontSize(10).SetTextAlignment(TextAlignment.LEFT)));
+                saleItemsTable.AddHeaderCell(new Cell().Add(new Paragraph("Qty").SetFont(boldFont).SetFontSize(10).SetTextAlignment(TextAlignment.CENTER)));
+                saleItemsTable.AddHeaderCell(new Cell().Add(new Paragraph("Price").SetFont(boldFont).SetFontSize(10).SetTextAlignment(TextAlignment.RIGHT)));
 
                 // Table rows
                 foreach (var item in cartItems)
                 {
-                    saleItemsTable.AddCell(new Paragraph(item.ProductName));
-                    saleItemsTable.AddCell(new Paragraph(item.Quantity.ToString()));
-                    saleItemsTable.AddCell(new Paragraph(item.TotalPrice.ToString("C")));
+                    saleItemsTable.AddCell(new Paragraph(item.ProductName).SetFont(regularFont).SetFontSize(10).SetTextAlignment(TextAlignment.LEFT));
+                    saleItemsTable.AddCell(new Paragraph(item.Quantity.ToString()).SetFont(regularFont).SetFontSize(10).SetTextAlignment(TextAlignment.CENTER));
+                    saleItemsTable.AddCell(new Paragraph(item.TotalPrice.ToString("C")).SetFont(regularFont).SetFontSize(10).SetTextAlignment(TextAlignment.RIGHT));
                 }
 
                 document.Add(saleItemsTable);
+
+                // Sale Summary
+                document.Add(new Paragraph("------------------------------------------------------------------------------------------------------------------------")
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetFont(regularFont));
+                document.Add(new Paragraph($"Total Amount: {sale.TotalAmount:C}")
+                        .SetFont(boldFont)
+                        .SetFontSize(12)
+                        .SetTextAlignment(TextAlignment.RIGHT));
+                document.Add(new Paragraph($"Customer Paid: {sale.CustomerPaid:C}")
+                        .SetFont(boldFont)
+                        .SetFontSize(12)
+                        .SetTextAlignment(TextAlignment.RIGHT));
+                document.Add(new Paragraph($"Change Given: {sale.ChangeGiven:C}")
+                        .SetFont(boldFont)
+                        .SetFontSize(12)
+                        .SetTextAlignment(TextAlignment.RIGHT));
+
+                // Footer
+                document.Add(new Paragraph("\n------------------------------------------------------------------------------------------------------------------------")
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetFont(regularFont));
+                document.Add(new Paragraph("Thank you for your purchase!")
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetFont(boldFont)
+                        .SetFontSize(14));
+                document.Add(new Paragraph("Visit us again!")
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetFont(regularFont)
+                        .SetFontSize(12));
             }
         }
+
+        public static void PrintSupplierReceipt(SuppliersModel supplier, int orderId,
+        List<ProductModel> orderedProducts, decimal subTotal, decimal shippingFee, decimal totalAmount, string exportPath)
+        {
+            using (var writer = new PdfWriter(exportPath))
+            using (var pdf = new PdfDocument(writer))
+            using (var document = new Document(pdf))
+            {
+                PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+
+                // Header
+                document.Add(new Paragraph("Purchase Order Receipt")
+                    .SetTextAlignment(TextAlignment.CENTER)
+                    .SetFont(boldFont)
+                    .SetFontSize(16));
+
+                document.Add(new Paragraph($"\nOrder ID: {orderId}")
+                    .SetFontSize(12));
+                document.Add(new Paragraph($"Date: {DateTime.Now:dd/MM/yyyy}")
+                    .SetFontSize(12));
+
+                // Supplier Details
+                document.Add(new Paragraph("\nSupplier Details")
+                    .SetFont(boldFont)
+                    .SetFontSize(14));
+                document.Add(new Paragraph($"Name: {supplier.SupplierName}"));
+                document.Add(new Paragraph($"Contact: {supplier.ContactName}"));
+                document.Add(new Paragraph($"Phone: {supplier.Phone}"));
+                document.Add(new Paragraph($"Email: {supplier.Email}"));
+                document.Add(new Paragraph($"Address: {supplier.Address}"));
+
+                // Products Table
+                document.Add(new Paragraph("\nOrdered Products")
+                    .SetFont(boldFont)
+                    .SetFontSize(14));
+
+                Table productTable = new Table(UnitValue.CreatePercentArray(new float[] { 4, 1, 1, 2 }))
+                    .SetWidth(UnitValue.CreatePercentValue(100));
+
+                // Table Headers
+                productTable.AddHeaderCell(new Cell().Add(new Paragraph("Product Name").SetFont(boldFont)));
+                productTable.AddHeaderCell(new Cell().Add(new Paragraph("Quantity").SetFont(boldFont)));
+                productTable.AddHeaderCell(new Cell().Add(new Paragraph("Unit Price").SetFont(boldFont)));
+                productTable.AddHeaderCell(new Cell().Add(new Paragraph("Total Cost").SetFont(boldFont)));
+
+                // Table Rows
+                foreach (var product in orderedProducts)
+                {
+                    productTable.AddCell(new Paragraph(product.ProductName));
+                    productTable.AddCell(new Paragraph(product.OrderQuantity.ToString()));
+                    productTable.AddCell(new Paragraph(product.UnitCost.ToString("C")));
+                    productTable.AddCell(new Paragraph(product.TotalCost.ToString("C")));
+                }
+
+                document.Add(productTable);
+
+                // Totals
+                document.Add(new Paragraph("\nOrder Summary")
+                    .SetFont(boldFont)
+                    .SetFontSize(14));
+                document.Add(new Paragraph($"Subtotal: {subTotal:C}"));
+                document.Add(new Paragraph($"Shipping Fee: {shippingFee:C}"));
+                document.Add(new Paragraph($"Total Amount: {totalAmount:C}"));
+
+                // Footer
+                document.Add(new Paragraph("\nThank you for your order!")
+                    .SetTextAlignment(TextAlignment.CENTER)
+                    .SetFontSize(12));
+            }
+        }
+
     }
 }

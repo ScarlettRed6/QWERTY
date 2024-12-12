@@ -32,6 +32,7 @@ namespace CIRCUIT.View.CashierView
 
         private void ProcessPayment_Click(object sender, RoutedEventArgs e)
         {
+            /*
             MessageBoxResult result = MessageBox.Show("Are the items finalized? Do you want to proceed with payment?",
                                                       "Confirm Payment",
                                                       MessageBoxButton.YesNo,
@@ -40,7 +41,7 @@ namespace CIRCUIT.View.CashierView
             if (result == MessageBoxResult.Yes)
             {
                 this.Close();
-            }
+            }*/
         }
 
 
@@ -55,6 +56,11 @@ namespace CIRCUIT.View.CashierView
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void TextBlock_PreviewStylusSystemGesture(object sender, StylusSystemGestureEventArgs e)
+        {
+
         }
     }
 }

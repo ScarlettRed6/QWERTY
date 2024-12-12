@@ -143,7 +143,7 @@
                        
                     </Button>
 
-                    <!-- Refund Button -->
+                    <!-- Refund Button 
                     <Button x:Name="Refund" 
                             FontSize="25" 
                             Height="90" 
@@ -152,7 +152,7 @@
                             Content="Refund"
                             Style="{StaticResource RefundBtn}">
                         
-                    </Button>
+                    </Button>-->
                 </StackPanel>
             </StackPanel>
 

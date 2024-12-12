@@ -9,7 +9,8 @@
         Title="Void Order" 
         Height="500" 
         Width="980"
-        Background="#27272A"
+        Background="Transparent"   
+        AllowsTransparency="True"
         WindowStyle="None"
         ResizeMode="NoResize">
 
@@ -18,99 +19,116 @@
         <vm:VoidOrderViewModel/>
     </Window.DataContext>
 
-    <Grid Margin="20">
-        <!-- Column Definitions -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="5*"/>
-        </Grid.ColumnDefinitions>
+    <Border Background="{StaticResource palette10}"
+            CornerRadius="10"
+            BorderThickness="2">
 
-        <!-- Left Side Content -->
-        <StackPanel Grid.Column="0" Margin="0,0,20,0">
-            <!-- Title -->
-            <TextBlock Text="Void Order" 
-                       FontSize="24" 
-                       Foreground="White"
-                       FontWeight="Bold" 
-                       Margin="0,0,0,20"/>
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#FF8C00" Offset="0"/>
+                <GradientStop Color="#00C8FF" Offset="0.50"/>
+                <GradientStop Color="#FF8C00" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
 
-            <!-- Order ID Input -->
-            <TextBlock Text="Order ID:" 
-                       HorizontalAlignment="Center"
-                       Margin="0,0,0,10" 
-                       Foreground="White"
-                       FontSize="14"/>
-            <TextBox Name="OrderIdTextBox" 
-                     Width="250" 
-                     Text="{Binding OrderIdToVoid, UpdateSourceTrigger=PropertyChanged}"
-                     ToolTip="Enter the ID of the order to be voided" 
-                     Margin="0,0,0,20"/>
+        <Grid Margin="20">
+            <!-- Column Definitions -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
 
-            <!-- Reason Label -->
-            <TextBlock Text="Reason for voiding:" 
-                       HorizontalAlignment="Center"
-                       Margin="0,0,0,10" 
-                       Foreground="White"
-                       FontSize="14"/>
-            <TextBox Name="ReasonTextBox" 
-                     Width="250" 
-                     Height="100" 
-                     Text="{Binding VoidReason, UpdateSourceTrigger=PropertyChanged}"
-                     TextWrapping="Wrap" 
-                     AcceptsReturn="True" 
-                     ToolTip="Provide a reason for voiding this order" 
-                     Margin="0,0,0,20"/>
+            <!-- Left Side Content -->
+            <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                <!-- Title -->
+                <TextBlock Text="Void Order" 
+                           FontSize="24" 
+                           Foreground="White"
+                           FontWeight="Bold" 
+                           Margin="0,0,0,20"/>
 
-            <!-- Buttons with Command Bindings -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,90,0,0">
-                <Button Content="Void Order" 
-                        Width="120" 
-                        Height="35" 
-                        Background="#FF6347" 
-                        Foreground="White" 
-                        BorderThickness="0" 
-                        Command="{Binding VoidOrderCommand}"
-                        ToolTip="Confirm voiding the selected order" 
-                        Margin="0,0,10,0" RenderTransformOrigin="0.482,2.539"/>
+                <!-- Order ID Input -->
+                <TextBlock Text="Order ID:" 
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,10" 
+                           Foreground="White"
+                           FontSize="14"/>
+                <TextBox Name="OrderIdTextBox" 
+                         Width="250" 
+                         Text="{Binding OrderIdToVoid, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="Enter the ID of the order to be voided" 
+                         Style="{StaticResource generalTextBoxStyle}"
+                         Margin="0,0,0,20"/>
 
-                <Button Content="Cancel" 
-                        Width="120" 
-                        Height="35" 
-                        Background="#808080" 
-                        Foreground="White" 
-                        BorderThickness="0" 
-                        Click="cancel_click"
-                        ToolTip="Close this window without voiding"/>
+                <!-- Reason Label -->
+                <TextBlock Text="Reason for voiding:" 
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,10" 
+                           Foreground="White"
+                           FontSize="14"/>
+                <TextBox Name="ReasonTextBox" 
+                         Width="250" 
+                         Height="100" 
+                         Text="{Binding VoidReason, UpdateSourceTrigger=PropertyChanged}"
+                         TextWrapping="Wrap" 
+                         AcceptsReturn="True" 
+                         Style="{StaticResource generalTextBoxStyle}"
+                         ToolTip="Provide a reason for voiding this order" 
+                         Margin="0,0,0,20"/>
+
+                <!-- Buttons with Command Bindings -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,90,0,0">
+                    <Button Content="Void Order" 
+                            Width="120" 
+                            Height="35" 
+                            Style="{StaticResource RefundBtn}"
+                            BorderThickness="0" 
+                            Command="{Binding VoidOrderCommand}"
+                            ToolTip="Confirm voiding the selected order" 
+                            Margin="0,0,10,0" RenderTransformOrigin="0.482,2.539"/>
+
+                    <Button Content="Cancel" 
+                            Width="120" 
+                            Height="35" 
+                            Style="{StaticResource StartNewSaleButton}"
+                            BorderThickness="0" 
+                            Click="cancel_click"
+                            ToolTip="Close this window without voiding"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
 
-        <!-- Right Side Content -->
-        <StackPanel Grid.Column="1">
-            <!-- Label for DataGrid -->
-            <TextBlock Text="TODAY'S ORDERS" 
-                       FontSize="16" 
-                       Foreground="White" 
-                       FontWeight="Bold" 
-                       Margin="0,0,0,10"/>
+            <!-- Right Side Content -->
+            <StackPanel Grid.Column="1">
+                <!-- Label for DataGrid -->
+                <TextBlock Text="TODAY'S ORDERS" 
+                           FontSize="16" 
+                           Foreground="White" 
+                           FontWeight="Bold" 
+                           Margin="0,0,0,10"/>
 
-            <!-- DataGrid -->
-            <DataGrid Name="OrdersDataGrid"
-                      ItemsSource="{Binding VoidOrders}"
-                      SelectedItem="{Binding SelectedOrder, Mode=TwoWay}"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      IsReadOnly="True"
-                      VerticalAlignment="Stretch"
-                      HorizontalAlignment="Stretch"
-                      ToolTip="Select an order to void"
-                      BorderThickness="1">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Order ID" Binding="{Binding SaleId}" Width="100"/>
-                    <DataGridTextColumn Header="Payment Method" Binding="{Binding PaymentMethod}" Width="200"/>
-                    <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount}" Width="150"/>
-                    <DataGridTextColumn Header="Date" Binding="{Binding DateTime}"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
-    </Grid>
+                <!-- DataGrid -->
+                <DataGrid Name="OrdersDataGrid"
+                          ItemsSource="{Binding VoidOrders}"
+                          SelectedItem="{Binding SelectedOrder, Mode=TwoWay}"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          IsReadOnly="True"
+                          Style="{StaticResource ModernDataGrid}"
+                          RowStyle="{StaticResource QuickPayGridRow}"
+                          CellStyle="{StaticResource ModernDataGridCell}"
+                          ColumnHeaderStyle="{StaticResource QuickPayColumnHeader}"
+                          VerticalAlignment="Stretch"
+                          HorizontalAlignment="Stretch"
+                          ToolTip="Select an order to void"
+                          BorderThickness="1">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Order ID" Binding="{Binding SaleId}" Width="100"/>
+                        <DataGridTextColumn Header="Payment Method" Binding="{Binding PaymentMethod}" Width="200"/>
+                        <DataGridTextColumn Header="Total Amount" Binding="{Binding TotalAmount}" Width="150"/>
+                        <DataGridTextColumn Header="Date" Binding="{Binding DateTime}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

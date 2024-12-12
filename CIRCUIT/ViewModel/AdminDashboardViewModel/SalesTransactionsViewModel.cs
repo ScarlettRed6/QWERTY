@@ -37,6 +37,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         public RelayCommand ExportCommand { get; }
         public RelayCommand ApplyDateFilterCommand { get; }
         public RelayCommand FilterButtonCommand { get; }
+        public RelayCommand ClearFilterFCommand { get; set; }
 
         //Properties
         [ObservableProperty]
@@ -109,6 +110,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 {
                     _categoryBox = value;
                     OnPropertyChanged();
+                    ClearFilterFCommand.NotifyCanExecuteChanged();
                     //UpdatePagedSales();
                 }
             }
@@ -138,6 +140,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 {
                     _startDate = value;
                     OnPropertyChanged();
+                    ClearFilterFCommand.NotifyCanExecuteChanged();
                 }
             }
         }
@@ -152,6 +155,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 {
                     _endDate = value;
                     OnPropertyChanged();
+                    ClearFilterFCommand.NotifyCanExecuteChanged();
                 }
             }
         }
@@ -180,11 +184,27 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             ExportCommand = new RelayCommand(ExportSelectedTransactions);
             ApplyDateFilterCommand = new RelayCommand(ApplyDateFilter);
             FilterButtonCommand = new RelayCommand(OpenWindowFilter);
-
+            ClearFilterFCommand = new RelayCommand(ClearFilters, CanClearFilter);
+            CategoryBox = "Payment Method";
             //IsAllSelected = false;
 
             UpdateList();
 
+        }
+
+        private bool CanClearFilter()
+        {
+           return !(string.IsNullOrWhiteSpace(CategoryBox) || CategoryBox == "Payment Method") 
+                   || StartDate.HasValue 
+                   || EndDate.HasValue;
+        }
+
+        private void ClearFilters()
+        {
+            CategoryBox = string.Empty;
+            StartDate = null;   
+            EndDate = null;
+            UpdatePagedSales();
         }
 
         private void OpenWindowFilter()

@@ -408,10 +408,16 @@ namespace CIRCUIT.Utilities
         //Method to fetch revenue per category
         public Dictionary<string, decimal> FetchRevenuePerCategory()
         {
-            string query = @"SELECT p.category AS Category, SUM(si.quantity * si.item_total_price) AS TotalRevenue
-                            FROM tbl_products p JOIN tbl_sale_items si ON p.product_id = si.product_id
+            string query = @"
+                            SELECT TOP 3 
+                                p.category AS Category, 
+                                SUM(si.quantity * (si.item_total_price / si.quantity)) AS TotalRevenue
+                            FROM tbl_products p 
+                            JOIN tbl_sale_items si ON p.product_id = si.product_id
                             JOIN tbl_sales s ON si.sale_id = s.sale_id
-                            GROUP BY p.category";
+                            WHERE s.is_void = 0
+                            GROUP BY p.category
+                            ORDER BY TotalRevenue DESC";
 
             var revenuePerCategory = new Dictionary<string, decimal>();
 
@@ -698,6 +704,11 @@ namespace CIRCUIT.Utilities
                     command.ExecuteNonQuery();
                 }
             }
+        }
+
+        internal void Dispose()
+        {
+            //throw new NotImplementedException();
         }
     }
 }

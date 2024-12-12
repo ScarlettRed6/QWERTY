@@ -96,7 +96,6 @@
                                     Height="40"
                                     FontSize="20"
                                     Style="{StaticResource ExportButtonStyle}"
-                                    Background="{StaticResource palette1}"
                                     Command="{Binding TestCommand, UpdateSourceTrigger=PropertyChanged}"/>
 
                         </StackPanel>

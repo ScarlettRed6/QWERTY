@@ -149,12 +149,12 @@
 
     <!-- Button add Catalog styles -->
     <Style x:Key="addCatalogButton" TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource panelColor1}"/>
+        <Setter Property="Background" Value="{StaticResource panelColor2}"/>
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}" CornerRadius="20">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="10">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
@@ -164,10 +164,10 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource panelColor2}"/>
+                <Setter Property="Background" Value="Red"/>
             </Trigger>
             <Trigger Property="IsMouseCaptured" Value="True">
-                <Setter Property="Background" Value="{StaticResource panelColor5}"/>
+                <Setter Property="Background" Value="{StaticResource panelColor1}"/>
             </Trigger>
         </Style.Triggers>
         

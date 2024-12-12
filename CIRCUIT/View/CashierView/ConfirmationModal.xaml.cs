@@ -55,6 +55,7 @@ namespace CIRCUIT.View.CashierView
 
         private void processOrder_Click(object sender, RoutedEventArgs e)
         {
+            /*
             MessageBoxResult result = MessageBox.Show("Do you want to proceed with payment?",
                               "Confirm Payment",
                               MessageBoxButton.YesNo,
@@ -63,7 +64,7 @@ namespace CIRCUIT.View.CashierView
             if (result == MessageBoxResult.Yes)
             {
                 this.Close();
-            }
+            }*/
         }
     }
 }

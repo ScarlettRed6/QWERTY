@@ -11,9 +11,16 @@ namespace CIRCUIT.ViewModel.CashierViewModel
     public class InventoryViewModel : ObservableObject
     {
         private ObservableCollection<ProductModel> _allProducts = new ObservableCollection<ProductModel>();
+        private ObservableCollection<ProductModel> _pagedProducts;
         private ObservableCollection<ProductModel> _filteredProducts;
         private readonly Db _db;
         private string _searchText;
+
+        private int _currentPage = 1;
+        private int _itemsPerPage = 5;
+        private int _totalItems;
+
+        public int TotalPages => (int)Math.Ceiling((double)TotalItems / ItemsPerPage);
 
         public ObservableCollection<ProductModel> FilteredProducts
         {
@@ -22,6 +29,17 @@ namespace CIRCUIT.ViewModel.CashierViewModel
             {
                 _filteredProducts = value;
                 OnPropertyChanged(nameof(FilteredProducts));
+                UpdatePagedProducts();
+            }
+        }
+
+        public ObservableCollection<ProductModel> PagedProducts
+        {
+            get => _pagedProducts;
+            set
+            {
+                _pagedProducts = value;
+                OnPropertyChanged(nameof(PagedProducts));
             }
         }
 
@@ -36,30 +54,67 @@ namespace CIRCUIT.ViewModel.CashierViewModel
             }
         }
 
+        public int CurrentPage
+        {
+            get => _currentPage;
+            set
+            {
+                if (_currentPage != value && value > 0 && value <= TotalPages)
+                {
+                    _currentPage = value;
+                    OnPropertyChanged();
+                    UpdatePagedProducts();
+                }
+            }
+        }
+
+        public int ItemsPerPage
+        {
+            get => _itemsPerPage;
+            set
+            {
+                _itemsPerPage = value;
+                OnPropertyChanged();
+                UpdatePagedProducts();
+            }
+        }
+
+        public int TotalItems
+        {
+            get => _totalItems;
+            set
+            {
+                _totalItems = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand SearchCommand { get; }
+        public ICommand FirstPageCommand { get; }
+        public ICommand LastPageCommand { get; }
+        public ICommand NextPageCommand { get; }
+        public ICommand PreviousPageCommand { get; }
 
         public InventoryViewModel()
         {
             _db = new Db();
             LoadProducts();
             SearchCommand = new RelayCommand(FilterProducts);
+            FirstPageCommand = new RelayCommand(() => CurrentPage = 1);
+            LastPageCommand = new RelayCommand(() => CurrentPage = TotalPages);
+            NextPageCommand = new RelayCommand(() => CurrentPage++);
+            PreviousPageCommand = new RelayCommand(() => CurrentPage--);
         }
 
-        // Method to load products from the database
         private void LoadProducts()
         {
             try
             {
-                // SQL query to fetch products that are not archived
-                string query = "SELECT * FROM products WHERE is_archived = 0";
-
-                // Fetch data from DB
+                string query = "SELECT * FROM tbl_products WHERE is_archived = 0";
                 var productsFromDb = _db.FetchData(query);
 
-                // Clear existing products in case we reload
                 _allProducts.Clear();
 
-                // Map fetched data into the ObservableCollection
                 foreach (var product in productsFromDb)
                 {
                     _allProducts.Add(new ProductModel
@@ -78,27 +133,22 @@ namespace CIRCUIT.ViewModel.CashierViewModel
                     });
                 }
 
-                // Set the FilteredProducts to the collection of all products
                 FilteredProducts = new ObservableCollection<ProductModel>(_allProducts);
             }
             catch (Exception ex)
             {
-                // Log or handle exceptions
                 Console.WriteLine($"Error loading products: {ex.Message}");
             }
         }
 
-        // Method to filter products based on search text
         private void FilterProducts()
         {
             if (string.IsNullOrWhiteSpace(SearchText))
             {
-                // If search text is empty, show all products
                 FilteredProducts = new ObservableCollection<ProductModel>(_allProducts);
             }
             else
             {
-                // Filter products by ProductId, ProductName, or Category (case-insensitive)
                 FilteredProducts = new ObservableCollection<ProductModel>(
                     _allProducts.Where(p =>
                         p.ProductId.ToString().Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
@@ -108,5 +158,17 @@ namespace CIRCUIT.ViewModel.CashierViewModel
                 );
             }
         }
+
+        private void UpdatePagedProducts()
+        {
+            if (FilteredProducts == null) return;
+
+            TotalItems = FilteredProducts.Count;
+
+            PagedProducts = new ObservableCollection<ProductModel>(
+                FilteredProducts.Skip((CurrentPage - 1) * ItemsPerPage).Take(ItemsPerPage)
+            );
+        }
+
     }
 }

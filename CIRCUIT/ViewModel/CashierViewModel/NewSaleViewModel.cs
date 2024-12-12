@@ -21,6 +21,8 @@ namespace CIRCUIT.ViewModel
         #region Private Fields
         private readonly Db _db;
         private readonly AccountRepository _accountRepository;
+        private quickpayView quickpayWindow;
+        private ConfirmationModal confirmationModal;
         private int _userId;
         private string _searchQuery;
         private string _amountReceived;
@@ -356,8 +358,9 @@ namespace CIRCUIT.ViewModel
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            quickpayView quickpayWindow = new quickpayView(CartItems, TotalAmount, this);
+            quickpayWindow = new quickpayView(CartItems, TotalAmount, this);
             quickpayWindow.Show();
+            
         }
 
         /*
@@ -573,7 +576,7 @@ namespace CIRCUIT.ViewModel
                 return;
             }
 
-            var confirmationModal = new ConfirmationModal(CartItems, TotalAmount, this);
+            confirmationModal = new ConfirmationModal(CartItems, TotalAmount, this);
             confirmationModal.ShowDialog();
         }
 
@@ -587,6 +590,16 @@ namespace CIRCUIT.ViewModel
         //Modified executeprocessorder to print a receipt
         private void ExecuteProcessOrder()
         {
+            MessageBoxResult result = MessageBox.Show("Are the items finalized? Do you want to proceed with payment?",
+                                                      "Confirm Payment",
+                                                      MessageBoxButton.YesNo,
+                                                      MessageBoxImage.Question);
+
+            if (result != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
             try
             {
                 if (!ValidatePayment(out decimal receivedAmount))
@@ -657,13 +670,25 @@ namespace CIRCUIT.ViewModel
                 MessageBox.Show($"An error occurred while processing the order: {ex.Message}", "Error",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            confirmationModal?.Close();
         }
 
 
         private void ExecuteQuickOrder()
         {
+            MessageBoxResult result = MessageBox.Show("Are the items finalized? Do you want to proceed with payment?",
+                                                      "Confirm Payment",
+                                                      MessageBoxButton.YesNo,
+                                                      MessageBoxImage.Question);
+
+            if (result != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
             try
             {
+                // Create a new sale record
                 SaleModel newSale = new SaleModel
                 {
                     CashierId = _userId,
@@ -685,11 +710,32 @@ namespace CIRCUIT.ViewModel
                     _db.InsertSaleItem(saleItem);
                     _db.UpdateProductStockQuantity(cartItem.ProductId, cartItem.Quantity);
                 }
-                LoadProductsFromDatabase();
 
+                // Open a SaveFileDialog to save the receipt
+                var saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "PDF Files (*.pdf)|*.pdf",
+                    FileName = $"Receipt_{newSaleId}.pdf"
+                };
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string exportPath = saveFileDialog.FileName;
+
+                    // Generate the receipt PDF
+                    PdfGenerator.GenerateReceiptPdf(newSale, newSaleId, CartItems.ToList(), exportPath);
+
+                    MessageBox.Show("Receipt generated and order processed successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Receipt generation canceled by user.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+
+                // Reset the order details
+                LoadProductsFromDatabase();
                 ResetOrderDetails();
                 TotalAmount = 0;
-                MessageBox.Show("Order processed successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                 CartItems.Clear();
             }
             catch (Exception ex)
@@ -697,6 +743,8 @@ namespace CIRCUIT.ViewModel
                 MessageBox.Show($"An error occurred while processing the order: {ex.Message}", "Error",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            quickpayWindow?.Close();
         }
 
 

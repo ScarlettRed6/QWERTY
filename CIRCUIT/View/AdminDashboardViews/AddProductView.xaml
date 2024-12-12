@@ -21,7 +21,7 @@
         </DataTemplate>
     </UserControl.Resources>
 
-    <Border CornerRadius="10" Background="{StaticResource palette10}">
+    <Border CornerRadius="10" Background="{StaticResource palette12}">
 
         <Grid>
             <Grid>
@@ -334,6 +334,7 @@
                              Width="200"
                              FontSize="18"
                              Margin="2"
+                             Style="{StaticResource catalogBox}"
                              IsEnabled="{Binding IsNewBrandEnabled}"/>
 
                     <Label Content="new Category"
@@ -343,6 +344,7 @@
                              Width="200"
                              FontSize="18"
                              Margin="2"
+                             Style="{StaticResource catalogBox}"
                              IsEnabled="{Binding IsNewCategoryEnabled}"/>
                 </StackPanel>
                 

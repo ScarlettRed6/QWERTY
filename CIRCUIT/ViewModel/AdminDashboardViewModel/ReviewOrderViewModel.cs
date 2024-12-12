@@ -1,8 +1,10 @@
 ﻿using CIRCUIT.Model;
 using CIRCUIT.Model.DataRepositories;
+using CIRCUIT.Utilities;
 using CIRCUIT.View.AdminDashboardViews;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -68,6 +70,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 // Insert the main order and retrieve the OrderID
                 int orderId = _sControlRepo.InsertOrder(supplierId, TotalAmount, ShippingFee);
 
+                GenerateSupplierReceipt(orderId);
+
                 // Insert the product details
                 _sControlRepo.InsertOrderDetails(orderId, FilteredProducts);
 
@@ -79,6 +83,38 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             {
                 MessageBox.Show("Supplier details not found. Please check your selection.",
                                 "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void GenerateSupplierReceipt(int orderId)
+        {
+            // Prompt user to save the receipt
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "PDF Files (*.pdf)|*.pdf",
+                FileName = $"Supplier_Receipt_{orderId}.pdf"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string exportPath = saveFileDialog.FileName;
+
+                // Generate the receipt PDF
+                PdfGenerator.PrintSupplierReceipt(
+                    _suppliersDetails[0], // Assuming the first supplier is selected
+                    orderId,
+                    FilteredProducts.ToList(),
+                    SubTotal,
+                    ShippingFee,
+                    TotalAmount,
+                    exportPath
+                );
+
+                MessageBox.Show("Receipt generated successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Receipt generation canceled by user.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 

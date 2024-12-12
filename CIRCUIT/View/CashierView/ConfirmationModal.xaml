@@ -10,7 +10,8 @@
         Height="700" Width="800"
         ResizeMode="NoResize"
         WindowStyle="None"
-        Background="#18181B">
+        Background="Transparent"
+        AllowsTransparency="True">
 
     <Window.DataContext>
         <vm:NewSaleViewModel />
@@ -19,14 +20,14 @@
     <Window.Resources>
         <!-- Base Style for Controls -->
         <Style x:Key="BaseControlStyle" TargetType="Control">
-            <Setter Property="Background" Value="#27272A"/>
-            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Background" Value="{StaticResource palette2}"/>
+            <Setter Property="Foreground" Value="{StaticResource palette6}"/>
 
         </Style>
 
         <!-- TextBlock Base Style -->
         <Style x:Key="TextBlockBase" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="Foreground" Value="{StaticResource palette6}"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
 
@@ -142,14 +143,16 @@
 
         <!-- Section Border Style -->
         <Style x:Key="SectionBorderStyle" TargetType="Border">
-            <Setter Property="Background" Value="#27272A"/>
+            <Setter Property="Background" Value="{StaticResource palette2}"/>
             <Setter Property="CornerRadius" Value="8"/>
             <Setter Property="Padding" Value="20"/>
             <Setter Property="Margin" Value="0,0,0,16"/>
         </Style>
     </Window.Resources>
 
-    <Border Padding="24">
+    <Border Padding="24"
+            CornerRadius="10"
+            Background="{StaticResource palette10}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -176,9 +179,9 @@
                                             <ColumnDefinition Width="120"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="{Binding ProductName}" Style="{StaticResource TextBlockBase}" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Column="1" Text="{Binding Quantity, StringFormat='{} × {0}'}" Margin="15,0" Foreground="#A1A1AA" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Column="2" Text="{Binding SellingPrice, StringFormat='₱{0:N2}'}" TextAlignment="Right" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Column="3" Text="{Binding TotalPrice, StringFormat='₱{0:N2}'}" TextAlignment="Right" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Quantity, StringFormat='{} × {0}'}" Margin="15,0" Foreground="{StaticResource palette6}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding SellingPrice, StringFormat='₱{0:N2}'}" TextAlignment="Right" Foreground="{StaticResource palette6}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding TotalPrice, StringFormat='₱{0:N2}'}" TextAlignment="Right" Foreground="{StaticResource palette6}" FontWeight="SemiBold" VerticalAlignment="Center"/>
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -207,6 +210,8 @@
 
                             <ComboBox ItemsSource="{Binding ViewModel.PaymentMethods}"
                                       Margin="0,0,0,16" 
+                                      Height="40"
+                                      Style="{StaticResource FilterComboBoxStyle}"
                                       VerticalContentAlignment="Center" 
                                       SelectionChanged="PaymentMethodComboBox_SelectionChanged"
                                       SelectedItem="{Binding ViewModel.PaymentMethod, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
@@ -223,9 +228,20 @@
 
             <!-- Action Buttons -->
             <UniformGrid Grid.Row="2" Rows="1" Columns="3" Margin="8,0,0,0">
-                <Button Content="RETURN TO CART" Style="{StaticResource ButtonBase}" Margin="10" Background="#3F3F46" Command="{Binding ViewModel.returncartCommand}" Click="ReturnToCart"/>
-                <Button Content="APPLY DISCOUNT" Style="{StaticResource ButtonBase}" Margin="10" Background="#FFA500" Command="{Binding ViewModel.ApplyDiscountCommand}"/>
-                <Button Content="PROCESS ORDER" Style="{StaticResource ButtonBase}" Margin="10" Background="#4CAF50" Command="{Binding ViewModel.ProcessOrderCommand}" Click="processOrder_Click"/>
+                <Button Content="RETURN TO CART" 
+                        Style="{StaticResource ButtonBase}" 
+                        Margin="10" 
+                        Background="#3F3F46" 
+                        Command="{Binding ViewModel.returncartCommand}" 
+                        Click="ReturnToCart"/>
+                <Button Content="APPLY DISCOUNT" 
+                        Style="{StaticResource ButtonBase}" 
+                        Margin="10" Background="#FFA500" 
+                        Command="{Binding ViewModel.ApplyDiscountCommand}"/>
+                <Button Content="PROCESS ORDER" 
+                        Style="{StaticResource ButtonBase}" 
+                        Margin="10" Background="#4CAF50" 
+                        Command="{Binding ViewModel.ProcessOrderCommand}"/>
             </UniformGrid>
         </Grid>
     </Border>

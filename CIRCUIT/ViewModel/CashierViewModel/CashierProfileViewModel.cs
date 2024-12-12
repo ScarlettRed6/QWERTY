@@ -8,6 +8,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using CIRCUIT.Model.SingleTons;
+using System.Security;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CIRCUIT.ViewModel.CashierViewModel
 {
@@ -20,8 +22,8 @@ namespace CIRCUIT.ViewModel.CashierViewModel
         public string Fullname { get; set; }
 
         // Password Properties
-        private string _currentPassword;
-        public string CurrentPassword
+        private SecureString _currentPassword;
+        public SecureString CurrentPassword
         {
             get => _currentPassword;
             set
@@ -31,8 +33,8 @@ namespace CIRCUIT.ViewModel.CashierViewModel
             }
         }
 
-        private string _newPassword;
-        public string NewPassword
+        private SecureString _newPassword;
+        public SecureString NewPassword
         {
             get => _newPassword;
             set
@@ -42,8 +44,8 @@ namespace CIRCUIT.ViewModel.CashierViewModel
             }
         }
 
-        private string _confirmNewPassword;
-        public string ConfirmNewPassword
+        private SecureString _confirmNewPassword;
+        public SecureString ConfirmNewPassword
         {
             get => _confirmNewPassword;
             set
@@ -52,6 +54,50 @@ namespace CIRCUIT.ViewModel.CashierViewModel
                 OnPropertyChange(nameof(ConfirmNewPassword));
             }
         }
+
+        private string _comparePassword;
+        public string ComparePassword
+        {
+            get 
+            { 
+                return _comparePassword; 
+            }
+            set 
+            { 
+                _comparePassword = value; 
+                OnPropertyChange(nameof(ComparePassword));
+            }
+        }
+        
+        private string _compareSalt;
+        public string CompareSalt
+        {
+            get 
+            { 
+                return _compareSalt; 
+            }
+            set 
+            {
+                _compareSalt = value; 
+                OnPropertyChange(nameof(CompareSalt));
+            }
+        }
+
+        private string _imagePathDisplay;
+
+        public string ImagePathDisplay
+        {
+            get 
+            { 
+                return _imagePathDisplay; 
+            }
+            set 
+            { 
+                _imagePathDisplay = value; 
+            }
+        }
+
+
 
         // Private fields
         private readonly int _userId;
@@ -94,6 +140,9 @@ namespace CIRCUIT.ViewModel.CashierViewModel
               UserId = _currentUser.UserId;
               Username = _currentUser.Username;
               Fullname = _currentUser.FullName;
+              ComparePassword = _currentUser.Password;
+              CompareSalt = _currentUser.Salt;
+              ImagePathDisplay = _currentUser.UserImagePath;
 
         }
 
@@ -102,25 +151,32 @@ namespace CIRCUIT.ViewModel.CashierViewModel
         /// </summary>
         private void SaveChanges()
         {
-            if (string.IsNullOrWhiteSpace(CurrentPassword) || !VerifyCurrentPassword(CurrentPassword))
+            string plainOld = PasswordHelper.ConvertSecureString(CurrentPassword);
+            string plainNew = PasswordHelper.ConvertSecureString(NewPassword);
+            string plainConfirmNew = PasswordHelper.ConvertSecureString(ConfirmNewPassword);
+
+
+            bool compare = PasswordHelper.VerifyPassword(plainOld, ComparePassword, CompareSalt);
+
+            if (!compare)
             {
                 MessageBox.Show("Current password is incorrect.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(NewPassword))
+            if (string.IsNullOrWhiteSpace(plainNew))
             {
                 MessageBox.Show("New password cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            if (NewPassword == CurrentPassword)
+            if (plainNew == plainOld)
             {
                 MessageBox.Show("New password cannot be the same as the current password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            if (NewPassword != ConfirmNewPassword)
+            if (plainNew != plainConfirmNew)
             {
                 MessageBox.Show("New password and confirm password do not match.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -129,13 +185,13 @@ namespace CIRCUIT.ViewModel.CashierViewModel
             try
             {
                 // Hash the new password and save
-                string newSalt;
-                string hashedNewPassword = PasswordHelper.HashPassword(NewPassword, out newSalt);
+                //string newSalt;
+                //string hashedNewPassword = PasswordHelper.HashPassword(plainNew, out newSalt);
 
                 if (_currentUser != null)
                 {
-                    _currentUser.Password = hashedNewPassword;
-                    _currentUser.Salt = newSalt;
+                    _currentUser.Password = plainNew;
+                    //_currentUser.Salt = newSalt;
 
                     _accountRepository.UpdateUserAccount(_currentUser);
 

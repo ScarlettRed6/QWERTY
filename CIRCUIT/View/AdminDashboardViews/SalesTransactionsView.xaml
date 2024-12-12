@@ -170,11 +170,35 @@
                                 <ComboBoxItem Content="Month"/>
                                 <ComboBoxItem Content="Year"/>
                             </ComboBox>-->
-                            <Button Content="Filter"
-                                    Height="40"
-                                    Width="150"
+                            
+                            <!-- Filter button -->
+                            <Button Height="40"
+                                    Width="140"
                                     Margin="10,0,0,0"
-                                    Command="{Binding FilterButtonCommand}"/>
+                                    Command="{Binding FilterButtonCommand}"
+                                    Style="{StaticResource ExportButtonStyle}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Icon="Filter" Height="15"
+                                                  Margin="0,0,20,0"/>
+                                    <TextBlock Text="Filter" FontSize="20"
+                                               FontWeight="Medium"
+                                               Margin="0,0,0,2"/>
+                                </StackPanel>
+                            </Button>
+                            
+                            <Button Height="40"
+                                    Width="120"
+                                    Margin="10,0,0,0"
+                                    Command="{Binding ClearFilterFCommand}"
+                                    Style="{StaticResource ExportButtonStyle}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Icon="X" Height="15"
+                                                  Margin="0,0,10,0"/>
+                                    <TextBlock Text="Clear" FontSize="20"
+                                               FontWeight="Medium"
+                                               Margin="0,0,0,2"/>
+                                </StackPanel>
+                            </Button>
 
                         </StackPanel>
 

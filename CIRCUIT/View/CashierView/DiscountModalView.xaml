@@ -9,9 +9,11 @@
         Height="350" 
         Width="300"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource panelColor6}"
+        Background="Transparent"
+        AllowsTransparency="True"
         xmlns:vm="clr-namespace:CIRCUIT.ViewModel"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        WindowStyle="None">
 
 
     <Window.DataContext>
@@ -20,7 +22,7 @@
 
     <Window.Resources>
         <Style x:Key="CustomButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource panelColor1}"/>
+            <Setter Property="Background" Value="{StaticResource palette1}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Height" Value="30"/>
@@ -35,7 +37,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource panelColor2}"/>
+                                <Setter Property="Background" Value="{StaticResource palette9}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -57,8 +59,8 @@
         </Style>
     </Window.Resources>
 
-    <Border Background="{StaticResource panelColor7}"
-            Margin="10"
+    <Border Background="{StaticResource palette10}"
+            Margin="0"
             CornerRadius="3">
         <Grid Margin="20">
             <Grid.ColumnDefinitions>
@@ -90,8 +92,7 @@
 
                 <PasswordBox x:Name="PinPasswordBox"
                              Height="30"
-                             Background="{StaticResource panelColor5}"
-                            Style="{StaticResource CustomPasswordBoxStyle}"
+                            Style="{StaticResource  passWordBoxStyle}"
                             Margin="0,0,0,20"/>
 
                 <StackPanel Orientation="Horizontal"

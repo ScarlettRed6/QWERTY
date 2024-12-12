@@ -17,7 +17,7 @@ using static Org.BouncyCastle.Asn1.Cmp.Challenge;
 
 namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 {
-    public class HomeViewModel : PropertyChange
+    public class HomeViewModel : PropertyChange, IDisposable
     {
         //Fields
         private decimal _grossProfit;
@@ -82,9 +82,9 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         {
             var revenues = _dbCon.FetchLast7DaysRevenue();
 
-            // Prepare the chart data
+            //the chart data
             var labels = new string[7];
-            var values = new List<double>(new double[7]); // Initial values as placeholder
+            var values = new List<double>(new double[7]); 
             DateTime today = DateTime.Today;
 
             for (int i = 0; i < 7; i++)
@@ -101,7 +101,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 }
             }
 
-            // Define the series
+            //the series , column series
             SeriesCollection = new ObservableCollection<ISeries>
             {
                 new ColumnSeries<double>
@@ -111,7 +111,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 }
             };
 
-            // Define axes
+            //axes
             XAxes = new ObservableCollection<Axis>
             {
                 new Axis
@@ -210,7 +210,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         private void UpdateStockAlert()
         {
-            var query = "SELECT * FROM tbl_products WHERE stock_quantity < 5 AND is_archived = 0";
+            var query = "SELECT * FROM tbl_products WHERE stock_quantity <= min_stock_level AND is_archived = 0";
             var fetchedProducts = _dbCon.FetchProducts(query);
 
             Products.Clear();
@@ -231,6 +231,24 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         }
 
+        public void Dispose()
+        {
+            if (_dbCon != null)
+            {
+                _dbCon.Dispose();
+            }
 
+            if (availableColors != null)
+            {
+                availableColors.Clear();  
+            }
+
+            GC.SuppressFinalize(this);
+        }
+
+        ~HomeViewModel()
+        {
+            Dispose();
+        }
     }
 }
