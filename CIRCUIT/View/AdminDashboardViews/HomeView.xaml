@@ -83,7 +83,7 @@
 
                         <wpf:PieChart Series="{Binding SeriesCollection2}"
                                       LegendPosition="Hidden"
-                                      Width="130"
+                                      Width="300"
                                       Height="130">
                             
                         </wpf:PieChart>
@@ -195,16 +195,10 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="Latest Transactions"
-                                   Foreground="{StaticResource panelColor4}"
+                                   Foreground="{StaticResource palette6}"
                                    FontSize="17"
-                                   Margin="10,5,0,0"/>
-                        <Button Content="View All >"
-                                Grid.Column="1"
-                                Background="Transparent"
-                                Foreground="{StaticResource panelColor4}"
-                                FontSize="17"
-                                Width="90"
-                                HorizontalAlignment="Right"/>
+                                   FontWeight="Medium"
+                                   Margin="10,10,0,0"/>
 
 
                     </Grid>

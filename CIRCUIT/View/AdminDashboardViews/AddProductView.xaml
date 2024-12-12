@@ -29,7 +29,6 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="80"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
                 <!-- Kaya nasa stackpanel kac baka mag add ako ng text later idk haha -->
@@ -109,87 +108,118 @@
                         </Grid.RowDefinitions>
 
                         <!-- Grid row 2 row 0-->
-                        <StackPanel Orientation="Horizontal"
-                                    VerticalAlignment="Top">
-                        
-                            <!-- Product name textbox -->
-                            <StackPanel>
-                                <Label Content="Product Name"
-                                       FontSize="15"
-                                       FontWeight="Medium"
-                                       Foreground="{StaticResource palette6}"
-                                       Margin="8,0,0,0"/>
-                                <TextBox x:Name="prodName" Height="35"
-                                         Width="230" 
-                                         Margin="10,0,0,0"
-                                         FontSize="20"
-                                         Foreground="{StaticResource panelColor4}"
-                                         Style="{StaticResource catalogBox}"
-                                         Text="{Binding ProductNameBox, UpdateSourceTrigger=PropertyChanged}"/>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Top">
+
+                                <!-- Product name textbox -->
+                                <StackPanel>
+                                    <Label Content="Product Name"
+                                           FontSize="15"
+                                           FontWeight="Medium"
+                                           Foreground="{StaticResource palette6}"
+                                           Margin="8,0,0,0"/>
+                                    <TextBox x:Name="prodName" Height="35"
+                                             Width="230" 
+                                             Margin="10,0,0,0"
+                                             FontSize="20"
+                                             Foreground="{StaticResource panelColor4}"
+                                             Style="{StaticResource catalogBox}"
+                                             Text="{Binding ProductNameBox, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+
+                                <!-- Product model textbox -->
+                                <StackPanel>
+                                    <Label Content="Model"
+                                           FontSize="15"
+                                           FontWeight="Medium"
+                                           Foreground="{StaticResource palette6}"
+                                           Margin="8,0,0,0"/>
+                                    <TextBox  x:Name="prodModel" Height="35"
+                                              Width="230" 
+                                              Margin="10,0,0,0"
+                                              FontSize="20"
+                                              Foreground="{StaticResource panelColor4}"
+                                              Style="{StaticResource catalogBox}"
+                                              Text="{Binding ProductModelBox, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+
+                                <StackPanel>
+                                    <Label Content="Brand"
+                                           FontSize="15"
+                                           FontWeight="Medium"
+                                           Foreground="{StaticResource palette6}"
+                                           Margin="8,0,0,0"/>
+
+                                    <ComboBox Width="150" Height="35"
+                                              Margin="8,0,0,0"
+                                              FontSize="15"
+                                              Style="{StaticResource FilterComboBoxStyle}"
+                                              ItemsSource="{Binding Brands}"
+                                              SelectedValue="{Binding BrandBox, UpdateSourceTrigger=PropertyChanged}"
+                                              IsEnabled="{Binding IsBrandBoxEnabled}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" />
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <!-- Product category combobox -->
+                                <StackPanel>
+                                    <Label Content="Category"
+                                           FontSize="15"
+                                           FontWeight="Medium"
+                                           Foreground="{StaticResource palette6}"
+                                           Margin="8,0,0,0"/>
+
+                                    <ComboBox Width="150" Height="35"
+                                              Margin="8,0,0,0"
+                                              FontSize="15"
+                                              Style="{StaticResource FilterComboBoxStyle}"
+                                              ItemsSource="{Binding Categories}"
+                                              SelectedValue="{Binding CategoryBox, UpdateSourceTrigger=PropertyChanged}"
+                                              IsEnabled="{Binding IsCategoryBoxEnabled}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}" />
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </StackPanel>
+
+
+
                             </StackPanel>
 
-                            <!-- Product model textbox -->
-                            <StackPanel>
-                                <Label Content="Model"
-                                       FontSize="15"
-                                       FontWeight="Medium"
-                                       Foreground="{StaticResource palette6}"
-                                       Margin="8,0,0,0"/>
-                                <TextBox  x:Name="prodModel" Height="35"
-                                          Width="230" 
-                                          Margin="10,0,0,0"
-                                          FontSize="20"
-                                          Foreground="{StaticResource panelColor4}"
-                                          Style="{StaticResource catalogBox}"
-                                          Text="{Binding ProductModelBox, UpdateSourceTrigger=PropertyChanged}"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="3"
+                                        Margin="10,5,0,0">
+
+                                <StackPanel>
+                                    <Label Content="New brand"
+                                           Foreground="{StaticResource palette6}"/>
+                                    <TextBox Text="{Binding NewBrand}"
+                                             Height="30"
+                                             Width="200"
+                                             FontSize="18"
+                                             Margin="2"
+                                             Style="{StaticResource catalogBox}"
+                                             IsEnabled="{Binding IsNewBrandEnabled}"/>
+                                </StackPanel>
+
+                                <StackPanel Margin="10,0,0,0">
+                                    <Label Content="new Category"
+                                           Foreground="{StaticResource palette6}"/>
+                                    <TextBox Text="{Binding NewCategory}"
+                                             Height="30"
+                                             Width="200"
+                                             FontSize="18"
+                                             Margin="2"
+                                             Style="{StaticResource catalogBox}"
+                                             IsEnabled="{Binding IsNewCategoryEnabled}"/>
+                                </StackPanel>
                             </StackPanel>
-
-                            <StackPanel>
-                                <Label Content="Brand"
-                                       FontSize="15"
-                                       FontWeight="Medium"
-                                       Foreground="{StaticResource palette6}"
-                                       Margin="8,0,0,0"/>
-
-                                <ComboBox Width="150" Height="35"
-                                          Margin="8,0,0,0"
-                                          FontSize="15"
-                                          Style="{StaticResource FilterComboBoxStyle}"
-                                          ItemsSource="{Binding Brands}"
-                                          SelectedValue="{Binding BrandBox, UpdateSourceTrigger=PropertyChanged}"
-                                          IsEnabled="{Binding IsBrandBoxEnabled}">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                            </StackPanel>
-
-                            <!-- Product category combobox -->
-                            <StackPanel>
-                                <Label Content="Category"
-                                       FontSize="15"
-                                       FontWeight="Medium"
-                                       Foreground="{StaticResource palette6}"
-                                       Margin="8,0,0,0"/>
-
-                                <ComboBox Width="150" Height="35"
-                                          Margin="8,0,0,0"
-                                          FontSize="15"
-                                          Style="{StaticResource FilterComboBoxStyle}"
-                                          ItemsSource="{Binding Categories}"
-                                          SelectedValue="{Binding CategoryBox, UpdateSourceTrigger=PropertyChanged}"
-                                          IsEnabled="{Binding IsCategoryBoxEnabled}">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                            </StackPanel>
-                        
-                        
 
                         </StackPanel>
 
@@ -263,7 +293,7 @@
 
                                         </StackPanel>
                                     </StackPanel>
-                                
+
                                     <StackPanel Grid.Row="1" Orientation="Horizontal">
                                         <!-- Stock quantity numerical textbox -->
                                         <StackPanel>
@@ -301,7 +331,7 @@
                                         </StackPanel>
 
                                     </StackPanel>
-                                
+
                                 </Grid>
                                 <!-- Image drop box , implement later -->
                                 <Button Grid.Column="2"
@@ -318,36 +348,13 @@
                                 </Button>
 
                             </Grid>
-                        
+
 
                         </StackPanel>
-                    
+
                     </Grid>
                 </Border>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="3">
-
-                    <Label Content="new brand"
-                           Foreground="{StaticResource palette6}"/>
-                    <TextBox Text="{Binding NewBrand}"
-                             Height="30"
-                             Width="200"
-                             FontSize="18"
-                             Margin="2"
-                             Style="{StaticResource catalogBox}"
-                             IsEnabled="{Binding IsNewBrandEnabled}"/>
-
-                    <Label Content="new Category"
-                           Foreground="{StaticResource palette6}"/>
-                    <TextBox Text="{Binding NewCategory}"
-                             Height="30"
-                             Width="200"
-                             FontSize="18"
-                             Margin="2"
-                             Style="{StaticResource catalogBox}"
-                             IsEnabled="{Binding IsNewCategoryEnabled}"/>
-                </StackPanel>
-                
             </Grid>
             
             <!-- Content Control for panel switching -->
