@@ -11,6 +11,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
     public partial class EditProductViewModel : ObservableObject
     {
         //Fields and Properties using ObservableProperty for quality of life
+        private string _imageToDatabase = "";
+
         [ObservableProperty]
         private int _productID;
 
@@ -100,9 +102,11 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 File.Copy(originalImagePath, newImagePath);
 
                 ImagePath = Path.Combine("Assets", "Images", "ProductImages", fileName);
-
+                _imageToDatabase = ImagePath;
                 MessageBox.Show("Image uploaded successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            ImagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ImagePath);
+            OnPropertyChanged(nameof(ImagePath));
         }
 
         //Execute UpdateProductCommand
@@ -127,7 +131,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 MinStockLevel = EditMinStockLevel,
                 StockQuantity = EditStockQuantity,
                 UnitCost = EditUnitCost,
-                ImagePath = ImagePath,
+                ImagePath = _imageToDatabase,
                 
             };
 

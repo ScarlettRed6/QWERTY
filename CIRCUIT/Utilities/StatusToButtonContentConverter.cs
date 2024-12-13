@@ -10,7 +10,7 @@ namespace CIRCUIT.Utilities
             var status = value as string;
             if (status == "Completed")
             {
-                return "Received";  // 
+                return "Completed";  // 
             }
             return "Receive";  // Default content
         }

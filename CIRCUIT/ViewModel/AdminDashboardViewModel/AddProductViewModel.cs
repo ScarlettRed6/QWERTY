@@ -11,6 +11,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
     public partial class AddProductViewModel : ObservableObject
     {
         //Properties
+        private string _imageToDatabase = "";
+
         [ObservableProperty]
         private string _productNameBox;
 
@@ -139,9 +141,12 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
                 // Store the image path (relative or absolute depending on how you will use it)
                 ImagePath = Path.Combine("Assets", "Images", "ProductImages", fileName); // Store relative path or full path
-
+                _imageToDatabase = ImagePath;
                 MessageBox.Show("Image uploaded successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+
+            ImagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ImagePath);
+            OnPropertyChanged(nameof(ImagePath));
         }
 
         //Execute to save product
@@ -248,7 +253,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             _products.UnitCost = UnitCost;
             _products.SKU = _random.Next(1, 9);
             _products.IsArchived = false;
-            _products.ImagePath = ImagePath;
+            _products.ImagePath = _imageToDatabase;
 
             return _products;
 

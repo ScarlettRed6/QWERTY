@@ -41,7 +41,7 @@
                                    FontSize="25"
                                    FontWeight="Medium"
                                    Margin="10,10,0,0"/>
-                        <TextBlock Text="{Binding GrossProfit, StringFormat='{}{0:C}'}" 
+                        <TextBlock Text="{Binding GrossProfit, StringFormat=₱{0:N2}}" 
                                    FontSize="40"
                                    FontWeight="Medium"
                                    Foreground="{StaticResource palette6}"
@@ -61,7 +61,7 @@
                                    FontWeight="Medium"
                                    Foreground="{StaticResource palette6}"
                                    Margin="10,10,0,0"/>
-                        <TextBlock Text="{Binding TotalSalesRevenue, StringFormat='{}{0:C}'}"
+                        <TextBlock Text="{Binding TotalSalesRevenue, StringFormat=₱{0:N2}}"
                                    FontSize="40"
                                    FontWeight="Medium"
                                    Foreground="{StaticResource palette6}"
@@ -72,19 +72,21 @@
 
                 <!-- Total sales by Category -->
                 <Border CornerRadius="10" Grid.Column="2" Margin="2"
-                        Background="{StaticResource palette10}"
+                        Background="{StaticResource palette6}"
                         Width="auto">
 
                     <StackPanel>
                         <TextBlock Text="Sales by Category"
                                    FontSize="20"
-                                   Foreground="{StaticResource palette6}"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource palette12}"
                                    Margin="10,0,0,0"/>
 
                         <wpf:PieChart Series="{Binding SeriesCollection2}"
-                                      LegendPosition="Hidden"
-                                      Width="300"
-                                      Height="130">
+                                      LegendPosition="Left"
+                                      LegendTextSize="15"
+                                      Width="380"
+                                      Height="135">
                             
                         </wpf:PieChart>
                     </StackPanel>
@@ -107,22 +109,40 @@
                         <ColumnDefinition Width="40*"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel>
-                        <TextBlock Text="Revenue over 7 days"
-                                   FontSize="15"
-                                   FontWeight="Medium"
-                                   Foreground="{StaticResource palette6}"
-                                   HorizontalAlignment="Center"/>
+                    <Border Background="{StaticResource palette6}"
+                            Margin="5"
+                            CornerRadius="5">
+                        <StackPanel>
 
-                        <wpf:CartesianChart x:Name="MyCartesianChart"
-                                            Series="{Binding SeriesCollection}"
-                                            YAxes="{Binding YAxes}"
-                                            XAxes="{Binding XAxes}"
-                                            LegendPosition="Hidden"
-                                            Height="280"
-                                            Padding="10" />
-                    </StackPanel>
-                        
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                            
+                                <TextBlock Text="Revenue over 7 days"
+                                       FontSize="15"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource palette12}"
+                                       HorizontalAlignment="Center"/>
+
+                                <Button Content="Export"
+                                        Grid.Column="1"
+                                        Margin="0,3,3,0"
+                                        Command="{Binding ExportReportCommand}"
+                                        Style="{StaticResource ExportButtonStyle}"/>
+
+                            </Grid>
+
+                            <wpf:CartesianChart x:Name="MyCartesianChart"
+                                                Series="{Binding SeriesCollection}"
+                                                YAxes="{Binding YAxes}"
+                                                XAxes="{Binding XAxes}"
+                                                LegendPosition="Hidden"
+                                                Height="265"
+                                                Padding="10"/>
+                        </StackPanel>
+                    </Border>
                     <Border CornerRadius="5" Grid.Column="1"
                             Background="{StaticResource palette2}"
                             Width="auto"
@@ -140,10 +160,11 @@
                                            Foreground="{StaticResource palette6}"
                                            FontSize="17"
                                            Margin="10,5,0,0"/>
+                                <!--
                                 <Button Content="View All"
                                         Foreground="{StaticResource palette6}"
                                         Margin="200,0,0,0"
-                                        Style="{StaticResource ExportButtonStyle}"/>
+                                        Style="{StaticResource ExportButtonStyle}"/>-->
                             </StackPanel>
 
                             <DataGrid x:Name="stockAlerts" 
@@ -223,8 +244,8 @@
                             <DataGridTextColumn Header=" ID" Binding="{Binding SaleId, UpdateSourceTrigger=PropertyChanged}" Width="10*" />
                             <DataGridTextColumn Header="Cashier" Binding="{Binding CashierName, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
                             <DataGridTextColumn Header="Payment Method" Binding="{Binding PaymentMethod, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
-                            <DataGridTextColumn Header="Amount Received" Binding="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
-                            <DataGridTextColumn Header="Change" Binding="{Binding ChangeGiven, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
+                            <DataGridTextColumn Header="Amount Received" Binding="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged, StringFormat=₱{0:N2}}" Width="20*" />
+                            <DataGridTextColumn Header="Change" Binding="{Binding ChangeGiven, UpdateSourceTrigger=PropertyChanged, StringFormat=₱{0:N2}}" Width="20*" />
                             <DataGridTextColumn Header="Date" Binding="{Binding DateTime, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
 
                         </DataGrid.Columns>

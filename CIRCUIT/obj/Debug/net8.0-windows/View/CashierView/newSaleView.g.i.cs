@@ -127,7 +127,7 @@ namespace CIRCUIT.View.CashierView {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/CIRCUIT;V1.0.0.0;component/view/cashierview/newsaleview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/CIRCUIT;component/view/cashierview/newsaleview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\View\CashierView\newSaleView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -1,6 +1,7 @@
 ﻿using CIRCUIT.Model;
 using CIRCUIT.Model.DataRepositories;
 using iText.IO.Font.Constants;
+using iText.IO.Image;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Draw;
@@ -247,6 +248,44 @@ namespace CIRCUIT.Utilities
                 document.Add(new Paragraph("\nThank you for your order!")
                     .SetTextAlignment(TextAlignment.CENTER)
                     .SetFontSize(12));
+            }
+        }
+
+        public static void GenerateReport(
+        string filePath,
+        decimal grossProfit,
+        decimal totalSalesRevenue,
+        byte[] barChartImageBytes,
+        byte[] pieChartImageBytes)
+        {
+            using (var writer = new PdfWriter(filePath))
+            using (var pdf = new PdfDocument(writer))
+            using (var document = new Document(pdf))
+            {
+                PdfFont boldFont = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+
+                document.Add(new Paragraph("Sales and Performance Report")
+                    .SetFont(boldFont)
+                    .SetFontSize(16)
+                    .SetTextAlignment(TextAlignment.CENTER));
+
+                document.Add(new Paragraph("\nGross Profit and Total Sales Revenue")
+                    .SetFont(boldFont)
+                    .SetFontSize(14));
+                document.Add(new Paragraph($"Gross Profit: {grossProfit:C}"));
+                document.Add(new Paragraph($"Total Sales Revenue: {totalSalesRevenue:C}"));
+
+                // Add Cartesian Chart
+                document.Add(new Paragraph("\nRevenue for the Last 7 Days").SetFont(boldFont).SetFontSize(14));
+                var barChartImage = ImageDataFactory.Create(barChartImageBytes);
+                var barChartPdfImage = new Image(barChartImage);
+                document.Add(barChartPdfImage.SetHorizontalAlignment(HorizontalAlignment.CENTER));
+
+                // Add Pie Chart
+                document.Add(new Paragraph("\nRevenue Breakdown by Category").SetFont(boldFont).SetFontSize(14));
+                var pieChartImage = ImageDataFactory.Create(pieChartImageBytes);
+                var pieChartPdfImage = new Image(pieChartImage);
+                document.Add(pieChartPdfImage.SetHorizontalAlignment(HorizontalAlignment.CENTER));
             }
         }
 

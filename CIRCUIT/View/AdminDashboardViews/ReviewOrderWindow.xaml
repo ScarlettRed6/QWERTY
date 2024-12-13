@@ -73,8 +73,8 @@
                     <DataGridTextColumn Header=" Product ID" Binding="{Binding ProductId}" Width="80"/>
                     <DataGridTextColumn Header=" Name" Binding="{Binding ProductName}" Width="120"/>
                     <DataGridTextColumn Header="Quantity" Binding="{Binding OrderQuantity}" Width="100"/>
-                    <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitCost}" Width="100"/>
-                    <DataGridTextColumn Header="Total" Binding="{Binding TotalCost}" Width="100"/>
+                    <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitCost, StringFormat=₱{0:N2}}" Width="100"/>
+                    <DataGridTextColumn Header="Total" Binding="{Binding TotalCost, StringFormat=₱{0:N2}}" Width="100"/>
                 </DataGrid.Columns>
             </DataGrid>
 
@@ -95,7 +95,7 @@
                         <TextBlock Text="SubTotal:     "
                                    Style="{StaticResource menuButtonText}"
                                    Foreground="{StaticResource palette6}"/>
-                        <TextBlock Text="{Binding SubTotal, StringFormat={}{0:C}}"
+                        <TextBlock Text="{Binding SubTotal, StringFormat=₱{0:N2}}"
                                    Style="{StaticResource menuButtonText}"
                                    Foreground="{StaticResource palette6}"/>
                     </StackPanel>
@@ -105,7 +105,7 @@
                         <TextBlock Text="Shipping:     "
                                    Style="{StaticResource menuButtonText}"
                                    Foreground="{StaticResource palette6}"/>
-                        <TextBlock Text="{Binding ShippingFee, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBlock Text="{Binding ShippingFee, UpdateSourceTrigger=PropertyChanged, StringFormat=₱{0:N2}}"
                                    Style="{StaticResource menuButtonText}"
                                    Foreground="{StaticResource palette6}"/>
                     </StackPanel>
@@ -115,7 +115,7 @@
                         <TextBlock Text="Total Amount:     "
                                    Style="{StaticResource menuButtonText}"
                                    Foreground="{StaticResource palette6}"/>
-                        <TextBlock Text="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged}"
+                        <TextBlock Text="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged, StringFormat=₱{0:N2}}"
                                    Style="{StaticResource menuButtonText}"
                                    Foreground="{StaticResource palette6}"/>
                     </StackPanel>

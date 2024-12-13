@@ -81,23 +81,8 @@
                             <DataGridTextColumn Header=" ID" Binding="{Binding OrderDetailID, UpdateSourceTrigger=PropertyChanged}" Width="70"/>
                             <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="150" />
                             <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}" Width="160" />
-                            <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice, UpdateSourceTrigger=PropertyChanged}" Width="150" />
+                            <DataGridTextColumn Header="Unit Price" Binding="{Binding UnitPrice, UpdateSourceTrigger=PropertyChanged, StringFormat=₱{0:N2}}" Width="150" />
 
-                            <DataGridTemplateColumn Width="5*" Header="Operations">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Height="30" Width="55" 
-                                              Content="Receive"
-                                              Margin="2"
-                                              Command="{Binding DataContext.ReceiveCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                              CommandParameter="{Binding}"
-                                              Style="{StaticResource PaginationButtonStyle}"/>
-
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
 
                         </DataGrid.Columns>
 
@@ -107,15 +92,15 @@
                                 Orientation="Horizontal">
                         
                         <TextBlock Text="SubTotal:     " Foreground="White"/>
-                        <TextBlock Text="{Binding SubTotal, StringFormat=P{0:N2}}"
+                        <TextBlock Text="{Binding SubTotal, StringFormat=₱{0:N2}}"
                                    Margin="0,0,30,0"
                                    Foreground="White"/>
                         <TextBlock Text="Shipping:     " Foreground="White"/>
-                        <TextBlock Text="{Binding ShippingFee, StringFormat=P{0:N2}}"
+                        <TextBlock Text="{Binding ShippingFee, StringFormat=₱{0:N2}}"
                                    Margin="0,0,30,0"
                                    Foreground="White"/>
                         <TextBlock Text="Total:     " Foreground="White"/>
-                        <TextBlock Text="{Binding TotalAmount, StringFormat=P{0:N2}}"
+                        <TextBlock Text="{Binding TotalAmount, StringFormat=₱{0:N2}}"
                                    Margin="0,0,30,0"
                                    Foreground="White"/>
 

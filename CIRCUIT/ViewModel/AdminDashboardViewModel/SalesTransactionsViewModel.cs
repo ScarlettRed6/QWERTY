@@ -168,6 +168,21 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             } 
         }
 
+        private string _amountFilter;
+
+        public string AmountFilter
+        {
+            get => _amountFilter;
+            set
+            {
+                if (_amountFilter != value)
+                {
+                    _amountFilter = value;
+                    OnPropertyChange();
+                }
+            }
+        }
+
         //Constructor
         public SalesTransactionsViewModel()
         {
@@ -194,6 +209,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             FilterButtonCommand = new RelayCommand(OpenWindowFilter);
             ClearFilterFCommand = new RelayCommand(ClearFilters, CanClearFilter);
             CategoryBox = "Payment Method";
+            AmountFilter = "Total Amount";
             //IsAllSelected = false;
 
             UpdateList();
@@ -202,9 +218,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         private bool CanClearFilter()
         {
-           return !(string.IsNullOrWhiteSpace(CategoryBox) || CategoryBox == "Payment Method") 
-                   || StartDate.HasValue 
-                   || EndDate.HasValue;
+           return !(string.IsNullOrWhiteSpace(CategoryBox) || CategoryBox == "Payment Method") || StartDate.HasValue || EndDate.HasValue;
         }
 
         private void ClearFilters()
@@ -212,6 +226,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             CategoryBox = string.Empty;
             StartDate = null;   
             EndDate = null;
+            AmountFilter = "Total Amount";
             UpdatePagedItems();
         }
 
@@ -310,6 +325,23 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                     "Year" => filteredItems.Where(p => p.DateTime >= now.AddYears(-1)),
                     _ => filteredItems
                 };
+            }
+
+            // For amount filter
+            if (!string.IsNullOrWhiteSpace(AmountFilter) || AmountFilter != "Total Amount")
+            {
+                switch (AmountFilter)
+                {
+                    case "Below $100":
+                        filteredItems = filteredItems.Where(p => p.TotalAmount < 100);
+                        break;
+                    case "$100 - $500":
+                        filteredItems = filteredItems.Where(p => p.TotalAmount >= 100 && p.TotalAmount <= 500);
+                        break;
+                    case "Above $500":
+                        filteredItems = filteredItems.Where(p => p.TotalAmount > 500);
+                        break;
+                }
             }
 
             if (StartDate.HasValue && EndDate.HasValue)

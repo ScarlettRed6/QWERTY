@@ -67,7 +67,8 @@ namespace CIRCUIT.Utilities
                                 ModelNumber = reader.GetString(reader.GetOrdinal("model_number")),
                                 StockQuantity = reader.GetInt32(reader.GetOrdinal("stock_quantity")),
                                 UnitCost = (decimal)reader.GetDecimal(reader.GetOrdinal("unit_cost")),
-                                SellingPrice = (decimal)reader.GetDecimal(reader.GetOrdinal("selling_price"))
+                                SellingPrice = (decimal)reader.GetDecimal(reader.GetOrdinal("selling_price")),
+                                ImagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, reader.GetString(reader.GetOrdinal("image_path")))
                             };
                             products.Add(product);
                         }

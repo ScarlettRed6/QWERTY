@@ -84,8 +84,8 @@
                         <DataGridTextColumn Header="Brand" Binding="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" Width="15*" />
                         <DataGridTextColumn Header="Model" Binding="{Binding ModelNumber, UpdateSourceTrigger=PropertyChanged}" Width="10*" />
                         <!-- <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity, UpdateSourceTrigger=PropertyChanged}" Width="70" /> -->
-                        <DataGridTextColumn Header="Cost" Binding="{Binding UnitCost, UpdateSourceTrigger=PropertyChanged}" Width="10*" />
-                        <DataGridTextColumn Header="Price" Binding="{Binding SellingPrice, UpdateSourceTrigger=PropertyChanged}" Width="10*" />
+                        <DataGridTextColumn Header="Cost" Binding="{Binding UnitCost, UpdateSourceTrigger=PropertyChanged, StringFormat=₱{0:N2}}" Width="10*" />
+                        <DataGridTextColumn Header="Price" Binding="{Binding SellingPrice, UpdateSourceTrigger=PropertyChanged, StringFormat=₱{0:N2}}" Width="10*" />
 
                         <!-- Implement Edit/Archive button here later -->
                         <DataGridTemplateColumn Width="15*" Header="Operations">

@@ -216,7 +216,7 @@
                                        Foreground="{StaticResource palette6}"
                                        Margin="8,0,0,0"/>
 
-                                <TextBlock Text="{Binding ViewPrice}"
+                                <TextBlock Text="{Binding ViewPrice, StringFormat=₱{0:N2}}"
                                            Foreground="{StaticResource palette6}"
                                            FontSize="20"
                                            Padding="5,0,0,0"
@@ -233,7 +233,7 @@
                                        Foreground="{StaticResource palette6}"
                                        Margin="8,0,0,0"/>
 
-                                <TextBlock Text="{Binding ViewUnitCost}"
+                                <TextBlock Text="{Binding ViewUnitCost, StringFormat=₱{0:N2}}"
                                            Foreground="{StaticResource palette6}"
                                            FontSize="20"
                                            Padding="5,0,0,0"

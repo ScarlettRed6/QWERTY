@@ -21,6 +21,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         private bool? isAllSelected;
         private string _filterPriceRange;
         private string _filterBrandBox;
+        private string _filterCategoryBox;
 
         //database connection instance of an object
         private Db dbCon = new Db();
@@ -28,6 +29,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         //Collections
         public ObservableCollection<ProductModel> PagedProducts { get; set; }
         public ObservableCollection<ProductModel> Product { get; set; }
+        public ObservableCollection<string> Brands { get; set; }
+        public ObservableCollection<string> Categories { get; set; }
         private List<ProductModel> _items;
 
         //Commands
@@ -41,6 +44,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         public RelayCommand CheckSelectAll { get; private set; }
         public RelayCommand CheckSelectCell { get; private set; }
         public RelayCommand<ProductModel> TestCommand { get; }
+        public RelayCommand ClearFilterFCommand { get; set; }
 
         //Class objects
         private EditProductViewModel _editProductViewModel;
@@ -101,6 +105,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 {
                     _filterPriceRange = value;
                     OnPropertyChange();
+                    ClearFilterFCommand.NotifyCanExecuteChanged();
                     FilterProductsByPrice();
                 }
             }
@@ -115,6 +120,23 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 {
                     _filterBrandBox = value;
                     OnPropertyChange();
+                    ClearFilterFCommand.NotifyCanExecuteChanged();
+                    UpdatePagedItems();
+                }
+            }
+        }
+
+
+        public string FilterCategoryBox // Added Category Filter property
+        {
+            get => _filterCategoryBox;
+            set
+            {
+                if (_filterCategoryBox != value)
+                {
+                    _filterCategoryBox = value;
+                    OnPropertyChange();
+                    ClearFilterFCommand.NotifyCanExecuteChanged();
                     UpdatePagedItems();
                 }
             }
@@ -125,6 +147,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         {
             Product = new ObservableCollection<ProductModel>();
             PagedProducts = new ObservableCollection<ProductModel>();
+            Brands = new ObservableCollection<string>();
+            Categories = new ObservableCollection<string>();
             AddNewProduct = new RelayCommand(ExecuteAddProduct);
             EditCommand = new RelayCommand<ProductModel>(ExecuteEditCommand);
             ViewCommand = new RelayCommand<ProductModel>(ExecuteViewCommand);
@@ -144,12 +168,48 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             CheckSelectAll = new RelayCommand(ChkSelectAllCommand);
             CheckSelectCell = new RelayCommand(ChkSelectCellCommand);
             TestCommand = new RelayCommand<ProductModel>(ExecuteTestCommand, CanArchive);
+            ClearFilterFCommand = new RelayCommand(ClearFilters, CanClearFilter);
 
             IsAllSelected = false;
-
+            LoadBrandsAndCategories();
             UpdateCatalog();
 
         }
+
+        private bool CanClearFilter()
+        {
+            return !(string.IsNullOrWhiteSpace(FilterCategoryBox) || FilterCategoryBox == "Category")
+                    || string.IsNullOrWhiteSpace(FilterBrandBox) || FilterBrandBox == "Brand"
+                    || string.IsNullOrWhiteSpace(FilterPriceRange) || FilterPriceRange == "Price Range";
+        }
+
+        private void ClearFilters()
+        {
+            FilterCategoryBox = "Category";
+            FilterBrandBox = "Brand";
+            FilterPriceRange = "Price Range";
+            UpdatePagedItems();
+        }
+
+        private void LoadBrandsAndCategories()
+        {
+            Brands.Clear();
+            Brands.Add("Brand"); // Placeholder option
+            foreach (var brand in dbCon.GetBrands())
+            {
+                Brands.Add(brand);
+            }
+            FilterBrandBox = "Brand";
+
+            Categories.Clear();
+            Categories.Add("Category"); // Placeholder option
+            foreach (var category in dbCon.GetCategories())
+            {
+                Categories.Add(category);
+            }
+            FilterCategoryBox = "Category";
+        }
+
         //Used for archiving button , enables the button if there is a row selected.
         private bool CanArchive(ProductModel? obj)
         {
@@ -260,6 +320,11 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 filteredProducts = filteredProducts.Where(p => p.Brand.Equals(FilterBrandBox, StringComparison.OrdinalIgnoreCase));
             }
 
+            if (!string.IsNullOrWhiteSpace(FilterCategoryBox) && FilterCategoryBox != "Category")
+            {
+                filteredProducts = filteredProducts.Where(p => p.Category.Equals(FilterCategoryBox, StringComparison.OrdinalIgnoreCase));
+            }
+
             // Update TotalItems dynamically
             TotalItems = filteredProducts.Count();
 
@@ -291,7 +356,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             OnPropertyChange(nameof(PagedProducts));
         }
 
-        // method to filter products by price range
+        // method to filter products by price range,, StringFormat=₱{0:N2}
         private void FilterProductsByPrice()
         {
             if (string.IsNullOrEmpty(FilterPriceRange) || FilterPriceRange == "Price Range")
@@ -302,10 +367,10 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
             var ranges = new Dictionary<string, (decimal Min, decimal Max)>
             {
-                { "Below $1000", (0, 1000) },
-                { "$1000 - $5000", (1000, 5000) },
-                { "$5001 - $10000", (5001, 10000) },
-                { "Above $10000", (10000, decimal.MaxValue) }
+                { "Below ₱1000", (0, 1000) },
+                { "₱1000 - ₱5000", (1000, 5000) },
+                { "₱5001 - ₱10000", (5001, 10000) },
+                { "Above ₱10000", (10000, decimal.MaxValue) }
             };
 
             if (ranges.TryGetValue(FilterPriceRange, out var range))

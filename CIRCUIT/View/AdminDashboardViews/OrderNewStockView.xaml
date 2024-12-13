@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboardViews"
+             xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboardViews" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1000">
 
@@ -21,7 +21,7 @@
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Orientation="Horizontal">
@@ -39,6 +39,46 @@
                 <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Right"
                                 Grid.Column="1">
+
+                    <Button Height="40"
+                            Width="120"
+                            Margin="10,0,0,0"
+                            Command="{Binding ClearFilterFCommand}"
+                            Style="{StaticResource ExportButtonStyle}"
+                            IsEnabled="{Binding canFilter}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="X" Height="15"
+                                          Margin="0,0,10,0"/>
+                            <TextBlock Text="Clear" FontSize="20"
+                                       FontWeight="Medium"
+                                       Margin="0,0,0,2"/>
+                        </StackPanel>
+                    </Button>
+
+                    <ComboBox Width="150" Height="35"
+                              Margin="8,0,0,0"
+                              FontSize="15"
+                              Style="{StaticResource FilterComboBoxStyle}"
+                              ItemsSource="{Binding Brands}"
+                              SelectedValue="{Binding FilterBrandBox, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox Width="150" Height="35"
+                              Margin="8,0,2,0"
+                              FontSize="15"
+                              Style="{StaticResource FilterComboBoxStyle}"
+                              ItemsSource="{Binding Categories}"
+                              SelectedValue="{Binding FilterCategoryBox, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
                     <Button Width="140" Height="40"
                                 BorderThickness="0"
@@ -79,21 +119,37 @@
                 <!-- Column context -->
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn Header="Product Id" Binding="{Binding ProductId}" Width="150" IsReadOnly="True"/>
+                    <DataGridTextColumn Header=" Id" Binding="{Binding ProductId}" Width="50" IsReadOnly="True"/>
+
+                    <DataGridTemplateColumn Header="Image" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding ImagePath}" 
+                                       Width="80" 
+                                       Height="80" 
+                                       Stretch="UniformToFill"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
                     <DataGridTextColumn Header="Name" Binding="{Binding ProductName}" Width="150" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Brand" Binding="{Binding Brand}" Width="100" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Model" Binding="{Binding ModelNumber}" Width="130" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Unit Cost" Binding="{Binding UnitCost}" Width="120" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Unit Cost" Binding="{Binding UnitCost, StringFormat=₱{0:N2}}" Width="120" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity}" Width="90" IsReadOnly="True"/>
 
                     <!-- Editable Order Quantity -->
                     <DataGridTextColumn Header="Order Quantity" 
-                            Binding="{Binding OrderQuantity, UpdateSourceTrigger=PropertyChanged}" 
-                            Width="150" />
+                                        Binding="{Binding OrderQuantity, UpdateSourceTrigger=PropertyChanged}" 
+                                        Width="150" 
+                                        CellStyle="{StaticResource ModerCellStyleOrderQuantity}"/>
 
                     <!-- Computed Total Cost -->
                     <DataGridTextColumn Header="Total Cost" 
-                            Binding="{Binding TotalCost, StringFormat=C}" 
-                            Width="150" IsReadOnly="True"/>
+                                        Binding="{Binding TotalCost, StringFormat=₱{0:N2}}" 
+                                        Width="150" IsReadOnly="True"/>
 
                 </DataGrid.Columns>
 

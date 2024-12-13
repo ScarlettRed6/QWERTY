@@ -89,18 +89,42 @@
                     </Grid>
                 </GroupBox>
 
-                <ComboBox Width="150" 
-                          Height="35"
-                          Grid.Row="1"
-                          Margin="8,0,0,0"
-                          FontSize="15"
-                          SelectedValuePath="Content"
-                          Style="{StaticResource FilterComboBoxStyle}"
-                          SelectedValue="{Binding CategoryBox, UpdateSourceTrigger=PropertyChanged}">
-                    <ComboBoxItem Content="Payment Method" IsSelected="True"/>
-                    <ComboBoxItem Content="Cash"/>
-                    <ComboBoxItem Content="Card"/>
-                </ComboBox>
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal"
+                                Margin="5">
+
+                        <ComboBox Width="150" 
+                              Height="35"
+                              FontSize="15"
+                              Margin="5,0,0,0"
+                              SelectedValuePath="Content"
+                              Style="{StaticResource FilterComboBoxStyle}"
+                              SelectedValue="{Binding CategoryBox, UpdateSourceTrigger=PropertyChanged}">
+                            <ComboBoxItem Content="Payment Method" IsSelected="True"/>
+                            <ComboBoxItem Content="Cash"/>
+                            <ComboBoxItem Content="Card"/>
+                        </ComboBox>
+
+                        <ComboBox Name="AmountFilterComboBox" 
+                                  SelectedValuePath="Content"
+                                  SelectedValue="{Binding AmountFilter, UpdateSourceTrigger=PropertyChanged}" 
+                                  Width="150" 
+                                  Height="35"
+                                  Margin="5"
+                                  Style="{StaticResource FilterComboBoxStyle}">
+                            <ComboBoxItem Content="Total Amount" IsSelected="True"/>
+                            <ComboBoxItem Content="Below $100" />
+                            <ComboBoxItem Content="$100 - $500" />
+                            <ComboBoxItem Content="Above $500" />
+                        </ComboBox>
+                    </StackPanel>
+
+                </Grid>
 
             </Grid>
 

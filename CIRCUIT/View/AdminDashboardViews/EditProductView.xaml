@@ -207,7 +207,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <!-- Selling price numerical textbox -->
                                         <StackPanel>
-                                            <Label Content="Selling price $"
+                                            <Label Content="Selling price"
                                                    FontSize="15"
                                                    FontWeight="Medium"
                                                    Foreground="{StaticResource palette6}"/>
@@ -279,21 +279,42 @@
 
                                 </Grid>
                                 <!-- Image drop box , implement later -->
-                                <Button Grid.Column="2"
-                                        Width="170"
-                                        Height="50"
-                                        Style="{StaticResource ExportButtonStyle}"
-                                        Command="{Binding UploadImageCommand}">
+                                <StackPanel Grid.Column="2">
 
-                                    <StackPanel VerticalAlignment="Center" 
+                                    <Border Height="180"
+                                            Width="180"
+                                            Margin="20,2,0,10"
+                                            HorizontalAlignment="Left"
+                                            CornerRadius="30"
+                                            BorderBrush="{StaticResource palette1}"
+                                            BorderThickness="2"
+                                            Background="Transparent">
+
+                                        <Image Source="{Binding ImagePath, UpdateSourceTrigger=PropertyChanged}" 
+                                               Stretch="UniformToFill">
+                                            <Image.Clip>
+                                                <RectangleGeometry RadiusX="30" RadiusY="30"
+                                                                   Rect="0,0,177,177"/>
+                                            </Image.Clip>
+                                        </Image>
+                                    </Border>
+
+                                    <Button Width="170"
+                                            Height="50"
+                                            Margin="20,0,0,0"
+                                            Style="{StaticResource ExportButtonStyle}"
+                                            Command="{Binding UploadImageCommand}">
+
+                                        <StackPanel VerticalAlignment="Center" 
                                                 HorizontalAlignment="Center">
-                                        <TextBlock Text="Upload Image"
+
+                                            <TextBlock Text="Upload Image"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Foreground="{StaticResource palette6}"/>
-                                    </StackPanel>
-                                </Button>
-
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
                             </Grid>
 
 

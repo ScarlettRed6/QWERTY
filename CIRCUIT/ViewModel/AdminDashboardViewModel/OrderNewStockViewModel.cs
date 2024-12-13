@@ -14,8 +14,10 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
     {
         //Fields and properties
         private int _currentPage = 1;
-        private int _itemsPerPage = 9; // Adjust number of items per page
+        private int _itemsPerPage = 5; // Adjust number of items per page
         private string _searchTerm;
+        private string _filterBrandBox;
+        private string _filterCategoryBox;
         public int TotalPages => (int)Math.Ceiling((double)TotalItems / ItemsPerPage);
         private StockControlRepository _sControlRepo;
         private Db _dbCon;
@@ -23,6 +25,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         //Collections 
         public ObservableCollection<ProductModel> ProductsForOrder { get; set; }
         public ObservableCollection<ProductModel> Products { get; set; }
+        public ObservableCollection<string> Brands { get; set; }
+        public ObservableCollection<string> Categories { get; set; }
 
         // Collection for ComboBox items
         [ObservableProperty]
@@ -42,6 +46,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         public RelayCommand LastPageCommand { get; }
         public RelayCommand NextPageCommand { get; }
         public RelayCommand PreviousPageCommand { get; }
+        public RelayCommand ClearFilterFCommand { get; set; }
 
         //For pagination
         public int CurrentPage
@@ -83,6 +88,37 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             }
         }
 
+        public string FilterBrandBox
+        {
+            get => _filterBrandBox;
+            set
+            {
+                if (_filterBrandBox != value)
+                {
+                    _filterBrandBox = value;
+                    OnPropertyChanged();
+                    ClearFilterFCommand.NotifyCanExecuteChanged();
+                    UpdatePagedProducts();
+                }
+            }
+        }
+
+
+        public string FilterCategoryBox // Added Category Filter property
+        {
+            get => _filterCategoryBox;
+            set
+            {
+                if (_filterCategoryBox != value)
+                {
+                    _filterCategoryBox = value;
+                    OnPropertyChanged();
+                    ClearFilterFCommand.NotifyCanExecuteChanged();
+                    UpdatePagedProducts();
+                }
+            }
+        }
+
         //Constructor
         public OrderNewStockViewModel()
         {
@@ -90,6 +126,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             _dbCon = new Db();
             Products = new ObservableCollection<ProductModel>();
             ProductsForOrder = new ObservableCollection<ProductModel>();
+            Brands = new ObservableCollection<string>();
+            Categories = new ObservableCollection<string>();
             FirstPageCommand = new RelayCommand(() => CurrentPage = 1);
             LastPageCommand = new RelayCommand(() => CurrentPage = TotalPages);
             NextPageCommand = new RelayCommand(() =>
@@ -104,10 +142,44 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             });
 
             OpenReviewOrderCommand = new RelayCommand(OpenReviewOrder);
+            ClearFilterFCommand = new RelayCommand(ClearFilters, CanClearFilter);
 
             LoadComboboxSuppliers();
+            LoadBrandsAndCategories();
             LoadProducts();
 
+        }
+
+        private bool CanClearFilter()
+        {
+            return !(string.IsNullOrWhiteSpace(FilterCategoryBox) || FilterCategoryBox == "Category")
+                    || string.IsNullOrWhiteSpace(FilterBrandBox) || FilterBrandBox == "Brand";
+        }
+
+        private void ClearFilters()
+        {
+            FilterCategoryBox = "Category";
+            FilterBrandBox = "Brand";
+            UpdatePagedProducts();
+        }
+
+        private void LoadBrandsAndCategories()
+        {
+            Brands.Clear();
+            Brands.Add("Brand"); // Placeholder option
+            foreach (var brand in _dbCon.GetBrands())
+            {
+                Brands.Add(brand);
+            }
+            FilterBrandBox = "Brand";
+
+            Categories.Clear();
+            Categories.Add("Category"); // Placeholder option
+            foreach (var category in _dbCon.GetCategories())
+            {
+                Categories.Add(category);
+            }
+            FilterCategoryBox = "Category";
         }
 
         //Openreview modal window method command
@@ -158,6 +230,16 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             {
                 filteredItems = filteredItems.Where(p =>
                     p.ProductName.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (!string.IsNullOrWhiteSpace(FilterBrandBox) && FilterBrandBox != "Brand")
+            {
+                filteredItems = filteredItems.Where(p => p.Brand.Equals(FilterBrandBox, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (!string.IsNullOrWhiteSpace(FilterCategoryBox) && FilterCategoryBox != "Category")
+            {
+                filteredItems = filteredItems.Where(p => p.Category.Equals(FilterCategoryBox, StringComparison.OrdinalIgnoreCase));
             }
 
             TotalItems = filteredItems.Count();

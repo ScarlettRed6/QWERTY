@@ -157,7 +157,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             if (!string.IsNullOrWhiteSpace(SearchTerm))
             {
                 filteredItems = filteredItems.Where(p =>
-                    p.Status.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase));
+                    p.SupplierName.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase));
             }
 
             TotalItems = filteredItems.Count();

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboardViews"
              xmlns:vm="clr-namespace:CIRCUIT.ViewModel.AdminDashboardViewModel"
              xmlns:view="clr-namespace:CIRCUIT.View.AdminDashboardViews"
-             xmlns:utils="clr-namespace:CIRCUIT.Utilities"
+             xmlns:utils="clr-namespace:CIRCUIT.Utilities" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1000">
 
@@ -39,6 +39,24 @@
 
                 <StackPanel Orientation="Horizontal"
                          HorizontalAlignment="Right">
+
+                    <fa:IconImage Icon="Search"
+                                  Foreground="{StaticResource palette6}"
+                                  Height="30"
+                                  Margin="10"/>
+                    <TextBox x:Name="txtUser" 
+                             FontSize="15"
+                             FontWeight="Medium" 
+                             Background="Transparent"
+                             BorderBrush="{StaticResource palette1}"
+                             BorderThickness="0,0,0,2" 
+                             Height="30"
+                             VerticalAlignment="Center" 
+                             Margin="0,4,10,0"
+                             Foreground="{StaticResource palette6}" 
+                             CaretBrush="{StaticResource palette1}"
+                             Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                             Width="230"/>
 
                     <Button Width="140" Height="40"
                             BorderThickness="0"

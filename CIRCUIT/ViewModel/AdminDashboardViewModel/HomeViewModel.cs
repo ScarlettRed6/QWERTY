@@ -1,19 +1,15 @@
 ﻿using CIRCUIT.Model;
 using CIRCUIT.Model.DataRepositories;
 using CIRCUIT.Utilities;
-using LiveCharts;
-using LiveCharts.Wpf;
-using System.Collections.ObjectModel;
-using System.Windows.Media;
+using CommunityToolkit.Mvvm.Input;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView.Painting.Effects;
+using LiveChartsCore.SkiaSharpView.SKCharts;
 using SkiaSharp;
+using System.Collections.ObjectModel;
+using System.IO;
 using Axis = LiveChartsCore.SkiaSharpView.Axis;
-using System.Windows;
-using System;
-using static Org.BouncyCastle.Asn1.Cmp.Challenge;
 
 namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 {
@@ -35,6 +31,9 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         public string[] labels { get; set; }
         public ObservableCollection<SaleModel> Sales { get; set; }
         public ObservableCollection<ProductModel> Products { get; set; }
+
+        //commands
+        public RelayCommand ExportReportCommand { get; set; }
 
         public decimal GrossProfit
         {
@@ -67,6 +66,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         {
             _dbCon = new Db();
             _salesRepository = new SalesRepository();
+            ExportReportCommand = new RelayCommand(ExportReport);
             Products = new ObservableCollection<ProductModel>();
             Sales = new ObservableCollection<SaleModel>();
             availableColors = new List<SKColor>();
@@ -107,7 +107,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 new ColumnSeries<double>
                 {
                     Values = values,
-                    Fill = new SolidColorPaint(SKColors.Orange)
+                    Fill = new SolidColorPaint(SKColors.Orange),
                 }
             };
 
@@ -117,7 +117,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 new Axis
                 {
                     Labels = labels,
-                    LabelsPaint = new SolidColorPaint(SKColors.White), // Set axis text color
+                    LabelsPaint = new SolidColorPaint(SKColors.Black), // Set axis text color
                     TextSize = 14
                 }
             };
@@ -127,8 +127,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 new Axis
                 {
                     MinLimit = values.Min() > 0 ? values.Min() : 0, // Avoid negative or invalid ranges
-                    Labeler = value => value.ToString("C"),
-                    LabelsPaint = new SolidColorPaint(SKColors.White),
+                    Labeler = value => value.ToString("N2"),
+                    LabelsPaint = new SolidColorPaint(SKColors.Black),
                     TextSize = 14
                 }
             };
@@ -158,7 +158,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                     Name = item.Key,  // Category name
                     Values = new double[] { (double)item.Value },  // Format label
                     DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,  // Position of the label
-                    Fill = new SolidColorPaint(RandomColor())  // Set random color
+                    Fill = new SolidColorPaint(RandomColor()),  // Set random color
+                    DataLabelsPaint = new SolidColorPaint(SKColors.Black),
                 });
             }
 
@@ -177,7 +178,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 {
                     new SKColor(0, 0, 170),     
                     new SKColor(255, 140, 0),   
-                    new SKColor(246, 246, 246)  
+                    new SKColor(164, 164, 164)  
                 });
             }
 
@@ -229,6 +230,93 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             UpdatePieChart();
             UpdateBarChart();
 
+        }
+
+        private byte[] CreateCartesianChartImage()
+        {
+            if (SeriesCollection == null || !SeriesCollection.Any())
+            {
+                throw new InvalidOperationException("SeriesCollection is empty or not initialized.");
+            }
+
+            var cartesianChart = new SKCartesianChart
+            {
+                Series = SeriesCollection,
+                Width = 800,
+                Height = 400,
+                XAxes = XAxes?.ToArray(),
+                YAxes = YAxes?.ToArray()
+            };
+
+            using var memoryStream = new MemoryStream();
+            cartesianChart.SaveImage(memoryStream, SKEncodedImageFormat.Png, 100);
+            return memoryStream.ToArray();
+        }
+
+        private byte[] CreatePieChartImage()
+        {
+            if (SeriesCollection2 == null || !SeriesCollection2.Any())
+            {
+                throw new InvalidOperationException("SeriesCollection2 is empty or not initialized.");
+            }
+
+            var pieChart = new SKPieChart
+            {
+                Series = SeriesCollection2,
+                Width = 300,
+                Height = 300,
+                // Optionally, adjust size to make room for legend
+                LegendPosition = LiveChartsCore.Measure.LegendPosition.Bottom
+            };
+
+            using var memoryStream = new MemoryStream();
+            pieChart.SaveImage(memoryStream, SKEncodedImageFormat.Png, 100);
+            return memoryStream.ToArray();
+        }
+
+        public string GetExportPath()
+        {
+            var dialog = new Microsoft.Win32.SaveFileDialog
+            {
+                Title = "Export PDF",
+                Filter = "PDF Files|*.pdf",
+                FileName = "SalesReport.pdf"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                return dialog.FileName;
+            }
+
+            throw new InvalidOperationException("Export path not selected.");
+        }
+
+        public void ExportReport()
+        {
+            try
+            {
+                // Get the export path
+                var exportPath = GetExportPath();
+
+                // Generate chart images
+                var cartesianChartImage = CreateCartesianChartImage();
+                var pieChartImage = CreatePieChartImage();
+
+                // Generate the PDF
+                PdfGenerator.GenerateReport(
+                    exportPath,
+                    GrossProfit,
+                    TotalSalesRevenue,
+                    cartesianChartImage,
+                    pieChartImage
+                );
+
+                Console.WriteLine("Report exported successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while exporting report: {ex.Message}");
+            }
         }
 
         public void Dispose()

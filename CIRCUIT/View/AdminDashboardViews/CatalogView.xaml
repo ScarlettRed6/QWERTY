@@ -112,13 +112,29 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
 
                         <!-- Combobox filters -->
                         <StackPanel Grid.Column="1"
                                     Orientation="Horizontal"
                                     FlowDirection="LeftToRight" >
+
+                            <Button Height="40"
+                                    Width="120"
+                                    Margin="10,0,0,0"
+                                    Command="{Binding ClearFilterFCommand}"
+                                    Style="{StaticResource ExportButtonStyle}"
+                                    IsEnabled="{Binding canFilter}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Icon="X" Height="15"
+                                                  Margin="0,0,10,0"/>
+                                    <TextBlock Text="Clear" FontSize="20"
+                                               FontWeight="Medium"
+                                               Margin="0,0,0,2"/>
+                                </StackPanel>
+                            </Button>
+
                             <!-- Price range filter -->
                             <ComboBox Width="150" Height="35"
                                       Margin="8,0,0,0"
@@ -136,13 +152,26 @@
                             <ComboBox Width="150" Height="35"
                                       Margin="8,0,0,0"
                                       FontSize="15"
-                                      SelectedValuePath="Content"
                                       Style="{StaticResource FilterComboBoxStyle}"
+                                      ItemsSource="{Binding Brands}"
                                       SelectedValue="{Binding FilterBrandBox, UpdateSourceTrigger=PropertyChanged}">
-                                <ComboBoxItem Content="Brand" IsSelected="True"/>
-                                <ComboBoxItem Content="Brand1"/>
-                                <ComboBoxItem Content="Brand2"/>
-                                <ComboBoxItem Content="Brand3"/>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <ComboBox Width="150" Height="35"
+                                      Margin="8,0,2,0"
+                                      FontSize="15"
+                                      Style="{StaticResource FilterComboBoxStyle}"
+                                      ItemsSource="{Binding Categories}"
+                                      SelectedValue="{Binding FilterCategoryBox, UpdateSourceTrigger=PropertyChanged}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
                             </ComboBox>
                         </StackPanel>
                     </Grid>
@@ -203,10 +232,10 @@
                         <DataGridTextColumn Header="Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="50*" />
                        <!-- <DataGridTextColumn Header="Category" Binding="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Width="*" /> -->
                         <DataGridTextColumn Header="Brand" Binding="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" Width="30*" />
-                        <DataGridTextColumn Header="Model" Binding="{Binding ModelNumber, UpdateSourceTrigger=PropertyChanged}" Width="50*" />
-                       <!-- <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity, UpdateSourceTrigger=PropertyChanged}" Width="70" /> -->
-                        <DataGridTextColumn Header="Cost" Binding="{Binding UnitCost, UpdateSourceTrigger=PropertyChanged}" Width="25*" />
-                        <DataGridTextColumn Header="Price" Binding="{Binding SellingPrice, UpdateSourceTrigger=PropertyChanged}" Width="25*" />
+                        <!--<DataGridTextColumn Header="Model" Binding="{Binding ModelNumber, UpdateSourceTrigger=PropertyChanged}" Width="50*" />-->
+                        <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity, UpdateSourceTrigger=PropertyChanged}" Width="70" />
+                        <DataGridTextColumn Header="Cost" Binding="{Binding UnitCost, UpdateSourceTrigger=PropertyChanged, StringFormat=₱{0:N2}}" Width="25*" />
+                        <DataGridTextColumn Header="Price" Binding="{Binding SellingPrice, UpdateSourceTrigger=PropertyChanged, StringFormat=₱{0:N2}}" Width="25*" />
 
                         <!-- Implement Edit/Archive button here later -->
                         <DataGridTemplateColumn Width="50*" Header="Operations">
