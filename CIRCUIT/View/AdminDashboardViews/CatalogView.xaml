@@ -143,10 +143,10 @@
                                       Style="{StaticResource FilterComboBoxStyle}"
                                       SelectedValue="{Binding FilterPriceRange, UpdateSourceTrigger=PropertyChanged}">
                                 <ComboBoxItem Content="Price Range" IsSelected="True"/>
-                                <ComboBoxItem Content="Below $1000"/>
-                                <ComboBoxItem Content="$1000 - $5000"/>
-                                <ComboBoxItem Content="$5001 - $10000"/>
-                                <ComboBoxItem Content="Above $10000"/>
+                                <ComboBoxItem Content="Below ₱100"/>
+                                <ComboBoxItem Content="₱101 - ₱500"/>
+                                <ComboBoxItem Content="₱501 - ₱1000"/>
+                                <ComboBoxItem Content="Above ₱1000"/>
                             </ComboBox>
                             <!-- Brand filter -->
                             <ComboBox Width="150" Height="35"

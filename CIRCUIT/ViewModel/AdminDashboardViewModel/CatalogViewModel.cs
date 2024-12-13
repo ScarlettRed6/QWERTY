@@ -367,10 +367,10 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
             var ranges = new Dictionary<string, (decimal Min, decimal Max)>
             {
-                { "Below ₱1000", (0, 1000) },
-                { "₱1000 - ₱5000", (1000, 5000) },
-                { "₱5001 - ₱10000", (5001, 10000) },
-                { "Above ₱10000", (10000, decimal.MaxValue) }
+                { "Below ₱100", (0, 100) },
+                { "₱101 - ₱500", (101, 500) },
+                { "₱501 - ₱1000", (501, 1000) },
+                { "Above ₱1000", (1000, decimal.MaxValue) }
             };
 
             if (ranges.TryGetValue(FilterPriceRange, out var range))

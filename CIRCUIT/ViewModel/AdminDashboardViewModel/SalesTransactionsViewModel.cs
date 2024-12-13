@@ -5,6 +5,7 @@ using CIRCUIT.View.AdminDashboardViews;
 using CIRCUIT.ViewModel.Bases;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using iText.Kernel.Pdf.Canvas.Wmf;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -223,7 +224,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         private void ClearFilters()
         {
-            CategoryBox = string.Empty;
+            CategoryBox = "Payment Method";
             StartDate = null;   
             EndDate = null;
             AmountFilter = "Total Amount";
