@@ -126,11 +126,11 @@ namespace CIRCUIT.ViewModel.CashierViewModel
                         return;
                     }
 
-                    saleConn.MarkItemAsRefunded(saleItem.SaleItemId, saleItem.RefundQuantity);
+                    //saleConn.MarkItemAsRefunded(saleItem.SaleItemId, saleItem.RefundQuantity);
 
                     if (SelectedRefundReason == "Customer Change Item")
                     {
-                        saleConn.RestockItem(saleItem.ProductId, saleItem.RefundQuantity);
+                        //saleConn.RestockItem(saleItem.ProductId, saleItem.RefundQuantity);
                     }
 
                     totalRefundAmount += saleItem.RefundQuantity * saleItem.UnitPrice;
@@ -143,7 +143,7 @@ namespace CIRCUIT.ViewModel.CashierViewModel
                     .Where(item => item.Quantity > 0)
                     .ToList();
 
-                saleConn.MarkSaleAsRefunded(SelectedSale.SaleId, SelectedRefundReason);
+                //saleConn.MarkSaleAsRefunded(SelectedSale.SaleId, SelectedRefundReason);
 
                 PurchasedItems = new List<SaleItemModel>(SelectedSale.SaleItems);
 

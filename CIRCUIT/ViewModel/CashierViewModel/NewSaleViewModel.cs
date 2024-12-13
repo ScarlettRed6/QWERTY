@@ -335,7 +335,7 @@ namespace CIRCUIT.ViewModel
         private void OpenMyProfile()
         {
             CashierProfileView cashierProfileView = new CashierProfileView();
-            cashierProfileView.Show();
+            cashierProfileView.ShowDialog();
         }
 
         private void ExecuteQuickPay()
@@ -353,20 +353,20 @@ namespace CIRCUIT.ViewModel
                 return;
             }
             quickpayWindow = new quickpayView(CartItems, TotalAmount, this);
-            quickpayWindow.Show();
+            quickpayWindow.ShowDialog();
 
         }
 
         private void VoidOrder()
         {
             voidOrderView voidOrderWindow = new voidOrderView();
-            voidOrderWindow.Show();
+            voidOrderWindow.ShowDialog();
         }
 
         private void ViewInventory()
         {
             inventoryView inventoryWindow = new inventoryView();
-            inventoryWindow.Show();
+            inventoryWindow.ShowDialog();
         }
 
         //Button close method
@@ -394,7 +394,7 @@ namespace CIRCUIT.ViewModel
 
         {
 
-            string query = "SELECT * FROM tbl_Products WHERE is_archived = 0 AND stock_quantity <= min_stock_level";
+            string query = "SELECT * FROM tbl_Products WHERE is_archived = 0 AND stock_quantity > 0";
             var productsFromDb = _db.FetchData(query);
             _allProducts.Clear();
 

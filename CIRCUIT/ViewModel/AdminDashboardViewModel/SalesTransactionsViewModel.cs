@@ -2,6 +2,7 @@
 using CIRCUIT.Model.DataRepositories;
 using CIRCUIT.Utilities;
 using CIRCUIT.View.AdminDashboardViews;
+using CIRCUIT.ViewModel.Bases;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
@@ -10,10 +11,9 @@ using System.Windows;
 
 namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 {
-    public partial class SalesTransactionsViewModel : ObservableObject
+    public partial class SalesTransactionsViewModel : BasePaginationViewModel
     {
         //Fields
-        private int _currentPage = 1;
         private int _itemsPerPage = 4; // Adjust number of items per page
         private string _searchTerm;
         private string _categoryBox;
@@ -21,6 +21,11 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         SalesRepository saleConn = new SalesRepository();
         public int TotalPages => (int)Math.Ceiling((double)TotalItems / ItemsPerPage);
         private ViewSaleViewModel _saleViewModel;
+
+        private object _currentView;
+        private List<SaleModel> _items;
+        private int _totalProductSold;
+        private int _totalTransactions;
 
         //Collections
         public ObservableCollection<SaleModel> PagedSales { get; set; }
@@ -39,42 +44,9 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         public RelayCommand FilterButtonCommand { get; }
         public RelayCommand ClearFilterFCommand { get; set; }
 
-        //Properties
-        [ObservableProperty]
-        private object _currentView;
-
-        //For total items in the dataset Product collection
-        [ObservableProperty]
-        private int _totalItems;
-
-        //For listing selectedall
-        [ObservableProperty]
-        private List<SaleModel> _items;
-
-        //Checks if checkbox for select all feature is true
-        //[ObservableProperty]
-        //private bool? _isAllSelected;
-
-        [ObservableProperty]
-        private int _totalProductSold;
-
-        [ObservableProperty]
-        private int _totalTransactions;
+        //Properties 
 
         //For pagination
-        public int CurrentPage
-        {
-            get => _currentPage;
-            set
-            {
-                if (_currentPage != value && value > 0 && value <= TotalPages)
-                {
-                    _currentPage = value;
-                    OnPropertyChanged();
-                    UpdatePagedSales();
-                }
-            }
-        }
         //For pagination number of items per page
         public int ItemsPerPage
         {
@@ -82,8 +54,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             set
             {
                 _itemsPerPage = value;
-                OnPropertyChanged();
-                UpdatePagedSales();
+                OnPropertyChange();
+                UpdatePagedItems();
             }
         }
 
@@ -95,8 +67,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 if (_searchTerm != value)
                 {
                     _searchTerm = value;
-                    OnPropertyChanged();
-                    UpdatePagedSales();
+                    OnPropertyChange();
+                    UpdatePagedItems();
                 }
             }
         }
@@ -109,7 +81,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 if (_categoryBox != value)
                 {
                     _categoryBox = value;
-                    OnPropertyChanged();
+                    OnPropertyChange();
                     ClearFilterFCommand.NotifyCanExecuteChanged();
                     //UpdatePagedSales();
                 }
@@ -124,8 +96,8 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 if (_timeFilter != value)
                 {
                     _timeFilter = value;
-                    OnPropertyChanged();
-                    UpdatePagedSales();
+                    OnPropertyChange();
+                    UpdatePagedItems();
                 }
             }
         }
@@ -139,7 +111,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 if (_startDate != value)
                 {
                     _startDate = value;
-                    OnPropertyChanged();
+                    OnPropertyChange();
                     ClearFilterFCommand.NotifyCanExecuteChanged();
                 }
             }
@@ -154,10 +126,46 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 if (_endDate != value)
                 {
                     _endDate = value;
-                    OnPropertyChanged();
+                    OnPropertyChange();
                     ClearFilterFCommand.NotifyCanExecuteChanged();
                 }
             }
+        }
+
+        public int TotalTransactions 
+        { 
+            get => _totalTransactions; 
+            set => _totalTransactions = value; 
+        }
+
+        public List<SaleModel> Items 
+        { 
+            get => _items; 
+            set 
+            { 
+                _items = value;
+                OnPropertyChange();
+            }
+        }
+
+        public object CurrentView 
+        { 
+            get => _currentView; 
+            set  
+            { 
+                _currentView = value;
+                OnPropertyChange();
+            }
+        }
+
+        public int TotalProductSold 
+        { 
+            get => _totalProductSold; 
+            set 
+            { 
+                _totalProductSold = value; 
+                OnPropertyChange();
+            } 
         }
 
         //Constructor
@@ -204,7 +212,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             CategoryBox = string.Empty;
             StartDate = null;   
             EndDate = null;
-            UpdatePagedSales();
+            UpdatePagedItems();
         }
 
         private void OpenWindowFilter()
@@ -218,7 +226,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         private void ApplyDateFilter()
         {
-            UpdatePagedSales();
+            UpdatePagedItems();
         }
 
         private void ExportSelectedTransactions()
@@ -270,11 +278,11 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
             TotalItems = Sales.Count;
             TotalProductSold = saleConn.FetchTotalProductSold();
-            UpdatePagedSales();
+            UpdatePagedItems();
         }
 
         //Updates data per page
-        private void UpdatePagedSales()
+        protected override void UpdatePagedItems()
         {
             IEnumerable<SaleModel> filteredItems = Sales;
 
@@ -314,7 +322,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 filteredItems.Skip((CurrentPage - 1) * ItemsPerPage).Take(ItemsPerPage)
             );
 
-            OnPropertyChanged(nameof(PagedSales));
+            OnPropertyChange(nameof(PagedSales));
         }
 
         //Search and filters data by Product name, filter can be modified later
@@ -329,7 +337,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             PagedSales = new ObservableCollection<SaleModel>(
                 filteredItems.Skip((CurrentPage - 1) * ItemsPerPage).Take(ItemsPerPage)
             );
-            OnPropertyChanged(nameof(PagedSales));
+            OnPropertyChange(nameof(PagedSales));
         }
 
     }

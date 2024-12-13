@@ -1,5 +1,6 @@
 ﻿using CIRCUIT.Model;
 using CIRCUIT.Utilities;
+using CIRCUIT.ViewModel.Bases;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,9 @@ using System.Windows.Input;
 
 namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 {
-    public class CatalogViewModel : PropertyChange
+    public class CatalogViewModel : BasePaginationViewModel
     {
         //Fields
-        private int _currentPage = 1;
-        private int _itemsPerPage = 5; // Adjust as needed
-        private int _totalItems;
         private object _addProductView;
         private string _searchTerm;
         private bool? isAllSelected;
@@ -26,9 +24,6 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         //database connection instance of an object
         private Db dbCon = new Db();
-
-        //Calculates the total pages dynamically
-        public int TotalPages => (int)Math.Ceiling((double)TotalItems / ItemsPerPage);
 
         //Collections
         public ObservableCollection<ProductModel> PagedProducts { get; set; }
@@ -63,45 +58,6 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             }
         }
 
-        public int CurrentPage
-        {
-            get => _currentPage;
-            set 
-            {
-                if (_currentPage != value && value > 0 && value <= TotalPages)
-                {
-                    _currentPage = value;
-                    OnPropertyChange();
-                    UpdatePagedProducts();
-
-                }
-
-            }
-        }
-
-        public int ItemsPerPage
-        {
-            get => _itemsPerPage;
-            set
-            {
-                _itemsPerPage = value;
-                OnPropertyChange();
-                UpdatePagedProducts();
-            }
-
-        }
-
-        public int TotalItems
-        {
-            get => _totalItems;
-            set
-            {
-                _totalItems = value;
-                OnPropertyChange();
-            }
-
-        }
-
         public string SearchTerm
         {
             get => _searchTerm;
@@ -111,7 +67,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 {
                     _searchTerm = value;
                     OnPropertyChange();
-                    UpdatePagedProducts();
+                    UpdatePagedItems();
                 }
             }
         }
@@ -159,7 +115,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
                 {
                     _filterBrandBox = value;
                     OnPropertyChange();
-                    UpdatePagedProducts();
+                    UpdatePagedItems();
                 }
             }
         }
@@ -283,11 +239,12 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
             }
 
             TotalItems = Product.Count;
-            UpdatePagedProducts();
+            OnPropertyChange(nameof(TotalPages));
+            UpdatePagedItems();
         }
 
-        //Updates data per page
-        private void UpdatePagedProducts()
+        //Updates data per page, overrides the UpdatePagedProducts from BasePaginationViewModel
+        protected override void UpdatePagedItems()
         {
             IEnumerable<ProductModel> filteredProducts = Product;
 
@@ -339,7 +296,7 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
         {
             if (string.IsNullOrEmpty(FilterPriceRange) || FilterPriceRange == "Price Range")
             {
-                UpdatePagedProducts();
+                UpdatePagedItems();
                 return;
             }
 

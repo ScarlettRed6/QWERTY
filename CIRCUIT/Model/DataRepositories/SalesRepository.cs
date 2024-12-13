@@ -11,6 +11,9 @@ namespace CIRCUIT.Model.DataRepositories
         private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
                                           "Trust Server Certificate=True";
 
+        //Try mo to 
+        //private string connectionString = "Server=localhost;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True"
+
         //Method to execute non queries like INSERT or UPDATE, might change this code later idk
         public void ExecuteNonQuery(string query)
         {
@@ -215,14 +218,14 @@ namespace CIRCUIT.Model.DataRepositories
         public List<SaleHistoryModel> GetSalesHistoryWithItems()
         {
             string query = @"
-    SELECT s.sale_id, s.date_time, COALESCE(s.cashier_id, 0) AS cashier_id, 
-           s.total_amount, s.payment_method, s.customer_payment, s.change_given, 
-           s.is_void, s.VoidReason,
-           p.product_name, p.selling_price, 
-           si.product_id, si.quantity, si.item_total_price
-    FROM tbl_sales s
-    INNER JOIN tbl_Sale_Items si ON s.sale_id = si.sale_id
-    INNER JOIN tbl_products p ON si.product_id = p.product_id";
+                            SELECT s.sale_id, s.date_time, COALESCE(s.cashier_id, 0) AS cashier_id, 
+                                   s.total_amount, s.payment_method, s.customer_payment, s.change_given, 
+                                   s.is_void, s.VoidReason,
+                                   p.product_name, p.selling_price, 
+                                   si.product_id, si.quantity, si.item_total_price
+                            FROM tbl_sales s
+                            INNER JOIN tbl_Sale_Items si ON s.sale_id = si.sale_id
+                            INNER JOIN tbl_products p ON si.product_id = p.product_id";
 
             var salesHistory = new List<SaleHistoryModel>();
             var salesDict = new Dictionary<int, SaleHistoryModel>();
@@ -274,155 +277,6 @@ namespace CIRCUIT.Model.DataRepositories
             return salesHistory;
         }
 
-        public void MarkSaleAsRefunded(int saleId, string refundReason)
-        {
-            string query = "UPDATE tbl_sales SET is_void = 1, VoidReason = @Reason WHERE sale_id = @SaleId";
-
-            using (var connection = GetConnection())
-            {
-                try
-                {
-                    connection.Open();
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@SaleId", saleId);
-                        command.Parameters.AddWithValue("@Reason", refundReason);
-
-                        command.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Failed to mark sale as refunded: {ex.Message}");
-                }
-            }
-        }
-
-
-        public void MarkItemAsRefunded(int saleItemId, int refundQuantity)
-        {
-            string query = "UPDATE tbl_Sale_Items SET is_refunded = 1 WHERE sale_item_id = @saleItemId";
-            using (var connection = GetConnection())
-            {
-                try
-                {
-                    connection.Open();
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@saleItemId", saleItemId);
-                        command.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error marking item as refunded: {ex.Message}");
-                }
-            }
-        }
-
-        // Adjust inventory for refunded items
-        public void RestockItem(int productId, int quantity)
-        {
-            string query = "UPDATE tbl_Products SET stock_quantity = stock_quantity + @quantity WHERE product_id = @productId";
-            using (var connection = GetConnection())
-            {
-                try
-                {
-                    connection.Open();
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@quantity", quantity);
-                        command.Parameters.AddWithValue("@productId", productId);
-                        command.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error restocking item: {ex.Message}");
-                }
-            }
-        }
-
-        public void RefundSale(string saleId, string reason)
-        {
-            string query = "UPDATE tbl_sales SET is_void = 1, VoidReason = @Reason WHERE sale_id = @SaleId";
-
-            using (var connection = GetConnection())
-            {
-                try
-                {
-                    connection.Open();
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@SaleId", saleId);
-                        command.Parameters.AddWithValue("@Reason", reason);
-
-                        command.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error processing refund: {ex.Message}");
-                }
-            }
-        }
-
-
-        public void UpdateTotalAmountAfterRefund(int saleId, decimal totalRefundAmount)
-        {
-            string query = "UPDATE tbl_sales SET total_amount = total_amount - @RefundAmount WHERE sale_id = @SaleId";
-
-            using (var connection = GetConnection())
-            {
-                try
-                {
-                    connection.Open();
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@SaleId", saleId);
-                        command.Parameters.AddWithValue("@RefundAmount", totalRefundAmount);
-
-                        command.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error updating total amount: {ex.Message}");
-                }
-            }
-        }
-
-
-        //INSERT DATA DI KO ALAM IF GAGAMITIN KO PA TO OR HINDI NA, pwede naman kasi sya ma filter
-        /*
-        public void InsertRefundItem(int saleId, int productId, int quantity, decimal refundAmount, string refundReason, DateTime refundDateTime)
-        {
-            string query = "INSERT INTO RefundedItems (sale_item_id, refund_quantity, refund_datetime, refund_amount, refund_reason, product_id) " +
-                           "VALUES (@saleItemId, @quantity, @refundDateTime, @refundAmount, @refundReason, @productId)";
-
-            using (var connection = GetConnection())
-            {
-                try
-                {
-                    connection.Open();
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@saleItemId", saleId);
-                        command.Parameters.AddWithValue("@quantity", quantity);
-                        command.Parameters.AddWithValue("@refundAmount", refundAmount);
-                        command.Parameters.AddWithValue("@refundReason", refundReason);
-                        command.Parameters.AddWithValue("@refundDateTime", refundDateTime);
-                        command.Parameters.AddWithValue("@productId", productId);
-                        command.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Error inserting refund item: {ex.Message}");
-                }
-            }
-        }
-        */
 
     }
 }

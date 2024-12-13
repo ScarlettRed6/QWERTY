@@ -19,6 +19,7 @@
         Dictionary<int, string> GetProductNames(List<int> productIds);
         List<SalesItemModel> FetchSaleItems(int saleId);
         int FetchTotalProductSold();
+        List<SaleHistoryModel> GetSalesHistoryWithItems();
     }
 
     //For product queries
