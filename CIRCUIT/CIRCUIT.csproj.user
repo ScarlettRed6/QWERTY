@@ -73,6 +73,9 @@
     <Compile Update="View\AdminDashboardViews\ViewSaleView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\SetupWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\UserLoginView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -157,6 +160,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\AdminDashboardViews\ViewSaleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\SetupWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\UserLoginView.xaml">

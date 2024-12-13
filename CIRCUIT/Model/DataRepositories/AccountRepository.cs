@@ -207,6 +207,30 @@ namespace CIRCUIT.Model.DataRepositories
             return user;
         }
 
+        public bool HasAdminAccounts()
+        {
+            string query = "SELECT COUNT(*) FROM tbl_users WHERE role = @role";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@role", "Admin");
+
+                        int adminCount = (int)command.ExecuteScalar();
+                        return adminCount > 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error checking admin accounts: {ex.Message}");
+                    return false;
+                }
+            }
+        }
+
         public UsersModel FetchUserPassAndSalt(string username)
         {
             string queryUser = "SELECT * FROM tbl_Users WHERE username = @username";
