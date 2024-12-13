@@ -13,7 +13,7 @@ namespace CIRCUIT.ViewModel.CashierViewModel
     {
         private ObservableCollection<SaleHistoryModel> _salesHistory;
         private readonly Db _database;
-        private string _staffName;
+
 
         public ObservableCollection<SaleHistoryModel> SalesHistory
         {
@@ -25,15 +25,7 @@ namespace CIRCUIT.ViewModel.CashierViewModel
             }
         }
 
-        public string StaffName
-        {
-            get => _staffName;
-            set
-            {
-                _staffName = value;
-                OnPropertyChange(nameof(StaffName));
-            }
-        }
+
 
 
         public decimal TotalSalesAmount => SalesHistory.Sum(s => s.TotalAmount);
@@ -48,7 +40,6 @@ namespace CIRCUIT.ViewModel.CashierViewModel
             SalesHistory = new ObservableCollection<SaleHistoryModel>();
             RefreshHistoryCommand = new RelayCommand(LoadSalesHistory);
 
-            StaffName = "Rhenz Pogi";
             LoadSalesHistory();
         }
 

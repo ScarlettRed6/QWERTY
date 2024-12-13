@@ -21,6 +21,10 @@ namespace CIRCUIT.ViewModel
         #region Private Fields
         private readonly Db _db;
         private readonly AccountRepository _accountRepository;
+        private readonly SalesRepository _productService;
+
+
+
         private quickpayView quickpayWindow;
         private ConfirmationModal confirmationModal;
         private int _userId;
@@ -49,7 +53,6 @@ namespace CIRCUIT.ViewModel
         private bool _discountAlreadyUsed = false;
 
         #region Public Properties
-        // Time and Staff Information
         public string CurrentDate
         {
             get => _currentDate;
@@ -283,6 +286,7 @@ namespace CIRCUIT.ViewModel
             InitializeCommands();
             ApplyDiscountCommand = new RelayCommand(ApplyDiscount);
             LoadProductsFromDatabase();
+
         }
         #endregion
 
@@ -320,28 +324,18 @@ namespace CIRCUIT.ViewModel
             LogOutBtnCommand = new RelayCommand(ExecuteLogout);
             //new added features
             MyProfileCommand = new RelayCommand(OpenMyProfile);
-            LayawayCommand = new RelayCommand(OpenLayawaySale);
             QuickPayCommand = new RelayCommand(ExecuteQuickPay);
-            //PreorderCommand = new RelayCommand(OpenPreOrder);
             VoidCommand = new RelayCommand(VoidOrder);
-            //ReprintReceiptCommand = new RelayCommand(ReprintReceipt);
             ViewInventoryCommand = new RelayCommand(ViewInventory);
             ResetOrderDetailsCommand = new RelayCommand(ResetOrderDetails);
             BtnCloseCommand = new RelayCommand(ExecuteClose);
         }
         #endregion
 
-        //new added features
         private void OpenMyProfile()
         {
             CashierProfileView cashierProfileView = new CashierProfileView();
             cashierProfileView.Show();
-        }
-
-        private void OpenLayawaySale()
-        {
-            layawayView layawayWindow = new layawayView();
-            layawayWindow.Show();
         }
 
         private void ExecuteQuickPay()
@@ -360,16 +354,8 @@ namespace CIRCUIT.ViewModel
             }
             quickpayWindow = new quickpayView(CartItems, TotalAmount, this);
             quickpayWindow.Show();
-            
-        }
 
-        /*
-        private void OpenPreOrder()
-        {
-            preorderView preorderWindow = new preorderView();
-            preorderWindow.Show();
         }
-        */
 
         private void VoidOrder()
         {
@@ -377,14 +363,6 @@ namespace CIRCUIT.ViewModel
             voidOrderWindow.Show();
         }
 
-        /*DISREGARD
-        private void ReprintReceipt()
-        {
-            reprintreceiptView reprintWindow = new reprintreceiptView();
-            reprintWindow.Show();
-        }
-
-        */
         private void ViewInventory()
         {
             inventoryView inventoryWindow = new inventoryView();
@@ -406,46 +384,48 @@ namespace CIRCUIT.ViewModel
 
 
         #region Database Operations
-        private void LoadProductsFromDatabase()
-        {
-            try
-            {
-                string query = "SELECT * FROM tbl_Products WHERE is_archived = 0 AND stock_quantity > 0";
-                var productsFromDb = _db.FetchData(query);
-                _allProducts.Clear();
-                foreach (var product in productsFromDb)
-                {
-                    _allProducts.Add(new ProductModel
-                    {
-                        ProductId = product.ProductId,
-                        ProductName = product.ProductName,
-                        Category = product.Category,
-                        Brand = product.Brand,
-                        ModelNumber = product.ModelNumber,
-                        SKU = product.SKU,
-                        Description = product.Description,
-                        StockQuantity = product.StockQuantity,
-                        UnitCost = product.UnitCost,
-                        SellingPrice = (decimal)product.SellingPrice,
-                        MinStockLevel = product.MinStockLevel,
-                        IsArchived = product.IsArchived,
-                        ImagePath = product.ImagePath,
-                    });
-                }
-                FilteredProducts = new ObservableCollection<ProductModel>(_allProducts);
 
-                if (_allProducts.Count == 0)
-                {
-                    MessageBox.Show("No products available", "Low Stock",
-                        MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-            }
-            catch (Exception ex)
+
+        //etong database operations  kailangan ilipat sa iserviceProduct
+        //Dependency Injection
+
+        //Refactor o nalang siguro 
+        private void LoadProductsFromDatabase()
+
+        {
+
+            string query = "SELECT * FROM tbl_Products WHERE is_archived = 0 AND stock_quantity <= min_stock_level";
+            var productsFromDb = _db.FetchData(query);
+            _allProducts.Clear();
+
+            foreach (var product in productsFromDb)
             {
-                MessageBox.Show($"Error loading products: {ex.Message}", "Database Error",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-                // Replace Console.WriteLine with a proper error handling mechanism
+                _allProducts.Add(new ProductModel
+                {
+                    ProductId = product.ProductId,
+                    ProductName = product.ProductName,
+                    Category = product.Category,
+                    Brand = product.Brand,
+                    ModelNumber = product.ModelNumber,
+                    SKU = product.SKU,
+                    Description = product.Description,
+                    StockQuantity = product.StockQuantity,
+                    UnitCost = product.UnitCost,
+                    SellingPrice = (decimal)product.SellingPrice,
+                    MinStockLevel = product.MinStockLevel,
+                    IsArchived = product.IsArchived,
+                    ImagePath = product.ImagePath,
+                });
             }
+
+            FilteredProducts = new ObservableCollection<ProductModel>(_allProducts);
+
+            if (_allProducts.Count == 0)
+            {
+                MessageBox.Show("No products available", "Low Stock",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
         }
         #endregion
 
