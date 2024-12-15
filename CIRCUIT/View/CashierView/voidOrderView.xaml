@@ -58,6 +58,7 @@
                          Text="{Binding OrderIdToVoid, UpdateSourceTrigger=PropertyChanged}"
                          ToolTip="Enter the ID of the order to be voided" 
                          Style="{StaticResource generalTextBoxStyle}"
+                         Foreground="{StaticResource palette6}"
                          Margin="0,0,0,20"/>
 
                 <!-- Reason Label -->
@@ -74,7 +75,8 @@
                          AcceptsReturn="True" 
                          Style="{StaticResource generalTextBoxStyle}"
                          ToolTip="Provide a reason for voiding this order" 
-                         Margin="0,0,0,20"/>
+                         Margin="0,0,0,20"
+                         Foreground="{StaticResource palette6}"/>
 
                 <!-- Buttons with Command Bindings -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,90,0,0">

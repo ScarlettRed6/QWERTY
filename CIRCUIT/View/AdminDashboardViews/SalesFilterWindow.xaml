@@ -118,9 +118,9 @@
                                   Margin="5"
                                   Style="{StaticResource FilterComboBoxStyle}">
                             <ComboBoxItem Content="Total Amount" IsSelected="True"/>
-                            <ComboBoxItem Content="Below $100" />
-                            <ComboBoxItem Content="$100 - $500" />
-                            <ComboBoxItem Content="Above $500" />
+                            <ComboBoxItem Content="Below ₱100" />
+                            <ComboBoxItem Content="₱100 - ₱500" />
+                            <ComboBoxItem Content="Above ₱500" />
                         </ComboBox>
                     </StackPanel>
 

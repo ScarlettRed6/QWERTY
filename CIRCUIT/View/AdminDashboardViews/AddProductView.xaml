@@ -204,6 +204,7 @@
                                              Width="200"
                                              FontSize="18"
                                              Margin="2"
+                                             Foreground="{StaticResource panelColor4}"
                                              Style="{StaticResource catalogBox}"
                                              IsEnabled="{Binding IsNewBrandEnabled}"/>
                                 </StackPanel>
@@ -216,6 +217,7 @@
                                              Width="200"
                                              FontSize="18"
                                              Margin="2"
+                                             Foreground="{StaticResource panelColor4}"
                                              Style="{StaticResource catalogBox}"
                                              IsEnabled="{Binding IsNewCategoryEnabled}"/>
                                 </StackPanel>

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj": {}
+    "c:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj": {
+    "c:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj",
+        "projectUniqueName": "c:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj",
         "projectName": "CIRCUIT",
-        "projectPath": "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj",
+        "projectPath": "c:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj",
         "packagesPath": "C:\\Users\\Dreadlord\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\obj\\",
+        "outputPath": "c:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
