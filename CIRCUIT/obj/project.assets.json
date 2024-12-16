@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj",
+      "projectUniqueName": "C:\\Users\\Ganotice\\Desktop\\QWERTY\\CIRCUIT\\CIRCUIT.csproj",
       "projectName": "CIRCUIT",
-      "projectPath": "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj",
-      "packagesPath": "C:\\Users\\Dreadlord\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\obj\\",
+      "projectPath": "C:\\Users\\Ganotice\\Desktop\\QWERTY\\CIRCUIT\\CIRCUIT.csproj",
+      "packagesPath": "C:\\Users\\Ganotice\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ganotice\\Desktop\\QWERTY\\CIRCUIT\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -33,6 +33,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
