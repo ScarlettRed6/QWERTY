@@ -9,9 +9,36 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="View\" />
-    <Folder Include="ViewModel\" />
+    <None Remove="Assets\Images\Circuit hd.png" />
+    <None Remove="Assets\Images\Icons\PasswordIcon.png" />
+    <None Remove="Assets\Images\Icons\UserIcon.png" />
+    <None Remove="Assets\Images\Personalpic.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="FontAwesome.Sharp" Version="6.6.0" />
+    <PackageReference Include="itext7" Version="9.0.0" />
+    <PackageReference Include="itext7.bouncy-castle-adapter" Version="9.0.0" />
+    <PackageReference Include="LiveCharts" Version="0.9.7" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc4.5" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageReference Include="Microsoft.SqlServer.Server" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\Backgrounds\LoginBackground.jpg" />
+    <Resource Include="Assets\Images\Circuit hd.png" />
+    <Resource Include="Assets\Images\Icons\PasswordIcon.png" />
+    <Resource Include="Assets\Images\Icons\UserIcon.png" />
+    <Resource Include="Assets\Images\Personalpic.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Images\AccountImages\" />
+    <Folder Include="Assets\Images\ProductImages\" />
+    <Folder Include="Assets\Images\UploadedImages\" />
   </ItemGroup>
 
 </Project>

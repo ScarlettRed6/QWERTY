@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="CIRCUIT.View.AdminDashboardViews.StockControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:adminVm="clr-namespace:CIRCUIT.ViewModel.AdminDashboardViewModel"
+             xmlns:Views="clr-namespace:CIRCUIT.View.AdminDashboardViews"
+             xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboardViews" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="1000">
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type adminVm:StockSuppliersViewModel}">
+            <Views:StockSuppliersView/>
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type adminVm:StockOrdersViewModel}">
+            <Views:StockOrdersView/>
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <Border Background="{StaticResource palette12}"
+            CornerRadius="5"
+            BorderThickness="0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="65"/>
+                <RowDefinition Height="70*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Grid row 0 -->
+            <Grid Grid.Row="0"
+                  Margin="5,0,5,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal">
+
+                    <RadioButton Style="{StaticResource stockControlNav}"
+                                 Tag="{StaticResource palette1}"
+                                 Command="{Binding ShowOrdersCommand}"
+                                 Margin="0,0,0,0"
+                                 HorizontalAlignment="Left">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Reorder" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Orders" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+
+                    </RadioButton>
+
+                    <RadioButton Style="{StaticResource stockControlNav2}"
+                                 Tag="{StaticResource palette1}"
+                                 Command="{Binding ShowSuppliersCommand}"
+                                 Margin="0,0,0,0"
+                                 HorizontalAlignment="Left">
+
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="PeopleGroup" Style="{StaticResource menuButtonIcon}"/>
+                            <TextBlock Text="Suppliers" Style="{StaticResource menuButtonText}"/>
+                        </StackPanel>
+
+                    </RadioButton>
+                </StackPanel>
+            </Grid>
+
+            <!-- Grid row 1 -->
+            <ContentControl Grid.Row="1" Content="{Binding CurrentView}"/>
+        </Grid>
+    </Border>
+</UserControl>

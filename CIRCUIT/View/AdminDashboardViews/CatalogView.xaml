@@ -1,0 +1,296 @@
+﻿<UserControl x:Class="CIRCUIT.View.AdminDashboard.CatalogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboard"
+             xmlns:vm="clr-namespace:CIRCUIT.ViewModel.AdminDashboardViewModel" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:view="clr-namespace:CIRCUIT.View.AdminDashboardViews"
+             xmlns:utils="clr-namespace:CIRCUIT.Utilities"
+             mc:Ignorable="d" 
+             Background="Transparent"
+             d:DesignHeight="650" d:DesignWidth="1000">
+
+    <UserControl.DataContext>
+        <vm:CatalogViewModel/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vm:AddProductViewModel}">
+            <view:AddProductView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:EditProductViewModel}">
+            <view:EditProductView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ViewProductViewModel}">
+            <view:ViewProductView/>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Border CornerRadius="10" Background="{StaticResource palette12}">
+
+        <Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <!-- Grid row 0 -->
+                <Border Background="{StaticResource palette10}"
+                        Margin="3"
+                        CornerRadius="5">
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Search textbox -->
+                        <!-- Implement product search later on bindings -->
+                        <StackPanel Orientation="Horizontal">
+
+                            <fa:IconImage Icon="Search"
+                                          Foreground="{StaticResource palette6}"
+                                          Height="30"
+                                          Margin="5"/>
+                            <TextBox x:Name="txtUser" FontSize="15"
+                                     FontWeight="Medium" Background="Transparent"
+                                     BorderBrush="{StaticResource palette1}"
+                                     BorderThickness="0,0,0,2" Height="30"
+                                     VerticalAlignment="Center" Margin="0,4,0,0"
+                                     Foreground="{StaticResource palette6}" 
+                                     CaretBrush="{StaticResource palette1}"
+                                     Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                                     Width="230"/>
+                        </StackPanel>
+
+                        <!-- Colomn 3 Add button -->
+                        <StackPanel Grid.Column="2"
+                                    Orientation="Horizontal"
+                                    FlowDirection="RightToLeft"
+                                    Margin="2">
+
+                            <!-- Add button -->
+                            <Button Width="120" Height="40"
+                                    BorderThickness="0"
+                                    Style="{StaticResource ExportButtonStyle}"
+                                    HorizontalAlignment="Right"
+                                    Command="{Binding AddNewProduct}">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Plus" Height="15"
+                                              Margin="0,0,30,0"/>
+                                <TextBlock Text="ADD" FontSize="20"
+                                           FontWeight="Medium"
+                                           Margin="0,0,0,2"/>
+                            </StackPanel>
+
+                            </Button>
+                            <!-- Archive button -->
+                            <Button Content="Archive"
+                                    Width="120"
+                                    Height="40"
+                                    FontSize="20"
+                                    Style="{StaticResource ExportButtonStyle}"
+                                    Command="{Binding TestCommand, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        </StackPanel>
+
+                    </Grid>
+                </Border>
+                
+                <!-- Grid row 1-->
+                <Border Background="{StaticResource palette10}"
+                        Grid.Row="1"
+                        Margin="3,0,3,2"
+                        CornerRadius="5">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Combobox filters -->
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    FlowDirection="LeftToRight" >
+
+                            <Button Height="40"
+                                    Width="120"
+                                    Margin="10,0,0,0"
+                                    Command="{Binding ClearFilterFCommand}"
+                                    Style="{StaticResource ExportButtonStyle}"
+                                    IsEnabled="{Binding canFilter}">
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:IconImage Icon="X" Height="15"
+                                                  Margin="0,0,10,0"/>
+                                    <TextBlock Text="Clear" FontSize="20"
+                                               FontWeight="Medium"
+                                               Margin="0,0,0,2"/>
+                                </StackPanel>
+                            </Button>
+
+                            <!-- Price range filter -->
+                            <ComboBox Width="150" Height="35"
+                                      Margin="8,0,0,0"
+                                      FontSize="15"
+                                      SelectedValuePath="Content"
+                                      Style="{StaticResource FilterComboBoxStyle}"
+                                      SelectedValue="{Binding FilterPriceRange, UpdateSourceTrigger=PropertyChanged}">
+                                <ComboBoxItem Content="Price Range" IsSelected="True"/>
+                                <ComboBoxItem Content="Below ₱100"/>
+                                <ComboBoxItem Content="₱101 - ₱500"/>
+                                <ComboBoxItem Content="₱501 - ₱1000"/>
+                                <ComboBoxItem Content="Above ₱1000"/>
+                            </ComboBox>
+                            <!-- Brand filter -->
+                            <ComboBox Width="150" Height="35"
+                                      Margin="8,0,0,0"
+                                      FontSize="15"
+                                      Style="{StaticResource FilterComboBoxStyle}"
+                                      ItemsSource="{Binding Brands}"
+                                      SelectedValue="{Binding FilterBrandBox, UpdateSourceTrigger=PropertyChanged}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <ComboBox Width="150" Height="35"
+                                      Margin="8,0,2,0"
+                                      FontSize="15"
+                                      Style="{StaticResource FilterComboBoxStyle}"
+                                      ItemsSource="{Binding Categories}"
+                                      SelectedValue="{Binding FilterCategoryBox, UpdateSourceTrigger=PropertyChanged}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                
+                <!-- Grid row 2 -->
+                <DataGrid x:Name="ProductDataGrid" 
+                          AutoGenerateColumns="False" 
+                          CanUserResizeColumns="False"
+                          CanUserAddRows="False"
+                          Grid.Row="2"
+                          IsReadOnly="True"
+                          ItemsSource="{Binding PagedProducts}"
+                          SelectionMode="Extended"
+                          RowHeaderWidth="0"
+                          Style="{StaticResource ModernDataGrid}"
+                          RowStyle="{StaticResource ModernDataGridRow}"
+                          CellStyle="{StaticResource ModernDataGridCell}"
+                          ColumnHeaderStyle="{StaticResource ModernDataGridColumnHeader}"
+                          VerticalScrollBarVisibility="Disabled">
+
+                    <!-- Column context -->
+                    <DataGrid.Columns>
+
+                        <DataGridTemplateColumn Width="50">
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding DataContext.IsAllSelected, RelativeSource={RelativeSource AncestorType=DataGrid}, Mode=TwoWay}"
+                                              Command="{Binding DataContext.CheckSelectAll, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                              Style="{StaticResource ModernCheckBoxStyle}"
+                                              Margin="5"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                              Command="{Binding DataContext.CheckSelectCell, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
+                                              Style="{StaticResource ModernCheckBoxStyle}"
+                                              Margin="5"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Image" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding ImagePath}" 
+                                           Width="80" 
+                                           Height="80" 
+                                           Stretch="UniformToFill"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTextColumn Header="ID" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="15*" DisplayIndex="1"/>
+                        <DataGridTextColumn Header="Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="50*" />
+                       <!-- <DataGridTextColumn Header="Category" Binding="{Binding Category, UpdateSourceTrigger=PropertyChanged}" Width="*" /> -->
+                        <DataGridTextColumn Header="Brand" Binding="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" Width="30*" />
+                        <!--<DataGridTextColumn Header="Model" Binding="{Binding ModelNumber, UpdateSourceTrigger=PropertyChanged}" Width="50*" />-->
+                        <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity, UpdateSourceTrigger=PropertyChanged}" Width="70" />
+                        <DataGridTextColumn Header="Cost" Binding="{Binding UnitCost, UpdateSourceTrigger=PropertyChanged, StringFormat=₱{0:N2}}" Width="25*" />
+                        <DataGridTextColumn Header="Price" Binding="{Binding SellingPrice, UpdateSourceTrigger=PropertyChanged, StringFormat=₱{0:N2}}" Width="25*" />
+
+                        <!-- Implement Edit/Archive button here later -->
+                        <DataGridTemplateColumn Width="50*" Header="Operations">
+                            <DataGridTemplateColumn.CellTemplate> 
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Height="30" Width="50" 
+                                                Content="Edit"
+                                                Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource PaginationButtonStyle}"/>
+
+                                        <Button Height="30" Width="50" 
+                                                Content="View"
+                                                Command="{Binding DataContext.ViewCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource PaginationButtonStyle}"/>
+                                        
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+                <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <Button Content=" First" Style="{StaticResource PaginationButtonStyle}"
+                            Command="{Binding FirstPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Button Content=" Prev" Style="{StaticResource PaginationButtonStyle}"
+                            Command="{Binding PreviousPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <TextBlock Text="{Binding CurrentPage, UpdateSourceTrigger=PropertyChanged}" 
+                                Style="{StaticResource PaginationTextStyle}"/>
+
+                    <TextBlock Text="of" 
+                               Style="{StaticResource PaginationTextStyle}"/>
+
+                    <TextBlock Text="{Binding TotalPages, UpdateSourceTrigger=PropertyChanged}"
+                               Style="{StaticResource PaginationTextStyle}"/>
+
+                    <Button Content="Next >" Style="{StaticResource PaginationButtonStyle}"
+                            Command="{Binding NextPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Button Content="Last >>" Style="{StaticResource PaginationButtonStyle}"
+                            Command="{Binding LastPageCommand, UpdateSourceTrigger=PropertyChanged}" />
+                    
+                </StackPanel>
+            </Grid>
+
+            <ContentControl Content="{Binding AddProductView}"/>
+        </Grid>
+        
+    </Border>
+
+</UserControl>

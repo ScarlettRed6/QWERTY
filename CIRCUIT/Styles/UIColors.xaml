@@ -1,0 +1,47 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- lagay rito color palette natin -->
+ 
+    <Color x:Key="primary1">#000000</Color>
+    <Color x:Key="primary2">#171717</Color>
+    <Color x:Key="primary3">#3D0000</Color>
+    <Color x:Key="secondary1">#950101</Color>
+    <Color x:Key="secondary2">#FF0000</Color>
+    
+    
+    <!-- Font colors -->
+
+    <SolidColorBrush x:Key="txtColor1">#282A3A</SolidColorBrush>
+    
+    <!-- Panel colors , Panel over / mouse hover -->
+    <SolidColorBrush x:Key="panelColor1">#3D0000</SolidColorBrush>
+    <SolidColorBrush x:Key="panelColor2">#950101</SolidColorBrush>
+    <SolidColorBrush x:Key="panelColor3">#171717</SolidColorBrush>
+    <SolidColorBrush x:Key="panelColor4">#A6AEBF</SolidColorBrush>
+    <SolidColorBrush x:Key="panelColor5">#2e2e2e</SolidColorBrush>
+    <SolidColorBrush x:Key="panelColor6">#000000</SolidColorBrush>
+    <SolidColorBrush x:Key="panelColor7">#1E1E1E</SolidColorBrush>
+
+    <SolidColorBrush x:Key="hoverBackground" Color="#FFD6EAF8" />
+    <SolidColorBrush x:Key="hoverForeground" Color="#FF1F618D" />
+    <SolidColorBrush x:Key="openBackground" Color="#FFAED6F1" />
+    <SolidColorBrush x:Key="openForeground" Color="#FF154360" />
+    
+    
+    <!-- App color palette -->
+    <SolidColorBrush x:Key="palette1">#FF8C00</SolidColorBrush>
+    <SolidColorBrush x:Key="palette2">#002366</SolidColorBrush>
+    <SolidColorBrush x:Key="palette3">#001F3F</SolidColorBrush>
+    <SolidColorBrush x:Key="palette4">#666666</SolidColorBrush>
+    <SolidColorBrush x:Key="palette5">#FFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="palette6">#E8FAFF</SolidColorBrush>
+    <SolidColorBrush x:Key="palette7">#00C8FF</SolidColorBrush>
+    <SolidColorBrush x:Key="palette8">#552E00</SolidColorBrush>
+    <SolidColorBrush x:Key="palette9">#FEAC01</SolidColorBrush>
+    <SolidColorBrush x:Key="palette10">#001744</SolidColorBrush>
+    <SolidColorBrush x:Key="palette11">#0000AA</SolidColorBrush>
+    <SolidColorBrush x:Key="palette12">#000B22</SolidColorBrush>
+    <SolidColorBrush x:Key="palette13">#BB6700</SolidColorBrush>
+
+</ResourceDictionary>

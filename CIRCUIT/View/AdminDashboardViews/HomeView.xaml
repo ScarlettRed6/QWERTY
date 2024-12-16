@@ -1,0 +1,265 @@
+﻿<UserControl x:Class="CIRCUIT.View.AdminDashboard.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboard"
+             xmlns:vm="clr-namespace:CIRCUIT.ViewModel.AdminDashboardViewModel"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
+             xmlns:wpf="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             mc:Ignorable="d" 
+             Background="Transparent"
+             d:DesignHeight="650" d:DesignWidth="1000">
+
+    <UserControl.DataContext>
+        <vm:HomeViewModel/>
+    </UserControl.DataContext>
+    
+    <Border CornerRadius="10" Background="{StaticResource palette12}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="30*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Grid row 0 -->
+            <Grid Grid.Row="0" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Gross profit -->
+                <Border CornerRadius="10" Margin="2"
+                        Background="{StaticResource palette10}"
+                        Width="auto">
+                    <StackPanel>
+                        <TextBlock Text="Gross Profit" 
+                                   Foreground="{StaticResource palette6}"
+                                   FontSize="25"
+                                   FontWeight="Medium"
+                                   Margin="10,10,0,0"/>
+                        <TextBlock Text="{Binding GrossProfit, StringFormat=₱{0:N2}}" 
+                                   FontSize="40"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource palette6}"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                </Border>
+
+                <!-- Total sales revenue -->
+                <Border CornerRadius="10" Grid.Column="1" Margin="2"
+                        Background="{StaticResource palette10}"
+                        Width="auto">
+
+                    <StackPanel>
+                        <TextBlock Text="Total Sales Revenue" 
+                                   FontSize="25"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource palette6}"
+                                   Margin="10,10,0,0"/>
+                        <TextBlock Text="{Binding TotalSalesRevenue, StringFormat=₱{0:N2}}"
+                                   FontSize="40"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource palette6}"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                </Border>
+
+                <!-- Total sales by Category -->
+                <Border CornerRadius="10" Grid.Column="2" Margin="2"
+                        Background="{StaticResource palette6}"
+                        Width="auto">
+
+                    <StackPanel>
+                        <TextBlock Text="Sales by Category"
+                                   FontSize="20"
+                                   FontWeight="Medium"
+                                   Foreground="{StaticResource palette12}"
+                                   Margin="10,0,0,0"/>
+
+                        <wpf:PieChart Series="{Binding SeriesCollection2}"
+                                      LegendPosition="Left"
+                                      LegendTextSize="15"
+                                      Width="380"
+                                      Height="135">
+                            
+                        </wpf:PieChart>
+                    </StackPanel>
+
+
+                </Border>
+
+            </Grid>
+            <!-- End of Grid row 0 -->
+            
+            <!-- Grid row 1 -->
+            <Border CornerRadius="5" Grid.Row="1"
+                    Background="{StaticResource palette10}"
+                    Margin="5,-1,5,0"
+                    Height="300"
+                    VerticalAlignment="Top">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60*"/>
+                        <ColumnDefinition Width="40*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Background="{StaticResource palette6}"
+                            Margin="5"
+                            CornerRadius="5">
+                        <StackPanel>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                            
+                                <TextBlock Text="Revenue over 7 days"
+                                       FontSize="15"
+                                       FontWeight="Medium"
+                                       Foreground="{StaticResource palette12}"
+                                       HorizontalAlignment="Center"/>
+
+                                <Button Content="Export"
+                                        Grid.Column="1"
+                                        Margin="0,3,3,0"
+                                        Command="{Binding ExportReportCommand}"
+                                        Style="{StaticResource ExportButtonStyle}"/>
+
+                            </Grid>
+
+                            <wpf:CartesianChart x:Name="MyCartesianChart"
+                                                Series="{Binding SeriesCollection}"
+                                                YAxes="{Binding YAxes}"
+                                                XAxes="{Binding XAxes}"
+                                                LegendPosition="Hidden"
+                                                Height="265"
+                                                Padding="10"/>
+                        </StackPanel>
+                    </Border>
+                    <Border CornerRadius="5" Grid.Column="1"
+                            Background="{StaticResource palette2}"
+                            Width="auto"
+                            Margin="5">
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="5">
+                                <TextBlock Text="Stock Alert"
+                                           Foreground="{StaticResource palette6}"
+                                           FontSize="17"
+                                           Margin="10,5,0,0"/>
+                                <!--
+                                <Button Content="View All"
+                                        Foreground="{StaticResource palette6}"
+                                        Margin="200,0,0,0"
+                                        Style="{StaticResource ExportButtonStyle}"/>-->
+                            </StackPanel>
+
+                            <DataGrid x:Name="stockAlerts" 
+                                      AutoGenerateColumns="False" 
+                                      CanUserAddRows="False"
+                                      Grid.Row="1"
+                                      IsReadOnly="True"
+                                      ItemsSource="{Binding Products}"
+                                      SelectionMode="Extended"
+                                      RowHeaderWidth="0"
+                                      Style="{StaticResource ModernDataGrid}"
+                                      RowStyle="{StaticResource StockAlertGridRowStyle}"
+                                      CellStyle="{StaticResource ModernDataGridCell}"
+                                      ColumnHeaderStyle="{StaticResource ModernDataGridColumnHeader}">
+
+                                <!-- Column context -->
+                                <DataGrid.Columns>
+
+                                    <DataGridTextColumn Header=" ID" Binding="{Binding ProductId, UpdateSourceTrigger=PropertyChanged}" Width="40"/>
+                                    <DataGridTextColumn Header="Name" Binding="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                                    <DataGridTextColumn Header="Brand" Binding="{Binding Brand, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                                    <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+
+                                </DataGrid.Columns>
+
+                            </DataGrid>
+                        </Grid>
+                    </Border>
+                    
+                </Grid>
+            </Border>
+            <!-- End of Grid Row 1-->
+            
+            <!-- Grid row 2 -->
+            <Border Grid.Row="2"
+                    Background="{StaticResource palette10}"
+                    CornerRadius="5"
+                    Margin="4">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Latest Transactions"
+                                   Foreground="{StaticResource palette6}"
+                                   FontSize="17"
+                                   FontWeight="Medium"
+                                   Margin="10,10,0,0"/>
+
+
+                    </Grid>
+
+                    <!-- Latest transactions -->
+                    <DataGrid x:Name="latestTransactionsList" 
+                              AutoGenerateColumns="False" 
+                              CanUserAddRows="False"
+                              Grid.Row="1"
+                              IsReadOnly="True"
+                              ItemsSource="{Binding Sales}"
+                              SelectionMode="Extended"
+                              RowHeaderWidth="0"
+                              Style="{StaticResource ModernDataGrid}"
+                              RowStyle="{StaticResource StockAlertGridRowStyle}"
+                              CellStyle="{StaticResource ModernDataGridCell}"
+                              ColumnHeaderStyle="{StaticResource ModernDataGridColumnHeader}">
+
+                        <!-- Column context -->
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Header=" ID" Binding="{Binding SaleId, UpdateSourceTrigger=PropertyChanged}" Width="10*" />
+                            <DataGridTextColumn Header="Cashier" Binding="{Binding CashierName, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
+                            <DataGridTextColumn Header="Payment Method" Binding="{Binding PaymentMethod, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
+                            <DataGridTextColumn Header="Amount Received" Binding="{Binding TotalAmount, UpdateSourceTrigger=PropertyChanged, StringFormat=₱{0:N2}}" Width="20*" />
+                            <DataGridTextColumn Header="Change" Binding="{Binding ChangeGiven, UpdateSourceTrigger=PropertyChanged, StringFormat=₱{0:N2}}" Width="20*" />
+                            <DataGridTextColumn Header="Date" Binding="{Binding DateTime, UpdateSourceTrigger=PropertyChanged}" Width="20*" />
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </Grid>
+            </Border>
+            
+
+        </Grid>
+    </Border>
+    
+</UserControl>
+    
+    
+    

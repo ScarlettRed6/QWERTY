@@ -1,0 +1,248 @@
+﻿<Window x:Class="CIRCUIT.View.CashierView.ConfirmationModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:CIRCUIT.ViewModel"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Order Confirmation"
+        Height="700" Width="800"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Window.DataContext>
+        <vm:NewSaleViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <!-- Base Style for Controls -->
+        <Style x:Key="BaseControlStyle" TargetType="Control">
+            <Setter Property="Background" Value="{StaticResource palette2}"/>
+            <Setter Property="Foreground" Value="{StaticResource palette6}"/>
+
+        </Style>
+
+        <!-- TextBlock Base Style -->
+        <Style x:Key="TextBlockBase" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource palette6}"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+
+        <!-- Header Style -->
+        <Style x:Key="HeaderStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="Margin" Value="0,0,0,20"/>
+        </Style>
+
+        <!-- Section Header Style -->
+        <Style x:Key="SectionHeaderStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+        </Style>
+
+        <!-- Label Style -->
+        <Style x:Key="LabelStyle" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="Foreground" Value="#A1A1AA"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+
+        <!-- TextBox Style -->
+        <Style TargetType="TextBox" BasedOn="{StaticResource BaseControlStyle}">
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="BorderBrush" Value="#3F3F46"/>
+        </Style>
+
+<Style TargetType="ComboBox" BasedOn="{StaticResource BaseControlStyle}">
+    <Setter Property="Height" Value="45"/>
+    <Setter Property="Background" Value="#27272A"/>
+    <Setter Property="Foreground" Value="#FFFFFF"/>
+    <Setter Property="BorderBrush" Value="#3F3F46"/>
+    <Setter Property="Template">
+        <Setter.Value>
+            <ControlTemplate TargetType="ComboBox">
+                <Grid>
+                    <ToggleButton Name="ToggleButton"
+                                  Template="{StaticResource ComboBoxToggleButton}"
+                                  Grid.Column="2"
+                                  Focusable="false"
+                                  IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                    <ContentPresenter Name="ContentSite"
+                                      IsHitTestVisible="False"
+                                      Content="{TemplateBinding SelectionBoxItem}"
+                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                      Margin="3,3,23,3"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Left"/>
+                    <TextBox x:Name="PART_EditableTextBox"
+                             Style="{x:Null}"
+                             Template="{StaticResource ComboBoxTextBox}"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Center"
+                             Margin="3,3,23,3"
+                             Focusable="True"
+                             Background="#27272A"
+                             Foreground="#FFFFFF"
+                             Visibility="Hidden"
+                             IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                    <Popup Name="Popup"
+                           Placement="Bottom"
+                           IsOpen="{TemplateBinding IsDropDownOpen}"
+                           AllowsTransparency="True"
+                           Focusable="False"
+                           PopupAnimation="Slide">
+                        <Grid Name="DropDown"
+                              SnapsToDevicePixels="True"
+                              MinWidth="{TemplateBinding ActualWidth}"
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                            <Border Name="DropDownBorder"
+                                    Background="#27272A"
+                                    BorderBrush="#3F3F46"
+                                    BorderThickness="1"/>
+                            <ScrollViewer Margin="4,6"
+                                          SnapsToDevicePixels="True">
+                                <StackPanel IsItemsHost="True"
+                                            KeyboardNavigation.DirectionalNavigation="Contained"/>
+                            </ScrollViewer>
+                        </Grid>
+                    </Popup>
+                </Grid>
+            </ControlTemplate>
+        </Setter.Value>
+    </Setter>
+</Style>
+
+
+        <!-- Button Style -->
+        <Style x:Key="ButtonBase" TargetType="Button">
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8" Padding="20,0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Section Border Style -->
+        <Style x:Key="SectionBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource palette2}"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Margin" Value="0,0,0,16"/>
+        </Style>
+    </Window.Resources>
+
+    <Border Padding="24"
+            CornerRadius="10"
+            Background="{StaticResource palette10}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <TextBlock Text="Order Summary" Style="{StaticResource HeaderStyle}"/>
+
+            <!-- Order Details -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,20">
+                <StackPanel>
+                    <!-- Order Items -->
+                    <Border Style="{StaticResource SectionBorderStyle}">
+                        <ItemsControl ItemsSource="{Binding OrderItems}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="120"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding ProductName}" Style="{StaticResource TextBlockBase}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Quantity, StringFormat='{} × {0}'}" Margin="15,0" Foreground="{StaticResource palette6}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding SellingPrice, StringFormat='₱{0:N2}'}" TextAlignment="Right" Foreground="{StaticResource palette6}" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding TotalPrice, StringFormat='₱{0:N2}'}" TextAlignment="Right" Foreground="{StaticResource palette6}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+
+                    <!-- Total Amount -->
+                    <Border Style="{StaticResource SectionBorderStyle}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Total Amount" Style="{StaticResource SectionHeaderStyle}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="{Binding ViewModel.TotalAmount, StringFormat='₱{0:N2}'}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" Foreground="#4CAF50"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Payment Details -->
+                    <Border Style="{StaticResource SectionBorderStyle}">
+                        <StackPanel>
+                            <TextBlock Text="Payment Details" Style="{StaticResource SectionHeaderStyle}"/>
+                            <TextBlock Text="Payment Method" Style="{StaticResource LabelStyle}" Margin="0,8,0,4"/>
+
+                            
+
+                            <ComboBox ItemsSource="{Binding ViewModel.PaymentMethods}"
+                                      Margin="0,0,0,16" 
+                                      Height="40"
+                                      Style="{StaticResource FilterComboBoxStyle}"
+                                      VerticalContentAlignment="Center" 
+                                      SelectionChanged="PaymentMethodComboBox_SelectionChanged"
+                                      SelectedItem="{Binding ViewModel.PaymentMethod, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" >
+
+                            </ComboBox>
+                            <TextBlock Text="Amount Received" Style="{StaticResource LabelStyle}" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding ViewModel.AmountReceived, UpdateSourceTrigger=PropertyChanged}"  MaxLength="11" VerticalContentAlignment="Center" Margin="0,0,0,16"/>
+                            <TextBlock Text="Change Given" Style="{StaticResource LabelStyle}" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding ViewModel.AmountGiven, Mode=OneWay}"  MaxLength="11" VerticalContentAlignment="Center" IsReadOnly="True"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Action Buttons -->
+            <UniformGrid Grid.Row="2" Rows="1" Columns="3" Margin="8,0,0,0">
+                <Button Content="RETURN TO CART" 
+                        Style="{StaticResource ButtonBase}" 
+                        Margin="10" 
+                        Background="#3F3F46" 
+                        Command="{Binding ViewModel.returncartCommand}" 
+                        Click="ReturnToCart"/>
+                <Button Content="APPLY DISCOUNT" 
+                        Style="{StaticResource ButtonBase}" 
+                        Margin="10" Background="#FFA500" 
+                        Command="{Binding ViewModel.ApplyDiscountCommand}"/>
+                <Button Content="PROCESS ORDER" 
+                        Style="{StaticResource ButtonBase}" 
+                        Margin="10" Background="#4CAF50" 
+                        Command="{Binding ViewModel.ProcessOrderCommand}"/>
+            </UniformGrid>
+        </Grid>
+    </Border>
+</Window>

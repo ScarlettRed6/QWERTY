@@ -1,0 +1,296 @@
+﻿<Window x:Class="CIRCUIT.View.AdminDashboardView.AdminDashboardView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CIRCUIT.View.AdminDashboardView"
+        xmlns:vm="clr-namespace:CIRCUIT.ViewModel"
+        xmlns:Views="clr-namespace:CIRCUIT.View.AdminDashboard"
+        xmlns:Views2="clr-namespace:CIRCUIT.View.AdminDashboardView"
+        xmlns:Views3="clr-namespace:CIRCUIT.View.AdminDashboardViews"
+        xmlns:adminVm="clr-namespace:CIRCUIT.ViewModel.AdminDashboardViewModel"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+        Icon="/Assets/Images/Circuit hd.png"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen" WindowStyle="None"
+        Background="Transparent" AllowsTransparency="True"
+        Title="AdminDashboardView" Height="800" Width="1400">
+
+    
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type adminVm:HomeViewModel}">
+            <Views:HomeView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type adminVm:AnalyticsAndReportsVM}">
+            <Views2:AnalyticsView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type adminVm:CatalogViewModel}">
+            <Views:CatalogView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type adminVm:ArchivedProductsViewModel}">
+            <Views3:ArchivedProductsView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type adminVm:StaffViewModel}">
+            <Views3:StaffView/>
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type adminVm:SalesTransactionsViewModel}">
+            <Views3:SalesTransactionsView/>
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type adminVm:StockControlViewModel}">
+            <Views3:StockControlView/>
+        </DataTemplate>
+
+    </Window.Resources>
+    
+    
+    <!-- Outer border -->
+    <Border CornerRadius="10" BorderThickness="3,2,2,5">
+        <!-- Border color gradient -->
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="#000B22" Offset="0"/>
+                <GradientStop Color="#AE445A" Offset="0.75"/>
+                <GradientStop Color="#FF8C00" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Border.Background>
+            <SolidColorBrush Color="#001744"/>
+        </Border.Background>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/> <!-- The Side navigation -->
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Border and Border background for the side nav -->
+            <Border CornerRadius="7,0,0,5">
+                <Border.Background>
+                    <SolidColorBrush Color="#000B22"/>
+                </Border.Background>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="80"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel>
+
+                        <!-- LOGO and Text either Dashboard or app Name or Current user -->
+                        <StackPanel Orientation="Horizontal" Height="35"
+                                    Margin="15,25,0,40">
+
+                            <Image Source="/Assets/Images/Circuit hd.png" Height="30"/>
+                            <TextBlock Text="CIRCUIT" Foreground="{StaticResource palette1}"
+                                       FontSize="20" FontWeight="Medium"
+                                       VerticalAlignment="Center" Margin="10,0,0,0"/>
+
+                        </StackPanel>
+
+                        <TextBlock Text="Dashboard"
+                                   Foreground="{StaticResource panelColor4}"
+                                   FontSize="15"
+                                   FontWeight="Medium"
+                                   Margin="30,0,0,10"/>
+                        <!-- Side menu buttons -->
+
+                        <RadioButton Style="{StaticResource menuButton}"
+                                     Tag="{StaticResource palette1}"
+                                     Command="{Binding ShowHomeCommand}"
+                                     IsChecked="True">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="ChartBar" Style="{StaticResource menuButtonIcon}"/>
+                                <TextBlock Text="Reports" Style="{StaticResource menuButtonText}"/>
+                            </StackPanel>
+
+                        </RadioButton>
+
+                        <!-- supposed to be for a separate reports, might implement later
+                        <RadioButton Style="{StaticResource menuButton}"
+                                     Tag="{StaticResource panelColor2}"
+                                     Command="{Binding ShowAnalyticsCommand}">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="ChartBar" Style="{StaticResource menuButtonIcon}"/>
+                                <TextBlock Text="Reports" Style="{StaticResource menuButtonText}"/>
+                            </StackPanel>
+
+                        </RadioButton>
+                        -->
+
+                        <RadioButton Style="{StaticResource menuButton}"
+                                     Tag="{StaticResource palette1}"
+                                     Command="{Binding ShowSalesCommand}">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="ExchangeAlt" Style="{StaticResource menuButtonIcon}"/>
+                                <TextBlock Text="Sales" Style="{StaticResource menuButtonText}"/>
+                            </StackPanel>
+
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource menuButton}"
+                                     Tag="{StaticResource palette1}"
+                                     Command="{Binding ShowCatalogCommand}">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Tag" Style="{StaticResource menuButtonIcon}"/>
+                                <TextBlock Text="Products" Style="{StaticResource menuButtonText}"/>
+                            </StackPanel>
+
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource menuButton}"
+                                     Tag="{StaticResource palette1}"
+                                     Command="{Binding ShowStockControlCommand}">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Box" Style="{StaticResource menuButtonIcon}"/>
+                                <TextBlock Text="Stock" Style="{StaticResource menuButtonText}"/>
+                            </StackPanel>
+
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource menuButton}"
+                                     Tag="{StaticResource palette1}"
+                                     Command="{Binding ShowArchivedCommand}">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="Archive" Style="{StaticResource menuButtonIcon}"/>
+                                <TextBlock Text="Archived" Style="{StaticResource menuButtonText}"/>
+                            </StackPanel>
+
+                        </RadioButton>
+
+                        <Separator Height="2" Background="Orange"
+                                   Margin="10,0,10,0"/>
+
+                        <RadioButton Style="{StaticResource menuButton}"
+                                     Tag="{StaticResource palette1}"
+                                     Command="{Binding ShowEmployeeManagementCommand}">
+
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Icon="PeopleGroup" Style="{StaticResource menuButtonIcon}"/>
+                                <TextBlock Text="Staff" Style="{StaticResource menuButtonText}"/>
+                            </StackPanel>
+
+                        </RadioButton>
+
+                        <Button x:Name="logoutBtn"
+                                Height="25"
+                                Width="140"
+                                FontSize="15"
+                                FontWeight="Medium"
+                                Command="{Binding LogOutBtnCommand}"
+                                Style="{StaticResource logoutButtonStyle}">
+                            
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0,0,40,0">
+                                <fa:IconImage Icon="SignOut" Style="{StaticResource logoutIcon}"/>
+                                <TextBlock Text="Log out" Style="{StaticResource logoutText}"/>
+                            </StackPanel>
+
+                        </Button>
+
+                        <!-- End of menu buttons -->
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+
+            <!-- Right Panel , The Content Panel -->
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel x:Name="ControlBar" Orientation="Horizontal"
+                            FlowDirection="RightToLeft" Background="Transparent"
+                            Margin="0,3,5,0"
+                            MouseLeftButtonDown="ControlBar_MouseLeftButtonDown"
+                            MouseEnter="ControlBar_MouseEnter">
+
+                    <!-- Button Close control -->
+                    <Button x:Name="btnClose" Style="{StaticResource controlButton}"
+                            Tag="{StaticResource panelColor2}" Command="{Binding btnCloseCommand}">
+                        <fa:IconImage Icon="Xmark" 
+                                      Style="{StaticResource controlButtonIcon}"/>
+
+                    </Button>
+                    <!-- Button Maximize control -->
+                    <Button x:Name="btnMaximize" Style="{StaticResource controlButton}"
+                            Tag="{StaticResource panelColor2}" Command="{Binding btnMaximizeCommand}">
+                        <fa:IconImage Icon="Square" 
+                                      Style="{StaticResource controlButtonIcon}"/>
+
+                    </Button>
+                    <!-- Button Minimize control -->
+                    <Button x:Name="btnMinimize" Style="{StaticResource controlButton}"
+                            Tag="{StaticResource panelColor2}" Command="{Binding btnMinimizeCommand}">
+                        <fa:IconImage Icon="WindowMinimize" 
+                                      Style="{StaticResource controlButtonIcon}"/>
+
+                    </Button>
+
+                </StackPanel>
+
+                <!-- Random Header caption !Can be remove later! -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Current Panel Caption -->
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <fa:IconImage Icon="{Binding Icon}" Height="20"
+                                      Width="20" Foreground="{StaticResource palette1}"
+                                      Margin="35,0,10,0"/>
+                        <TextBlock Text="{Binding Caption}" Foreground="{StaticResource palette6}"
+                                   FontSize="20" FontWeight="Medium"
+                                   VerticalAlignment="Center"/>
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                FlowDirection="LeftToRight"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="10,0,0,0">
+
+                        <TextBlock Text="WELCOME, " Foreground="{StaticResource palette6}"
+                                   FontSize="20" VerticalAlignment="Center"
+                                   FontWeight="Medium"/>
+
+                        <!-- Apply a binding here for the current user logged in -->
+                        <TextBlock Text="{Binding LoggedInAdmin}" 
+                                   Foreground="{StaticResource palette6}"
+                                   FontSize="20" VerticalAlignment="Center"
+                                   FontWeight="Medium"/>
+                    </StackPanel>
+
+                </Grid>
+
+                <!-- Content control for panel switching -->
+                <ContentControl Grid.Row="2" Content="{Binding CurrentAdminView}"
+                                Margin="10"/>
+
+            </Grid>
+
+        </Grid>
+        
+    </Border>
+
+</Window>
