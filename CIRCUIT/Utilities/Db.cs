@@ -1,20 +1,29 @@
 ﻿using CIRCUIT.Model;
 using CIRCUIT.Model.NewSaleModel;
 using Microsoft.Data.SqlClient;
+using System.Data.Common;
 using System.Windows;
 
 namespace CIRCUIT.Utilities
 {
     public class Db
     {
+        private bool _disposed = false;
         //Comment each of our local connection for local use
         //private string connectionString = "Server=LAPTOP-DK8TN1UP\\SQLEXPRESS01;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
 
-        private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
-                                       "Trust Server Certificate=True";
+        //private string connectionString = "Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;" +
+        //"Trust Server Certificate=True";
 
         //Try mo to 
-        //private string connectionString = "Server=localhost;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True"
+        private string connectionString = "Server=localhost;Database=Pos_db;Integrated Security=True;Trust Server Certificate=True";
+
+        private readonly SqlConnection _connection;
+
+        public Db()
+        {
+            _connection = new SqlConnection("Data Source=localhost;Initial Catalog = Pos_db; Persist Security Info=True;User ID = carl; Password=carlAmbatunut;Trust Server Certificate=True");
+        }
 
         //Method to execute non queries like INSERT or UPDATE, might change this code later idk
         public void ExecuteNonQuery(string query)
@@ -706,9 +715,31 @@ namespace CIRCUIT.Utilities
             }
         }
 
-        internal void Dispose()
+        public void Dispose()
         {
-            //throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    // Dispose managed resources.
+                    _connection?.Dispose();
+                }
+
+                // Free unmanaged resources (if any).
+
+                _disposed = true;
+            }
+        }
+
+        ~Db()
+        {
+            Dispose(false);
         }
     }
 }

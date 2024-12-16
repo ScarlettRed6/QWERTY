@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CIRCUIT")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b461a5faf638094d18dfe6047aeb3b980479f36b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+45dee58ecfade0b9bf1e95550c57de124de2c061")]
 [assembly: System.Reflection.AssemblyProductAttribute("CIRCUIT")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CIRCUIT")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

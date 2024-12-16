@@ -17,11 +17,13 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
     {
         //Fields
         private decimal _grossProfit;
+        private bool _disposed = false;
         private decimal _totalSalesRevenue;
         private readonly SalesRepository _salesRepository;
         private readonly Db _dbCon;
         private List<SKColor> availableColors;
         private Random random;
+
 
         public ObservableCollection<ISeries> SeriesCollection { get; set; }
         public ObservableCollection<Axis> XAxes { get; set; }
@@ -321,22 +323,31 @@ namespace CIRCUIT.ViewModel.AdminDashboardViewModel
 
         public void Dispose()
         {
-            if (_dbCon != null)
-            {
-                _dbCon.Dispose();
-            }
-
-            if (availableColors != null)
-            {
-                availableColors.Clear();  
-            }
-
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    // Dispose managed state (managed objects).
+                    _dbCon?.Dispose();
+                    availableColors?.Clear();
+                }
+
+                // Free unmanaged resources (if any) here.
+                _disposed = true;
+            }
+        }
+
+        // Destructor (finalizer) to ensure resources are released if Dispose is not called.
         ~HomeViewModel()
         {
-            Dispose();
+            Dispose(false);
         }
+
     }
 }

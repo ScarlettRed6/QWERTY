@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "tbGkjKll5u8=",
+  "dgSpecHash": "le6YeroYT5Y=",
   "success": true,
-  "projectFilePath": "c:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj",
+  "projectFilePath": "C:\\Users\\Dreadlord\\VSCommunityProjects\\CIRCUIT-GROUPPROJECT\\CIRCUIT\\CIRCUIT\\CIRCUIT.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dreadlord\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Dreadlord\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
